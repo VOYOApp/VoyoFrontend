@@ -85,6 +85,11 @@ export function Icon(props: IconProps) {
 }
 
 export const iconRegistry = {
+  home: require("../../assets/icons/voyo/home.png"),
+  search: require("../../assets/icons/voyo/search.png"),
+  chat: require("../../assets/icons/voyo/chat.png"),
+
+
   back: require("../../assets/icons/back.png"),
   bell: require("../../assets/icons/bell.png"),
   caretLeft: require("../../assets/icons/caretLeft.png"),
@@ -92,7 +97,6 @@ export const iconRegistry = {
   check: require("../../assets/icons/check.png"),
   clap: require("../../assets/icons/demo/clap.png"),
   community: require("../../assets/icons/demo/community.png"),
-  components: require("../../assets/icons/demo/components.png"),
   debug: require("../../assets/icons/demo/debug.png"),
   github: require("../../assets/icons/demo/github.png"),
   heart: require("../../assets/icons/demo/heart.png"),
