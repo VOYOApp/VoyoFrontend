@@ -72,10 +72,10 @@
     },
     "extra": {
       "eas": {
-        "projectId": "b352f1df-eecd-4220-802f-3efab7efa8a5"
+        "projectId": "0d92b54a-c759-4245-a89e-33eaa283feff"
       }
     },
-    "owner": "yohann69"
+    "owner": "voyo"
   },
   "ignite": {
     "version": "9.2.0"
