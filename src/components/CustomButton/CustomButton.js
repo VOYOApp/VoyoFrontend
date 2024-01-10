@@ -1,13 +1,14 @@
 import React from "react";
 import {View, Text, StyleSheet, Pressable} from "react-native";
 
-const CustomButton = ({text, onPress, type = "PRIMARY", bgColor, fgColor}) => {
+const CustomButton = ({text, onPress, type = "PRIMARY", bgColor, fgColor, widthBtn}) => {
     return (
         <Pressable onPress={onPress}
                    style={[
                        styles.container,
                        styles[`container_${type}`],
-                       bgColor ? {backgroundColor: bgColor} : null
+                       bgColor ? {backgroundColor: bgColor} : null,
+                       widthBtn ? {width: widthBtn} : null,
                    ]}>
             <Text style={[
                 styles.text,
@@ -20,7 +21,6 @@ const CustomButton = ({text, onPress, type = "PRIMARY", bgColor, fgColor}) => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-
         height: 50,
         borderRadius: 100,
         marginVertical: 5,

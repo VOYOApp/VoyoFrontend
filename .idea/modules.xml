@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/VoyoApp.iml" filepath="$PROJECT_DIR$/.idea/VoyoApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/VoyoFrontend.iml" filepath="$PROJECT_DIR$/.idea/VoyoFrontend.iml" />
     </modules>
   </component>
 </project>

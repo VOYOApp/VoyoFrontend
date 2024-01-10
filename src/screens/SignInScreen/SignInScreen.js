@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet, useWindowDimensions} from 'react-native';
-// import Logo from '../../../assets/logos/logo.svg'
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+
 
 const SignInScreen = () => {
     const [email, setEmail] = useState('')
@@ -20,23 +20,25 @@ const SignInScreen = () => {
 
     return (
         <View style={styles.root}>
-            {/*<Image source={Logo} style={[styles.logo, {height: height * 0.3}]} resizeMode="contain"/>*/}
-            <Text style={styles.title}>Connexion à VOYO</Text>
 
-            <CustomInput placeHolder="Email"
-                         value={email}
-                         setValue={setEmail}
-            />
+          {/*<Image source={Logo} style={[styles.logo, {height: height * 0.3}]} resizeMode="contain"/>*/}
+          <Text style={styles.title}>Connexion à VOYO</Text>
 
-            <CustomInput placeHolder="Mot de passe"
-                         value={password}
-                         setValue={setPassword}
-                         secureTextEntry
-            />
+          <CustomInput placeHolder="Email"
+                       value={email}
+                       setValue={setEmail}
+          />
 
-            <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"}/>
-            <CustomButton text="Mot de passe oublié" onPress={onForgotPasswordPressed} type="TERTIARY"/>
-        </View>);
+          <CustomInput placeHolder="Mot de passe"
+                       value={password}
+                       setValue={setPassword}
+                       secureTextEntry
+          />
+
+          <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"}/>
+          <CustomButton text="Mot de passe oublié" onPress={onForgotPasswordPressed} type="TERTIARY"/>
+        </View>
+);
 }
 
 

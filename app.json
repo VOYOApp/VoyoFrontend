@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "VoyoApp",
-    "slug": "voyoapp",
+    "slug": "voyofrontend",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,9 +29,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "cd911f94-e985-4d2c-904f-ce3da2f74cbc"
+        "projectId": "0d92b54a-c759-4245-a89e-33eaa283feff"
       }
     },
-    "owner": "yohann69"
+    "owner": "voyo"
   }
 }
