@@ -2,8 +2,11 @@ import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet, useWindowDimensions} from 'react-native';
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 const HomeScreen = () => {
+  const { t } = useTranslation();
+
 
   const {height} = useWindowDimensions()
   const navigation = useNavigation()
@@ -21,7 +24,7 @@ const HomeScreen = () => {
     <View style={styles.root}>
 
       <Image source={require("../../../assets/logos/banner-voyo.png")} style={[styles.logo, {height: height}]} resizeMode="contain"/>
-      <Text style={styles.title}>Bienvenue sur VOYO</Text>
+      <Text style={styles.title}>{t('home_screen_greetings')}</Text>
 
 
       <View style={{width:'100%', display:'flex', alignItems:'center', flexDirection:'row', justifyContent:'space-around'}}>
