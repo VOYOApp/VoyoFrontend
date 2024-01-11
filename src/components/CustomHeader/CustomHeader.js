@@ -1,7 +1,21 @@
 import React from "react";
 import {View, Text, TextInput, StyleSheet, Image} from "react-native";
+import { useNavigation } from '@react-navigation/native';
+
 
 const CustomHeader = () =>{
+
+  const navigation = useNavigation()
+  const goBack = () => {
+    //  TODO : Get back to previous page
+    console.warn('Going back')
+  }
+  
+  const logout = () => {
+    //  TODO : Back / Déconnexion
+    navigation.navigate('SignInScreen')
+  }
+  
 return(
     <View style={styles.header}>
     <View style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
