@@ -1,7 +1,11 @@
 import React from "react";
-import {View, Text, TextInput, StyleSheet} from "react-native";
+import {View, Text, TextInput, StyleSheet, Image} from "react-native";
 
-const CustomInput = ({value, setValue, placeHolder, secureTextEntry, editabled = true}) => {
+const CustomInput = ({value, setValue, placeHolder, secureTextEntry, editable = true, showPen = false}) => {
+    let penDisplay = "none";
+    if(showPen === true){
+        penDisplay = "flex";
+    }
     return (<View style={styles.container}>
             <TextInput
                 value={value}
@@ -9,8 +13,9 @@ const CustomInput = ({value, setValue, placeHolder, secureTextEntry, editabled =
                 placeholder={placeHolder}
                 style={styles.input}
                 secureTextEntry={secureTextEntry}
-                editable={editabled}
+                editable={editable}
             />
+            <Image source={require("../../../assets/pen.png")} style={{display:penDisplay, width:"10px", height:"10px", marginRight:"15px"}} on={console.warn("Edition cliquer")}></Image>
         </View>)
 }
 
@@ -23,6 +28,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'row'
     },
     input: {
         width: '100%',

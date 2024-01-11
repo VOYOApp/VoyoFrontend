@@ -9,12 +9,14 @@ import RegisterMail from "../screens/RegisterMail";
 import RegisterPhone from "../screens/RegisterPhone";
 import MailConfirmation from "../screens/MailConfirmation";
 import PhoneConfirmation from "../screens/PhoneConfirmation";
+import UserPage from "../screens/UserPage";
 
 const Stack = createStackNavigator();
 const Navigation = () => {
     return (
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="UserPage" component={UserPage} />
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="SignInScreen" component={SignInScreen} />
           <Stack.Screen name="RegisterAdditionnalDetails" component={RegisterAdditionnalDetails} />
@@ -22,6 +24,7 @@ const Navigation = () => {
           <Stack.Screen name="RegisterPhone" component={RegisterPhone} />
           <Stack.Screen name="MailConfirmation" component={MailConfirmation} />
           <Stack.Screen name="PhoneConfirmation" component={PhoneConfirmation} />
+          
         </Stack.Navigator>
     </NavigationContainer>
     );
