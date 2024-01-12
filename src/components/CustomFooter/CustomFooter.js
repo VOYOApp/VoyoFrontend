@@ -40,15 +40,15 @@ const CustomFooter = ({currentOption = "home"}) =>{
     
   return(
       <View style={styles.footer}>
-        <View>
-            <Image style={{ width: 25, height: 25}} source={require("../../../assets/"+home+".png")} onClick={() => goHome()}></Image>
-        </View>
-        <View>
-            <Image style={{ width: 25, height: 25}} source={require("../../../assets/"+search+".png")} onClick={() => goSearch()}></Image>
-        </View>
-        <View>
-            <Image style={{ width: 25, height: 25}} source={require("../../../assets/"+chat+".png")} onClick={() => goChat()}></Image>
-        </View>
+        {/*<View>*/}
+        {/*    <Image style={{ width: 25, height: 25}} source={require("../../../assets/"+home+".png")} onClick={() => goHome()}></Image>*/}
+        {/*</View>*/}
+        {/*<View>*/}
+        {/*    <Image style={{ width: 25, height: 25}} source={require("../../../assets/"+search+".png")} onClick={() => goSearch()}></Image>*/}
+        {/*</View>*/}
+        {/*<View>*/}
+        {/*    <Image style={{ width: 25, height: 25}} source={require("../../../assets/"+chat+".png")} onClick={() => goChat()}></Image>*/}
+        {/*</View>*/}
       </View>)
   }
 

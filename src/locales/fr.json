@@ -4,7 +4,8 @@
     "logout": "Déconnexion",
     "register": "Inscription",
     "greetings": "Bienvenue sur VOYO !",
-    "greetings_name": "Bienvenue {{name}} !"
+    "greetings_name": "Bienvenue {{name}} !",
+    "already_have_an_account": "J’ai déjà un compte"
   },
   "prospect": {
   },
