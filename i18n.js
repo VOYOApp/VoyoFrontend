@@ -8,8 +8,6 @@ const deviceLanguage =
         NativeModules.SettingsManager.settings.AppleLanguages[0] //iOS 13
         : NativeModules.I18nManager.localeIdentifier;
 
-console.log(deviceLanguage.substring(0, 2)); //en_US
-
 // Import your translation files
 import enTranslation from './src/locales/en.json';
 import frTranslation from './src/locales/fr.json';
