@@ -2,16 +2,16 @@ import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet, useWindowDimensions} from 'react-native';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-
+import { useNavigation } from '@react-navigation/native';
 
 const SignInScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
+    const navigation = useNavigation()
     const {height} = useWindowDimensions()
 
     const onSignInPressed = () => {
-        console.warn('Sign in pressed')
+        navigation.navigate('UserPage')
     }
 
     const onForgotPasswordPressed = () => {

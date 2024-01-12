@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
         paddingTop:"12px", 
         paddingBottom:"12px"
       }})
-    export default CustomFooter
+export default CustomFooter

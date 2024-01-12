@@ -9,6 +9,7 @@ import RegisterMail from "../screens/RegisterMail";
 import RegisterPhone from "../screens/RegisterPhone";
 import MailConfirmation from "../screens/MailConfirmation";
 import PhoneConfirmation from "../screens/PhoneConfirmation";
+import UserPage from "../screens/UserPage";
 
 const Stack = createStackNavigator();
 const Navigation = () => {
@@ -23,6 +24,8 @@ const Navigation = () => {
 
           <Stack.Screen name="MailConfirmation" component={MailConfirmation} />
           <Stack.Screen name="PhoneConfirmation" component={PhoneConfirmation} />
+          <Stack.Screen name="UserPage" component={UserPage} />
+          
         </Stack.Navigator>
     </NavigationContainer>
     );
