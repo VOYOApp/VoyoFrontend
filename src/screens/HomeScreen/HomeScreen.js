@@ -28,8 +28,8 @@ const HomeScreen = () => {
 
 
       <View style={{width:'100%', display:'flex', alignItems:'center', flexDirection:'row', justifyContent:'space-around'}}>
-        <CustomButton text="Connexion" onPress={onSignInPressed} bgColor={"black"} widthBtn={"40%"}/>
-        <CustomButton text="Inscription" onPress={onRegisterPressed} bgColor={"orange"} widthBtn={"40%"}/>
+        <CustomButton text={t('login')} onPress={onSignInPressed} bgColor={"black"} widthBtn={"40%"}/>
+        <CustomButton text={t('register')} onPress={onRegisterPressed} bgColor={"orange"} widthBtn={"40%"}/>
       </View>
     </View>
   );

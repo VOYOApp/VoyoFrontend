@@ -1,4 +1,7 @@
 {
   "home_screen_greetings": "Welcome to VOYO!",
-  "greeting": "Hello, {{name}}!"
+  "greeting": "Hello, {{name}}!",
+  "login": "Login",
+  "logout": "Logout",
+  "register": "Register"
 }

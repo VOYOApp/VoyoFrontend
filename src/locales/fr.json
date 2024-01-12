@@ -1,4 +1,7 @@
 {
-  "home_screen_greetings": "Bienvenue sur VOYO!",
-  "greeting": "Bonjour, {{name}}!"
+  "home_screen_greetings": "Bienvenue sur VOYO !",
+  "greeting": "Bonjour, {{name}}!",
+  "login": "Connexion",
+  "logout": "Déconnexion",
+  "register": "Inscription"
 }
