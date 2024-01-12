@@ -19,8 +19,9 @@ const HomeProspect = () => {
     return (
         <View style={styles.root}>
 
-            {/*<Image source={require("../../../assets/logos/banner-voyo.png")} style={[styles.logo, {height: height}]}*/}
-            {/*       resizeMode="contain"/>*/}
+            <Image source={require("../../../assets/avatar.png")}
+                   style={[styles.logo, {height: height}]}
+                   resizeMode="contain"/>
             <Text style={styles.title}>{t('common.greetings_name')}</Text>
 
 
@@ -43,10 +44,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        width: '400%',
-        maxWidth: 300,
-        maxHeight: 400,
+        width: '100%',
+        maxWidth: 45,
+        maxHeight: 45,
         marginBottom: 10,
+        borderRadius: 100,
     },
     title: {
         fontSize: 30,
