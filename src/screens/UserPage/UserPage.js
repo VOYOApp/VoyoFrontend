@@ -4,10 +4,8 @@ import {LinearGradient} from 'expo-linear-gradient';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import CustomHeader from "../../components/CustomHeader";
+import CustomFooter from "../../components/CustomFooter";
 import { useNavigation } from '@react-navigation/native';
-
-
-
 
 
 const UserPage = () => {
@@ -25,16 +23,6 @@ const UserPage = () => {
 
   const {height} = useWindowDimensions()
   // const navigation = useNavigation()
-
-  const goBack = () => {
-    //  TODO : Get back to previous page
-    console.warn('Going back')
-  }
-
-  const logout = () => {
-    //  TODO : Back / Déconnexion
-    navigation.navigate('SignInScreen')
-  }
 
   const applyChanges = () => {
     console.warn('Updated infos')
@@ -144,6 +132,8 @@ const UserPage = () => {
 
           <CustomButton text="Appliquer les modifications" onPress={applyChanges} bgColor={"black"} />
         </View>
+
+        <CustomFooter/>
       </View>
   );
 }

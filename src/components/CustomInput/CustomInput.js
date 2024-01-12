@@ -15,7 +15,7 @@ const CustomInput = ({value, setValue, placeHolder, secureTextEntry, editable = 
                 secureTextEntry={secureTextEntry}
                 editable={editable}
             />
-            <Image source={require("../../../assets/pen.png")} style={{display:penDisplay, width:"10px", height:"10px", marginRight:"15px"}} on={console.warn("Edition cliquer")}></Image>
+            <Image source={require("../../../assets/pen.png")} style={{display:penDisplay, width:"10px", height:"10px", marginRight:"15px"}}></Image>
         </View>)
 }
 
