@@ -17,7 +17,7 @@ const HomeScreen = () => {
 
     const onRegisterPressed = () => {
         // console.warn('Forgot password pressed')
-        navigation.navigate('RegisterAdditionnalDetails')
+        navigation.navigate('RegisterPhone')
     }
 
     const onHomeProspectPressed = () => {

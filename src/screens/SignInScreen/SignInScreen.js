@@ -21,8 +21,8 @@ const SignInScreen = () => {
     return (
         <View style={styles.root}>
 
-          {/*<Image source={Logo} style={[styles.logo, {height: height * 0.3}]} resizeMode="contain"/>*/}
-          <Text style={styles.title}>Connexion à VOYO</Text>
+          <View style={{width:'100%'}}>
+          <Text style={[styles.title,{marginTop:20}]}>Connexion à VOYO</Text>
 
           <CustomInput placeHolder="Email"
                        value={email}
@@ -37,6 +37,7 @@ const SignInScreen = () => {
 
           <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"}/>
           <CustomButton text="Mot de passe oublié" onPress={onForgotPasswordPressed} type="TERTIARY"/>
+          </View>
         </View>
 );
 }
@@ -44,8 +45,11 @@ const SignInScreen = () => {
 
 const styles = StyleSheet.create({
     root: {
-        padding: 20,
-        alignItems: 'center',
+      backgroundColor: 'white',
+      padding: 30,
+      alignItems: 'center',
+      width: '100%',
+      height: '100%',
     },
     logo: {
         width: '400%',
@@ -55,7 +59,6 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 30,
-        // fontWeight: 'bold',
         marginBottom: 10,
     }
 })

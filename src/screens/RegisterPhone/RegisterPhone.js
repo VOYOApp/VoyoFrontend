@@ -3,17 +3,14 @@ import { View, Text, Image, StyleSheet, useWindowDimensions, TextInput } from "r
 import CustomPhoneNumber from "../../components/CustomPhoneNumber"
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 const RegisterPhone = () => {
+  const {t} = useTranslation();
   const [phoneNumber, setPhoneNumber] = useState('')
 
   const {height} = useWindowDimensions()
   const navigation = useNavigation()
-
-  const goToOtpVerification = () => {
-    navigation.navigate('PhoneConfirmation')
-    // TODO: send phone number to API for get OTP code
-  }
 
   const formattedPhoneNumber = (numero) => {
     const cleanedInput = numero.replace(/\D/g, '');
@@ -27,6 +24,14 @@ const RegisterPhone = () => {
     setPhoneNumber(numeroFormate);
   };
 
+  const alreadyHaveAnAccount = () => {
+    navigation.navigate('SignInScreen')
+  }
+
+  const goToOtpVerification = () => {
+    navigation.navigate('PhoneConfirmation')
+    // TODO: send phone number to API for get OTP code
+  }
 
   return (
     <View style={styles.root}>
@@ -34,11 +39,11 @@ const RegisterPhone = () => {
       <View style={{width:'100%'}}>
         <Text style={[styles.title,{marginTop:20}]}>Inscription à VOYO</Text>
 
-        <CustomPhoneNumber placeHolder="N° de téléphone portable"
+        <CustomPhoneNumber placeHolder={t('common.cell_phone_number')}
                            value={phoneNumber}
                            setValue={handleNumChange}
         />
-        <Text>TEST</Text>
+        <Text onPress={alreadyHaveAnAccount} style={{color:'#FE881B', marginTop:10, marginBottom:10}}>{t('common.already_have_an_account')}</Text>
       </View>
 
       <CustomButton text="Suivant" onPress={goToOtpVerification} bgColor={"black"}/>
@@ -46,10 +51,9 @@ const RegisterPhone = () => {
   );
 }
 
-
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: '#FE881B',
+    backgroundColor: 'white',
     padding: 30,
     alignItems: 'center',
     width: '100%',
@@ -57,7 +61,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    // fontWeight: 'bold',
     marginBottom: 10,
   }
 })
