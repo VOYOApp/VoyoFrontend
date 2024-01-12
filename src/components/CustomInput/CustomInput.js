@@ -1,7 +1,7 @@
 import React from "react";
 import {View, Text, TextInput, StyleSheet, Image} from "react-native";
 
-const CustomInput = ({value, setValue, placeHolder, secureTextEntry, editable = true, showPen = false}) => {
+const CustomInput = ({value, setValue, placeHolder, secureTextEntry, editable = true, showPen = false, widthInp}) => {
     let penDisplay = "none";
     if(showPen === true){
         penDisplay = "flex";

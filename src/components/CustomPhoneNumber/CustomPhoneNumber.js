@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, TextInput, StyleSheet, Image } from "react-native"
 
 const CustomPhoneNumber = ({value, setValue, placeHolder, secureTextEntry, editabled = true, widthInp}) => {
+
     return (
       <View style={styles.container}>
           <View style={{width:'100%', flexDirection:'row', alignItems:'center'}}>
@@ -20,7 +21,7 @@ const CustomPhoneNumber = ({value, setValue, placeHolder, secureTextEntry, edita
                     editable={editabled}
                     textContentType={"telephoneNumber"}
                     keyboardType={"numeric"}
-                    maxLength={10}
+                    maxLength={13}
                   />
               </View>
           </View>
