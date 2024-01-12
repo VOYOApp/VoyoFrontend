@@ -5,7 +5,8 @@
     "register": "Inscription",
     "greetings": "Bienvenue sur VOYO !",
     "greetings_name": "Bienvenue {{name}} !",
-    "already_have_an_account": "J’ai déjà un compte"
+    "already_have_an_account": "J’ai déjà un compte",
+    "cell_phone_number": "N° téléphone portable"
   },
   "prospect": {
   },

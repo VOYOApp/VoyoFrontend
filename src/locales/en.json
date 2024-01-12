@@ -4,7 +4,9 @@
     "logout": "Logout",
     "register": "Register",
     "greetings": "Welcome to VOYO!",
-    "greetings_name": "Welcome {{name}} !"
+    "greetings_name": "Welcome {{name}} !",
+    "already_have_an_account": "I already have an account",
+    "cell_phone_number": "Cell phone number"
   },
   "prospect": {
   },
