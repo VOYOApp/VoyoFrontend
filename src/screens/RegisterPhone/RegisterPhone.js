@@ -1,43 +1,35 @@
 import React, {useState} from 'react';
-import {View, Text, Image, StyleSheet, useWindowDimensions} from 'react-native';
-import CustomInput from "../../components/CustomInput";
+import { View, Text, Image, StyleSheet, useWindowDimensions, TextInput } from "react-native"
+import CustomPhoneNumber from "../../components/CustomPhoneNumber"
 import CustomButton from "../../components/CustomButton";
-
-// import Logo from '../../../assets/logos/logo.svg'
+import { useNavigation } from '@react-navigation/native';
 
 const RegisterPhone = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState(0)
+  const [number, onChangeNumber] = React.useState('');
 
   const {height} = useWindowDimensions()
+  const navigation = useNavigation()
 
-  const onSignInPressed = () => {
-    console.warn('Sign in pressed')
-  }
-
-  const onForgotPasswordPressed = () => {
-    console.warn('Forgot password pressed')
+  const goToOtpVerification = () => {
+    navigation.navigate('PhoneConfirmation')
+    // TODO: send phone number to API for get OTP code
   }
 
   return (
     <View style={styles.root}>
 
-      {/*<Image source={Logo} style={[styles.logo, {height: height * 0.3}]} resizeMode="contain"/>*/}
-      <Text style={styles.title}>Connexion à VOYO</Text>
+      <View style={{width:'100%'}}>
+        <Text style={[styles.title,{marginTop:20}]}>Inscription à VOYO</Text>
 
-      <CustomInput placeHolder="Email"
-                   value={email}
-                   setValue={setEmail}
-      />
+        <CustomPhoneNumber placeHolder="N° de téléphone"
+                           value={phoneNumber}
+                           setValue={setPhoneNumber}
+        />
+        <Text>TEST</Text>
+      </View>
 
-      <CustomInput placeHolder="Mot de passe"
-                   value={password}
-                   setValue={setPassword}
-                   secureTextEntry
-      />
-
-      <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"}/>
-      <CustomButton text="Mot de passe oublié" onPress={onForgotPasswordPressed} type="TERTIARY"/>
+      <CustomButton text="Suivant" onPress={goToOtpVerification} bgColor={"black"}/>
     </View>
   );
 }
@@ -45,14 +37,11 @@ const RegisterPhone = () => {
 
 const styles = StyleSheet.create({
   root: {
-    padding: 20,
+    backgroundColor: '#FE881B',
+    padding: 30,
     alignItems: 'center',
-  },
-  logo: {
-    width: '400%',
-    maxWidth: 300,
-    maxHeight: 400,
-    marginBottom: 10,
+    width: '100%',
+    height: '100%',
   },
   title: {
     fontSize: 30,

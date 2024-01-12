@@ -1,23 +1,28 @@
+import React, {useEffect} from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {SafeAreaView, StyleSheet} from 'react-native';
+import {useTranslation} from 'react-i18next'; // Import the useTranslation hook
+import {LinearGradient} from 'expo-linear-gradient';
+import Navigation from './src/navigation';
+import i18n from './i18n'; // Import your i18n configuration file
 
 
-import {LinearGradient} from "expo-linear-gradient";
-import Navigation from "./src/navigation"
 const App = () => {
-    return (
+    const {t, i18n} = useTranslation(); // Destructure the t function and i18n object
 
-        <SafeAreaView style={styles.root}>
-            {/*<LinearGradient*/}
-            {/*    colors={['#FF9B3F','#FFA95A', '#FFC289',  'white', 'white', 'white', 'white', 'white', 'white']}*/}
-            {/*    start={{x: 0, y: 0.5}}*/}
-            {/*    end={{x: 1, y: 1}}*/}
-            {/*    style={styles.gradientBackground}*/}
-            {/*/>*/}
-          <Navigation></Navigation>
+    useEffect(() => {
+    }, []);
+
+    return (<SafeAreaView style={styles.root}>
+        <LinearGradient
+            colors={['#4c669f', '#3b5998', '#192f6a']}
+            style={styles.gradientBackground}
+        >
+            <Navigation/>
             <StatusBar style="auto"/>
-        </SafeAreaView>);
-}
+        </LinearGradient>
+    </SafeAreaView>);
+};
 
 const styles = StyleSheet.create({
     root: {

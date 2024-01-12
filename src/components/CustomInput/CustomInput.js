@@ -11,7 +11,7 @@ const CustomInput = ({value, setValue, placeHolder, secureTextEntry, editable = 
                 value={value}
                 onChangeText={setValue}
                 placeholder={placeHolder}
-                style={styles.input}
+                style={[styles.input, widthInp ? {width: widthInp} : null]}
                 secureTextEntry={secureTextEntry}
                 editable={editable}
             />
