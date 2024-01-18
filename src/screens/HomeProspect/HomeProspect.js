@@ -18,19 +18,29 @@ const HomeProspect = () => {
 
 	return (
 	  <View style={styles.root}>
+		  <View style={styles.header}>
+			  <Image source={require("../../../assets/avatar.png")}
+			         style={[styles.logo, { height: height }]}
+			         resizeMode="contain" />
+			  <Text style={styles.title}>{t("common.greetings_name", { name: "Yohann" })}</Text>
+		  </View>
 
-		  <Image source={require("../../../assets/avatar.png")}
-		         style={[styles.logo, { height: height }]}
-		         resizeMode="contain" />
-		  <Text style={styles.title}>{t("common.greetings_name", { name: "toto" })}</Text>
-
-		<HomeStats StatsType={"prospect"} />
+		  <HomeStats StatsType={"prospect"} />
 	  </View>
 	)
 }
 
 
 const styles = StyleSheet.create({
+	header:{
+		marginTop: 20,
+		marginBottom: 20,
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "space-between",
+		flexDirection: "row-reverse",
+		width: "100%",
+	},
 	root: {
 		padding: 20,
 		alignItems: "center",
@@ -45,7 +55,7 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 30,
 		marginBottom: 10,
-	}
+	},
 })
 
 export default HomeProspect
