@@ -1,9 +1,10 @@
 import React from "react"
 import { View, Text, TextInput, StyleSheet, Image, Dimensions} from "react-native"
 import { useNavigation } from "@react-navigation/native"
-
+import {useTranslation} from 'react-i18next';
 
 const CustomHeader = () => {
+	const {t} = useTranslation();
     const appWidth = Dimensions.get('window').width;
     const appHeight = Dimensions.get('window').height;
 	const navigation = useNavigation()
@@ -32,7 +33,7 @@ const CustomHeader = () => {
 			<Image style={{ width: 25, height: 25 }}
 			       source={require("../../../assets/back.png")}></Image>
 			<Text style={{ marginLeft: 25, fontFamily: "Roboto", fontSize: 15 }}>
-				Mon compte</Text>
+				{t('common.my_account')}</Text>
 		</View>
 		<View style={{flexDirection: "row", alignItems: "center", position: "absolute", top: 0, paddingTop:40, left:appWidth-50}} >
 			<Image style={{ width: 25, height: 25, right:0}}

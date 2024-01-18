@@ -15,7 +15,15 @@
     },
     "resend_code": "Renvoyer le code",
     "verification_code_sent": "Un code de vérification a été envoyé au {{phone}}",
-    "verification_mail_code_sent": "Un code de vérification à été envoyé à votre email : {{mail}}"
+    "verification_mail_code_sent": "Un code de vérification à été envoyé à votre email : {{mail}}",
+    "my_account": "Mon compte",
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "bio": "Bio",
+    "email":"Email",
+    "password":"Mot de passe",
+    "confirm_password":"Confirmer le mot de passe",
+    "apply_changes":"Appliquer les modifications"
   },
   "prospect": {
     "programmed_visite": {

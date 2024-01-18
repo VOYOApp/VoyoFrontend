@@ -6,9 +6,11 @@ import CustomButton from "../../components/CustomButton";
 import CustomHeader from "../../components/CustomHeader";
 import CustomFooter from "../../components/CustomFooter";
 import { useNavigation } from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 
 const UserPage = () => {
+  const {t} = useTranslation();
   const [lastName, setLastName] = useState('')
   const [firstName, setFirstName] = useState('')
   const [bio, setBio] = useState('')
@@ -45,12 +47,12 @@ const UserPage = () => {
                     style={{ width: 100, height: 100, marginRight: 20 }} />
             </View>
             <View style={{ marginLeft:10,width: "65%" }}>
-              <CustomInput placeHolder="First Name"
+              <CustomInput placeHolder={t('common.first_name')}
                           value={firstName}
                           setValue={setFirstName}
                           showPen={true}
               />
-              <CustomInput placeHolder="Last Name"
+              <CustomInput placeHolder={t('common.last_name')}
                           value={lastName}
                           setValue={setLastName}
                           showPen={true}
@@ -63,7 +65,7 @@ const UserPage = () => {
           <View>
             <TextInput
               multiline={true}
-              placeholder="Bio"
+              placeholder={t('common.bio')}
               value={bio}
               onChangeText={handleBioChange}
               maxLength={200}
@@ -79,12 +81,12 @@ const UserPage = () => {
 
             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, width: 40, marginBottom: 5, marginTop: 5, alignSelf: 'center' }} />
 
-            <CustomInput placeHolder="Phone Number"
+            <CustomInput placeHolder={t('common.cell_phone_number')}
                         value={phoneNumber}
                         setValue={setPhoneNumber}
                         showPen={true}
             />
-            <CustomInput placeHolder="Email"
+            <CustomInput placeHolder={t('common.email')}
                         value={email}
                         setValue={setEmail}
                         showPen={true}
@@ -93,14 +95,14 @@ const UserPage = () => {
             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, width: 40, marginBottom: 5, marginTop: 5, alignSelf: 'center' }} />
 
             <View>
-              <CustomInput placeHolder="Mot de passe"
+              <CustomInput placeHolder={t('common.password')}
                           value={password}
                           setValue={setPassword}
                           secureTextEntry
                           showPen={true}
               />
 
-              <CustomInput placeHolder="Confirmer le mot de passe"
+              <CustomInput placeHolder={t('common.confirm_password')}
                           value={passwordConfirmation}
                           setValue={setPasswordConfirmation}
                           secureTextEntry
@@ -124,10 +126,10 @@ const UserPage = () => {
             <Text style={{textAlign:'center', width: '30%'}}>Je souhaite faire visiter des biens immobiliers</Text>
           </View> */}
 
-          <CustomButton text="Appliquer les modifications" onPress={applyChanges} bgColor={"black"} />
+          <CustomButton text={t('common.apply_changes')} onPress={applyChanges} bgColor={"black"} />
         </View>
 
-        <CustomFooter/>
+        <CustomFooter currentOption={"home"}/>
       </View>
   );
 }
