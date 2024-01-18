@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, useWindowDimensions, Button, Switch, Tex
 import {LinearGradient} from 'expo-linear-gradient';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import CustomHeader from "../../components/CustomHeader";
+// import CustomHeader from "../../components/CustomHeader";
 import CustomFooter from "../../components/CustomFooter";
 import { useNavigation } from '@react-navigation/native';
 
@@ -35,14 +35,8 @@ const UserPage = () => {
 
   return (
       <View style={styles.root}>
-        <LinearGradient
-          colors={['#FF9B3F','#FFA95A', '#FFC289',  'white', 'white', 'white', 'white', 'white', 'white']}
-          start={{x: 0, y: 0.5}}
-          end={{x: 1, y: 1}}
-          style={styles.gradientBackground}
-        />
-
-        <CustomHeader/>
+        {/* <CustomHeader/> */}
+        
         
         <View style={styles.body}>
           <View style={{flexDirection: "row", width: '100%'}}>
@@ -50,7 +44,7 @@ const UserPage = () => {
               <Image source={require("../../../assets/avatar.png")}
                     style={{ width: 100, height: 100, marginRight: 20 }} />
             </View>
-            <View style={{ width: "70%" }}>
+            <View style={{ marginLeft:10,width: "65%" }}>
               <CustomInput placeHolder="First Name"
                           value={firstName}
                           setValue={setFirstName}
@@ -143,9 +137,11 @@ const styles = StyleSheet.create({
   root: {
     width: '100%',
     height: '100%',
+    // backgroundColor: "#100902"
   },
   body:{
-    padding:20
+    padding:20,
+    marginTop: 40
   },
   title: {
     fontSize: 28,
