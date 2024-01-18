@@ -6,9 +6,9 @@ const CustomPhoneNumber = ({value, setValue, placeHolder, secureTextEntry, edita
     return (
       <View style={styles.container}>
           <View style={{width:'100%', flexDirection:'row', alignItems:'center'}}>
-              <View style={{flexDirection:'row', alignItems:'center', width:'20%', height:50, backgroundColor:'#F0F0F0', borderRadius:18, padding:10, marginRight:10}}>
+              <View style={{flexDirection:'row', alignItems:'center', width:'23%', height:50, backgroundColor:'#F0F0F0', borderRadius:18, padding:10, marginRight:10}}>
                   <Image source={require('../../../assets/france.png')} style={styles.logo}/>
-                  <Text> +33</Text>
+                  <Text style={{fontSize: 17}}> +33</Text>
               </View>
 
               <View style={{flexDirection:'row',width:'70%'}}>
@@ -16,7 +16,7 @@ const CustomPhoneNumber = ({value, setValue, placeHolder, secureTextEntry, edita
                     value={value}
                     onChangeText={setValue}
                     placeholder={placeHolder}
-                    style={[styles.input,{backgroundColor: '#F0F0F0', borderRadius: 18, height: 50, width: '100%',padding:10 }]}
+                    style={[styles.input,{backgroundColor: '#F0F0F0', borderRadius: 18, height: 50, width: '100%',padding:10, fontSize: 17}]}
                     secureTextEntry={secureTextEntry}
                     editable={editabled}
                     textContentType={"telephoneNumber"}

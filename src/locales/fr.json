@@ -3,6 +3,8 @@
     "login": "Connexion",
     "logout": "Déconnexion",
     "register": "Inscription",
+    "register_to_voyo": "Inscription à VOYO",
+    "enter_your_email": "Entrez votre adresse email",
     "greetings": "Bienvenue sur VOYO !",
     "greetings_name": "Bienvenue {{name}} !",
     "already_have_an_account": "J’ai déjà un compte",
@@ -10,16 +12,17 @@
     "unread_messages": {
       "one": "Message non lu",
       "other": "Messages non lus"
-    }
+    },
+    "resend_code": "Renvoyer le code",
+    "verification_code_sent": "Un code de vérification a été envoyé au {{phone}}",
+    "verification_mail_code_sent": "Un code de vérification à été envoyé à votre email : {{mail}}"
   },
-  "prospect": {
-  },
+  "prospect": {},
   "visitor": {
     "upcoming_visits": {
       "one": "Visite à venir",
       "other": "Visites à venir"
     }
   },
-  "admin": {
-  }
+  "admin": {}
 }

@@ -1,64 +1,56 @@
 import React, {useState} from 'react';
-import {View, Text, Image, StyleSheet, useWindowDimensions} from 'react-native';
-import CustomInput from "../../components/CustomInput";
+import { View, Text, Image, StyleSheet, useWindowDimensions, TextInput } from "react-native"
+import { useNavigation } from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
+import CustomInput from "../../components/CustomInput"
 import CustomButton from "../../components/CustomButton";
 
-// import Logo from '../../../assets/logos/logo.svg'
-
 const RegisterMail = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+    const {t} = useTranslation();
+    const [email, setEmail] = useState('')
 
-  const {height} = useWindowDimensions()
+    const {height} = useWindowDimensions()
+    const navigation = useNavigation()
 
-  const onSignInPressed = () => {
-    console.warn('Sign in pressed')
-  }
+    const goToOtpVerification = () => {
+        navigation.navigate('MailConfirmation')
+        // TODO: send phone number to API for get OTP code
+    }
 
-  const onForgotPasswordPressed = () => {
-    console.warn('Forgot password pressed')
-  }
+    return (
+      <View style={styles.root}>
 
-  return (
-    <View style={styles.root}>
+          <View style={{width:'100%', marginBottom: 20}}>
+              <Text style={[styles.title,{marginTop:20}]}>{t('common.register_to_voyo')}</Text>
 
-      {/*<Image source={Logo} style={[styles.logo, {height: height * 0.3}]} resizeMode="contain"/>*/}
-      <Text style={styles.title}>Connexion à VOYO</Text>
+              <CustomInput placeHolder={t('common.enter_your_email')}
+                           value={email}
+                           setValue={setEmail}
+                           editabled={false}
+              />
+          </View>
 
-      <CustomInput placeHolder="Email"
-                   value={email}
-                   setValue={setEmail}
-      />
-
-      <CustomInput placeHolder="Mot de passe"
-                   value={password}
-                   setValue={setPassword}
-                   secureTextEntry
-      />
-
-      <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"}/>
-      <CustomButton text="Mot de passe oublié" onPress={onForgotPasswordPressed} type="TERTIARY"/>
-    </View>
-  );
+          <CustomButton text="Suivant" onPress={goToOtpVerification} bgColor={"black"}/>
+      </View>
+    );
 }
 
-
 const styles = StyleSheet.create({
-  root: {
-    padding: 20,
-    alignItems: 'center',
-  },
-  logo: {
-    width: '400%',
-    maxWidth: 300,
-    maxHeight: 400,
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 30,
-    // fontWeight: 'bold',
-    marginBottom: 10,
-  }
+    root: {
+        backgroundColor: 'white',
+        padding: 30,
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+    },
+    title: {
+        fontSize: 30,
+        marginBottom: 10,
+    },
+    link: {
+        color: '#FE881B',
+        marginTop: 10,
+    }
 })
 
 export default RegisterMail;

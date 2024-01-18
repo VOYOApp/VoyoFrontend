@@ -1,64 +1,61 @@
 import React, {useState} from 'react';
-import {View, Text, Image, StyleSheet, useWindowDimensions} from 'react-native';
-import CustomInput from "../../components/CustomInput";
+import { View, Text, Image, StyleSheet, useWindowDimensions, TextInput } from "react-native"
+import CodeConfirmation from "../../components/CodeConfirmation"
 import CustomButton from "../../components/CustomButton";
-
-// import Logo from '../../../assets/logos/logo.svg'
+import { useNavigation } from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 const MailConfirmation = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+    const {t} = useTranslation();
+    const [phoneNumber, setPhoneNumber] = useState('')
 
-  const {height} = useWindowDimensions()
+    const {height} = useWindowDimensions()
+    const navigation = useNavigation()
 
-  const onSignInPressed = () => {
-    console.warn('Sign in pressed')
-  }
+    const resentCode = () => {
+        // TODO: resend phone number to API for get OTP code
+    }
 
-  const onForgotPasswordPressed = () => {
-    console.warn('Forgot password pressed')
-  }
+    const goToOtpVerification = () => {
+        navigation.navigate('PhoneConfirmation')
+        // TODO: send phone number to API for get OTP code
+    }
 
-  return (
-    <View style={styles.root}>
+    return (
+      <View style={styles.root}>
 
-      {/*<Image source={Logo} style={[styles.logo, {height: height * 0.3}]} resizeMode="contain"/>*/}
-      <Text style={styles.title}>Connexion à VOYO</Text>
+          <View style={{width:'100%'}}>
+              <Text style={styles.title}>{t('common.register_to_voyo')}</Text>
+              <Text style={{marginBottom:20}}>{t('common.verification_mail_code_sent')}</Text>
 
-      <CustomInput placeHolder="Email"
-                   value={email}
-                   setValue={setEmail}
-      />
+              <CodeConfirmation placeHolder={t('common.cell_phone_number')}
+                                value={phoneNumber}
+                                setValue={setPhoneNumber}
+              />
+              <Text onPress={resentCode} style={styles.link}>{t('common.resend_code')}</Text>
+          </View>
 
-      <CustomInput placeHolder="Mot de passe"
-                   value={password}
-                   setValue={setPassword}
-                   secureTextEntry
-      />
-
-      <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"}/>
-      <CustomButton text="Mot de passe oublié" onPress={onForgotPasswordPressed} type="TERTIARY"/>
-    </View>
-  );
+      </View>
+    );
 }
 
-
 const styles = StyleSheet.create({
-  root: {
-    padding: 20,
-    alignItems: 'center',
-  },
-  logo: {
-    width: '400%',
-    maxWidth: 300,
-    maxHeight: 400,
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 30,
-    // fontWeight: 'bold',
-    marginBottom: 10,
-  }
+    root: {
+        backgroundColor: 'white',
+        padding: 30,
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+    },
+    title: {
+        fontSize: 30,
+        marginBottom: 10,
+        marginTop:20
+    },
+    link: {
+        color: '#FE881B',
+        marginTop: 10,
+    }
 })
 
 export default MailConfirmation;

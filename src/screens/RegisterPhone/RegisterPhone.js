@@ -37,13 +37,13 @@ const RegisterPhone = () => {
     <View style={styles.root}>
 
       <View style={{width:'100%'}}>
-        <Text style={[styles.title,{marginTop:20}]}>Inscription à VOYO</Text>
+        <Text style={[styles.title,{marginTop:20}]}>{t('common.register_to_voyo')}</Text>
 
         <CustomPhoneNumber placeHolder={t('common.cell_phone_number')}
                            value={phoneNumber}
                            setValue={handleNumChange}
         />
-        <Text onPress={alreadyHaveAnAccount} style={{color:'#FE881B', marginTop:10, marginBottom:10}}>{t('common.already_have_an_account')}</Text>
+        <Text onPress={alreadyHaveAnAccount} style={[styles.link, {marginBottom:10}]}>{t('common.already_have_an_account')}</Text>
       </View>
 
       <CustomButton text="Suivant" onPress={goToOtpVerification} bgColor={"black"}/>
@@ -62,6 +62,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     marginBottom: 10,
+  },
+  link: {
+    color: '#FE881B',
+    marginTop: 10,
   }
 })
 
