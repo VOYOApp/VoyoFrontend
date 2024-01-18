@@ -6,7 +6,9 @@
     "greetings": "Bienvenue sur VOYO !",
     "greetings_name": "Bienvenue {{name}} !",
     "already_have_an_account": "J’ai déjà un compte",
-    "cell_phone_number": "N° téléphone portable"
+    "cell_phone_number": "N° téléphone portable",
+    "resend_code": "Renvoyer le code",
+    "verification_code_sent": "Un code de vérification a été envoyé au {{phone}}"
   },
   "prospect": {
   },

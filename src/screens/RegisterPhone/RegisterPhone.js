@@ -43,7 +43,7 @@ const RegisterPhone = () => {
                            value={phoneNumber}
                            setValue={handleNumChange}
         />
-        <Text onPress={alreadyHaveAnAccount} style={{color:'#FE881B', marginTop:10, marginBottom:10}}>{t('common.already_have_an_account')}</Text>
+        <Text onPress={alreadyHaveAnAccount} style={[styles.link, {marginBottom:10}]}>{t('common.already_have_an_account')}</Text>
       </View>
 
       <CustomButton text="Suivant" onPress={goToOtpVerification} bgColor={"black"}/>
@@ -62,6 +62,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     marginBottom: 10,
+  },
+  link: {
+    color: '#FE881B',
+    marginTop: 10,
   }
 })
 
