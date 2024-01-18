@@ -8,14 +8,21 @@ import CustomButton from "../../components/CustomButton";
 const RegisterMail = () => {
     const {t} = useTranslation();
     const [email, setEmail] = useState('')
+    const [btnDisabled, setBtnDisabled] = useState(true)
 
     const {height} = useWindowDimensions()
     const navigation = useNavigation()
 
-    const goToOtpVerification = () => {
-        navigation.navigate('MailConfirmation')
+    const goToOtpVerification = (mail) => {
+        navigation.navigate('MailConfirmation',{mail: mail})
         // TODO: send phone number to API for get OTP code
     }
+
+    const handleMailChange = (mail) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/;
+        setEmail(mail);
+        setBtnDisabled(prevState => !emailRegex.test(mail));
+    };
 
     return (
       <View style={styles.root}>
@@ -25,12 +32,13 @@ const RegisterMail = () => {
 
               <CustomInput placeHolder={t('common.enter_your_email')}
                            value={email}
-                           setValue={setEmail}
+                           setValue={handleMailChange}
                            editabled={false}
+                           inputype={"emailAddress"}
               />
           </View>
 
-          <CustomButton text="Suivant" onPress={goToOtpVerification} bgColor={"black"}/>
+          <CustomButton text="Suivant" onPress={()=>goToOtpVerification(email)} bgColor={"black"} deactivated={btnDisabled}/>
       </View>
     );
 }

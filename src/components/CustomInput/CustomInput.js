@@ -1,7 +1,7 @@
 import React from "react";
 import {View, Text, TextInput, StyleSheet, Image} from "react-native";
 
-const CustomInput = ({value, setValue, placeHolder, secureTextEntry, editable = true, showPen = false, widthInp}) => {
+const CustomInput = ({value, setValue, placeHolder, secureTextEntry, editable = true, showPen = false, widthInp, inputype}) => {
     let penDisplay = "none";
     if(showPen === true){
         penDisplay = "flex";
@@ -14,6 +14,8 @@ const CustomInput = ({value, setValue, placeHolder, secureTextEntry, editable = 
                 style={[styles.input, widthInp ? {width: widthInp} : null]}
                 secureTextEntry={secureTextEntry}
                 editable={editable}
+                textContentType={inputype !== '' ? inputype : "none"}
+                autoCapitalize={inputype === 'emailAddress' ? "none" : "sentences"}
             />
             <Image source={require("../../../assets/pen.png")} style={{display:penDisplay, width:"10px", height:"10px", marginRight:"15px"}}></Image>
         </View>)

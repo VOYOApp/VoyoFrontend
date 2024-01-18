@@ -1,13 +1,14 @@
 import React from "react";
 import {View, Text, StyleSheet, Pressable} from "react-native";
 
-const CustomButton = ({text, onPress, type = "PRIMARY", bgColor, fgColor, widthBtn}) => {
+const CustomButton = ({text, onPress, type = "PRIMARY", bgColor, fgColor, widthBtn, deactivated = false}) => {
     return (
         <Pressable onPress={onPress}
+                   disabled={deactivated}
                    style={[
                        styles.container,
                        styles[`container_${type}`],
-                       bgColor ? {backgroundColor: bgColor} : null,
+                       bgColor && deactivated === false ? {backgroundColor: bgColor} : {backgroundColor: 'grey'},
                        widthBtn ? {width: widthBtn} : null,
                    ]}>
             <Text style={[
