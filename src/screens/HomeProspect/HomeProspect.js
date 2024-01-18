@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import HomeStats from "../../components/HomeStats"
 import HeaderHome from "../../components/HeaderHome"
+import CustomFooter from "../../components/CustomFooter"
 
 const HomeProspect = () => {
 	const { t } = useTranslation()
@@ -21,6 +22,7 @@ const HomeProspect = () => {
 	  <View style={styles.root}>
 		  <HeaderHome />
 		  <HomeStats StatsType={"prospect"} />
+		  <CustomFooter currentOption={"home"}/>
 	  </View>
 	)
 }
