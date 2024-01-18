@@ -37,7 +37,7 @@ const RegisterPhone = () => {
     <View style={styles.root}>
 
       <View style={{width:'100%'}}>
-        <Text style={[styles.title,{marginTop:20}]}>Inscription à VOYO</Text>
+        <Text style={[styles.title,{marginTop:20}]}>{t('common.register_to_voyo')}</Text>
 
         <CustomPhoneNumber placeHolder={t('common.cell_phone_number')}
                            value={phoneNumber}

@@ -11,7 +11,7 @@ const CustomPhoneNumber = ({value, setValue, placeHolder, secureTextEntry, edita
                   <Text style={{fontSize: 17}}> +33</Text>
               </View>
 
-              <View style={{flexDirection:'row',width:'55%'}}>
+              <View style={{flexDirection:'row',width:'70%'}}>
                   <TextInput
                     value={value}
                     onChangeText={setValue}

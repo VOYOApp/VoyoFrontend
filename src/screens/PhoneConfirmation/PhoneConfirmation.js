@@ -12,10 +12,6 @@ const PhoneConfirmation = () => {
     const {height} = useWindowDimensions()
     const navigation = useNavigation()
 
-    const alreadyHaveAnAccount = () => {
-        navigation.navigate('SignInScreen')
-    }
-
     const resentCode = () => {
         // TODO: resend phone number to API for get OTP code
     }
@@ -29,7 +25,7 @@ const PhoneConfirmation = () => {
       <View style={styles.root}>
 
           <View style={{width:'100%'}}>
-              <Text style={styles.title}>Inscription à VOYO</Text>
+              <Text style={styles.title}>{t('common.register_to_voyo')}</Text>
               <Text style={{marginBottom:20}}>{t('common.verification_code_sent')}</Text>
 
               <CodeConfirmation placeHolder={t('common.cell_phone_number')}
@@ -37,7 +33,6 @@ const PhoneConfirmation = () => {
                                  setValue={setPhoneNumber}
               />
               <Text onPress={resentCode} style={styles.link}>{t('common.resend_code')}</Text>
-              <Text onPress={alreadyHaveAnAccount} style={[styles.link, {marginBottom:10}]}>{t('common.already_have_an_account')}</Text>
           </View>
 
       </View>

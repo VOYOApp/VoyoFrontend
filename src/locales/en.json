@@ -3,12 +3,15 @@
     "login": "Login",
     "logout": "Logout",
     "register": "Register",
+    "register_to_voyo": "Register to VOYO",
+    "enter_your_email": "Enter your email",
     "greetings": "Welcome to VOYO!",
     "greetings_name": "Welcome {{name}} !",
     "already_have_an_account": "I already have an account",
     "cell_phone_number": "Cell phone number",
     "resend_code": "Resend code",
-    "verification_code_sent": "A verification code has been sent to {{phone}}"
+    "verification_code_sent": "A verification code has been sent to {{phone}}",
+    "verification_mail_code_sent": "A verification code has been sent to {{email}}"
   },
   "prospect": {
   },
