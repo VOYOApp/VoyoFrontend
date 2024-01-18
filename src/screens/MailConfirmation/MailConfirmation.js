@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, Image, StyleSheet, useWindowDimensions, TextInput } from "react-native"
 import CodeConfirmation from "../../components/CodeConfirmation"
 import CustomButton from "../../components/CustomButton";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from "@react-navigation/native"
 import {useTranslation} from 'react-i18next';
 
 const MailConfirmation = () => {
@@ -12,12 +12,15 @@ const MailConfirmation = () => {
     const {height} = useWindowDimensions()
     const navigation = useNavigation()
 
+    const route = useRoute()
+    const mail = route.params?.mail
+
     const resentCode = () => {
         // TODO: resend phone number to API for get OTP code
     }
 
     const goToOtpVerification = () => {
-        navigation.navigate('PhoneConfirmation')
+        navigation.navigate('RegisterAdditionnalDetails')
         // TODO: send phone number to API for get OTP code
     }
 
@@ -26,11 +29,12 @@ const MailConfirmation = () => {
 
           <View style={{width:'100%'}}>
               <Text style={styles.title}>{t('common.register_to_voyo')}</Text>
-              <Text style={{marginBottom:20}}>{t('common.verification_mail_code_sent')}</Text>
+              <Text style={{marginBottom:20}}>{t('common.verification_mail_code_sent', {mail: mail})}</Text>
 
               <CodeConfirmation placeHolder={t('common.cell_phone_number')}
                                 value={phoneNumber}
                                 setValue={setPhoneNumber}
+                                navigated={'RegisterAdditionnalDetails'}
               />
               <Text onPress={resentCode} style={styles.link}>{t('common.resend_code')}</Text>
           </View>
