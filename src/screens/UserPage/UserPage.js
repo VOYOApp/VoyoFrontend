@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, useWindowDimensions, Button, Switch, Tex
 import {LinearGradient} from 'expo-linear-gradient';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-// import CustomHeader from "../../components/CustomHeader";
+import CustomHeader from "../../components/CustomHeader";
 import CustomFooter from "../../components/CustomFooter";
 import { useNavigation } from '@react-navigation/native';
 
@@ -35,7 +35,7 @@ const UserPage = () => {
 
   return (
       <View style={styles.root}>
-        {/* <CustomHeader/> */}
+        <CustomHeader/>
         
         
         <View style={styles.body}>
@@ -140,8 +140,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "#100902"
   },
   body:{
-    padding:20,
-    marginTop: 40
+    padding:20
   },
   title: {
     fontSize: 28,
