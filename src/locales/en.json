@@ -17,7 +17,20 @@
     "verification_code_sent": "A verification code has been sent to {{phone}}",
     "verification_mail_code_sent": "A verification code has been sent to {{email}}"
   },
-  "prospect": {},
+  "prospect": {
+    "programmed_visite": {
+      "one": "Programmed visit",
+      "other": "Programmed visits"
+    },
+    "number_of_visits": {
+      "one": "Visit made with VOYO",
+      "other": "Visits made with VOYO"
+    },
+    "feedback_waiting": {
+      "one": "Feedback waiting",
+      "other": "Feedbacks waiting"
+    }
+  },
   "visitor": {
     "upcoming_visits": {
       "one": "Upcoming visit",

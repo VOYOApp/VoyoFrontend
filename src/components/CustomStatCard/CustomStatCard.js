@@ -11,7 +11,7 @@ const CustomStatCard = ({ value, text, isSmall = true }) => {
 	  <View style={styles.container}>
 		  <View style={isSmall ? styles.smallCard : styles.bigCard}>
 			  <Text style={styles.value}> {value}</Text>
-			  <Text style={{ fontSize: isSmall ? 15 : 20 }}> {t(text)} </Text>
+			  <Text style={styles.text}> {t(text)} </Text>
 		  </View>
 
 	  </View>)
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 		borderRadius: 18,
 		backgroundColor: "#dcdcdc",
 		padding: 10,
-		paddingTop: 15,
+		paddingTop: 8,
 		paddingBottom: 15,
 		width: 145,
 	},
@@ -38,10 +38,13 @@ const styles = StyleSheet.create({
 		borderRadius: 18,
 		backgroundColor: "#dcdcdc",
 		padding: 10,
-		paddingTop: 15,
+		paddingTop: 8,
 		paddingBottom: 15,
 		width: 205,
 	},
+	text:{
+		fontSize: 15,
+	}
 })
 
 export default CustomStatCard
