@@ -1,57 +1,61 @@
-import React, {useState} from 'react';
-import {View, Text, Image, StyleSheet, useWindowDimensions} from 'react-native';
-import CustomButton from "../../components/CustomButton";
-import {useNavigation} from '@react-navigation/native';
-import {useTranslation} from 'react-i18next';
+import React, { useState } from "react"
+import { View, Text, Image, StyleSheet, useWindowDimensions } from "react-native"
+import { useNavigation } from "@react-navigation/native"
+import { useTranslation } from "react-i18next"
+import HomeStats from "../../components/HomeStats"
 
 const HomeProspect = () => {
-    const {t} = useTranslation();
+	const { t } = useTranslation()
 
 
-    const {height} = useWindowDimensions()
-    const navigation = useNavigation()
-    const onBtnPressed = () => {
-        // console.warn('Sign in pressed')
-        navigation.navigate('SignInScreen')
-    }
+	const { height } = useWindowDimensions()
+	const navigation = useNavigation()
+	const onBtnPressed = () => {
+		// console.warn('Sign in pressed')
+		navigation.navigate("SignInScreen")
+	}
 
 
-    return (
-        <View style={styles.root}>
+	return (
+	  <View style={styles.root}>
+		  <View style={styles.header}>
+			  <Image source={require("../../../assets/avatar.png")}
+			         style={[styles.logo, { height: height }]}
+			         resizeMode="contain" />
+			  <Text style={styles.title}>{t("common.greetings_name", { name: "Yohann" })}</Text>
+		  </View>
 
-            {/*<Image source={require("../../../assets/logos/banner-voyo.png")} style={[styles.logo, {height: height}]}*/}
-            {/*       resizeMode="contain"/>*/}
-            <Text style={styles.title}>{t('common.greetings_name')}</Text>
-
-
-            <View style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                flexDirection: 'row',
-                justifyContent: 'space-around'
-            }}>
-            </View>
-        </View>
-    );
+		  <HomeStats StatsType={"prospect"} />
+	  </View>
+	)
 }
 
 
 const styles = StyleSheet.create({
-    root: {
-        padding: 20,
-        alignItems: 'center',
-    },
-    logo: {
-        width: '400%',
-        maxWidth: 300,
-        maxHeight: 400,
-        marginBottom: 10,
-    },
-    title: {
-        fontSize: 30,
-        marginBottom: 10,
-    }
+	header:{
+		marginTop: 20,
+		marginBottom: 20,
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "space-between",
+		flexDirection: "row-reverse",
+		width: "100%",
+	},
+	root: {
+		padding: 20,
+		alignItems: "center",
+	},
+	logo: {
+		width: "100%",
+		maxWidth: 45,
+		maxHeight: 45,
+		marginBottom: 10,
+		borderRadius: 100,
+	},
+	title: {
+		fontSize: 30,
+		marginBottom: 10,
+	},
 })
 
-export default HomeProspect;
+export default HomeProspect

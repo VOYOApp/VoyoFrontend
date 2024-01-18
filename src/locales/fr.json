@@ -9,14 +9,33 @@
     "greetings_name": "Bienvenue {{name}} !",
     "already_have_an_account": "J’ai déjà un compte",
     "cell_phone_number": "N° téléphone portable",
+    "unread_messages": {
+      "one": "Message non lu",
+      "other": "Messages non lus"
+    },
     "resend_code": "Renvoyer le code",
     "verification_code_sent": "Un code de vérification a été envoyé au {{phone}}",
     "verification_mail_code_sent": "Un code de vérification à été envoyé à votre email : {{mail}}"
   },
   "prospect": {
+    "programmed_visite": {
+      "one": "Visite programmée",
+      "other": "Visites programmées"
+    },
+    "number_of_visits": {
+      "one": "Visite effectuée avec VOYO",
+      "other": "Visites effectuées avec VOYO"
+    },
+    "feedback_waiting": {
+      "one": "Revue en attente",
+      "other": "Revues en attente"
+    }
   },
   "visitor": {
+    "upcoming_visits": {
+      "one": "Visite à venir",
+      "other": "Visites à venir"
+    }
   },
-  "admin": {
-  }
+  "admin": {}
 }
