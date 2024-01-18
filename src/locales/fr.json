@@ -6,11 +6,19 @@
     "greetings": "Bienvenue sur VOYO !",
     "greetings_name": "Bienvenue {{name}} !",
     "already_have_an_account": "J’ai déjà un compte",
-    "cell_phone_number": "N° téléphone portable"
+    "cell_phone_number": "N° téléphone portable",
+    "unread_messages": {
+      "one": "Message non lu",
+      "other": "Messages non lus"
+    }
   },
   "prospect": {
   },
   "visitor": {
+    "upcoming_visits": {
+      "one": "Visite à venir",
+      "other": "Visites à venir"
+    }
   },
   "admin": {
   }

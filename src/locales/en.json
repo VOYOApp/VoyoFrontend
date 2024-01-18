@@ -6,11 +6,19 @@
     "greetings": "Welcome to VOYO!",
     "greetings_name": "Welcome {{name}} !",
     "already_have_an_account": "I already have an account",
-    "cell_phone_number": "Cell phone number"
+    "cell_phone_number": "Cell phone number",
+    "unread_messages": {
+      "one": "Unread message",
+      "other": "Unread messages"
+    }
   },
   "prospect": {
   },
   "visitor": {
+    "upcoming_visits": {
+      "one": "Upcoming visit",
+      "other": "Upcoming visits"
+    }
   },
   "admin": {
   }
