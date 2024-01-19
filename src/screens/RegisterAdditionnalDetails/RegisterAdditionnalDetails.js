@@ -1,21 +1,25 @@
 import React, {useState} from 'react';
 import { View, Text, Image, StyleSheet, useWindowDimensions, Button, Switch, TextInput } from "react-native"
-import {LinearGradient} from 'expo-linear-gradient';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from "@react-navigation/native"
 
 const RegisterAdditionnalDetails = () => {
+  const route = useRoute()
+  const user = route.params?.user
+
   const [lastName, setLastName] = useState('')
   const [firstName, setFirstName] = useState('')
   const [bio, setBio] = useState('')
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [email, setEmail] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('+33 '+user.number || '')
+  const [email, setEmail] = useState(user.email || '')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
   const [isEnabled, setIsEnabled] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+
 
   const {height} = useWindowDimensions()
   // const navigation = useNavigation()
@@ -31,12 +35,7 @@ const RegisterAdditionnalDetails = () => {
 
   return (
       <View style={styles.root}>
-        <LinearGradient
-          colors={['#FF9B3F','#FFA95A', '#FFC289',  'white', 'white', 'white', 'white', 'white', 'white']}
-          start={{x: 0, y: 0.5}}
-          end={{x: 1, y: 1}}
-          style={styles.gradientBackground}
-        />
+
         <Image style={{ width: 25, height: 25 }} source={require("../../../assets/logos/logo.png")} onProgress={() => console.warn("Back")}></Image>
 
         <Text style={styles.title}>Inscription à VOYO</Text>
@@ -82,12 +81,12 @@ const RegisterAdditionnalDetails = () => {
           <CustomInput placeHolder="Phone Number"
                        value={phoneNumber}
                        setValue={setPhoneNumber}
-                       editabled={false}
+                       editable={false}
           />
           <CustomInput placeHolder="Email"
                        value={email}
                        setValue={setEmail}
-                       editabled={false}
+                       editable={false}
           />
 
           <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, width: 40, marginBottom: 5, marginTop: 5, alignSelf: 'center' }} />
@@ -163,9 +162,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  gradientBackground: {
-  ...StyleSheet.absoluteFillObject,
   }
 })
 

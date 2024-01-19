@@ -13,14 +13,15 @@ const MailConfirmation = () => {
     const navigation = useNavigation()
 
     const route = useRoute()
-    const mail = route.params?.mail
+    const user = route.params?.user
 
     const resentCode = () => {
         // TODO: resend phone number to API for get OTP code
     }
 
     const goToOtpVerification = () => {
-        navigation.navigate('RegisterAdditionnalDetails')
+        // navigation.navigate('RegisterAdditionnalDetails', {numberPhone: phoneNumber, mail:user.mail})
+        //navigation.navigate('RegisterAdditionnalDetails')
         // TODO: send phone number to API for get OTP code
     }
 
@@ -29,12 +30,13 @@ const MailConfirmation = () => {
 
           <View style={{width:'100%'}}>
               <Text style={styles.title}>{t('common.register_to_voyo')}</Text>
-              <Text style={{marginBottom:20}}>{t('common.verification_mail_code_sent', {mail: mail})}</Text>
+              <Text style={{marginBottom:20}}>{t('common.verification_mail_code_sent', {mail: user.email})}</Text>
 
               <CodeConfirmation placeHolder={t('common.cell_phone_number')}
                                 value={phoneNumber}
                                 setValue={setPhoneNumber}
                                 navigated={'RegisterAdditionnalDetails'}
+                                params={{user}}
               />
               <Text onPress={resentCode} style={styles.link}>{t('common.resend_code')}</Text>
           </View>

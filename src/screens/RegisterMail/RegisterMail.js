@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { View, Text, Image, StyleSheet, useWindowDimensions, TextInput } from "react-native"
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from "@react-navigation/native"
 import {useTranslation} from 'react-i18next';
 import CustomInput from "../../components/CustomInput"
 import CustomButton from "../../components/CustomButton";
@@ -12,9 +12,16 @@ const RegisterMail = () => {
 
     const {height} = useWindowDimensions()
     const navigation = useNavigation()
+    const route = useRoute()
+    const numberPhone = route.params?.numberPhone
 
     const goToOtpVerification = (mail) => {
-        navigation.navigate('MailConfirmation',{mail: mail})
+        navigation.navigate('MailConfirmation', {
+            user: {
+                number: numberPhone,
+                email: mail,
+            },
+        });
         // TODO: send phone number to API for get OTP code
     }
 
@@ -26,7 +33,6 @@ const RegisterMail = () => {
 
     return (
       <View style={styles.root}>
-
           <View style={{width:'100%', marginBottom: 20}}>
               <Text style={[styles.title,{marginTop:20}]}>{t('common.register_to_voyo')}</Text>
 

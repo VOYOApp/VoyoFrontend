@@ -3,7 +3,7 @@ import {SafeAreaView, Text, StyleSheet, View} from 'react-native';
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell, } from 'react-native-confirmation-code-field';
 import { useNavigation } from '@react-navigation/native';
 
-const CodeConfirmation = ({value, setValue, count_cell = 6, editabled = true, widthInp, navigated = ''}) => {
+const CodeConfirmation = ({value, setValue, count_cell = 6, editabled = true, widthInp, navigated = '', params}) => {
 	const navigation = useNavigation()
 	const CELL_COUNT = count_cell;
 	const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
@@ -14,7 +14,11 @@ const CodeConfirmation = ({value, setValue, count_cell = 6, editabled = true, wi
 	const onChangeNumber = (value) => {
 		setValue(value)
 		if (value.length === CELL_COUNT) {
-			navigation.navigate(navigated)
+			if (params !== undefined) {
+				navigation.navigate(navigated, params)
+			}else{
+				navigation.navigate(navigated)
+			}
 		}
 	};
 	return (

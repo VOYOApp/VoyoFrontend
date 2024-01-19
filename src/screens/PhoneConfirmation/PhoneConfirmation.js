@@ -7,7 +7,7 @@ import {useTranslation} from 'react-i18next';
 
 const PhoneConfirmation = () => {
     const {t} = useTranslation();
-    const [phoneNumber, setPhoneNumber] = useState('')
+    const [codeVerification, setCodeVerification] = useState('')
 
     const {height} = useWindowDimensions()
     const navigation = useNavigation()
@@ -32,9 +32,10 @@ const PhoneConfirmation = () => {
               <Text style={{marginBottom:20, width:'75%'}}>{t('common.verification_code_sent', {phone: '+33 '+ numberPhone})}</Text>
 
               <CodeConfirmation placeHolder={t('common.cell_phone_number')}
-                                 value={phoneNumber}
-                                 setValue={setPhoneNumber}
+                                 value={codeVerification}
+                                 setValue={setCodeVerification}
                                  navigated={'RegisterMail'}
+                                 params={{numberPhone:numberPhone}}
               />
               <Text onPress={resentCode} style={styles.link}>{t('common.resend_code')}</Text>
           </View>
