@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, Image, StyleSheet, useWindowDimensions, Button, Switch, TextInput } from "react-native"
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import BackButton from "../../components/BackButton";
 import { useNavigation, useRoute } from "@react-navigation/native"
 
 const RegisterAdditionnalDetails = () => {
@@ -36,7 +37,7 @@ const RegisterAdditionnalDetails = () => {
   return (
       <View style={styles.root}>
 
-        <Image style={{ width: 25, height: 25 }} source={require("../../../assets/logos/logo.png")} onProgress={() => console.warn("Back")}></Image>
+        <BackButton/>
 
         <Text style={styles.title}>Inscription à VOYO</Text>
         <Text style={{ fontSize: 12, fontWeight: "300" }}>fin de finaliser votre inscription, nous
@@ -70,7 +71,7 @@ const RegisterAdditionnalDetails = () => {
             maxLength={200}
             style={{
               backgroundColor: "#f0f0f0",
-              height: 60,
+              height: 50,
               borderRadius: 18,
               padding: 10,
             }}
@@ -149,14 +150,16 @@ const RegisterAdditionnalDetails = () => {
 
 const styles = StyleSheet.create({
   root: {
-    padding: 20,
+    backgroundColor: 'white',
+    padding: 30,
+    marginTop: 10,
     width: '100%',
     height: '100%',
   },
   title: {
     fontSize: 28,
-    // fontWeight: 'bold',
-    marginBottom: 10,
+    // marginBottom: 10,
+    // marginTop: 10,
   },
   passwordValidation: {
     display: 'flex',

@@ -50,7 +50,7 @@ const RegisterPhone = () => {
       <BackButton/>
 
       <View style={{width:'100%'}}>
-        <Text style={[styles.title,{marginTop:10}]}>{t('common.register_to_voyo')}</Text>
+        <Text style={[styles.title]}>{t('common.register_to_voyo')}</Text>
 
         <CustomPhoneNumber placeHolder={t('common.cell_phone_number')}
                            value={phoneNumber}
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     marginBottom: 10,
+    marginTop:10
   },
   link: {
     color: '#FE881B',

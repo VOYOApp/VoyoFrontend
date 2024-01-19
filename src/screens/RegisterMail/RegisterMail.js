@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import {useTranslation} from 'react-i18next';
 import CustomInput from "../../components/CustomInput"
 import CustomButton from "../../components/CustomButton";
+import BackButton from "../../components/BackButton";
 
 const RegisterMail = () => {
     const {t} = useTranslation();
@@ -33,8 +34,9 @@ const RegisterMail = () => {
 
     return (
       <View style={styles.root}>
+        <BackButton/>
           <View style={{width:'100%', marginBottom: 20}}>
-              <Text style={[styles.title,{marginTop:20}]}>{t('common.register_to_voyo')}</Text>
+              <Text style={[styles.title]}>{t('common.register_to_voyo')}</Text>
 
               <CustomInput placeHolder={t('common.enter_your_email')}
                            value={email}
@@ -53,13 +55,14 @@ const styles = StyleSheet.create({
     root: {
         backgroundColor: 'white',
         padding: 30,
-        alignItems: 'center',
+        marginTop: 10,
         width: '100%',
         height: '100%',
     },
     title: {
         fontSize: 30,
         marginBottom: 10,
+        marginTop:10
     },
     link: {
         color: '#FE881B',
