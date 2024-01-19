@@ -23,7 +23,8 @@
     "email":"Email",
     "password":"Mot de passe",
     "confirm_password":"Confirmer le mot de passe",
-    "apply_changes":"Appliquer les modifications"
+    "apply_changes":"Appliquer les modifications",
+    "back": "Retour"
   },
   "prospect": {
     "programmed_visite": {

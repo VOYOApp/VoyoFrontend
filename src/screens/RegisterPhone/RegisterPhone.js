@@ -1,7 +1,13 @@
 import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet, useWindowDimensions, TextInput } from "react-native"
+import {
+  View,
+  Text,
+  StyleSheet,
+  useWindowDimensions,
+} from "react-native"
 import CustomPhoneNumber from "../../components/CustomPhoneNumber"
 import CustomButton from "../../components/CustomButton";
+import BackButton from "../../components/BackButton";
 import { useNavigation } from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
@@ -41,8 +47,10 @@ const RegisterPhone = () => {
   return (
     <View style={styles.root}>
 
+      <BackButton/>
+
       <View style={{width:'100%'}}>
-        <Text style={[styles.title,{marginTop:20}]}>{t('common.register_to_voyo')}</Text>
+        <Text style={[styles.title,{marginTop:10}]}>{t('common.register_to_voyo')}</Text>
 
         <CustomPhoneNumber placeHolder={t('common.cell_phone_number')}
                            value={phoneNumber}
@@ -60,9 +68,9 @@ const styles = StyleSheet.create({
   root: {
     backgroundColor: 'white',
     padding: 30,
-    alignItems: 'center',
     width: '100%',
     height: '100%',
+    marginTop:10
   },
   title: {
     fontSize: 30,

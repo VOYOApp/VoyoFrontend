@@ -23,7 +23,8 @@
     "email":"Email",
     "password":"Password",
     "confirm_password":"Password confirmation",
-    "apply_changes":"Apply changes"
+    "apply_changes":"Apply changes",
+    "back":"Back"
   },
   "prospect": {
     "programmed_visite": {
