@@ -34,10 +34,10 @@ const HomeProspect = () => {
 			  <ScrollView style={{ width: "100%", backgroundColor: "rgba(0,0,0,0.05)" }}>
 
 
-				  <Tab.Navigator style={{ height: 500 }}>
-					  <Tab.Screen name={t("prospect.programmed_visits")} component={MailConfirmation} />
-					  <Tab.Screen name={t("prospect.passed_visits")} component={MailConfirmation} />
-				  </Tab.Navigator>
+				  {/*<Tab.Navigator style={{ height: 500 }}>*/}
+					{/*  <Tab.Screen name={t("prospect.programmed_visits")} component={MailConfirmation} />*/}
+					{/*  <Tab.Screen name={t("prospect.passed_visits")} component={MailConfirmation} />*/}
+				  {/*</Tab.Navigator>*/}
 
 
 				  <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
