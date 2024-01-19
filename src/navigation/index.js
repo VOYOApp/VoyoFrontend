@@ -11,6 +11,7 @@ import MailConfirmation from "../screens/MailConfirmation";
 import PhoneConfirmation from "../screens/PhoneConfirmation";
 import HomeProspect from "../screens/HomeProspect";
 import UserPage from "../screens/UserPage";
+import NoInternet from "../screens/NoInternet";
 
 const Stack = createStackNavigator();
 const Navigation = () => {
@@ -26,7 +27,7 @@ const Navigation = () => {
                 <Stack.Screen name="PhoneConfirmation" component={PhoneConfirmation} />
                 <Stack.Screen name="HomeProspect" component={HomeProspect} />
                 <Stack.Screen name="UserPage" component={UserPage} />
-
+                <Stack.Screen name="NoInternet" component={NoInternet} />
             </Stack.Navigator>
         </NavigationContainer>
     );
