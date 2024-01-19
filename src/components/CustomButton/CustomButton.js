@@ -1,7 +1,7 @@
 import React from "react";
 import {View, Text, StyleSheet, Pressable} from "react-native";
 
-const CustomButton = ({text, onPress, type = "PRIMARY", bgColor, fgColor, widthBtn, deactivated = false}) => {
+const CustomButton = ({text, onPress, type = "PRIMARY", bgColor, fgColor, widthBtn, heightBtn,deactivated = false}) => {
     return (
         <Pressable onPress={onPress}
                    disabled={deactivated}
@@ -10,6 +10,7 @@ const CustomButton = ({text, onPress, type = "PRIMARY", bgColor, fgColor, widthB
                        styles[`container_${type}`],
                        bgColor && deactivated === false ? {backgroundColor: bgColor} : {backgroundColor: 'grey'},
                        widthBtn ? {width: widthBtn} : null,
+                          heightBtn ? {height: heightBtn} : null,
                    ]}>
             <Text style={[
                 styles.text,

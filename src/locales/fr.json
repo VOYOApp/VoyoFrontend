@@ -15,7 +15,8 @@
     },
     "resend_code": "Renvoyer le code",
     "verification_code_sent": "Un code de vérification a été envoyé au {{phone}}",
-    "verification_mail_code_sent": "Un code de vérification à été envoyé à votre email : {{mail}}"
+    "verification_mail_code_sent": "Un code de vérification à été envoyé à votre email : {{mail}}",
+    "details": "Détails",
   },
   "prospect": {
     "programmed_visite": {
@@ -29,7 +30,9 @@
     "feedback_waiting": {
       "one": "Revue en attente",
       "other": "Revues en attente"
-    }
+    },
+    "passed_visits": "Visites à venir",
+    "programmed_visits": "Visites programmées"
   },
   "visitor": {
     "upcoming_visits": {

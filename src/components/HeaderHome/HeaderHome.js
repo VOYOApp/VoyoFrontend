@@ -9,9 +9,10 @@ const HeaderHome = () => {
 
 	return (
 	  <View style={styles.header}>
-		  <Image source={require("../../../assets/avatar.png")}
-		         style={[styles.profilePic, { height: height }]}
-		         resizeMode="contain" />
+		  <Image
+			src={"https://2.bp.blogspot.com/-0rLFh_JbOzQ/VVTtjHV98DI/AAAAAAAAB6M/cOJ84R_cUpk/s1600/whatsappimages%2Bfunny%2Bdp%2B(9).jpg"}
+			style={[styles.profilePic, { height: height }]}
+			resizeMode="contain" />
 		  <Text style={styles.title}>{t("common.greetings_name", { name: "Yohann" })}</Text>
 	  </View>)
 }
