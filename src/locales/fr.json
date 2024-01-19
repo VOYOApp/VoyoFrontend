@@ -26,7 +26,8 @@
     "apply_changes":"Appliquer les modifications",
     "please":"Veuillez vous",
     "connect_to_internet":"connecter à Internet",
-    "retry":"Réessayer"
+    "retry":"Réessayer",
+    "back": "Retour"
   },
   "prospect": {
     "programmed_visite": {
