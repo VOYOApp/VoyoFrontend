@@ -1,5 +1,5 @@
 import React from "react"
-import { View, Text, Image, StyleSheet, useWindowDimensions } from "react-native"
+import { Image, StyleSheet, Text, useWindowDimensions, View } from "react-native"
 import { useTranslation } from "react-i18next"
 
 const HeaderHome = () => {

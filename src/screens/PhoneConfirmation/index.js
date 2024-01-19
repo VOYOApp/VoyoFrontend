@@ -1,1 +1,1 @@
-export {default} from './PhoneConfirmation';
+export { default } from "./PhoneConfirmation"

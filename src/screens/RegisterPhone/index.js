@@ -1,1 +1,1 @@
-export {default} from './RegisterPhone';
+export { default } from "./RegisterPhone"

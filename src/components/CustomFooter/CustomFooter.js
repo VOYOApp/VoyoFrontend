@@ -1,5 +1,5 @@
 import React from "react"
-import { View, Text, TextInput, StyleSheet, Image, Dimensions } from "react-native"
+import { Dimensions, Image, StyleSheet, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import Images from "../../../assets/index.js"
 

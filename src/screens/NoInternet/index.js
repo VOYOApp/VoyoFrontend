@@ -1,1 +1,1 @@
-export {default} from './NoInternet';
+export { default } from "./NoInternet"

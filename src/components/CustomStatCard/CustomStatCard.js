@@ -1,5 +1,5 @@
 import React from "react"
-import { View, Text, StyleSheet } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import { useTranslation } from "react-i18next"
 
 const CustomStatCard = ({ value, text, isSmall = true }) => {
@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
 		paddingBottom: 15,
 		width: 205,
 	},
-	text:{
+	text: {
 		fontSize: 15,
-	}
+	},
 })
 
 export default CustomStatCard

@@ -1,1 +1,1 @@
-export {default} from './RegisterMail';
+export { default } from "./RegisterMail"

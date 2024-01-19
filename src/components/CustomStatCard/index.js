@@ -1,1 +1,1 @@
-export {default} from './CustomStatCard';
+export { default } from "./CustomStatCard"
