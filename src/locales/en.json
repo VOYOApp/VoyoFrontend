@@ -17,6 +17,18 @@
     "verification_code_sent": "A verification code has been sent to {{phone}}",
     "verification_mail_code_sent": "A verification code has been sent to {{email}}",
     "details": "Details",
+    "my_account": "My account",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "bio": "Bio",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Password confirmation",
+    "apply_changes": "Apply changes",
+    "please": "Please connect",
+    "connect_to_internet": "to Internet",
+    "retry": "Retry",
+    "back": "Back"
   },
   "prospect": {
     "programmed_visite": {
