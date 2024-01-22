@@ -33,13 +33,7 @@ const HomeScreen = () => {
 		  <Text style={styles.title}>{t("common.greetings")}</Text>
 
 
-		  <View style={{
-			  width: "100%",
-			  display: "flex",
-			  alignItems: "center",
-			  flexDirection: "row",
-			  justifyContent: "space-around",
-		  }}>
+		  <View className="w-full items-center flex-row justify-around">
 			  <CustomButton text={t("common.login")} onPress={onSignInPressed} bgColor={"black"} widthBtn={"40%"} />
 			  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"orange"}
 			                widthBtn={"40%"} />
