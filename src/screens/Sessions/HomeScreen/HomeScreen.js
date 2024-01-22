@@ -1,6 +1,6 @@
 import React from "react"
 import { Image, StyleSheet, Text, useWindowDimensions, View } from "react-native"
-import CustomButton from "../../components/CustomButton"
+import CustomButton from "../../../components/CustomButton"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 
@@ -28,7 +28,7 @@ const HomeScreen = () => {
 	return (
 	  <View style={styles.root}>
 
-		  <Image source={require("../../../assets/logos/banner-voyo.png")} style={[styles.logo, { height: height }]}
+		  <Image source={require("../../../../assets/logos/banner-voyo.png")} style={[styles.logo, { height: height }]}
 		         resizeMode="contain" />
 		  <Text style={styles.title}>{t("common.greetings")}</Text>
 

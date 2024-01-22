@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { Image, StyleSheet, TextInput, useWindowDimensions, View } from "react-native"
-import CustomInput from "../../components/CustomInput"
-import CustomButton from "../../components/CustomButton"
-import CustomHeader from "../../components/CustomHeader"
-import CustomFooter from "../../components/CustomFooter"
+import CustomInput from "../../../components/CustomInput"
+import CustomButton from "../../../components/CustomButton"
+import CustomHeader from "../../../components/CustomHeader"
+import CustomFooter from "../../../components/CustomFooter"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 
@@ -42,7 +42,7 @@ const UserPage = () => {
 		  <View style={styles.body}>
 			  <View style={{ flexDirection: "row", width: "100%" }}>
 				  <View style={{ justifyContent: "center", width: "30%" }}>
-					  <Image source={require("../../../assets/avatar.png")}
+					  <Image source={require("../../../../assets/avatar.png")}
 					         style={{ width: 100, height: 100, marginRight: 20 }} />
 				  </View>
 				  <View style={{ marginLeft: 10, width: "65%" }}>

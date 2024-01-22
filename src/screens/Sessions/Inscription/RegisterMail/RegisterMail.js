@@ -2,9 +2,9 @@ import React, { useState } from "react"
 import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
-import CustomInput from "../../components/CustomInput"
-import CustomButton from "../../components/CustomButton"
-import BackButton from "../../components/BackButton"
+import CustomInput from "../../../../components/CustomInput"
+import CustomButton from "../../../../components/CustomButton"
+import BackButton from "../../../../components/BackButton"
 
 const RegisterMail = () => {
 	const { t } = useTranslation()

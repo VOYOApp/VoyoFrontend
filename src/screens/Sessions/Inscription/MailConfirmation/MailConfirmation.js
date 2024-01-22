@@ -1,26 +1,27 @@
 import React, { useState } from "react"
 import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
-import CodeConfirmation from "../../components/CodeConfirmation"
-import BackButton from "../../components/BackButton"
+import CodeConfirmation from "../../../../components/CodeConfirmation"
+import BackButton from "../../../../components/BackButton"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 
-const PhoneConfirmation = () => {
+const MailConfirmation = () => {
 	const { t } = useTranslation()
-	const [codeVerification, setCodeVerification] = useState("")
+	const [phoneNumber, setPhoneNumber] = useState("")
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
 
 	const route = useRoute()
-	const numberPhone = route.params?.numberPhone
+	const user = route.params?.user
 
 	const resentCode = () => {
 		// TODO: resend phone number to API for get OTP code
 	}
 
 	const goToOtpVerification = () => {
-		navigation.navigate("PhoneConfirmation")
+		// navigation.navigate('RegisterAdditionnalDetails', {numberPhone: phoneNumber, mail:user.mail})
+		//navigation.navigate('RegisterAdditionnalDetails')
 		// TODO: send phone number to API for get OTP code
 	}
 
@@ -29,16 +30,13 @@ const PhoneConfirmation = () => {
 		  <BackButton />
 		  <View style={{ width: "100%" }}>
 			  <Text style={styles.title}>{t("common.register_to_voyo")}</Text>
-			  <Text style={{
-				  marginBottom: 20,
-				  width: "75%",
-			  }}>{t("common.verification_code_sent", { phone: "+33 " + numberPhone })}</Text>
+			  <Text style={{ marginBottom: 20 }}>{t("common.verification_mail_code_sent", { mail: user.email })}</Text>
 
 			  <CodeConfirmation placeHolder={t("common.cell_phone_number")}
-			                    value={codeVerification}
-			                    setValue={setCodeVerification}
-			                    navigated={"RegisterMail"}
-			                    params={{ numberPhone: numberPhone }}
+			                    value={phoneNumber}
+			                    setValue={setPhoneNumber}
+			                    navigated={"RegisterAdditionnalDetails"}
+			                    params={{ user }}
 			  />
 			  <Text onPress={resentCode} style={styles.link}>{t("common.resend_code")}</Text>
 		  </View>
@@ -66,4 +64,4 @@ const styles = StyleSheet.create({
 	},
 })
 
-export default PhoneConfirmation
+export default MailConfirmation

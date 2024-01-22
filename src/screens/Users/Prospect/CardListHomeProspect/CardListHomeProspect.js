@@ -2,7 +2,7 @@ import React from "react"
 import { ScrollView, StyleSheet, useWindowDimensions, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
-import HomeVisitCard from "../../components/HomeVisitCard"
+import HomeVisitCard from "../../../../components/HomeVisitCard"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 
 const CardListHomeProspect = () => {

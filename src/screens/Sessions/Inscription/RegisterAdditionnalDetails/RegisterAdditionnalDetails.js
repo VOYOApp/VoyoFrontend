@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { Image, StyleSheet, Switch, Text, TextInput, useWindowDimensions, View } from "react-native"
-import CustomInput from "../../components/CustomInput"
-import CustomButton from "../../components/CustomButton"
-import BackButton from "../../components/BackButton"
+import CustomInput from "../../../../components/CustomInput"
+import CustomButton from "../../../../components/CustomButton"
+import BackButton from "../../../../components/BackButton"
 import { useRoute } from "@react-navigation/native"
 
 const RegisterAdditionnalDetails = () => {
@@ -44,7 +44,7 @@ const RegisterAdditionnalDetails = () => {
 
 		  <View style={{ display: "flex", flexDirection: "row", width: "100%" }}>
 			  <View style={{ display: "flex", justifyContent: "center", width: "30%" }}>
-				  <Image source={require("../../../assets/avatar.png")}
+				  <Image source={require("../../../../../assets/avatar.png")}
 				         style={{ width: 100, height: 100, marginRight: 20 }} />
 			  </View>
 			  <View style={{ width: "70%" }}>
@@ -119,22 +119,22 @@ const RegisterAdditionnalDetails = () => {
 				               secureTextEntry
 				  />
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image source={require("../../../assets/check-mark-validate.png")}
+					  <Image source={require("../../../../../assets/check-mark-validate.png")}
 					         style={{ width: 12, height: 12, marginRight: 5 }} />
 					  <Text style={{ color: "green" }}>8 caractères ou plus</Text>
 				  </View>
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image source={require("../../../assets/check-mark-validate.png")}
+					  <Image source={require("../../../../../assets/check-mark-validate.png")}
 					         style={{ width: 12, height: 12, marginRight: 5 }} />
 					  <Text style={{ color: "green" }}>Charactères spéciaux</Text>
 				  </View>
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image source={require("../../../assets/check-mark-validate.png")}
+					  <Image source={require("../../../../../assets/check-mark-validate.png")}
 					         style={{ width: 12, height: 12, marginRight: 5 }} />
 					  <Text style={{ color: "green" }}>Chiffres</Text>
 				  </View>
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image source={require("../../../assets/check-mark-validate.png")}
+					  <Image source={require("../../../../../assets/check-mark-validate.png")}
 					         style={{ width: 12, height: 12, marginRight: 5 }} />
 					  <Text style={{ color: "green" }}>Majuscules</Text>
 				  </View>

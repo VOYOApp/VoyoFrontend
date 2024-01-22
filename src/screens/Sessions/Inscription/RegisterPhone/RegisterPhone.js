@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
-import CustomPhoneNumber from "../../components/CustomPhoneNumber"
-import CustomButton from "../../components/CustomButton"
-import BackButton from "../../components/BackButton"
+import CustomPhoneNumber from "../../../../components/CustomPhoneNumber"
+import CustomButton from "../../../../components/CustomButton"
+import BackButton from "../../../../components/BackButton"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 

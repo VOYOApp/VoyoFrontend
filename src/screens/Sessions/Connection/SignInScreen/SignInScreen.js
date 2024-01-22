@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
-import CustomInput from "../../components/CustomInput"
-import CustomButton from "../../components/CustomButton"
-import BackButton from "../../components/BackButton"
+import CustomInput from "../../../../components/CustomInput"
+import CustomButton from "../../../../components/CustomButton"
+import BackButton from "../../../../components/BackButton"
 import { useNavigation } from "@react-navigation/native"
 
 const SignInScreen = () => {
