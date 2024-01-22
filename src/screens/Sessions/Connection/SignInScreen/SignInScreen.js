@@ -12,7 +12,7 @@ const SignInScreen = () => {
 	const { height } = useWindowDimensions()
 
 	const onSignInPressed = () => {
-		navigation.navigate("UserPage")
+		navigation.navigate('Prospect', { screen: "UserPage" })
 	}
 
 	const onForgotPasswordPressed = () => {

@@ -31,7 +31,7 @@ const RegisterPhone = () => {
 	}
 
 	const alreadyHaveAnAccount = () => {
-		navigation.navigate("SignInScreen")
+		navigation.navigate("SignIn", { screen: "SignInScreen" })
 	}
 
 	const goToOtpVerification = (phoneNumber) => {

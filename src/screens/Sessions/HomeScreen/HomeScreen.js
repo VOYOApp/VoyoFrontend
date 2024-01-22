@@ -12,17 +12,17 @@ const HomeScreen = () => {
 	const navigation = useNavigation()
 	const onSignInPressed = () => {
 		// console.warn('Sign in pressed')
-		navigation.navigate("SignInScreen")
+		navigation.navigate("SignIn")
 	}
 
 	const onRegisterPressed = () => {
 		// console.warn('Forgot password pressed')
-		navigation.navigate("RegisterPhone")
+		navigation.navigate("SignUp")
 	}
 
 	const onHomeProspectPressed = () => {
 		// console.warn('Forgot password pressed')
-		navigation.navigate("HomeProspect")
+		navigation.navigate("Prospect", { screen: "HomeProspect" })
 	}
 
 	return (
