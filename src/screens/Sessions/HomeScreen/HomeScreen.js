@@ -22,7 +22,7 @@ const HomeScreen = () => {
 
 	const onHomeProspectPressed = () => {
 		// console.warn('Forgot password pressed')
-		navigation.navigate("Prospect", { screen: "HomeProspect" })
+		navigation.navigate("Prospect", { screen: "ProspectHome" })
 	}
 
 	return (

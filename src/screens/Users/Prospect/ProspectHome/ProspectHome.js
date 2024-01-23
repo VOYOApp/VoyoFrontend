@@ -8,7 +8,7 @@ import CustomFooter from "../../../../components/CustomFooter"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import CardListHomeProspect from "../CardListHomeProspect"
 
-const HomeProspect = () => {
+const ProspectHome = () => {
 	const { t } = useTranslation()
 	const Tab = createMaterialTopTabNavigator()
 
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
 	},
 })
 
-export default HomeProspect
+export default ProspectHome

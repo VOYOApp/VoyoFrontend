@@ -12,13 +12,14 @@ import RegisterMail from "../screens/Sessions/Inscription/RegisterMail"
 import RegisterPhone from "../screens/Sessions/Inscription/RegisterPhone"
 import MailConfirmation from "../screens/Sessions/Inscription/MailConfirmation"
 import PhoneConfirmation from "../screens/Sessions/Inscription/PhoneConfirmation"
-import HomeProspect from "../screens/Users/Prospect/HomeProspect"
+import ProspectHome from "../screens/Users/Prospect/ProspectHome"
 import UserPage from "../screens/Users/UserPage"
 import NoInternet from "../screens/NoInternet"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
+// AUTH STACKS (Home, SignIn, SignUp)
 function SignUp() {
 	return (
 	  <Stack.Navigator initialRouteName="RegisterPhone" screenOptions={{ headerShown: false }}>
@@ -30,7 +31,6 @@ function SignUp() {
 	  </Stack.Navigator>
 	);
 }
-
 function SignIn() {
 	return (
 	  <Stack.Navigator initialRouteName="SignInScreen" screenOptions={{ headerShown: false }}>
@@ -39,24 +39,84 @@ function SignIn() {
 	);
 }
 
+// PROSPECT STACKS (Home, Search, Chat)
+function HomeProspect() {
+	return (
+	  <Stack.Navigator initialRouteName="ProspectHome" screenOptions={{ headerShown: false }}>
+		  <Stack.Screen name="ProspectHome" component={ProspectHome} />
+		  <Stack.Screen name="UserPage" component={UserPage} />
+		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+	  </Stack.Navigator>
+	);
+}
+// function SearchProspect() {
+// 	return (
+// 	  <Stack.Navigator initialRouteName="ProspectSearch" screenOptions={{ headerShown: false }}>
+// 		  <Stack.Screen name="ProspectSearch" component={ProspectSearch} />
+// 		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+// 	  </Stack.Navigator>
+// 	);
+// }
+// function ChatProspect() {
+// 	return (
+// 	  <Stack.Navigator initialRouteName="ProspectChat" screenOptions={{ headerShown: false }}>
+// 		  <Stack.Screen name="ProspectChat" component={ProspectChat} />
+// 		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+// 	  </Stack.Navigator>
+// 	);
+// }
+
 function Prospect() {
 	return (
-	  <Tab.Navigator initialRouteName="HomeProspect" screenOptions={{ headerShown: false }}>
+	  <Tab.Navigator initialRouteName="HomeProspect" screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
 		  <Tab.Screen name="HomeProspect" component={HomeProspect} options={{
 			  tabBarLabel: 'Home',
 			  tabBarIcon: ({ color }) => (
 			    <MaterialCommunityIcons name="home" color={color} size={26} />
 			  ),
 		  }}/>
-		  <Tab.Screen name="UserPage" component={UserPage} options={{
-			  tabBarLabel: 'Profile',
-			  tabBarIcon: ({ color }) => (
-			    <MaterialCommunityIcons name="account" color={color} size={26} />
-			  ),
-		  }}/>
+		  {/*<Tab.Screen name="SearchProspect" component={SearchProspect} options={{*/}
+			{/*  tabBarLabel: 'Search',*/}
+			{/*  tabBarIcon: ({ color }) => (*/}
+			{/*    <MaterialCommunityIcons name="magnify" color={color} size={26} />*/}
+			{/*  ),*/}
+		  {/*}}/>*/}
+		  {/*<Tab.Screen name="ChatProspect" component={ChatProspect} options={{*/}
+			{/*  tabBarLabel: 'Chat',*/}
+			{/*  tabBarIcon: ({ color }) => (*/}
+			{/*    <MaterialCommunityIcons name="chat" color={color} size={26} />*/}
+			{/*  ),*/}
+		  {/*}}/>*/}
+		  {/* Ajoutez d'autres onglets si nécessaire */}
 	  </Tab.Navigator>
 	);
 }
+
+// function Visitor() {
+// 	return (
+// 	  <Tab.Navigator initialRouteName="HomeVisitor" screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
+// 		  <Tab.Screen name="HomeVisitor" component={HomeVisitor} options={{
+// 			  tabBarLabel: 'Home',
+// 			  tabBarIcon: ({ color }) => (
+// 				<MaterialCommunityIcons name="home" color={color} size={26} />
+// 			  ),
+// 		  }}/>
+// 		  <Tab.Screen name="SearchVisitor" component={SearchVisitor} options={{
+// 		    tabBarLabel: 'Search',
+// 		    tabBarIcon: ({ color }) => (
+// 		      <MaterialCommunityIcons name="magnify" color={color} size={26} />
+// 		    ),
+// 		  }}/>
+// 		  <Tab.Screen name="ChatVisitor" component={ChatVisitor} options={{
+// 		    tabBarLabel: 'Chat',
+// 		    tabBarIcon: ({ color }) => (
+// 		      <MaterialCommunityIcons name="chat" color={color} size={26} />
+// 		    ),
+// 		  }}/>
+// 		  {/* Ajoutez d'autres onglets si nécessaire */}
+// 	  </Tab.Navigator>
+// 	);
+// }
 
 function Navigation() {
 	const [isLoggedIn, setLoggedIn] = React.useState(false);
