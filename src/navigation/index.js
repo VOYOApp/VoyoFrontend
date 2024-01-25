@@ -7,6 +7,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import HomeScreen from "../screens/Sessions/HomeScreen"
 import SignInScreen from "../screens/Sessions/Connection/SignInScreen"
+import ConnectPhone from "../screens/Sessions/Connection/ConnectPhone"
+import ConnectEmail from "../screens/Sessions/Connection/ConnectEmail"
+import ConnectPWD from "../screens/Sessions/Connection/ConnectPWD"
 import RegisterAdditionnalDetails from "../screens/Sessions/Inscription/RegisterAdditionnalDetails"
 import RegisterMail from "../screens/Sessions/Inscription/RegisterMail"
 import RegisterPhone from "../screens/Sessions/Inscription/RegisterPhone"
@@ -33,7 +36,10 @@ function SignUp() {
 }
 function SignIn() {
 	return (
-	  <Stack.Navigator initialRouteName="SignInScreen" screenOptions={{ headerShown: false }}>
+	  <Stack.Navigator initialRouteName="ConnectPhone" screenOptions={{ headerShown: false }}>
+		  <Stack.Screen name="ConnectPhone" component={ConnectPhone} />
+		  <Stack.Screen name="ConnectEmail" component={ConnectEmail} />
+		  <Stack.Screen name="ConnectPWD" component={ConnectPWD} />
 		  <Stack.Screen name="SignInScreen" component={SignInScreen} />
 	  </Stack.Navigator>
 	);

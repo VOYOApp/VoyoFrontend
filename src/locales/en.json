@@ -4,11 +4,14 @@
     "logout": "Logout",
     "register": "Register",
     "register_to_voyo": "Register to VOYO",
+    "connection_to_voyo": "Connection to VOYO",
     "enter_your_email": "Enter your email",
     "greetings": "Welcome to VOYO!",
     "greetings_name": "Welcome {{name}} !",
     "already_have_an_account": "I already have an account",
     "cell_phone_number": "Cell phone number",
+    "continue_with_email": "Continue with email",
+    "continue_with_phone": "Continue with phone",
     "unread_messages": {
       "one": "Unread message",
       "other": "Unread messages"
