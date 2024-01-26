@@ -84,7 +84,7 @@ function Prospect() {
 			    <MaterialCommunityIcons name="home" color={color} size={26} />
 			  ),
 		  }}/>
-		  <Tab.Screen name="SearchMap" component={SearchProspect} options={{
+		  <Tab.Screen name="SearchProspect" component={SearchProspect} options={{
 			  tabBarLabel: 'Search',
 			  tabBarIcon: ({ color }) => (
 			    <MaterialCommunityIcons name="magnify" color={color} size={26} />
@@ -141,19 +141,19 @@ function Navigation() {
 	return (
 	  <NavigationContainer>
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-			  {isLoggedIn ? (
-			    // Screens for logged in users
+			  {/*{isLoggedIn ? (*/}
+			  {/*  // Screens for logged in users*/}
 			  <Stack.Group>
 				  <Stack.Screen name="Prospect" component={Prospect} />
 			  </Stack.Group>
-			  ) : (
-				// Auth screens
+			  {/*) : (*/}
+				{/*// Auth screens*/}
 			  <Stack.Group>
 				  <Stack.Screen name="HomeScreen" component={HomeScreen} />
 				  <Stack.Screen name="SignUp" component={SignUp} />
 				  <Stack.Screen name="SignIn" component={SignIn} />
 			  </Stack.Group>
-			  )}
+			  {/*)}*/}
 			  {/* Common modal screens */}
 			  <Stack.Screen name="NoInternet" component={NoInternet} />
 		  </Stack.Navigator>
