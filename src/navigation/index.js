@@ -6,10 +6,11 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeScreen from "../screens/Sessions/HomeScreen"
-import SignInScreen from "../screens/Sessions/Connection/SignInScreen"
 import ConnectPhone from "../screens/Sessions/Connection/ConnectPhone"
 import ConnectEmail from "../screens/Sessions/Connection/ConnectEmail"
 import ConnectPWD from "../screens/Sessions/Connection/ConnectPWD"
+import ForgotPassword from "../screens/Sessions/Connection/ForgotPassword"
+import PasswordMailConfirmation from "../screens/Sessions/Connection/PasswordMailConfirmation"
 import RegisterAdditionnalDetails from "../screens/Sessions/Inscription/RegisterAdditionnalDetails"
 import RegisterMail from "../screens/Sessions/Inscription/RegisterMail"
 import RegisterPhone from "../screens/Sessions/Inscription/RegisterPhone"
@@ -40,7 +41,8 @@ function SignIn() {
 		  <Stack.Screen name="ConnectPhone" component={ConnectPhone} />
 		  <Stack.Screen name="ConnectEmail" component={ConnectEmail} />
 		  <Stack.Screen name="ConnectPWD" component={ConnectPWD} />
-		  <Stack.Screen name="SignInScreen" component={SignInScreen} />
+		  <Stack.Screen name="PasswordMailConfirmation" component={PasswordMailConfirmation} />
+		  <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 	  </Stack.Navigator>
 	);
 }

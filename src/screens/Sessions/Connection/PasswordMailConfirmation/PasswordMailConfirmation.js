@@ -6,7 +6,7 @@ import BackButton from "../../../../components/BackButton"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 
-const ConnectPWD = () => {
+const PasswordMailConfirmation = () => {
 	const { t } = useTranslation()
 	const [password, setPassword] = useState("")
 	const navigation = useNavigation()
@@ -17,7 +17,7 @@ const ConnectPWD = () => {
 	}
 
 	const onForgotPasswordPressed = () => {
-		navigation.navigate('SignIn', { screen: "PasswordMailConfirmation" })
+		console.warn("Forgot password pressed")
 	}
 
 	return (
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default ConnectPWD
+export default PasswordMailConfirmation

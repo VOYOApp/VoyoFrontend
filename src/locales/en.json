@@ -26,6 +26,8 @@
     "bio": "Bio",
     "email": "Email",
     "password": "Password",
+    "forgot_password": "Forgot password ?",
+    "incorrect_password": "Incorrect password",
     "confirm_password": "Password confirmation",
     "apply_changes": "Apply changes",
     "please": "Please connect",

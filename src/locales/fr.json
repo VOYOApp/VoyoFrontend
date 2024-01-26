@@ -26,6 +26,8 @@
     "bio": "Bio",
     "email": "Email",
     "password": "Mot de passe",
+    "forgot_password": "Mot de passe oublié ?",
+    "incorrect_password": "Mot de passe incorrect",
     "confirm_password": "Confirmer le mot de passe",
     "apply_changes": "Appliquer les modifications",
     "please": "Veuillez vous",

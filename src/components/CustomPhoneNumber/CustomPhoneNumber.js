@@ -37,7 +37,7 @@ const CustomPhoneNumber = ({ value, setValue, placeHolder, secureTextEntry, edit
 					editable={editabled}
 					textContentType={"telephoneNumber"}
 					keyboardType={"numeric"}
-					maxLength={13}
+					maxLength={14}
 				  />
 			  </View>
 		  </View>

@@ -34,8 +34,8 @@ const ConnectPhone = () => {
 		navigation.navigate("SignIn", { screen: "ConnectEmail" })
 	}
 
-	const goToOtpVerification = (phoneNumber) => {
-		navigation.navigate("SignIn", { screen: "ConnectPWD" })
+	const goToPwdVerification = (phoneNumber) => {
+		navigation.navigate("SignIn", { screen: "ConnectPWD", params: { numberPhone: phoneNumber } })
 		// TODO: send phone number to API for get OTP code
 	}
 
@@ -53,7 +53,7 @@ const ConnectPhone = () => {
 			  />
 		  </View>
 
-		  <CustomButton text="Suivant" onPress={() => goToOtpVerification(phoneNumber)} bgColor={"black"}
+		  <CustomButton text="Suivant" onPress={() => goToPwdVerification(phoneNumber)} bgColor={"black"}
 		                deactivated={btnDisabled} />
 
 		  <View className={'w-full flex-row items-center justify-around mt-4'}>
@@ -88,5 +88,6 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 	},
 })
+
 
 export default ConnectPhone
