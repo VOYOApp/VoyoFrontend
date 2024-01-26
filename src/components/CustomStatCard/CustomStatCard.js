@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 	smallCard: {
 		height: 120,
 		borderRadius: 18,
-		backgroundColor: "rgba(0,0,0,0.05)",
+		backgroundColor: "#ecd7c0",
 		padding: 10,
 		paddingTop: 8,
 		paddingBottom: 15,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 	bigCard: {
 		height: 120,
 		borderRadius: 18,
-		backgroundColor: "rgba(0,0,0,0.05)",
+		backgroundColor: "#ffc88c",
 		padding: 10,
 		paddingTop: 8,
 		paddingBottom: 15,
