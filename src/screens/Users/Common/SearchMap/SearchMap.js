@@ -45,6 +45,8 @@ const SearchMap = () => {
 					  longitude: 4.892703,
 				  }} />
 			  </MapView>
+
+
 		  </View>
 	  </View>
 	)
