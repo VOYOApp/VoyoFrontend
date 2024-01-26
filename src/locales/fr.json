@@ -4,11 +4,14 @@
     "logout": "Déconnexion",
     "register": "Inscription",
     "register_to_voyo": "Inscription à VOYO",
+    "connection_to_voyo": "Connexion à VOYO",
     "enter_your_email": "Entrez votre adresse email",
     "greetings": "Bienvenue sur VOYO !",
     "greetings_name": "Bienvenue {{name}} !",
     "already_have_an_account": "J’ai déjà un compte",
     "cell_phone_number": "N° téléphone portable",
+    "continue_with_email": "Continuer avec un email",
+    "continue_with_phone": "Continuer avec un n° de téléphone",
     "unread_messages": {
       "one": "Message non lu",
       "other": "Messages non lus"
@@ -23,6 +26,8 @@
     "bio": "Bio",
     "email": "Email",
     "password": "Mot de passe",
+    "forgot_password": "Mot de passe oublié ?",
+    "incorrect_password": "Mot de passe incorrect",
     "confirm_password": "Confirmer le mot de passe",
     "apply_changes": "Appliquer les modifications",
     "please": "Veuillez vous",

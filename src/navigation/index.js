@@ -6,7 +6,11 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeScreen from "../screens/Sessions/HomeScreen"
-import SignInScreen from "../screens/Sessions/Connection/SignInScreen"
+import ConnectPhone from "../screens/Sessions/Connection/ConnectPhone"
+import ConnectEmail from "../screens/Sessions/Connection/ConnectEmail"
+import ConnectPWD from "../screens/Sessions/Connection/ConnectPWD"
+import ForgotPassword from "../screens/Sessions/Connection/ForgotPassword"
+import PasswordMailConfirmation from "../screens/Sessions/Connection/PasswordMailConfirmation"
 import RegisterAdditionnalDetails from "../screens/Sessions/Inscription/RegisterAdditionnalDetails"
 import RegisterMail from "../screens/Sessions/Inscription/RegisterMail"
 import RegisterPhone from "../screens/Sessions/Inscription/RegisterPhone"
@@ -34,8 +38,12 @@ function SignUp() {
 }
 function SignIn() {
 	return (
-	  <Stack.Navigator initialRouteName="SignInScreen" screenOptions={{ headerShown: false }}>
-		  <Stack.Screen name="SignInScreen" component={SignInScreen} />
+	  <Stack.Navigator initialRouteName="ConnectPhone" screenOptions={{ headerShown: false }}>
+		  <Stack.Screen name="ConnectPhone" component={ConnectPhone} />
+		  <Stack.Screen name="ConnectEmail" component={ConnectEmail} />
+		  <Stack.Screen name="ConnectPWD" component={ConnectPWD} />
+		  <Stack.Screen name="PasswordMailConfirmation" component={PasswordMailConfirmation} />
+		  <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 	  </Stack.Navigator>
 	);
 }
@@ -76,7 +84,7 @@ function Prospect() {
 			    <MaterialCommunityIcons name="home" color={color} size={26} />
 			  ),
 		  }}/>
-		  <Tab.Screen name="SearchMap" component={SearchProspect} options={{
+		  <Tab.Screen name="SearchProspect" component={SearchProspect} options={{
 			  tabBarLabel: 'Search',
 			  tabBarIcon: ({ color }) => (
 			    <MaterialCommunityIcons name="magnify" color={color} size={26} />
@@ -133,19 +141,19 @@ function Navigation() {
 	return (
 	  <NavigationContainer>
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-			  {isLoggedIn ? (
-			    // Screens for logged in users
+			  {/*{isLoggedIn ? (*/}
+			  {/*  // Screens for logged in users*/}
 			  <Stack.Group>
 				  <Stack.Screen name="Prospect" component={Prospect} />
 			  </Stack.Group>
-			  ) : (
-				// Auth screens
+			  {/*) : (*/}
+				{/*// Auth screens*/}
 			  <Stack.Group>
 				  <Stack.Screen name="HomeScreen" component={HomeScreen} />
 				  <Stack.Screen name="SignUp" component={SignUp} />
 				  <Stack.Screen name="SignIn" component={SignIn} />
 			  </Stack.Group>
-			  )}
+			  {/*)}*/}
 			  {/* Common modal screens */}
 			  <Stack.Screen name="NoInternet" component={NoInternet} />
 		  </Stack.Navigator>
