@@ -15,6 +15,7 @@ import PhoneConfirmation from "../screens/Sessions/Inscription/PhoneConfirmation
 import ProspectHome from "../screens/Users/Prospect/ProspectHome"
 import UserPage from "../screens/Users/UserPage"
 import NoInternet from "../screens/NoInternet"
+import SearchMap from "../screens/Users/Common/SearchMap"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -49,22 +50,22 @@ function HomeProspect() {
 	  </Stack.Navigator>
 	);
 }
-// function SearchProspect() {
-// 	return (
-// 	  <Stack.Navigator initialRouteName="ProspectSearch" screenOptions={{ headerShown: false }}>
-// 		  <Stack.Screen name="ProspectSearch" component={ProspectSearch} />
-// 		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
-// 	  </Stack.Navigator>
-// 	);
-// }
-// function ChatProspect() {
-// 	return (
-// 	  <Stack.Navigator initialRouteName="ProspectChat" screenOptions={{ headerShown: false }}>
-// 		  <Stack.Screen name="ProspectChat" component={ProspectChat} />
-// 		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
-// 	  </Stack.Navigator>
-// 	);
-// }
+function SearchProspect() {
+	return (
+	  <Stack.Navigator initialRouteName="SearchMap" screenOptions={{ headerShown: false }}>
+		  <Stack.Screen name="SearchMap" component={SearchMap} />
+		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+	  </Stack.Navigator>
+	);
+}
+function ChatProspect() {
+	return (
+	  <Stack.Navigator initialRouteName="ProspectChat" screenOptions={{ headerShown: false }}>
+		  <Stack.Screen name="ProspectChat" component={ProspectChat} />
+		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+	  </Stack.Navigator>
+	);
+}
 
 function Prospect() {
 	return (
@@ -75,19 +76,19 @@ function Prospect() {
 			    <MaterialCommunityIcons name="home" color={color} size={26} />
 			  ),
 		  }}/>
-		  {/*<Tab.Screen name="SearchProspect" component={SearchProspect} options={{*/}
-			{/*  tabBarLabel: 'Search',*/}
-			{/*  tabBarIcon: ({ color }) => (*/}
-			{/*    <MaterialCommunityIcons name="magnify" color={color} size={26} />*/}
-			{/*  ),*/}
-		  {/*}}/>*/}
-		  {/*<Tab.Screen name="ChatProspect" component={ChatProspect} options={{*/}
-			{/*  tabBarLabel: 'Chat',*/}
-			{/*  tabBarIcon: ({ color }) => (*/}
-			{/*    <MaterialCommunityIcons name="chat" color={color} size={26} />*/}
-			{/*  ),*/}
-		  {/*}}/>*/}
-		  {/* Ajoutez d'autres onglets si nécessaire */}
+		  <Tab.Screen name="SearchMap" component={SearchProspect} options={{
+			  tabBarLabel: 'Search',
+			  tabBarIcon: ({ color }) => (
+			    <MaterialCommunityIcons name="magnify" color={color} size={26} />
+			  ),
+		  }}/>
+		  <Tab.Screen name="ChatProspect" component={ChatProspect} options={{
+			  tabBarLabel: 'Chat',
+			  tabBarIcon: ({ color }) => (
+			    <MaterialCommunityIcons name="chat" color={color} size={26} />
+			  ),
+		  }}/>
+		   {/*Ajoutez d'autres onglets si nécessaire*/}
 	  </Tab.Navigator>
 	);
 }
