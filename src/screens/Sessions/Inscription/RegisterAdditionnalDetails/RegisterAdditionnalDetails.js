@@ -5,10 +5,14 @@ import CustomInput from "../../../../components/CustomInput"
 import CustomButton from "../../../../components/CustomButton"
 import BackButton from "../../../../components/BackButton"
 
+import { auth } from '../../../../../firebaseConfig';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+
 const RegisterAdditionnalDetails = () => {
 	const route = useRoute()
 	const user = route.params?.user
 
+	const [avatar, setAvatar] = useState('');
 	const [lastName, setLastName] = useState("")
 	const [firstName, setFirstName] = useState("")
 	const [bio, setBio] = useState("")
@@ -80,7 +84,29 @@ const RegisterAdditionnalDetails = () => {
 
 	const onRegisterPressed = () => {
 		// console.warn("Inscription")
-		navigation.navigate('Prospect', {screen: 'HomeScreen'})
+		createUserWithEmailAndPassword(auth, email, password)
+		.then((userCredential) => {
+			// Registered
+			const user = userCredential.user;
+			updateProfile(user, {
+				displayName: firstName + ' ' + lastName,
+				photoURL: avatar ? avatar : 'https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x',
+			})
+			.then(() => {
+				alert('Registered, please login.');
+				navigation.navigate('Prospect', {screen: 'HomeScreen'})
+			})
+			.catch((error) => {
+				alert(error.message);
+			})
+		})
+		.catch((error) => {
+			const errorCode = error.code;
+			const errorMessage = error.message;
+			alert(errorMessage);
+		});
+
+		// navigation.navigate('Prospect', {screen: 'HomeScreen'})
 	}
 	const onNextPressed = () => {
 		console.warn("Next")
