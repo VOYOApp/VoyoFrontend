@@ -37,7 +37,9 @@
     "searchMap": {
       "searchPlaceholder": "Rechercher une adresse"
     },
-    "next": "Suivant"
+    "next": "Suivant",
+    "validate": "Valider",
+    "search": "Rechercher"
   },
   "prospect": {
     "programmed_visite": {
@@ -53,7 +55,19 @@
       "other": "Revues en attente"
     },
     "passed_visits": "Visites à venir",
-    "programmed_visits": "Visites programmées"
+    "programmed_visits": "Visites programmées",
+    "choose_a_date": "Veuillez choisir une date",
+    "type_of_property": "Type de bien",
+    "subtext_type_of_property": "Le choix de type de bien immobilier permet d’obtenir la durée de visite et par conséquent estimer le coût de la prestation.",
+    "subtext_choose_a_date": "Veuillez indiquer la date à laquelle vous souhaitez que la visite soit effectuée.",
+    "visits_duration": {
+      "studio": "Studio, T1 : 30 minutes",
+      "t2_to_t4": "T2, T3, T4 : 40 minutes",
+      "t5_and_more": "T5 et plus : 50 minutes",
+      "house": "Maison : 1h",
+      "villa": "Villa : 1h30",
+      "custom_duration": "Durée personnalisée"
+    }
   },
   "visitor": {
     "upcoming_visits": {
