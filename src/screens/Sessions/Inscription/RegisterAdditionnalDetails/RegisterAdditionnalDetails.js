@@ -1,18 +1,14 @@
 import React, { useState } from "react"
 import { Image, StyleSheet, Switch, Text, TextInput, useWindowDimensions, View } from "react-native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import CustomInput from "../../../../components/CustomInput"
 import CustomButton from "../../../../components/CustomButton"
 import BackButton from "../../../../components/BackButton"
-import { useRoute } from "@react-navigation/native"
-
-import { auth } from '../../../../../firebaseConfig';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 const RegisterAdditionnalDetails = () => {
 	const route = useRoute()
 	const user = route.params?.user
 
-	const [avatar, setAvatar] = useState('');
 	const [lastName, setLastName] = useState("")
 	const [firstName, setFirstName] = useState("")
 	const [bio, setBio] = useState("")
@@ -84,29 +80,7 @@ const RegisterAdditionnalDetails = () => {
 
 	const onRegisterPressed = () => {
 		// console.warn("Inscription")
-		createUserWithEmailAndPassword(auth, email, password)
-		.then((userCredential) => {
-			// Registered
-			const user = userCredential.user;
-			updateProfile(user, {
-				displayName: firstName + ' ' + lastName,
-				photoURL: avatar ? avatar : 'https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x',
-			})
-			.then(() => {
-				alert('Registered, please login.');
-				navigation.navigate('Prospect', {screen: 'HomeScreen'})
-			})
-			.catch((error) => {
-				alert(error.message);
-			})
-		})
-		.catch((error) => {
-			const errorCode = error.code;
-			const errorMessage = error.message;
-			alert(errorMessage);
-		});
-
-		// navigation.navigate('Prospect', {screen: 'HomeScreen'})
+		navigation.navigate('Prospect', {screen: 'HomeScreen'})
 	}
 	const onNextPressed = () => {
 		console.warn("Next")
@@ -212,24 +186,32 @@ const RegisterAdditionnalDetails = () => {
 				               secureTextEntry
 				  />
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image source={require("../../../../../assets/check-mark-validate.png")}
-					         style={{ width: 12, height: 12, marginRight: 5 }} />
-					  <Text style={{ color: "green" }}>8 caractères ou plus</Text>
+					  <Image
+						source={require("../../../../../assets/check-mark-validate.png")}
+						style={{ width: 12, height: 12, marginRight: 5, tintColor: isLengthValid ? "green" : "grey" }}
+					  />
+					  <Text style={{ color: isLengthValid ? "green" : "grey" }}>8 caractères ou plus</Text>
 				  </View>
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image source={require("../../../../../assets/check-mark-validate.png")}
-					         style={{ width: 12, height: 12, marginRight: 5 }} />
-					  <Text style={{ color: "green" }}>Charactères spéciaux</Text>
+					  <Image
+						source={require("../../../../../assets/check-mark-validate.png")}
+						style={{ width: 12, height: 12, marginRight: 5, tintColor: hasSpecialChar ? "green" : "grey" }}
+					  />
+					  <Text style={{ color: hasSpecialChar ? "green" : "grey" }}>Charactères spéciaux</Text>
 				  </View>
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image source={require("../../../../../assets/check-mark-validate.png")}
-					         style={{ width: 12, height: 12, marginRight: 5 }} />
-					  <Text style={{ color: "green" }}>Chiffres</Text>
+					  <Image
+						source={require("../../../../../assets/check-mark-validate.png")}
+						style={{ width: 12, height: 12, marginRight: 5, tintColor: hasNumber ? "green" : "grey" }}
+					  />
+					  <Text style={{ color: hasNumber ? "green" : "grey" }}>Chiffres</Text>
 				  </View>
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image source={require("../../../../../assets/check-mark-validate.png")}
-					         style={{ width: 12, height: 12, marginRight: 5 }} />
-					  <Text style={{ color: "green" }}>Majuscules</Text>
+					  <Image
+						source={require("../../../../../assets/check-mark-validate.png")}
+						style={{ width: 12, height: 12, marginRight: 5, tintColor: hasUpperCase ? "green" : "grey" }}
+					  />
+					  <Text style={{ color: hasUpperCase ? "green" : "grey" }}>Majuscules</Text>
 				  </View>
 
 				  <CustomInput placeHolder="Confirmer le mot de passe"
@@ -269,7 +251,7 @@ const RegisterAdditionnalDetails = () => {
 			  <Text style={{ textAlign: "center", width: "30%" }}>Je souhaite faire visiter des biens immobiliers</Text>
 		  </View>
 
-		  <CustomButton text="S'inscrire" onPress={onRegisterPressed} bgColor={"black"} />
+		  {renderButton()}
 	  </View>
 	)
 }
