@@ -33,7 +33,10 @@
     "please": "Veuillez vous",
     "connect_to_internet": "connecter à Internet",
     "retry": "Réessayer",
-    "back": "Retour"
+    "back": "Retour",
+    "searchMap": {
+      "searchPlaceholder": "Rechercher une adresse"
+    }
   },
   "prospect": {
     "programmed_visite": {

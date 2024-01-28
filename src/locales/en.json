@@ -33,7 +33,10 @@
     "please": "Please connect",
     "connect_to_internet": "to Internet",
     "retry": "Retry",
-    "back": "Back"
+    "back": "Back",
+    "searchMap": {
+      "searchPlaceholder": "Search an address"
+    }
   },
   "prospect": {
     "programmed_visite": {
