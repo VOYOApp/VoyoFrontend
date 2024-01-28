@@ -1,13 +1,15 @@
 import React, { useCallback, useState, useLayoutEffect } from "react"
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native"
 import { Avatar } from "react-native-elements"
 import { auth, db } from '../../../../../firebaseConfig';
 import { signOut } from "firebase/auth"
 import { collection, addDoc, getDocs, query, orderBy, onSnapshot } from "firebase/firestore"
 import { GiftedChat } from "react-native-gifted-chat"
+import BackButton from "../../../../components/BackButton"
 
-const Chat = ({ navigation }) => {
+const Chat = ({ navigation, route }) => {
 	const [messages, setMessages] = useState([])
+	const { chatName, id } = route.params
 	const signOutNow = () => {
 		signOut(auth).then(() => {
 			// Sign-out successful.
@@ -18,27 +20,29 @@ const Chat = ({ navigation }) => {
 	}
 	useLayoutEffect(() => {
 		navigation.setOptions({
+			title: chatName || "Chat",
+			headerTitleStyle: { fontSize: 18 },
 			headerLeft: () => (
-			  <View style={{ marginLeft: 20 }}>
-				  <Avatar
-					rounded
-					source={{
-						uri: auth?.currentUser?.photoURL,
-					}}
-				  />
+			  <View className={'flex-row items-center ml-4'}>
+				  <BackButton navigation={navigation}/>
+				  <View className={'ml-4'}>
+					  <Avatar
+					    rounded
+					    source={{
+						    uri: auth?.currentUser?.photoURL || require("../../../../../assets/avatar.png"),
+					    }}
+					  />
+				  </View>
 			  </View>
 			),
 			headerRight: () => (
-			  <TouchableOpacity style={{
-				  marginRight: 10,
-			  }}
-			                    onPress={signOutNow}
-			  >
-				  <Text>logout</Text>
+			  <TouchableOpacity onPress={signOutNow}>
+				  <Image style={{ width: 25, height: 25, right: 15 }}
+				         source={require("../../../../../assets/logout.png")}></Image>
 			  </TouchableOpacity>
 			),
 		})
-		const q = query(collection(db, "chats"), orderBy("createdAt", "desc"))
+		const q = query(collection(db, `chats/${route.params.id}/messages`), orderBy("createdAt", "desc"));
 		const unsubscribe = onSnapshot(q, (snapshot) => setMessages(
 		  snapshot.docs.map(doc => ({
 			  _id: doc.data()._id,
@@ -46,19 +50,21 @@ const Chat = ({ navigation }) => {
 			  text: doc.data().text,
 			  user: doc.data().user,
 		  })),
-		))
+		));
 
 		return () => {
-			unsubscribe()
-		}
-
-	}, [navigation])
+			unsubscribe();
+		};
+	}, [navigation, route.params.id]);
 
 	const onSend = useCallback((messages = []) => {
-		const { _id, createdAt, text, user } = messages[0]
+		const { _id, createdAt, text, user } = messages[0];
+		const chatId = route.params.id;
 
-		addDoc(collection(db, "chats"), { _id, createdAt, text, user })
-	}, [])
+		// Ajoutez le message à la collection "messages" spécifique au chat
+		addDoc(collection(db, `chats/${chatId}/messages`), { _id, createdAt, text, user, photoURL: require("../../../../../assets/logos/logo.png") });
+	}, [route.params.id]);
+
 	return (
 	  <GiftedChat
 		messages={messages}

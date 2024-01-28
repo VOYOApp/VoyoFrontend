@@ -21,6 +21,7 @@ import UserPage from "../screens/Users/UserPage"
 import NoInternet from "../screens/NoInternet"
 import SearchMap from "../screens/Users/Common/SearchMap"
 import Chat from "../screens/Users/Common/Chat"
+import ChatChannel from "../screens/Users/Common/ChatChannel"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -49,7 +50,7 @@ function SignIn() {
 	);
 }
 
-// PROSPECT STACKS (Home, Search, Chat)
+// PROSPECT STACKS (Home, Search, CustomListItem)
 function HomeProspect() {
 	return (
 	  <Stack.Navigator initialRouteName="ProspectHome" screenOptions={{ headerShown: false }}>
@@ -67,31 +68,42 @@ function SearchProspect() {
 	  </Stack.Navigator>
 	);
 }
-function ChatProspect() {
+// function ChatProspect() {
+// 	return (
+// 	  <Stack.Navigator initialRouteName="Chat">
+// 		  {/*<Stack.Screen name="ChatChannel" component={ChatChannel} />*/}
+// 		  <Stack.Screen name="Chat" component={Chat} />
+// 		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+// 	  </Stack.Navigator>
+// 	);
+// }
+
+function Common() {
 	return (
-	  <Stack.Navigator initialRouteName="Chat">
+	  <Stack.Navigator>
 		  <Stack.Screen name="Chat" component={Chat} />
-		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
 	  </Stack.Navigator>
 	);
 }
 
 function Prospect() {
 	return (
-	  <Tab.Navigator initialRouteName="HomeProspect" screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
+	  <Tab.Navigator initialRouteName="HomeProspect" screenOptions={{ tabBarShowLabel: false }}>
 		  <Tab.Screen name="HomeProspect" component={HomeProspect} options={{
+			  headerShown: false,
 			  tabBarLabel: 'Home',
 			  tabBarIcon: ({ color }) => (
 			    <MaterialCommunityIcons name="home" color={color} size={26} />
 			  ),
 		  }}/>
 		  <Tab.Screen name="SearchProspect" component={SearchProspect} options={{
+			  headerShown: false,
 			  tabBarLabel: 'Search',
 			  tabBarIcon: ({ color }) => (
 			    <MaterialCommunityIcons name="magnify" color={color} size={26} />
 			  ),
 		  }}/>
-		  <Tab.Screen name="ChatProspect" component={ChatProspect} options={{
+		  <Tab.Screen name="ChatChannel" component={ChatChannel} options={{
 			  tabBarLabel: 'Chat',
 			  tabBarIcon: ({ color }) => (
 			    <MaterialCommunityIcons name="chat" color={color} size={26} />
@@ -118,7 +130,7 @@ function Prospect() {
 // 		    ),
 // 		  }}/>
 // 		  <Tab.Screen name="ChatVisitor" component={ChatVisitor} options={{
-// 		    tabBarLabel: 'Chat',
+// 		    tabBarLabel: 'CustomListItem',
 // 		    tabBarIcon: ({ color }) => (
 // 		      <MaterialCommunityIcons name="chat" color={color} size={26} />
 // 		    ),
@@ -146,6 +158,7 @@ function Navigation() {
 			  {/*  // Screens for logged in users*/}
 			  <Stack.Group>
 				  <Stack.Screen name="Prospect" component={Prospect} />
+				  <Stack.Screen name="Common" component={Common} />
 			  </Stack.Group>
 			  {/*) : (*/}
 				{/*// Auth screens*/}

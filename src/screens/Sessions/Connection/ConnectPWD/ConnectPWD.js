@@ -6,7 +6,7 @@ import BackButton from "../../../../components/BackButton"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import { auth } from '../../../../../firebaseConfig';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 
 const ConnectPWD = () => {
 	const { t } = useTranslation()
@@ -14,19 +14,41 @@ const ConnectPWD = () => {
 	const navigation = useNavigation()
 	const route = useRoute()
 	const email = route.params?.email;
+	const numberPhone = route.params?.numberPhone;
 	const { height } = useWindowDimensions()
 
 	const onSignInPressed = () => {
-		signInWithEmailAndPassword(auth, email, password)
-		.then((userCredential) => {
-			navigation.navigate('Prospect', {screen: 'HomeScreen'})
-			console.warn(userCredential)
-		})
-		.catch((error) => {
-			const errorCode = error.code;
-			const errorMessage = error.message;
-			alert(errorMessage);
-		});
+		if (email) {
+			signInWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				navigation.navigate('Prospect', {screen: 'HomeScreen'})
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				alert(errorMessage);
+			});
+		}
+		else if (numberPhone) {
+			// const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+			// 	'size': 'invisible',
+			// 	'callback': (response) => {
+			// 		// This callback will be called after reCAPTCHA verification
+			// 	},
+			// });
+			//
+			// signInWithPhoneNumber(auth, numberPhone, recaptchaVerifier)
+			// .then((userCredential) => {
+			// 	navigation.navigate('Prospect', {screen: 'HomeScreen'})
+			// 	console.warn(userCredential)
+			// })
+			// .catch((error) => {
+			// 	const errorCode = error.code;
+			// 	const errorMessage = error.message;
+			// 	console.log(errorMessage)
+			// 	alert(errorMessage);
+			// });
+		}
 	}
 
 	const onForgotPasswordPressed = () => {
