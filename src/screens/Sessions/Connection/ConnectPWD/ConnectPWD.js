@@ -3,17 +3,30 @@ import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
 import CustomInput from "../../../../components/CustomInput"
 import CustomButton from "../../../../components/CustomButton"
 import BackButton from "../../../../components/BackButton"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
+import { auth } from '../../../../../firebaseConfig';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const ConnectPWD = () => {
 	const { t } = useTranslation()
 	const [password, setPassword] = useState("")
 	const navigation = useNavigation()
+	const route = useRoute()
+	const email = route.params?.email;
 	const { height } = useWindowDimensions()
 
 	const onSignInPressed = () => {
-		navigation.navigate('Prospect', { screen: "UserPage" })
+		signInWithEmailAndPassword(auth, email, password)
+		.then((userCredential) => {
+			navigation.navigate('Prospect', {screen: 'HomeScreen'})
+			console.warn(userCredential)
+		})
+		.catch((error) => {
+			const errorCode = error.code;
+			const errorMessage = error.message;
+			alert(errorMessage);
+		});
 	}
 
 	const onForgotPasswordPressed = () => {

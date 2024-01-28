@@ -5,10 +5,14 @@ import CustomButton from "../../../../components/CustomButton"
 import BackButton from "../../../../components/BackButton"
 import { useRoute } from "@react-navigation/native"
 
+import { auth } from '../../../../../firebaseConfig';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+
 const RegisterAdditionnalDetails = () => {
 	const route = useRoute()
 	const user = route.params?.user
 
+	const [avatar, setAvatar] = useState('');
 	const [lastName, setLastName] = useState("")
 	const [firstName, setFirstName] = useState("")
 	const [bio, setBio] = useState("")
@@ -18,20 +22,84 @@ const RegisterAdditionnalDetails = () => {
 	const [passwordConfirmation, setPasswordConfirmation] = useState("")
 	const [isEnabled, setIsEnabled] = useState(false)
 	const [isValidated, setIsValidated] = useState(false)
-	const toggleSwitch = () => setIsEnabled(previousState => !previousState)
-
 
 	const { height } = useWindowDimensions()
 	// const navigation = useNavigation()
 
-	const onRegisterPressed = () => {
-		console.warn("Sign up pressed")
-		// navigation.navigate('HomeScreen')
-	}
-
 	const handleBioChange = (text) => {
 		setBio(text)
 	}
+
+	const handlePasswordChange = (text) => {
+		setPassword(text);
+
+		setIsLengthValid(text.length >= 8);
+		setHasSpecialChar(/[!@#$%^&*()_+={}\[\]:;<>,.?/~`"'\-|\\]/.test(text));
+		setHasNumber(/\d/.test(text));
+		setHasUpperCase(/[A-Z]/.test(text));
+
+		setIsPasswordValid(text === passwordConfirmation &&
+		  text !== '' &&
+		  isLengthValid &&
+		  hasSpecialChar &&
+		  hasNumber &&
+		  hasUpperCase)
+
+		setPasswordMatch(isPasswordValid);
+		setBtnDisabled(!isPasswordValid);
+	};
+
+	const handlePasswordConfirmationChange = (text) => {
+		setPasswordConfirmation(text)
+		text === password && text !== '' ? setPasswordMatch(true) : setPasswordMatch(false)
+		text === password && text !== '' ? setBtnDisabled(false) : setBtnDisabled(true)
+	}
+
+	const toggleSwitch = () => setIsEnabled(previousState => !previousState)
+
+	const onRegisterPressed = () => {
+		// console.warn("Inscription")
+		createUserWithEmailAndPassword(auth, email, password)
+		.then((userCredential) => {
+			// Registered
+			const user = userCredential.user;
+			updateProfile(user, {
+				displayName: firstName + ' ' + lastName,
+				photoURL: avatar ? avatar : 'https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x',
+			})
+			.then(() => {
+				alert('Registered, please login.');
+				navigation.navigate('Prospect', {screen: 'HomeScreen'})
+			})
+			.catch((error) => {
+				alert(error.message);
+			})
+		})
+		.catch((error) => {
+			const errorCode = error.code;
+			const errorMessage = error.message;
+			alert(errorMessage);
+		});
+
+		// navigation.navigate('Prospect', {screen: 'HomeScreen'})
+	}
+	const onNextPressed = () => {
+		console.warn("Next")
+		// navigation.navigate('HomeScreen')
+	}
+
+	const renderButton = () => {
+		if (isEnabled) {
+			return (
+			  <CustomButton text="Suivant" onPress={onNextPressed} bgColor={"#FE881B"} deactivated={btnDisabled} />
+			);
+		} else {
+			return (
+			  <CustomButton text="S'inscrire" onPress={onRegisterPressed} bgColor={"black"} deactivated={btnDisabled} />
+			);
+		}
+	};
+
 
 	return (
 	  <View style={styles.root}>

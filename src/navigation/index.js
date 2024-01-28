@@ -20,6 +20,7 @@ import ProspectHome from "../screens/Users/Prospect/ProspectHome"
 import UserPage from "../screens/Users/UserPage"
 import NoInternet from "../screens/NoInternet"
 import SearchMap from "../screens/Users/Common/SearchMap"
+import Chat from "../screens/Users/Common/Chat"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -68,8 +69,8 @@ function SearchProspect() {
 }
 function ChatProspect() {
 	return (
-	  <Stack.Navigator initialRouteName="ProspectChat" screenOptions={{ headerShown: false }}>
-		  <Stack.Screen name="ProspectChat" component={ProspectChat} />
+	  <Stack.Navigator initialRouteName="Chat">
+		  <Stack.Screen name="Chat" component={Chat} />
 		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
 	  </Stack.Navigator>
 	);
