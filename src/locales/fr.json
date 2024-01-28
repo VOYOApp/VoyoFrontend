@@ -36,7 +36,8 @@
     "back": "Retour",
     "searchMap": {
       "searchPlaceholder": "Rechercher une adresse"
-    }
+    },
+    "next": "Suivant"
   },
   "prospect": {
     "programmed_visite": {
