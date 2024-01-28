@@ -26,7 +26,7 @@ const ConnectEmail = () => {
 	}
 
 	const goToPwdVerification = (mail) => {
-		navigation.navigate("SignIn", { screen: "ConnectPWD", params: { email: mail } })
+		navigation.navigate("SignIn", { screen: "ConnectPWD", params: { email: mail } });
 	}
 
 	return (
@@ -45,7 +45,7 @@ const ConnectEmail = () => {
 				  />
 		  </View>
 
-		  <CustomButton text="Suivant" onPress={() => goToPwdVerification()} bgColor={"black"}
+		  <CustomButton text="Suivant" onPress={() => goToPwdVerification(email)} bgColor={"black"}
 		                deactivated={btnDisabled} />
 
 		  <View className={'w-full flex-row items-center justify-around mt-4'}>
