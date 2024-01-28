@@ -21,10 +21,35 @@ const RegisterAdditionnalDetails = () => {
 	const [password, setPassword] = useState("")
 	const [passwordConfirmation, setPasswordConfirmation] = useState("")
 	const [isEnabled, setIsEnabled] = useState(false)
-	const [isValidated, setIsValidated] = useState(false)
+	const [btnDisabled, setBtnDisabled] = useState(true)
+	const [isPasswordValid, setIsPasswordValid] = useState(false);
+	const [passwordMatch, setPasswordMatch] = useState(true);
+	const [isLengthValid, setIsLengthValid] = useState(false);
+	const [hasSpecialChar, setHasSpecialChar] = useState(false);
+	const [hasNumber, setHasNumber] = useState(false);
+	const [hasUpperCase, setHasUpperCase] = useState(false);
+	// const [allCriteriaValid, setAllCriteriaValid] = useState(false);
 
 	const { height } = useWindowDimensions()
-	// const navigation = useNavigation()
+	const navigation = useNavigation()
+
+	// const allCriteriaIsValid = () => {
+	// 	const isValid =
+	// 	  isPasswordValid &&
+	// 	  lastName !== '' &&
+	// 	  firstName !== '' &&
+	// 	  bio !== '' &&
+	// 	  phoneNumber !== '';
+	//
+	// 	setAllCriteriaValid(isValid);
+	// 	setBtnDisabled(!isValid);
+	// };
+	// const handleLastNameChange = (text) => {
+	// 	setLastName(text)
+	// }
+	// const handleFirstNameChange = (text) => {
+	// 	setFirstName(text)
+	// }
 
 	const handleBioChange = (text) => {
 		setBio(text)
@@ -183,7 +208,7 @@ const RegisterAdditionnalDetails = () => {
 			  <View>
 				  <CustomInput placeHolder="Mot de passe"
 				               value={password}
-				               setValue={setPassword}
+				               setValue={handlePasswordChange}
 				               secureTextEntry
 				  />
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
@@ -209,7 +234,7 @@ const RegisterAdditionnalDetails = () => {
 
 				  <CustomInput placeHolder="Confirmer le mot de passe"
 				               value={passwordConfirmation}
-				               setValue={setPasswordConfirmation}
+				               setValue={handlePasswordConfirmationChange}
 				               secureTextEntry
 				  />
 			  </View>
