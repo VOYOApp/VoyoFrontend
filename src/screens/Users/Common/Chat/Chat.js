@@ -7,7 +7,6 @@ import { collection, addDoc, getDocs, query, orderBy, onSnapshot } from "firebas
 import { GiftedChat } from "react-native-gifted-chat"
 
 const Chat = ({ navigation }) => {
-	console.log(auth?.currentUser)
 	const [messages, setMessages] = useState([])
 	const signOutNow = () => {
 		signOut(auth).then(() => {
