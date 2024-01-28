@@ -36,7 +36,10 @@
     "back": "Back",
     "searchMap": {
       "searchPlaceholder": "Search an address"
-    }
+    },
+    "next": "Next",
+    "validate": "Validate",
+    "search": "Search"
   },
   "prospect": {
     "programmed_visite": {
@@ -52,7 +55,19 @@
       "other": "Feedbacks waiting"
     },
     "passed_visits": "Passed visits",
-    "programmed_visits": "Programmed visits"
+    "programmed_visits": "Programmed visits",
+    "choose_a_date": "Choose a date",
+    "type_of_property": "Type of property",
+    "subtext_type_of_property": "By choosing the type of property, you can determine the duration of the visit and, therefore, estimate its cost.",
+    "subtext_choose_a_date": "Please indicate the date you would like the visit to take place.",
+    "visits_duration": {
+      "studio": "Studio, T1 : 30 minutes",
+      "t2_to_t4": "T2, T3, T4 : 40 minutes",
+      "t5_and_more": "T5 et plus : 50 minutes",
+      "house": "House : 1h",
+      "villa": "Villa : 1h30",
+      "custom_duration": "Custom duration"
+    }
   },
   "visitor": {
     "upcoming_visits": {
