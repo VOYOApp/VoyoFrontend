@@ -24,28 +24,28 @@ const RegisterAdditionnalDetails = () => {
 	const [hasSpecialChar, setHasSpecialChar] = useState(false);
 	const [hasNumber, setHasNumber] = useState(false);
 	const [hasUpperCase, setHasUpperCase] = useState(false);
-	const [allCriteriaValid, setAllCriteriaValid] = useState(false);
+	// const [allCriteriaValid, setAllCriteriaValid] = useState(false);
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
 
-	const allCriteriaIsValid = () => {
-		const isValid =
-		  isPasswordValid &&
-		  lastName !== '' &&
-		  firstName !== '' &&
-		  bio !== '' &&
-		  phoneNumber !== '';
-
-		setAllCriteriaValid(isValid);
-		setBtnDisabled(!isValid);
-	};
-	const handleLastNameChange = (text) => {
-		setLastName(text)
-	}
-	const handleFirstNameChange = (text) => {
-		setFirstName(text)
-	}
+	// const allCriteriaIsValid = () => {
+	// 	const isValid =
+	// 	  isPasswordValid &&
+	// 	  lastName !== '' &&
+	// 	  firstName !== '' &&
+	// 	  bio !== '' &&
+	// 	  phoneNumber !== '';
+	//
+	// 	setAllCriteriaValid(isValid);
+	// 	setBtnDisabled(!isValid);
+	// };
+	// const handleLastNameChange = (text) => {
+	// 	setLastName(text)
+	// }
+	// const handleFirstNameChange = (text) => {
+	// 	setFirstName(text)
+	// }
 
 	const handleBioChange = (text) => {
 		setBio(text)
