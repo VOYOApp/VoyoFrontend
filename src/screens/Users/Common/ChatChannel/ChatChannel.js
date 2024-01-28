@@ -2,16 +2,15 @@ import React, { useCallback, useState, useLayoutEffect, useEffect } from "react"
 import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView, ScrollView } from "react-native"
 import { Avatar } from "react-native-elements"
 import { auth, db } from '../../../../../firebaseConfig';
-import { collection, addDoc, getDocs, query, orderBy, onSnapshot } from "firebase/firestore"
+import { collection, addDoc, getDocs, query, orderBy, onSnapshot, where } from "firebase/firestore"
 import CustomListItem from "../../../../components/CustomListItem"
 import BackButton from "../../../../components/BackButton"
 const ChatChannel = ({navigation}) => {
-	//TODO FAIRE EN SORTE D'AFFICHER SEULEMENT LES CHATS OU L'UTILISATEUR EST PRESENT AVEC LES CHATS LES PLUS RECENTS EN PREMIER
 	const [chats, setChats] = useState([])
 
 	useEffect(() => {
-		const q = query(collection(db, "chats"))
-		const unsubscribe = onSnapshot(q,(snapshot) =>
+		const q = query(collection(db, "chats"), where("members", "array-contains", auth.currentUser.email), orderBy("lastActivity", "desc"));
+		const unsubscribe = onSnapshot(q, (snapshot) =>
 		  setChats(
 			snapshot.docs.map((doc) => ({
 				id: doc.id,
@@ -19,10 +18,12 @@ const ChatChannel = ({navigation}) => {
 			}))
 		  )
 		);
+
 		return () => {
-			unsubscribe()
-		}
-	}, [])
+			unsubscribe();
+		};
+	}, []);
+
 
 	useLayoutEffect(() => {
 		navigation.setOptions({

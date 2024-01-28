@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native"
 import { Avatar } from "react-native-elements"
 import { auth, db } from '../../../../../firebaseConfig';
 import { signOut } from "firebase/auth"
-import { collection, addDoc, getDocs, query, orderBy, onSnapshot } from "firebase/firestore"
+import { collection, addDoc, doc, updateDoc, serverTimestamp, getDocs, query, orderBy, onSnapshot } from "firebase/firestore"
 import { GiftedChat } from "react-native-gifted-chat"
 import BackButton from "../../../../components/BackButton"
 
@@ -42,7 +42,7 @@ const Chat = ({ navigation, route }) => {
 			  </TouchableOpacity>
 			),
 		})
-		const q = query(collection(db, `chats/${route.params.id}/messages`), orderBy("createdAt", "desc"));
+		const q = query(collection(db, `chats/${id}/messages`), orderBy("createdAt", "desc"));
 		const unsubscribe = onSnapshot(q, (snapshot) => setMessages(
 		  snapshot.docs.map(doc => ({
 			  _id: doc.data()._id,
@@ -55,15 +55,19 @@ const Chat = ({ navigation, route }) => {
 		return () => {
 			unsubscribe();
 		};
-	}, [navigation, route.params.id]);
+	}, [navigation, id, chatName]);
 
 	const onSend = useCallback((messages = []) => {
 		const { _id, createdAt, text, user } = messages[0];
-		const chatId = route.params.id;
+		const chatId = id;
 
 		// Ajoutez le message à la collection "messages" spécifique au chat
-		addDoc(collection(db, `chats/${chatId}/messages`), { _id, createdAt, text, user, photoURL: require("../../../../../assets/logos/logo.png") });
-	}, [route.params.id]);
+		addDoc(collection(db, `chats/${chatId}/messages`), { _id, createdAt, text, user });
+
+		// Mettez à jour la propriété "lastActivity" du chat
+		updateDoc(doc(db, `chats/${chatId}`), { lastActivity: serverTimestamp() });
+	}, [id]);
+
 
 	return (
 	  <GiftedChat
