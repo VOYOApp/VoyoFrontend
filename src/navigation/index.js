@@ -140,7 +140,7 @@ function Navigation() {
 
 	return (
 	  <NavigationContainer>
-		  <Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
+		  <Stack.Navigator screenOptions={{ headerShown: false }}>
 			  {/*{isLoggedIn ? (*/}
 			  {/*  // Screens for logged in users*/}
 			  <Stack.Group>

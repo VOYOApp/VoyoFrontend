@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { Image, StyleSheet, Switch, Text, TextInput, useWindowDimensions, View } from "react-native"
-import { useNavigation, useRoute } from "@react-navigation/native"
 import CustomInput from "../../../../components/CustomInput"
 import CustomButton from "../../../../components/CustomButton"
 import BackButton from "../../../../components/BackButton"
+import { useRoute } from "@react-navigation/native"
 
 const RegisterAdditionnalDetails = () => {
 	const route = useRoute()
@@ -17,88 +17,21 @@ const RegisterAdditionnalDetails = () => {
 	const [password, setPassword] = useState("")
 	const [passwordConfirmation, setPasswordConfirmation] = useState("")
 	const [isEnabled, setIsEnabled] = useState(false)
-	const [btnDisabled, setBtnDisabled] = useState(true)
-	const [isPasswordValid, setIsPasswordValid] = useState(false);
-	const [passwordMatch, setPasswordMatch] = useState(true);
-	const [isLengthValid, setIsLengthValid] = useState(false);
-	const [hasSpecialChar, setHasSpecialChar] = useState(false);
-	const [hasNumber, setHasNumber] = useState(false);
-	const [hasUpperCase, setHasUpperCase] = useState(false);
-	const [allCriteriaValid, setAllCriteriaValid] = useState(false);
+	const [isValidated, setIsValidated] = useState(false)
+	const toggleSwitch = () => setIsEnabled(previousState => !previousState)
+
 
 	const { height } = useWindowDimensions()
-	const navigation = useNavigation()
+	// const navigation = useNavigation()
 
-	const allCriteriaIsValid = () => {
-		const isValid =
-		  isPasswordValid &&
-		  lastName !== '' &&
-		  firstName !== '' &&
-		  bio !== '' &&
-		  phoneNumber !== '';
-
-		setAllCriteriaValid(isValid);
-		setBtnDisabled(!isValid);
-	};
-	const handleLastNameChange = (text) => {
-		setLastName(text)
-	}
-	const handleFirstNameChange = (text) => {
-		setFirstName(text)
+	const onRegisterPressed = () => {
+		console.warn("Sign up pressed")
+		// navigation.navigate('HomeScreen')
 	}
 
 	const handleBioChange = (text) => {
 		setBio(text)
 	}
-
-	const handlePasswordChange = (text) => {
-		setPassword(text);
-
-		setIsLengthValid(text.length >= 8);
-		setHasSpecialChar(/[!@#$%^&*()_+={}\[\]:;<>,.?/~`"'\-|\\]/.test(text));
-		setHasNumber(/\d/.test(text));
-		setHasUpperCase(/[A-Z]/.test(text));
-
-		setIsPasswordValid(text === passwordConfirmation &&
-		  text !== '' &&
-		  isLengthValid &&
-		  hasSpecialChar &&
-		  hasNumber &&
-		  hasUpperCase)
-
-		setPasswordMatch(isPasswordValid);
-		setBtnDisabled(!isPasswordValid);
-	};
-
-	const handlePasswordConfirmationChange = (text) => {
-		setPasswordConfirmation(text)
-		text === password && text !== '' ? setPasswordMatch(true) : setPasswordMatch(false)
-		text === password && text !== '' ? setBtnDisabled(false) : setBtnDisabled(true)
-	}
-
-	const toggleSwitch = () => setIsEnabled(previousState => !previousState)
-
-	const onRegisterPressed = () => {
-		// console.warn("Inscription")
-		navigation.navigate('Prospect', {screen: 'HomeScreen'})
-	}
-	const onNextPressed = () => {
-		console.warn("Next")
-		// navigation.navigate('HomeScreen')
-	}
-
-	const renderButton = () => {
-		if (isEnabled) {
-			return (
-			  <CustomButton text="Suivant" onPress={onNextPressed} bgColor={"#FE881B"} deactivated={btnDisabled} />
-			);
-		} else {
-			return (
-			  <CustomButton text="S'inscrire" onPress={onRegisterPressed} bgColor={"black"} deactivated={btnDisabled} />
-			);
-		}
-	};
-
 
 	return (
 	  <View style={styles.root}>
@@ -182,41 +115,33 @@ const RegisterAdditionnalDetails = () => {
 			  <View>
 				  <CustomInput placeHolder="Mot de passe"
 				               value={password}
-				               setValue={handlePasswordChange}
+				               setValue={setPassword}
 				               secureTextEntry
 				  />
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image
-					    source={require("../../../../../assets/check-mark-validate.png")}
-					    style={{ width: 12, height: 12, marginRight: 5, tintColor: isLengthValid ? "green" : "grey" }}
-					  />
-					  <Text style={{ color: isLengthValid ? "green" : "grey" }}>8 caractères ou plus</Text>
+					  <Image source={require("../../../../../assets/check-mark-validate.png")}
+					         style={{ width: 12, height: 12, marginRight: 5 }} />
+					  <Text style={{ color: "green" }}>8 caractères ou plus</Text>
 				  </View>
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image
-                        source={require("../../../../../assets/check-mark-validate.png")}
-                        style={{ width: 12, height: 12, marginRight: 5, tintColor: hasSpecialChar ? "green" : "grey" }}
-                      />
-					  <Text style={{ color: hasSpecialChar ? "green" : "grey" }}>Charactères spéciaux</Text>
+					  <Image source={require("../../../../../assets/check-mark-validate.png")}
+					         style={{ width: 12, height: 12, marginRight: 5 }} />
+					  <Text style={{ color: "green" }}>Charactères spéciaux</Text>
 				  </View>
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image
-					    source={require("../../../../../assets/check-mark-validate.png")}
-					    style={{ width: 12, height: 12, marginRight: 5, tintColor: hasNumber ? "green" : "grey" }}
-					  />
-					  <Text style={{ color: hasNumber ? "green" : "grey" }}>Chiffres</Text>
+					  <Image source={require("../../../../../assets/check-mark-validate.png")}
+					         style={{ width: 12, height: 12, marginRight: 5 }} />
+					  <Text style={{ color: "green" }}>Chiffres</Text>
 				  </View>
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image
-					    source={require("../../../../../assets/check-mark-validate.png")}
-					    style={{ width: 12, height: 12, marginRight: 5, tintColor: hasUpperCase ? "green" : "grey" }}
-					  />
-					  <Text style={{ color: hasUpperCase ? "green" : "grey" }}>Majuscules</Text>
+					  <Image source={require("../../../../../assets/check-mark-validate.png")}
+					         style={{ width: 12, height: 12, marginRight: 5 }} />
+					  <Text style={{ color: "green" }}>Majuscules</Text>
 				  </View>
 
 				  <CustomInput placeHolder="Confirmer le mot de passe"
 				               value={passwordConfirmation}
-				               setValue={handlePasswordConfirmationChange}
+				               setValue={setPasswordConfirmation}
 				               secureTextEntry
 				  />
 			  </View>
@@ -251,7 +176,7 @@ const RegisterAdditionnalDetails = () => {
 			  <Text style={{ textAlign: "center", width: "30%" }}>Je souhaite faire visiter des biens immobiliers</Text>
 		  </View>
 
-		  {renderButton()}
+		  <CustomButton text="S'inscrire" onPress={onRegisterPressed} bgColor={"black"} />
 	  </View>
 	)
 }
