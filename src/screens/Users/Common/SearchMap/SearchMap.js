@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useCallback, useMemo, useRef, useState } from "react"
 import { Image, StyleSheet, Text, View } from "react-native"
 import { useTranslation } from "react-i18next"
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps"
@@ -6,17 +6,35 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import CustomButton from "../../../../components/CustomButton" // https://www.npmjs.com/package/react-native-modal-datetime-picker
 import { RadioButton } from "react-native-paper"
+import { BottomSheetModal, BottomSheetModalProvider } from "@gorhom/bottom-sheet"
 
 navigator.geolocation = require("react-native-geolocation-service")
 
 const SearchMap = () => {
+	// ref
+	const bottomSheetModalRef = useRef(null)
+
+	// variables
+	const snapPoints = useMemo(() => ["25%", "50%"], [])
+
+	// callbacks
+	const handlePresentModalPress = useCallback(() => {
+		bottomSheetModalRef.current?.present()
+	}, [])
+	const handleSheetChanges = useCallback((index) => {
+		console.log("handleSheetChanges", index)
+	}, [])
+
+
 	const { t } = useTranslation()
 	const [selectedPlace, setSelectedPlace] = useState(null)
 	const mapRef = useRef(null)
-	const [next, setNext] = useState(false)
 
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
 	const [date, setDate] = useState(new Date())
+	const [showResults, setShowResults] = useState(false)
+	const [showDuration, setShowDuration] = useState(false)
+	const [showDate, setShowDate] = useState(false)
 
 	const options = {
 		weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric",
@@ -37,6 +55,11 @@ const SearchMap = () => {
 
 
 	const handlePlaceSelected = (data) => {
+		setShowDate(!showDate)
+		setShowDuration(false)
+		styles.map.height = "50%"
+		handlePresentModalPress()
+
 		let placeId = data.place_id
 
 		try {
@@ -75,116 +98,138 @@ const SearchMap = () => {
 
 
 	return (<View style={styles.root}>
-		<View style={styles.mapContainer}>
-			<MapView
-			  ref={mapRef}
-			  provider={PROVIDER_GOOGLE}
-			  style={styles.map}
-			  region={{
-				  latitude: 44.933393, longitude: 4.892703, latitudeDelta: 0.0922, longitudeDelta: 0.0421,
-			  }}
-			  showUserLocation={true}
-			  showsMyLocationButton={true}
-			>
-				{selectedPlace && (<Marker
-				  coordinate={{
-					  latitude: selectedPlace.latitude, longitude: selectedPlace.longitude,
-				  }}
-				/>)}
-				{/*<Circle center={{*/}
-				{/*	latitude: 44.933393, longitude: 4.892703,*/}
-				{/*}}*/}
-				{/*        radius={500}*/}
-				{/*        fillColor="rgba(255, 0, 0, 0.1)"*/}
-				{/*        strokeColor="rgba(255, 0, 0, 0.1)"*/}
-				{/*        strokeWidth={1}*/}
-				{/*/>*/}
-			</MapView>
+		<BottomSheetModalProvider>
+			<View style={styles.container}>
+				<View style={styles.mapContainer}>
+					<MapView
+					  ref={mapRef}
+					  provider={PROVIDER_GOOGLE}
+					  style={styles.map}
+					  region={{
+						  latitude: 44.933393, longitude: 4.892703, latitudeDelta: 0.0922, longitudeDelta: 0.0421,
+					  }}
+					  showUserLocation={true}
+					  showsMyLocationButton={true}
+					>
+						{selectedPlace && (<Marker
+						  coordinate={{
+							  latitude: selectedPlace.latitude, longitude: selectedPlace.longitude,
+						  }}
+						/>)}
+						{/*<Circle center={{*/}
+						{/*	latitude: 44.933393, longitude: 4.892703,*/}
+						{/*}}*/}
+						{/*        radius={500}*/}
+						{/*        fillColor="rgba(255, 0, 0, 0.1)"*/}
+						{/*        strokeColor="rgba(255, 0, 0, 0.1)"*/}
+						{/*        strokeWidth={1}*/}
+						{/*/>*/}
+					</MapView>
 
-			<GooglePlacesAutocomplete
-			  placeholder={t("common.searchMap.searchPlaceholder")}
-			  onPress={handlePlaceSelected}
-			  query={{
-				  key: "AIzaSyBznSC8S1mPU-GPjsxuagQqnNK3a8xVOl4", language: "fr", components: "country:fr", // Limit the search to France
-			  }}
-			  nearbyPlacesAPI="GooglePlacesSearch"
-			  debounce={400}
-			  styles={styles.searchBar}
-			  currentLocation={true}
-			  currentLocationLabel="Current location"
-			/>
-		</View>
-
-		{!next ? (<View style={styles.detailsBox}>
-			<View>
-				<View style={styles.titleWithImageContainer}>
-					<Image source={require("../../../../../assets/icons/012-calendar.png")}
-					       style={styles.titleWithImageIcon} />
-					<Text style={styles.titleWithImageText}>{t("prospect.choose_a_date")}</Text>
+					<GooglePlacesAutocomplete
+					  placeholder={t("common.searchMap.searchPlaceholder")}
+					  onPress={handlePlaceSelected}
+					  query={{
+						  key: "AIzaSyBznSC8S1mPU-GPjsxuagQqnNK3a8xVOl4", language: "fr", components: "country:fr", // Limit the search to France
+					  }}
+					  nearbyPlacesAPI="GooglePlacesSearch"
+					  debounce={400}
+					  styles={styles.searchBar}
+					  currentLocation={true}
+					  currentLocationLabel="Current location"
+					/>
 				</View>
-				<Text>
-					{t("prospect.subtext_choose_a_date")}
-				</Text>
+				<BottomSheetModal
+				  ref={bottomSheetModalRef}
+				  index={1}
+				  snapPoints={snapPoints}
+				  onChange={handleSheetChanges}
+				>
+					<View style={styles.contentContainer}>
+
+
+
+						{showDate ? (<View style={styles.detailsBox}>
+							<View>
+								<View style={styles.titleWithImageContainer}>
+									<Image source={require("../../../../../assets/icons/012-calendar.png")}
+									       style={styles.titleWithImageIcon} />
+									<Text style={styles.titleWithImageText}>{t("prospect.choose_a_date")}</Text>
+								</View>
+								<Text>
+									{t("prospect.subtext_choose_a_date")}
+								</Text>
+							</View>
+
+							<View>
+								<CustomButton
+								  text={Intl.DateTimeFormat("fr-FR", options).format(date).charAt(0).toUpperCase() + Intl.DateTimeFormat("fr-FR", options).format(date).slice(1)}
+								  onPress={showDatePicker}
+								  bgColor={"rgba(255,127,80,0.35)"}
+								  fgColor={"black"} />
+								<DateTimePickerModal
+								  isVisible={isDatePickerVisible}
+								  mode="datetime"
+								  onConfirm={handleConfirm}
+								  onCancel={hideDatePicker}
+								  date={date}
+
+								/>
+							</View>
+
+							<CustomButton
+							  text={t("common.next")}
+							  bgColor={"#FF7F50"}
+							  onPress={() => {
+								  setShowDate(!showDate)
+								  setShowDuration(!showDuration)
+							  }}
+							/>
+						</View>) : null}
+
+
+						{showDuration ? (<View style={styles.detailsBox}>
+							<View>
+								<View style={styles.titleWithImageContainer}>
+									<Image source={require("../../../../../assets/icons/001-home.png")}
+									       style={styles.titleWithImageIcon} />
+									<Text style={styles.titleWithImageText}>{t("prospect.type_of_property")}</Text>
+								</View>
+								<Text style={styles.subtitle}>
+									{t("prospect.subtext_type_of_property")}
+								</Text>
+							</View>
+
+							<View>
+								{radioItems.map((item) => (
+								  <View key={item.value} style={{ flexDirection: "row", alignItems: "center" }}>
+									  <RadioButton
+										value={item.value}
+										status={selectedValue === item.value ? "checked" : "unchecked"}
+										onPress={() => setSelectedValue(item.value)}
+										color={"#FF7F50"}
+									  />
+									  <Text>{item.label}</Text>
+								  </View>
+								))}
+							</View>
+
+							<CustomButton
+							  text={t("common.search")}
+							  bgColor={"#FF7F50"}
+							  onPress={() => {
+								  console.warn("TODO")
+								  setShowDate(!showDate)
+								  setShowResults(!showResults)
+							  }}
+							/>
+						</View>) : null}
+
+
+					</View>
+				</BottomSheetModal>
 			</View>
-
-			<View>
-				<CustomButton
-				  text={Intl.DateTimeFormat("fr-FR", options).format(date).charAt(0).toUpperCase() + Intl.DateTimeFormat("fr-FR", options).format(date).slice(1)}
-				  onPress={showDatePicker}
-				  bgColor={"rgba(255,127,80,0.35)"}
-				  fgColor={"black"} />
-				<DateTimePickerModal
-				  isVisible={isDatePickerVisible}
-				  mode="datetime"
-				  onConfirm={handleConfirm}
-				  onCancel={hideDatePicker}
-				  date={date}
-
-				/>
-			</View>
-
-			<CustomButton
-			  text={t("common.next")}
-			  bgColor={"#FF7F50"}
-			  onPress={() => setNext(!next)}
-			/>
-		</View>) : (<View style={styles.detailsBox}>
-			<View>
-				<View style={styles.titleWithImageContainer}>
-					<Image source={require("../../../../../assets/icons/001-home.png")}
-					       style={styles.titleWithImageIcon} />
-					<Text style={styles.titleWithImageText}>{t("prospect.type_of_property")}</Text>
-				</View>
-				<Text style={styles.subtitle}>
-					{t("prospect.subtext_type_of_property")}
-				</Text>
-			</View>
-
-			<View>
-				{radioItems.map((item) => (
-				  <View key={item.value} style={{ flexDirection: "row", alignItems: "center" }}>
-					  <RadioButton
-						value={item.value}
-						status={selectedValue === item.value ? "checked" : "unchecked"}
-						onPress={() => setSelectedValue(item.value)}
-						color={"#FF7F50"}
-					  />
-					  <Text>{item.label}</Text>
-				  </View>
-				))}
-			</View>
-
-			<CustomButton
-			  text={t("common.search")}
-			  bgColor={"#FF7F50"}
-			  onPress={() => {
-				  console.warn("TODO")
-				  setNext(!next)
-			  }}
-			/>
-		</View>)}
-
-
+		</BottomSheetModalProvider>
 	</View>)
 }
 
@@ -194,7 +239,8 @@ const styles = StyleSheet.create({
 	}, mapContainer: {
 		height: "100%", width: "100%", justifyContent: "flex-end", alignItems: "center",
 	}, map: {
-		...StyleSheet.absoluteFillObject,
+		width: "100%", height: "100%",
+		top: 0, left: 0, right: 0, bottom: 0, position: "absolute",
 	}, searchBar: {
 		container: {
 			position: "absolute", top: 50, left: 10, right: 10, borderRadius: 20, shadowColor: "#000", elevation: 10,
@@ -211,12 +257,13 @@ const styles = StyleSheet.create({
 		}, separator: {
 			height: 0.5, backgroundColor: "#3400fd",
 		},
-	}, detailsBox: {
+	},
+	detailsBox: {
 		position: "absolute",
 		bottom: 0,
 		left: 0,
 		right: 0,
-		height: "60%",
+		height: "100%",
 		backgroundColor: "white",
 		borderTopLeftRadius: 20,
 		borderTopRightRadius: 20,
@@ -234,6 +281,15 @@ const styles = StyleSheet.create({
 		width: 25, height: 25,
 	}, subtitle: {
 		marginTop: 7,
+	},
+	container: {
+		flex: 1,
+		justifyContent: "center",
+		backgroundColor: "grey",
+	},
+	contentContainer: {
+		flex: 1,
+		alignItems: "center",
 	},
 })
 
