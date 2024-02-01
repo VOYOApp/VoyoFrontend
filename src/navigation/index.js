@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -22,6 +22,9 @@ import NoInternet from "../screens/NoInternet"
 import SearchMap from "../screens/Users/Common/SearchMap"
 import Chat from "../screens/Users/Common/Chat"
 import ChatChannel from "../screens/Users/Common/ChatChannel"
+
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebaseConfig';
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -141,33 +144,45 @@ function Prospect() {
 // }
 
 function Navigation() {
-	const [isLoggedIn, setLoggedIn] = React.useState(false);
+	// const [isLoggedIn, setLoggedIn] = React.useState(false);
+	//
+	// const handleLogin = () => {
+	// 	setLoggedIn(true);
+	// };
+	//
+	// const handleLogout = () => {
+	// 	setLoggedIn(false);
+	// };
 
-	const handleLogin = () => {
-		setLoggedIn(true);
-	};
+	const [user, setUser] = useState(null);
 
-	const handleLogout = () => {
-		setLoggedIn(false);
-	};
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			setUser(user);
+		});
+
+		// Assurez-vous de vous désabonner lorsque le composant est démonté
+		return () => unsubscribe();
+	}, []);
+
 
 	return (
 	  <NavigationContainer>
 		  <Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
-			  {/*{isLoggedIn ? (*/}
-			  {/*  // Screens for logged in users*/}
+			  {user ? (
+			    // Screens for logged in users
 			  <Stack.Group>
 				  <Stack.Screen name="Prospect" component={Prospect} />
 				  <Stack.Screen name="Common" component={Common} />
 			  </Stack.Group>
-			  {/*) : (*/}
-				{/*// Auth screens*/}
+			  ) : (
+				// Auth screens
 			  <Stack.Group>
 				  <Stack.Screen name="HomeScreen" component={HomeScreen} />
 				  <Stack.Screen name="SignUp" component={SignUp} />
 				  <Stack.Screen name="SignIn" component={SignIn} />
 			  </Stack.Group>
-			  {/*)}*/}
+			  )}
 			  {/* Common modal screens */}
 			  <Stack.Screen name="NoInternet" component={NoInternet} />
 		  </Stack.Navigator>
