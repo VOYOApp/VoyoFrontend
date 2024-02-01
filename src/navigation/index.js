@@ -18,6 +18,7 @@ import MailConfirmation from "../screens/Sessions/Inscription/MailConfirmation"
 import PhoneConfirmation from "../screens/Sessions/Inscription/PhoneConfirmation"
 import ProspectHome from "../screens/Users/Prospect/ProspectHome"
 import UserPage from "../screens/Users/UserPage"
+import DetailsVisitor from "../screens/Users/Prospect/DetailsVisitor"
 import NoInternet from "../screens/NoInternet"
 import SearchMap from "../screens/Users/Common/SearchMap"
 import Chat from "../screens/Users/Common/Chat"
@@ -59,6 +60,7 @@ function HomeProspect() {
 	  <Stack.Navigator initialRouteName="ProspectHome" screenOptions={{ headerShown: false }}>
 		  <Stack.Screen name="ProspectHome" component={ProspectHome} />
 		  <Stack.Screen name="UserPage" component={UserPage} />
+		  <Stack.Screen name="DetailsVisitor" component={DetailsVisitor} />
 		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
 	  </Stack.Navigator>
 	);
