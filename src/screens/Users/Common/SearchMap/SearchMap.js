@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from "react"
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native"
 import { useTranslation } from "react-i18next"
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps"
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
@@ -7,6 +7,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker"
 import CustomButton from "../../../../components/CustomButton" // https://www.npmjs.com/package/react-native-modal-datetime-picker
 import { RadioButton } from "react-native-paper"
 import { BottomSheetModal, BottomSheetModalProvider } from "@gorhom/bottom-sheet"
+import SearchResultPerson from "../../../../components/SearchResultPerson"
 
 navigator.geolocation = require("react-native-geolocation-service")
 
@@ -15,7 +16,7 @@ const SearchMap = () => {
 	const bottomSheetModalRef = useRef(null)
 
 	// variables
-	const snapPoints = useMemo(() => ["25%", "50%"], [])
+	const snapPoints = useMemo(() => ["20%", "60%"], [])
 
 	// callbacks
 	const handlePresentModalPress = useCallback(() => {
@@ -55,8 +56,9 @@ const SearchMap = () => {
 
 
 	const handlePlaceSelected = (data) => {
-		setShowDate(!showDate)
+		setShowDate(true)
 		setShowDuration(false)
+		setShowResults(false)
 		styles.map.height = "50%"
 		handlePresentModalPress()
 
@@ -72,8 +74,19 @@ const SearchMap = () => {
 					latitude, longitude,
 				})
 
+				// latitude = json.results[0].geometry.location.lat - 0.001
+
+				// Get screen dimensions
+				const { height } = Dimensions.get("window")
+
+				// Calculate the offset based on screen height
+				const offsetFactor = 0.000001 // Adjust this factor based on your preference
+				const offset = offsetFactor * height
+
+				latitude -= offset
+
 				mapRef.current.animateToRegion({
-					latitude, longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0021,
+					latitude, longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0031,
 				}, 2000)
 			})
 			.catch((error) => {
@@ -139,6 +152,8 @@ const SearchMap = () => {
 					  currentLocationLabel="Current location"
 					/>
 				</View>
+
+
 				<BottomSheetModal
 				  ref={bottomSheetModalRef}
 				  index={1}
@@ -146,8 +161,6 @@ const SearchMap = () => {
 				  onChange={handleSheetChanges}
 				>
 					<View style={styles.contentContainer}>
-
-
 
 						{showDate ? (<View style={styles.detailsBox}>
 							<View>
@@ -218,14 +231,30 @@ const SearchMap = () => {
 							  text={t("common.search")}
 							  bgColor={"#FF7F50"}
 							  onPress={() => {
-								  console.warn("TODO")
-								  setShowDate(!showDate)
-								  setShowResults(!showResults)
+								  if (selectedValue === "") {
+									  alert("Please select a value")
+								  } else {
+									  setShowDate(false)
+									  setShowDuration(false)
+									  setShowResults(true)
+								  }
 							  }}
 							/>
 						</View>) : null}
 
 
+						{showResults ? (<View style={styles.detailsBox}>
+							<View>
+								<View style={styles.titleWithImageContainer}>
+									<Image source={require("../../../../../assets/icons/005-invoice.png")}
+									       style={styles.titleWithImageIcon} />
+									<Text style={styles.titleWithImageText}>{t("common.result.other")}</Text>
+								</View>
+							</View>
+							<View>
+								<SearchResultPerson/>
+							</View>
+						</View>) : null}
 					</View>
 				</BottomSheetModal>
 			</View>

@@ -39,7 +39,11 @@
     },
     "next": "Suivant",
     "validate": "Valider",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "result": {
+      "one": "Résultat",
+      "other": "Résultats"
+    }
   },
   "prospect": {
     "programmed_visite": {
