@@ -154,35 +154,24 @@ function Navigation() {
 	// 	setLoggedIn(false);
 	// };
 
-	const [user, setUser] = useState(null);
-
-	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			setUser(user);
-		});
-
-		// Assurez-vous de vous désabonner lorsque le composant est démonté
-		return () => unsubscribe();
-	}, []);
-
 
 	return (
 	  <NavigationContainer>
 		  <Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
-			  {user ? (
-			    // Screens for logged in users
+			  {/*{isLoggedIn ? (*/}
+			  {/*  // Screens for logged in users*/}
 			  <Stack.Group>
 				  <Stack.Screen name="Prospect" component={Prospect} />
 				  <Stack.Screen name="Common" component={Common} />
 			  </Stack.Group>
-			  ) : (
-				// Auth screens
+			  {/*) : (*/}
+				{/*// Auth screens*/}
 			  <Stack.Group>
 				  <Stack.Screen name="HomeScreen" component={HomeScreen} />
 				  <Stack.Screen name="SignUp" component={SignUp} />
 				  <Stack.Screen name="SignIn" component={SignIn} />
 			  </Stack.Group>
-			  )}
+			  {/*)}*/}
 			  {/* Common modal screens */}
 			  <Stack.Screen name="NoInternet" component={NoInternet} />
 		  </Stack.Navigator>
