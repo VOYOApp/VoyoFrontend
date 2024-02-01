@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Image } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -91,25 +92,30 @@ function Common() {
 
 function Prospect() {
 	return (
-	  <Tab.Navigator initialRouteName="HomeProspect" screenOptions={{ tabBarShowLabel: false }}>
+	  <Tab.Navigator initialRouteName="HomeProspect" screenOptions={{ tabBarShowLabel: false, 
+	  tabBarStyle: { marginBottom:0 }}}>
 		  <Tab.Screen name="HomeProspect" component={HomeProspect} options={{
 			  headerShown: false,
 			  tabBarLabel: 'Home',
-			  tabBarIcon: ({ color }) => (
-			    <MaterialCommunityIcons name="home" color={color} size={26} />
+			  tabBarIcon: ({ color, focused }) => (
+			    // <MaterialCommunityIcons name="home" color={color} size={26} />
+				<Image source={require("../../assets/home_locked.png")} color={color} 
+				style={{ tintColor: focused ? '#F99342' : color, width: 22, height: 22 }}/>
 			  ),
 		  }}/>
 		  <Tab.Screen name="SearchProspect" component={SearchProspect} options={{
 			  headerShown: false,
 			  tabBarLabel: 'Search',
-			  tabBarIcon: ({ color }) => (
-			    <MaterialCommunityIcons name="magnify" color={color} size={26} />
+			  tabBarIcon: ({ color, focused }) => (
+			    <Image source={require("../../assets/search_locked.png")} color={color} 
+				style={{ tintColor: focused ? '#FC4F45' : color, width: 22, height: 22 }}/>
 			  ),
 		  }}/>
 		  <Tab.Screen name="ChatChannel" component={ChatChannel} options={{
 			  tabBarLabel: 'Chat',
-			  tabBarIcon: ({ color }) => (
-			    <MaterialCommunityIcons name="chat" color={color} size={26} />
+			  tabBarIcon: ({ color, focused }) => (
+			    <Image source={require("../../assets/chat_locked.png")} 
+				style={{ tintColor: focused ? '#B34BFF' : color, width: 22, height: 22 }}/>
 			  ),
 		  }}/>
 		   {/*Ajoutez d'autres onglets si nécessaire*/}
