@@ -8,7 +8,7 @@ import CustomButton from "../../../../components/CustomButton" // https://www.np
 import { RadioButton } from "react-native-paper"
 import { BottomSheetModal, BottomSheetModalProvider } from "@gorhom/bottom-sheet"
 import SearchResultPerson from "../../../../components/SearchResultPerson"
-import { Picker } from "@react-native-picker/picker"
+import { IndexPath, Select, SelectItem } from "@ui-kitten/components"
 
 navigator.geolocation = require("react-native-geolocation-service")
 
@@ -149,15 +149,17 @@ const SearchMap = () => {
 	}, // { label: t("prospect.visits_duration.custom_duration"), value: "option6" },
 	]
 
-
-	const sortResults = (itemValue) => {
+	const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0))
+	const sortingChoices = [t("common.star.other"), t("common.price"), t("common.distance")]
+	const displayValue = sortingChoices[selectedIndex.row]
+	const sortResults = (index) => {
 		let sortedResults = []
 
-		if (itemValue === "stars") {
+		if (index.row === 0) {
 			sortedResults = [...searchResults].sort((a, b) => b.note - a.note)
-		} else if (itemValue === "price") {
+		} else if (index.row === 1) {
 			sortedResults = [...searchResults].sort((a, b) => a.price - b.price)
-		} else if (itemValue === "distance") {
+		} else if (index.row === 2) {
 			sortedResults = [...searchResults].sort((a, b) => a.distance - b.distance)
 		}
 
@@ -299,29 +301,36 @@ const SearchMap = () => {
 
 						{showResults ? (<View style={styles.detailsBox}>
 							<View>
-								<View style={styles.titleWithImageContainer}>
-									<Image source={require("../../../../../assets/icons/005-invoice.png")}
-									       style={styles.titleWithImageIcon} />
-									<Text style={styles.titleWithImageText}>{t("common.result.other")}</Text>
+								<View style={styles.titleAndFilter}>
+									<View style={styles.titleWithImageContainer}>
+										<Image source={require("../../../../../assets/icons/005-invoice.png")}
+										       style={styles.titleWithImageIcon} />
+										<Text style={styles.titleWithImageText}>{t("common.result.other")}</Text>
+									</View>
+
+									<Select
+									  selectedIndex={selectedIndex}
+									  onSelect={(index) => {
+										  setSelectedIndex(index)
+										  sortResults(index)
+									  }}
+									  value={displayValue}
+									  style={{
+										  width: "100%", borderRadius: 20, maxWidth: 130, alignSelf: "center",
+									  }}
+									>
+										<SelectItem title={t("common.star.other")} />
+										<SelectItem title={t("common.price")} />
+										<SelectItem title={t("common.distance")} />
+									</Select>
 								</View>
 
-								<Picker
-								  onValueChange={(itemValue) => sortResults(itemValue)}
-								  style={{ height: "auto", width: "auto", backgroundColor: "orange" }}
-								>
-									<Picker.Item label="Défaut" value="stars" />
-									<Picker.Item label={t("common.stars")} value="stars" />
-									<Picker.Item label={t("common.prix")} value="price" />
-									<Picker.Item label={t("common.distance")} value="distance" />
-								</Picker>
 
 							</View>
 							<ScrollView style={styles.searchResults} contentContainerStyle={{ flexGrow: 1 }}>
-								{searchResults.map((person, index) => (
-								  <View key={index}>
-									  <SearchResultPerson data={person} />
-								  </View>
-								))}
+								{searchResults.map((person, index) => (<View key={index}>
+									<SearchResultPerson data={person} />
+								</View>))}
 							</ScrollView>
 						</View>) : null}
 					</View>
@@ -381,7 +390,10 @@ const styles = StyleSheet.create({
 		flex: 1, justifyContent: "center", backgroundColor: "grey",
 	}, contentContainer: {
 		flex: 1, alignItems: "center",
-	}, searchResults: undefined,
+	},
+	titleAndFilter:{
+		display: "flex", flexDirection: "row", justifyContent: "space-between",
+	}
 
 })
 
