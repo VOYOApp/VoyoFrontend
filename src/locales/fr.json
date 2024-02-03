@@ -43,7 +43,13 @@
     "result": {
       "one": "Résultat",
       "other": "Résultats"
-    }
+    },
+    "price": "Prix",
+    "star": {
+      "one": "Note",
+      "other": "Notes"
+    },
+    "distance": "Distance"
   },
   "prospect": {
     "programmed_visite": {
