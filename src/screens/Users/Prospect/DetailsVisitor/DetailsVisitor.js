@@ -41,6 +41,7 @@ const DetailsVisitor = () => {
 							  <Text className={"text-2xl font-semibold mr-2"}>{dataVisitor.name}</Text>
 							  <BackButton />
 						  </View>
+						  {/*<Text className={"text-sm font-light mb-2"}>yohann@proton.me</Text>*/}
 						  <View className={"flex-row"}>
 							  <TouchableOpacity
 								className={"bg-blue-400 w-[50%] h-8 items-center mr-2 flex-row rounded-3xl"}
