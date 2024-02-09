@@ -37,11 +37,10 @@ const DetailsVisitor = () => {
 						style={[styles.profilePic, { height: height }]}
 						resizeMode="cover" />
 					  <View className={"w-full ml-3"}>
-						  <View className={"flex-row items-center"}>
+						  <View className={"flex-row items-center mb-2"}>
 							  <Text className={"text-2xl font-semibold mr-2"}>{dataVisitor.name}</Text>
 							  <BackButton />
 						  </View>
-						  <Text className={"text-sm font-light mb-2"}>yohann@proton.me</Text>
 						  <View className={"flex-row"}>
 							  <TouchableOpacity
 								className={"bg-blue-400 w-[50%] h-8 items-center mr-2 flex-row rounded-3xl"}
