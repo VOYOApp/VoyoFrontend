@@ -186,7 +186,7 @@ const RegisterAdditionnalDetails = () => {
 				placeholder="Bio"
 				value={bio}
 				onChangeText={handleBioChange}
-				maxLength={200}
+				maxLength={400}
 				style={{
 					backgroundColor: "#f0f0f0",
 					height: 50,
