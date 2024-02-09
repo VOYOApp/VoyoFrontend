@@ -48,11 +48,11 @@ const SearchMap = () => {
 		map: {
 			coordinates: { "latitude": 44.91689119999999, "longitude": 4.9328504 }, radius: 1000,
 		},
-		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures\n" +
-		  "\t\t\t\t\t\t  logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En\n" +
-		  "\t\t\t\t\t\t  dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du\n" +
-		  "\t\t\t\t\t\t  développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire\n" +
-		  "\t\t\t\t\t\t  passionnante. 💻🚀",
+		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures " +
+		  "logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En " +
+		  "dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du " +
+		  "développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire " +
+		  "passionnante. 💻🚀",
 		nbOfVisits: 5,
 	}, {
 		profilePicture: "https://randomuser.me/api/portraits/men/95.jpg",
@@ -63,11 +63,11 @@ const SearchMap = () => {
 		map: {
 			coordinates: { "latitude": 44.925527, "longitude": 4.92091 }, radius: 1500,
 		},
-		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures\n" +
-		  "\t\t\t\t\t\t  logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En\n" +
-		  "\t\t\t\t\t\t  dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du\n" +
-		  "\t\t\t\t\t\t  développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire\n" +
-		  "\t\t\t\t\t\t  passionnante. 💻🚀",
+		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures " +
+		  "logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En " +
+		  "dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du " +
+		  "développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire " +
+		  "passionnante. 💻🚀",
 		nbOfVisits: 5,
 	}, {
 		profilePicture: "https://randomuser.me/api/portraits/women/59.jpg",
@@ -78,11 +78,11 @@ const SearchMap = () => {
 		map: {
 			coordinates: { "latitude": 44.933393, "longitude": 4.89236 }, radius: 2000,
 		},
-		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures\n" +
-		  "\t\t\t\t\t\t  logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En\n" +
-		  "\t\t\t\t\t\t  dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du\n" +
-		  "\t\t\t\t\t\t  développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire\n" +
-		  "\t\t\t\t\t\t  passionnante. 💻🚀",
+		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures " +
+		  "logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En " +
+		  "dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du " +
+		  "développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire " +
+		  "passionnante. 💻🚀",
 		nbOfVisits: 5,
 	}, {
 		profilePicture: "https://randomuser.me/api/portraits/women/59.jpg",
@@ -93,11 +93,11 @@ const SearchMap = () => {
 		map: {
 			coordinates: { "latitude": 44.920177, "longitude": 4.899143 }, radius: 1700,
 		},
-		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures\n" +
-		  "\t\t\t\t\t\t  logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En\n" +
-		  "\t\t\t\t\t\t  dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du\n" +
-		  "\t\t\t\t\t\t  développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire\n" +
-		  "\t\t\t\t\t\t  passionnante. 💻🚀",
+		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures " +
+		  "logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En " +
+		  "dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du " +
+		  "développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire " +
+		  "passionnante. 💻🚀",
 		nbOfVisits: 5,
 	}])
 
