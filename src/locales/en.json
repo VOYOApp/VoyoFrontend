@@ -39,7 +39,17 @@
     },
     "next": "Next",
     "validate": "Validate",
-    "search": "Search"
+    "search": "Search",
+    "result": {
+      "one": "Result",
+      "other": "Results"
+    },
+    "price": "Price",
+    "star": {
+      "one": "Star",
+      "other": "Stars"
+    },
+    "distance": "Distance"
   },
   "prospect": {
     "programmed_visite": {
