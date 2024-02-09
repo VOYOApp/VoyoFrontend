@@ -2,15 +2,20 @@ import React from "react"
 import { Image, StyleSheet, Text, View } from "react-native"
 import CustomButton from "../CustomButton"
 import { useTranslation } from "react-i18next"
+import { useNavigation } from "@react-navigation/native"
 
 const SearchResultPerson = (data) => {
 	const { t } = useTranslation()
-
+	const navigation = useNavigation()
 	data = data.data
 
 	// Screen width
 	const width = window.innerWidth
 	styles.rowWithImage.maxWidth = width - (styles.profilePicture.width + styles.btn.marginRight + 80 + 20 + 10 + 10)
+
+	const goToProfilePage = () => {
+		navigation.navigate("HomeProspect", { params: {data}, screen: "DetailsVisitor" })
+	}
 
 	return (
 	  <View style={styles.card}>
@@ -41,7 +46,7 @@ const SearchResultPerson = (data) => {
 		  </View>
 
 		  <View style={styles.btn}>
-			  <CustomButton text={"RDV"} widthBtn={80} heightBtn={40} />
+			  <CustomButton text={"RDV"} widthBtn={80} heightBtn={40} onPress={goToProfilePage}/>
 		  </View>
 	  </View>
 

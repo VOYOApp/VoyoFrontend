@@ -58,7 +58,7 @@ function SignIn() {
 // PROSPECT STACKS (Home, Search, CustomListItem)
 function HomeProspect() {
 	return (
-	  <Stack.Navigator initialRouteName="ProspectHome" screenOptions={{ headerShown: false }}>
+	  <Stack.Navigator screenOptions={{ headerShown: false }}>
 		  <Stack.Screen name="ProspectHome" component={ProspectHome} />
 		  <Stack.Screen name="UserPage" component={UserPage} />
 		  <Stack.Screen name="DetailsVisitor" component={DetailsVisitor} />
