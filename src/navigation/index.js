@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Image } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -18,6 +19,7 @@ import MailConfirmation from "../screens/Sessions/Inscription/MailConfirmation"
 import PhoneConfirmation from "../screens/Sessions/Inscription/PhoneConfirmation"
 import ProspectHome from "../screens/Users/Prospect/ProspectHome"
 import UserPage from "../screens/Users/UserPage"
+import DetailsVisitor from "../screens/Users/Prospect/DetailsVisitor"
 import NoInternet from "../screens/NoInternet"
 import SearchMap from "../screens/Users/Common/SearchMap"
 import Chat from "../screens/Users/Common/Chat"
@@ -56,9 +58,10 @@ function SignIn() {
 // PROSPECT STACKS (Home, Search, CustomListItem)
 function HomeProspect() {
 	return (
-	  <Stack.Navigator initialRouteName="ProspectHome" screenOptions={{ headerShown: false }}>
+	  <Stack.Navigator screenOptions={{ headerShown: false }}>
 		  <Stack.Screen name="ProspectHome" component={ProspectHome} />
 		  <Stack.Screen name="UserPage" component={UserPage} />
+		  <Stack.Screen name="DetailsVisitor" component={DetailsVisitor} />
 		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
 	  </Stack.Navigator>
 	);
@@ -91,25 +94,30 @@ function Common() {
 
 function Prospect() {
 	return (
-	  <Tab.Navigator initialRouteName="HomeProspect" screenOptions={{ tabBarShowLabel: false }}>
+	  <Tab.Navigator screenOptions={{ tabBarShowLabel: false,
+	  tabBarStyle: { marginBottom:0 }}}>
 		  <Tab.Screen name="HomeProspect" component={HomeProspect} options={{
 			  headerShown: false,
 			  tabBarLabel: 'Home',
-			  tabBarIcon: ({ color }) => (
-			    <MaterialCommunityIcons name="home" color={color} size={26} />
+			  tabBarIcon: ({ color, focused }) => (
+			    // <MaterialCommunityIcons name="home" color={color} size={26} />
+				<Image source={require("../../assets/home_locked.png")} color={color} 
+				style={{ tintColor: focused ? '#F99342' : color, width: 22, height: 22 }}/>
 			  ),
 		  }}/>
 		  <Tab.Screen name="SearchProspect" component={SearchProspect} options={{
 			  headerShown: false,
 			  tabBarLabel: 'Search',
-			  tabBarIcon: ({ color }) => (
-			    <MaterialCommunityIcons name="magnify" color={color} size={26} />
+			  tabBarIcon: ({ color, focused }) => (
+			    <Image source={require("../../assets/search_locked.png")} color={color} 
+				style={{ tintColor: focused ? '#FC4F45' : color, width: 22, height: 22 }}/>
 			  ),
 		  }}/>
 		  <Tab.Screen name="ChatChannel" component={ChatChannel} options={{
 			  tabBarLabel: 'Chat',
-			  tabBarIcon: ({ color }) => (
-			    <MaterialCommunityIcons name="chat" color={color} size={26} />
+			  tabBarIcon: ({ color, focused }) => (
+			    <Image source={require("../../assets/chat_locked.png")} 
+				style={{ tintColor: focused ? '#B34BFF' : color, width: 22, height: 22 }}/>
 			  ),
 		  }}/>
 		   {/*Ajoutez d'autres onglets si nécessaire*/}
