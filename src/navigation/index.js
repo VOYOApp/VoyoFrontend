@@ -94,7 +94,7 @@ function Common() {
 
 function Prospect() {
 	return (
-	  <Tab.Navigator initialRouteName="HomeProspect" screenOptions={{ tabBarShowLabel: false, 
+	  <Tab.Navigator screenOptions={{ tabBarShowLabel: false,
 	  tabBarStyle: { marginBottom:0 }}}>
 		  <Tab.Screen name="HomeProspect" component={HomeProspect} options={{
 			  headerShown: false,

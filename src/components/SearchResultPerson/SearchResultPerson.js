@@ -37,7 +37,7 @@ const SearchResultPerson = (data) => {
 			  </View>
 			  <View style={styles.rowWithImage}>
 				  <Image source={require("../../../assets/icons/long-distance.png")} style={styles.logoBigger} />
-				  <Text>{data.distance}</Text>
+				  <Text>{data.distance} m</Text>
 			  </View>
 			  <View style={styles.rowWithImage}>
 				  <Image source={require("../../../assets/icons/008-dollar.png")} style={styles.logo} />
