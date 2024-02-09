@@ -31,7 +31,7 @@ const DetailsVisitor = () => {
 			  <View className={"p-4 bg-white w-full h-[30%] rounded-2xl"} style={styles.shadowProp}>
 				  <View className={"flex-row"}>
 					  <Image
-						source={require("../../../../../assets/avatar2.jpg")}
+						source={require("../../../../../assets/icons/avartar2.jpg")}
 						style={[styles.profilePic, { height: height }]}
 						resizeMode="cover" />
 					  <View className={"w-full ml-3"}>
