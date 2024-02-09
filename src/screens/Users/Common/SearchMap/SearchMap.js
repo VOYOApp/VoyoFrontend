@@ -123,17 +123,15 @@ const SearchMap = () => {
 	}
 
 
-	const [dataFromChild, setDataFromChild] = useState();
+	const [dataFromChild, setDataFromChild] = useState()
 	const handleDataFromChild = useCallback((data) => {
-		setDataFromChild(data);
+		setDataFromChild(data)
 
 		setShowDate(true)
 		setShowDuration(false)
 		setShowResults(false)
-		styles.map.height = "50%"
 		handlePresentModalPress()
-	}, []);
-
+	}, [])
 
 
 	return (<View style={styles.root}>
@@ -286,26 +284,6 @@ const SearchMap = () => {
 const styles = StyleSheet.create({
 	root: {
 		flex: 1,
-	}, mapContainer: {
-		height: "100%", width: "100%", justifyContent: "flex-end", alignItems: "center",
-	}, map: {
-		width: "100%", height: "100%", top: 0, left: 0, right: 0, bottom: 0, position: "absolute",
-	}, searchBar: {
-		container: {
-			position: "absolute", top: 50, left: 10, right: 10, borderRadius: 20, shadowColor: "#000", elevation: 10,
-		}, textInputContainer: {
-			width: "100%", borderRadius: 20,
-		}, textInput: {
-			borderRadius: 100,
-		}, poweredContainer: {
-			display: "none",
-		}, listView: {
-			borderRadius: 20, backgroundColor: "#f5d4c6",
-		}, row: {
-			backgroundColor: "#f5d4c6", padding: 13, height: 50, flexDirection: "row", borderRadius: 20,
-		}, separator: {
-			height: 0.5, backgroundColor: "#3400fd",
-		},
 	}, detailsBox: {
 		position: "absolute",
 		bottom: 0,

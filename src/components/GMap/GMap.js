@@ -49,7 +49,7 @@ const GMap = ({ hasSearch = false, marker, onData }) => {
 				const { height } = Dimensions.get("window")
 
 				// Calculate the offset based on screen height
-				const offsetFactor = 0.0000006 // Adjust this factor based on your preference
+				const offsetFactor = 0.000001 // Adjust this factor based on your preference (the higher the upper)
 				const offset = offsetFactor * height
 
 				latitude -= offset
