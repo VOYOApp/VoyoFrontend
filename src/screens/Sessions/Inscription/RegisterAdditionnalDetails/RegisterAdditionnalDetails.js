@@ -1,18 +1,17 @@
 import React, { useState } from "react"
-import { Image, StyleSheet, Switch, Text, TextInput, useWindowDimensions, View } from "react-native"
+import { Image, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, StyleSheet, Switch, Text, TextInput, useWindowDimensions, View } from "react-native"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import CustomInput from "../../../../components/CustomInput"
 import CustomButton from "../../../../components/CustomButton"
 import BackButton from "../../../../components/BackButton"
-
-import { auth } from '../../../../../firebaseConfig';
-import { createUserWithEmailAndPassword, updateProfile, linkWithCredential, PhoneAuthProvider } from 'firebase/auth';
+import { auth } from "../../../../../firebaseConfig"
+import { createUserWithEmailAndPassword, updateProfile, linkWithCredential, PhoneAuthProvider } from "firebase/auth"
 
 const RegisterAdditionnalDetails = () => {
 	const route = useRoute()
 	const user = route.params?.user
 
-	const [avatar, setAvatar] = useState('');
+	const [avatar, setAvatar] = useState("")
 	const [lastName, setLastName] = useState("")
 	const [firstName, setFirstName] = useState("")
 	const [bio, setBio] = useState("")
@@ -22,12 +21,12 @@ const RegisterAdditionnalDetails = () => {
 	const [passwordConfirmation, setPasswordConfirmation] = useState("")
 	const [isEnabled, setIsEnabled] = useState(false)
 	const [btnDisabled, setBtnDisabled] = useState(true)
-	const [isPasswordValid, setIsPasswordValid] = useState(false);
-	const [passwordMatch, setPasswordMatch] = useState(true);
-	const [isLengthValid, setIsLengthValid] = useState(false);
-	const [hasSpecialChar, setHasSpecialChar] = useState(false);
-	const [hasNumber, setHasNumber] = useState(false);
-	const [hasUpperCase, setHasUpperCase] = useState(false);
+	const [isPasswordValid, setIsPasswordValid] = useState(false)
+	const [passwordMatch, setPasswordMatch] = useState(true)
+	const [isLengthValid, setIsLengthValid] = useState(false)
+	const [hasSpecialChar, setHasSpecialChar] = useState(false)
+	const [hasNumber, setHasNumber] = useState(false)
+	const [hasUpperCase, setHasUpperCase] = useState(false)
 	// const [allCriteriaValid, setAllCriteriaValid] = useState(false);
 
 	const { height } = useWindowDimensions()
@@ -56,28 +55,28 @@ const RegisterAdditionnalDetails = () => {
 	}
 
 	const handlePasswordChange = (text) => {
-		setPassword(text);
+		setPassword(text)
 
-		setIsLengthValid(text.length >= 8);
-		setHasSpecialChar(/[!@#$%^&*()_+={}\[\]:;<>,.?/~`"'\-|\\]/.test(text));
-		setHasNumber(/\d/.test(text));
-		setHasUpperCase(/[A-Z]/.test(text));
+		setIsLengthValid(text.length >= 8)
+		setHasSpecialChar(/[!@#$%^&*()_+={}\[\]:;<>,.?/~`"'\-|\\]/.test(text))
+		setHasNumber(/\d/.test(text))
+		setHasUpperCase(/[A-Z]/.test(text))
 
 		setIsPasswordValid(text === passwordConfirmation &&
-		  text !== '' &&
+		  text !== "" &&
 		  isLengthValid &&
 		  hasSpecialChar &&
 		  hasNumber &&
 		  hasUpperCase)
 
-		setPasswordMatch(isPasswordValid);
-		setBtnDisabled(!isPasswordValid);
-	};
+		setPasswordMatch(isPasswordValid)
+		setBtnDisabled(!isPasswordValid)
+	}
 
 	const handlePasswordConfirmationChange = (text) => {
 		setPasswordConfirmation(text)
-		text === password && text !== '' ? setPasswordMatch(true) : setPasswordMatch(false)
-		text === password && text !== '' ? setBtnDisabled(false) : setBtnDisabled(true)
+		text === password && text !== "" ? setPasswordMatch(true) : setPasswordMatch(false)
+		text === password && text !== "" ? setBtnDisabled(false) : setBtnDisabled(true)
 	}
 
 	const toggleSwitch = () => setIsEnabled(previousState => !previousState)
@@ -86,45 +85,44 @@ const RegisterAdditionnalDetails = () => {
 		createUserWithEmailAndPassword(auth, email, password)
 		.then((userCredential) => {
 			// Registered
-			const user = userCredential.user;
+			const user = userCredential.user
 
 			// Mettez à jour le profil de l'utilisateur avec le nom et l'avatar
 			updateProfile(user, {
-				displayName: firstName + ' ' + lastName,
-				photoURL: avatar ? avatar : 'https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x',
+				displayName: firstName + " " + lastName,
+				photoURL: avatar ? avatar : "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
 			})
 			.then(() => {
 				// Enregistrement réussi, mettez à jour le numéro de téléphone
-				user.phoneNumber = phoneNumber;
+				user.phoneNumber = phoneNumber
 
 				// Mettez à jour l'objet utilisateur dans Firebase
 				auth.updateCurrentUser(user)
 				.then(() => {
 					// Numéro de téléphone mis à jour avec succès
-					console.log('Numéro de téléphone mis à jour avec succès :', user);
-					alert('Registered, please login.');
-					navigation.navigate('Prospect', { screen: 'HomeScreen' });
+					console.log("Numéro de téléphone mis à jour avec succès :", user)
+					alert("Registered, please login.")
+					navigation.navigate("Prospect", { screen: "HomeScreen" })
 				})
 				.catch((error) => {
 					// Gérez les erreurs liées à la mise à jour du numéro de téléphone
-					console.error(error);
-					alert(error.message);
-				});
+					console.error(error)
+					alert(error.message)
+				})
 			})
 			.catch((error) => {
 				// Gérez les erreurs liées à la mise à jour du profil
-				console.error(error);
-				alert(error.message);
-			});
+				console.error(error)
+				alert(error.message)
+			})
 		})
 		.catch((error) => {
 			// Gérez les erreurs liées à la création de l'utilisateur avec e-mail et mot de passe
-			const errorCode = error.code;
-			const errorMessage = error.message;
-			alert(errorMessage);
-		});
-	};
-
+			const errorCode = error.code
+			const errorMessage = error.message
+			alert(errorMessage)
+		})
+	}
 
 
 	const onNextPressed = () => {
@@ -136,18 +134,18 @@ const RegisterAdditionnalDetails = () => {
 		if (isEnabled) {
 			return (
 			  <CustomButton text="Suivant" onPress={onNextPressed} bgColor={"#FE881B"} deactivated={btnDisabled} />
-			);
+			)
 		} else {
 			return (
 			  <CustomButton text="S'inscrire" onPress={onRegisterPressed} bgColor={"black"} deactivated={btnDisabled} />
-			);
+			)
 		}
-	};
+	}
 
 
 	return (
-	  <View style={styles.root}>
-
+	  <KeyboardAvoidingView style={styles.bottomContainer} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+		  <View style={styles.root}>
 		  <BackButton />
 
 		  <Text style={styles.title}>Inscription à VOYO</Text>
@@ -163,10 +161,12 @@ const RegisterAdditionnalDetails = () => {
 				  <CustomInput placeHolder="First Name"
 				               value={firstName}
 				               setValue={setFirstName}
+				               inputype="name"
 				  />
 				  <CustomInput placeHolder="Last Name"
 				               value={lastName}
 				               setValue={setLastName}
+				               inputype="familyName"
 				  />
 			  </View>
 		  </View>
@@ -179,6 +179,7 @@ const RegisterAdditionnalDetails = () => {
 			  marginTop: 5,
 			  alignSelf: "center",
 		  }} />
+
 
 		  <View>
 			  <TextInput
@@ -228,7 +229,8 @@ const RegisterAdditionnalDetails = () => {
 				  <CustomInput placeHolder="Mot de passe"
 				               value={password}
 				               setValue={handlePasswordChange}
-				               secureTextEntry
+				               secureTextEntry={true}
+				               inputype="password"
 				  />
 				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
 					  <Image
@@ -297,7 +299,10 @@ const RegisterAdditionnalDetails = () => {
 		  </View>
 
 		  {renderButton()}
-	  </View>
+
+
+		  </View>
+</KeyboardAvoidingView>
 	)
 }
 
@@ -305,10 +310,14 @@ const RegisterAdditionnalDetails = () => {
 const styles = StyleSheet.create({
 	root: {
 		backgroundColor: "white",
-		padding: 30,
 		marginTop: 10,
-		width: "100%",
-		height: "100%",
+		justifyContent: 'center',
+		padding: 30,
+		// width: "100%",
+		// height: "100%",
+	},
+	bottomContainer: {
+		width: '100%',
 	},
 	title: {
 		fontSize: 28,
