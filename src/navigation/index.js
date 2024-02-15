@@ -27,6 +27,7 @@ import ChatChannel from "../screens/Users/Common/ChatChannel"
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
+import CriteriaScreen from "../screens/Users/Prospect/CriteresPage"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -88,6 +89,15 @@ function Common() {
 	return (
 	  <Stack.Navigator>
 		  <Stack.Screen name="Chat" component={Chat} />
+	  </Stack.Navigator>
+	);
+}
+
+function Tests() {
+	return (
+	  <Stack.Navigator>
+		  <Stack.Screen name="Criteria" component={CriteriaScreen} />
+
 	  </Stack.Navigator>
 	);
 }
@@ -171,6 +181,7 @@ function Navigation() {
 			  <Stack.Group>
 				  <Stack.Screen name="Prospect" component={Prospect} />
 				  <Stack.Screen name="Common" component={Common} />
+				  <Stack.Screen name="test" component={Tests} />
 			  </Stack.Group>
 			  {/*) : (*/}
 				{/*// Auth screens*/}
