@@ -6,6 +6,8 @@ import CustomButton from "../../../../components/CustomButton"
 import BackButton from "../../../../components/BackButton"
 import { auth } from "../../../../../firebaseConfig"
 import { createUserWithEmailAndPassword, updateProfile, linkWithCredential, PhoneAuthProvider } from "firebase/auth"
+import axios from 'axios';
+import {BASE_URL} from '@env'
 
 const RegisterAdditionnalDetails = () => {
 	const route = useRoute()
@@ -81,7 +83,34 @@ const RegisterAdditionnalDetails = () => {
 
 	const toggleSwitch = () => setIsEnabled(previousState => !previousState)
 
-	const onRegisterPressed = () => {
+	const onRegisterPressed = async () => {
+	// 	try {
+	// 		console.log(`${BASE_URL}/utilisateurs`)
+	// 		const response = await axios.post(`${BASE_URL}/utilisateurs`, {
+	// 			"first_name": "Admin",
+	// 			"last_name": "User",
+	// 			"email": "admin.user@email.com",
+	// 			"address": "456 Admin St",
+	// 			"city": "Admin City",
+	// 			"postal_code": 54321,
+	// 			"tel": "9876543210",
+	// 			"note": null,
+	// 			"description": "Admin user account",
+	// 			"password": "adminpass",
+	// 			"role_id": 1
+	// 		});
+	//
+	// 		if (response.status === 201) {
+	// 			alert(` You have created: ${JSON.stringify(response.data)}`);
+	// 		} else {
+	// 			console.log(response.data)
+	// 			// throw new Error("An error has occurred");
+	// 		}
+	// 	} catch (error) {
+	// 		alert("An error has occurred");
+	// 		console.log(error);
+	// 	}
+	// };
 		createUserWithEmailAndPassword(auth, email, password)
 		.then((userCredential) => {
 			// Registered
@@ -299,7 +328,6 @@ const RegisterAdditionnalDetails = () => {
 		  </View>
 
 		  {renderButton()}
-
 
 		  </View>
 </KeyboardAvoidingView>

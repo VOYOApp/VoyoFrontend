@@ -3,15 +3,16 @@ import { initializeFirestore, getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import {API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID} from '@env'
 
 // Initialize Firebase
 const firebaseConfig = {
-	apiKey: "AIzaSyBG4rbsxL8hjkZpHDgHQC7Z3uvxvakIoQQ",
-	authDomain: "voyo-chat.firebaseapp.com",
-	projectId: "voyo-chat",
-	storageBucket: "voyo-chat.appspot.com",
-	messagingSenderId: "187219606635",
-	appId: "1:187219606635:web:fa671f735962d61886452e"
+	apiKey: API_KEY,
+	authDomain: AUTH_DOMAIN,
+	projectId: PROJECT_ID,
+	storageBucket: STORAGE_BUCKET,
+	messagingSenderId: MESSAGING_SENDER_ID,
+	appId: APP_ID
 };
 
 // Initialize Firebase

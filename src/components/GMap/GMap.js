@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 import { Icon } from "react-native-paper"
 import Images from "../../../assets"
 import Geolocation from "react-native-geolocation-service"
-
+import {GOOGLE_MAPS_KEY} from '@env'
 
 navigator.geolocation = Geolocation
 
@@ -36,7 +36,7 @@ const GMap = ({ hasSearch = false, marker, onData }) => {
 		sendDataToParent(data)
 
 		try {
-			fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBznSC8S1mPU-GPjsxuagQqnNK3a8xVOl4&place_id=${placeId}`)
+			fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${GOOGLE_MAPS_KEY}&place_id=${placeId}`)
 			.then((response) => response.json())
 			.then((json) => {
 				let latitude = json.results[0].geometry.location.lat
