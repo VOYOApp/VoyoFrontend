@@ -63,7 +63,6 @@ function HomeProspect() {
 function SearchProspect() {
 	return (<Stack.Navigator initialRouteName="SearchMap" screenOptions={{ headerShown: false }}>
 		<Stack.Screen name="SearchMap" component={SearchMap} />
-
 		<Stack.Screen name="Criteria" component={CriteriaScreen} />
 		<Stack.Screen name="Recap" component={RecapRequest} />
 		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}

@@ -82,7 +82,7 @@ const CriteriaScreen = () => {
 
 const styles = StyleSheet.create({
 	root: {
-		paddingTop: 10,
+		paddingTop: 60,
 		alignItems: "flex-start",
 		paddingLeft: 10,
 		paddingRight: 10,

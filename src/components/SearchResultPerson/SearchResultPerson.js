@@ -17,6 +17,10 @@ const SearchResultPerson = (data) => {
 		navigation.navigate("HomeProspect", { params: { data }, screen: "DetailsVisitor" })
 	}
 
+	const goToRDV = () => {
+		navigation.navigate("SearchProspect", { screen: "Criteria" })
+	}
+
 	return (<View style={styles.card}>
 
 		  <TouchableOpacity
@@ -48,12 +52,7 @@ const SearchResultPerson = (data) => {
 		  </View>
 
 		  <View style={styles.btn}>
-			  <CustomButton text={"RDV"} widthBtn={80} heightBtn={40} onPress={
-				  () => {
-					  console.log("RDV")
-					  navigation.navigate("SearchProspect", { screen: "CriteriaScreen" })
-				  }
-			  } />
+			  <CustomButton text={"RDV"} widthBtn={80} heightBtn={40} onPress={goToRDV} />
 		  </View>
 	  </View>
 
