@@ -22,11 +22,10 @@ const HomeScreen = () => {
 
 	const onHomeProspectPressed = () => {
 		// console.warn('Forgot password pressed')
-		navigation.navigate("test", { screen: "CriteriaScreen" })
+		navigation.navigate("Prospect", { screen: "ProspectHome" })
 	}
 
-	return (
-	  <View style={styles.root}>
+	return (<View style={styles.root}>
 
 		  <Image source={require("../../../../assets/logos/banner-voyo.png")} style={[styles.logo, { height: height }]}
 		         resizeMode="contain" />
@@ -39,25 +38,17 @@ const HomeScreen = () => {
 			                widthBtn={"40%"} />
 		  </View>
 		  <CustomButton text="HomeProspect" onPress={onHomeProspectPressed} bgColor={"magenta"} widthBtn={"40%"} />
-	  </View>
-	)
+	  </View>)
 }
 
 
 const styles = StyleSheet.create({
 	root: {
-		padding: 20,
-		alignItems: "center",
-	},
-	logo: {
-		width: "400%",
-		maxWidth: 300,
-		maxHeight: 400,
-		marginBottom: 10,
-	},
-	title: {
-		fontSize: 30,
-		marginBottom: 10,
+		padding: 20, alignItems: "center",
+	}, logo: {
+		width: "400%", maxWidth: 300, maxHeight: 400, marginBottom: 10,
+	}, title: {
+		fontSize: 30, marginBottom: 10,
 	},
 })
 

@@ -88,6 +88,7 @@
     },
     "send_request": "Envoi de demande",
     "send_request_description": "Afin de débloquer l’accès au chat, veillez envoyer une demande. Si cette dernière est refusée, vous serez remboursé",
+    "send_request_description_2": "Afin de réaliser le paiement, vous allez être redirigés sur le site de notre prestatire externe Stripe.",
     "add_criteria": "Ajouter un critère",
     "criteria": "Critères"
   },

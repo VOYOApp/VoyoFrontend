@@ -70,8 +70,9 @@ const CriteriaScreen = () => {
 			</TouchableOpacity>
 
 			<CustomButton text={t("common.next")}
-			              onPress={() => navigation.navigate("ProspectHome")}
-			              bgColor={"magenta"} widthBtn={"90%"}
+			              onPress={() => navigation.navigate("Recap")}
+			              bgColor={"#FE881B"}
+			              widthBtn={"90%"}
 			              heightBtn={43} />
 		</View>
 
