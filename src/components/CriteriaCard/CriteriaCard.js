@@ -2,15 +2,19 @@ import React from "react"
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { Checkbox, Icon } from "react-native-paper"
 import Images from "../../../assets"
+import { useTranslation } from "react-i18next"
 
 const CriteriaCard = ({ text, onDelete }) => {
-	const [checkedPhoto, setCheckedPhoto] = React.useState(false);
-	const [checkedVideo, setCheckedVideo] = React.useState(false);
+	const { t } = useTranslation()
+
+
+	const [checkedPhoto, setCheckedPhoto] = React.useState(false)
+	const [checkedVideo, setCheckedVideo] = React.useState(false)
 
 	return (
 	  <View style={styles.container}>
 		  <TextInput
-			placeholder={'Votre critère'}
+			placeholder={t("prospect.criteria")}
 			style={styles.textArea}
 			multiline={true}
 			numberOfLines={2}
@@ -21,21 +25,21 @@ const CriteriaCard = ({ text, onDelete }) => {
 			  <View style={styles.checkboxes}>
 				  <View style={styles.checkbox}>
 					  <Checkbox
-						status={checkedPhoto ? 'checked' : 'unchecked'}
+						status={checkedPhoto ? "checked" : "unchecked"}
 						onPress={() => {
-							setCheckedPhoto(!checkedPhoto);
+							setCheckedPhoto(!checkedPhoto)
 						}}
 					  />
-					  <Text>Photo</Text>
+					  <Text>{t("common.photo.one")}</Text>
 				  </View>
 				  <View style={styles.checkbox}>
 					  <Checkbox
-						status={checkedVideo ? 'checked' : 'unchecked'}
+						status={checkedVideo ? "checked" : "unchecked"}
 						onPress={() => {
-							setCheckedVideo(!checkedVideo);
+							setCheckedVideo(!checkedVideo)
 						}}
 					  />
-					  <Text>Video</Text>
+					  <Text>{t("common.video.one")}</Text>
 				  </View>
 			  </View>
 
@@ -44,8 +48,8 @@ const CriteriaCard = ({ text, onDelete }) => {
 			  </TouchableOpacity>
 		  </View>
 	  </View>
-	);
-};
+	)
+}
 
 
 const styles = StyleSheet.create({

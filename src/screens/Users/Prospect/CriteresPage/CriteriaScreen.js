@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
@@ -6,6 +6,7 @@ import CriteriaCard from "../../../../components/CriteriaCard"
 import { Icon } from "react-native-paper"
 import Images from "../../../../../assets"
 import { useTranslation } from "react-i18next"
+import CustomButton from "../../../../components/CustomButton"
 
 const CriteriaScreen = () => {
 	const { t } = useTranslation()
@@ -13,10 +14,15 @@ const CriteriaScreen = () => {
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
-	const [criteriaList, setCriteriaList] = useState([{ id: 1, text: "Criteria 1" }, {
-		id: 2,
-		text: "Criteria 2",
-	}, // Add more initial criteria as needed
+	const [criteriaList, setCriteriaList] = useState([
+		{
+			id: 1,
+			text: "Criteria 1",
+		},
+		{
+			id: 2,
+			text: "Criteria 2",
+		},
 	])
 
 	const addCriteriaCard = () => {
@@ -29,33 +35,47 @@ const CriteriaScreen = () => {
 		setCriteriaList(updatedCriteriaList)
 	}
 
+	const scrollViewRef = useRef(null)
+
 	return (<View style={styles.root}>
-		  <View style={styles.headTitles}>
-			  <Text style={styles.title}>Envoi de demande</Text>
-			  <Text>
-				  Afin de débloquer l’accès au chat, veillez envoyer une demande. Si cette dernière est refusée, vous
-				  serez remboursé
-			  </Text>
-		  </View>
+		<View style={styles.headTitles}>
+			<Text style={styles.title}>{t("prospect.send_request")}</Text>
+			<Text>
+				{t("prospect.send_request_description")}
+			</Text>
+		</View>
 
-		  <ScrollView
-			style={styles.scrollView}
-			showsVerticalScrollIndicator={false}
-			showsHorizontalScrollIndicator={false}
-		  >
-			  {/* Render CriteriaCard components based on the criteriaList state */}
-			  {criteriaList.map((criteria) => (<CriteriaCard key={criteria.id} text={criteria.text}
-			                                                 onDelete={() => removeCriteriaCard(criteria.id)} />))}
-		  </ScrollView>
+		<ScrollView
+		  style={styles.scrollView}
+		  showsVerticalScrollIndicator={false}
+		  showsHorizontalScrollIndicator={false}
+		  ref={scrollViewRef}
+		  onContentSizeChange={() => {
+			  scrollViewRef.current?.scrollToEnd()
+		  }}
+		>
+			{criteriaList.map((criteria) => (
+			  <CriteriaCard key={criteria.id}
+			                text={criteria.text}
+			                onDelete={() => removeCriteriaCard(criteria.id)} />),
+			)}
+		</ScrollView>
 
-		  <TouchableOpacity style={styles.plusBtn} onPress={addCriteriaCard}>
-			  <View style={styles.icon}>
-				  {/* Include your Icon component here */}
-				  <Icon source={Images.add} size={25} />
-			  </View>
-			  <Text>Ajouter un critère</Text>
-		  </TouchableOpacity>
-	  </View>)
+		<View style={styles.bottomButtons}>
+			<TouchableOpacity style={styles.plusBtn} onPress={addCriteriaCard}>
+				<View style={styles.icon}>
+					<Icon source={Images.add} size={25} />
+				</View>
+				<Text>{t("prospect.add_criteria")}</Text>
+			</TouchableOpacity>
+
+			<CustomButton text={t("prospect.send_request")}
+			              onPress={() => navigation.navigate("ProspectHome")}
+			              bgColor={"magenta"} widthBtn={"90%"}
+			              heightBtn={43} />
+		</View>
+
+	</View>)
 }
 
 
@@ -77,7 +97,7 @@ const styles = StyleSheet.create({
 	}, plusBtn: {
 		height: 40,
 		backgroundColor: "rgba(0,0,0,0.06)",
-		borderRadius: 18,
+		borderRadius: 100,
 		justifyContent: "center",
 		alignItems: "center",
 		flexDirection: "row",
@@ -85,6 +105,11 @@ const styles = StyleSheet.create({
 		paddingRight: 10,
 	}, icon: {
 		marginRight: 10,
+	},
+	bottomButtons: {
+		width: "100%",
+		alignItems: "center",
+		backgroundColor: "rgba(0,0,0,0.00)",
 	},
 })
 
