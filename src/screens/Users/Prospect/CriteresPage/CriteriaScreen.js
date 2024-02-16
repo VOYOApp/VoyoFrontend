@@ -14,16 +14,11 @@ const CriteriaScreen = () => {
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
-	const [criteriaList, setCriteriaList] = useState([
-		{
-			id: 1,
-			text: "Criteria 1",
-		},
-		{
-			id: 2,
-			text: "Criteria 2",
-		},
-	])
+	const [criteriaList, setCriteriaList] = useState([{
+		id: 1, text: "Criteria 1",
+	}, {
+		id: 2, text: "Criteria 2",
+	}])
 
 	const addCriteriaCard = () => {
 		const newCriteriaList = [...criteriaList, { id: Date.now(), text: "New Criteria" }]
@@ -31,6 +26,7 @@ const CriteriaScreen = () => {
 	}
 
 	const removeCriteriaCard = (id) => {
+		if (criteriaList.length === 1) return
 		const updatedCriteriaList = criteriaList.filter((criteria) => criteria.id !== id)
 		setCriteriaList(updatedCriteriaList)
 	}
@@ -43,6 +39,10 @@ const CriteriaScreen = () => {
 			<Text>
 				{t("prospect.send_request_description")}
 			</Text>
+			<View style={styles.subTitle}>
+				<Icon source={Images.list} size={33} />
+				<Text style={styles.subTitleText}>Liste des critères</Text>
+			</View>
 		</View>
 
 		<ScrollView
@@ -54,11 +54,11 @@ const CriteriaScreen = () => {
 			  scrollViewRef.current?.scrollToEnd()
 		  }}
 		>
-			{criteriaList.map((criteria) => (
-			  <CriteriaCard key={criteria.id}
-			                text={criteria.text}
-			                onDelete={() => removeCriteriaCard(criteria.id)} />),
-			)}
+			{criteriaList.map((criteria) => (<CriteriaCard key={criteria.id}
+			                                               text={criteria.text}
+			                                               onDelete={() => removeCriteriaCard(criteria.id)} />))}
+
+			<View style={styles.iAmABlankSpace} />
 		</ScrollView>
 
 		<View style={styles.bottomButtons}>
@@ -69,7 +69,7 @@ const CriteriaScreen = () => {
 				<Text>{t("prospect.add_criteria")}</Text>
 			</TouchableOpacity>
 
-			<CustomButton text={t("prospect.send_request")}
+			<CustomButton text={t("common.next")}
 			              onPress={() => navigation.navigate("ProspectHome")}
 			              bgColor={"magenta"} widthBtn={"90%"}
 			              heightBtn={43} />
@@ -96,20 +96,35 @@ const styles = StyleSheet.create({
 		width: "100%", padding: 20,
 	}, plusBtn: {
 		height: 40,
-		backgroundColor: "rgba(0,0,0,0.06)",
+		backgroundColor: "#f4f3f4",
 		borderRadius: 100,
 		justifyContent: "center",
 		alignItems: "center",
 		flexDirection: "row",
 		paddingLeft: 10,
 		paddingRight: 10,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0, height: 0,
+		},
 	}, icon: {
 		marginRight: 10,
+	}, bottomButtons: {
+		width: "100%", alignItems: "center", backgroundColor: "rgba(0,0,0,0.00)", position: "absolute", bottom: 10,
 	},
-	bottomButtons: {
-		width: "100%",
+	iAmABlankSpace: {
+		height: 140,
+	},
+	subTitle: {
 		alignItems: "center",
-		backgroundColor: "rgba(0,0,0,0.00)",
+		flexDirection: "row",
+		marginTop: 15,
+		marginBottom: 0,
+		padding: 0,
+	},
+	subTitleText: {
+		fontSize: 20,
+		marginLeft: 10,
 	},
 })
 
