@@ -21,8 +21,8 @@ const GMapInscription = React.forwardRef(({ hasSearch = false, marker, isSearch 
 
 	const [hasBeenCalled, setHasBeenCalled] = useState(false)
 
-	const [latitude, setLatitude] = useState(0.0)
-	const [longitude, setLongitude] = useState(0.0)
+	const [global_latitude, setLatitude] = useState(0.0)
+	const [global_longitude, setLongitude] = useState(0.0)
 
 	let searchResults = []
 
@@ -94,7 +94,7 @@ const GMapInscription = React.forwardRef(({ hasSearch = false, marker, isSearch 
 			/>)}
 			{isSearch && (<Circle
 			  key={1}
-			  center={{ "latitude": latitude, "longitude": longitude }}
+			  center={{ "latitude": global_latitude, "longitude": global_longitude }}
 			  radius={radius_visitor}
 			  strokeColor={"#FF7F50"}
 			  fillColor={"rgba(255,127,80,0.35)"}
