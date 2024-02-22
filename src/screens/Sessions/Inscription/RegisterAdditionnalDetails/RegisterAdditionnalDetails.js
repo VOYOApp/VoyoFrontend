@@ -8,8 +8,10 @@ import { auth } from "../../../../../firebaseConfig"
 import { createUserWithEmailAndPassword, updateProfile, linkWithCredential, PhoneAuthProvider } from "firebase/auth"
 import axios from 'axios';
 import {BASE_URL} from '@env'
+import { useTranslation } from "react-i18next"
 
 const RegisterAdditionnalDetails = () => {
+	const { t } = useTranslation()
 	const route = useRoute()
 	const user = route.params?.user
 
@@ -22,7 +24,7 @@ const RegisterAdditionnalDetails = () => {
 	const [password, setPassword] = useState("")
 	const [passwordConfirmation, setPasswordConfirmation] = useState("")
 	const [isEnabled, setIsEnabled] = useState(false)
-	const [btnDisabled, setBtnDisabled] = useState(true)
+	const [btnDisabled, setBtnDisabled] = useState(false)
 	const [isPasswordValid, setIsPasswordValid] = useState(false)
 	const [passwordMatch, setPasswordMatch] = useState(true)
 	const [isLengthValid, setIsLengthValid] = useState(false)
@@ -85,7 +87,7 @@ const RegisterAdditionnalDetails = () => {
 
 	const onRegisterPressed = async () => {
 		try {
-			const response = await axios.post(`${BASE_URL}/inscription`, {
+			const response = await axios.post(`${BASE_URL}/register`, {
 				"phone_number": phoneNumber.replaceAll(" ", ""),
 				"first_name": firstName,
 				"last_name": lastName,
@@ -101,7 +103,7 @@ const RegisterAdditionnalDetails = () => {
 
 			if (response.status === 201) {
 				console.log(`Your account has been created: ${JSON.stringify(response.data)}`);
-				navigation.navigate('Prospect', {screen: 'HomeScreen'})
+				// navigation.navigate('AdditionalDetailsVisitor')
 			}
 		} catch (error) {
 			console.log("An error has occurred: "+error);
@@ -151,18 +153,17 @@ const RegisterAdditionnalDetails = () => {
 
 
 	const onNextPressed = () => {
-		console.warn("Next")
-		// navigation.navigate('HomeScreen')
+		navigation.navigate('AdditionalDetailsVisitor')
 	}
 
 	const renderButton = () => {
 		if (isEnabled) {
 			return (
-			  <CustomButton text="Suivant" onPress={onNextPressed} bgColor={"#FE881B"} deactivated={btnDisabled} />
+			  <CustomButton text={t("common.next")} onPress={onNextPressed} bgColor={"#FE881B"} deactivated={btnDisabled} />
 			)
 		} else {
 			return (
-			  <CustomButton text="S'inscrire" onPress={onRegisterPressed} bgColor={"black"} deactivated={btnDisabled} />
+			  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"black"} deactivated={btnDisabled} />
 			)
 		}
 	}
@@ -311,7 +312,7 @@ const RegisterAdditionnalDetails = () => {
 			  marginBottom: 10,
 			  width: "100%",
 		  }}>
-			  <Text style={{ textAlign: "center", width: "30%" }}>Je souhaite visiter des biens immobiliers</Text>
+			  <Text style={{ textAlign: "center", width: "45%" }}>{t("common.create_prospect_account")}</Text>
 			  <Switch
 				style={{ marginLeft: 10, marginRight: 10 }}
 				trackColor={{ false: "#767577", true: "#FE881B" }}
@@ -320,7 +321,7 @@ const RegisterAdditionnalDetails = () => {
 				onValueChange={toggleSwitch}
 				value={isEnabled}
 			  />
-			  <Text style={{ textAlign: "center", width: "30%" }}>Je souhaite faire visiter des biens immobiliers</Text>
+			  <Text style={{ textAlign: "center", width: "45%" }}>{t("common.create_visitor_account")}</Text>
 		  </View>
 
 		  {renderButton()}

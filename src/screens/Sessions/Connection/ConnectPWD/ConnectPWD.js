@@ -19,67 +19,57 @@ const ConnectPWD = () => {
 	const [password, setPassword] = useState("")
 	const { height } = useWindowDimensions()
 
-	const onSignInPressed = () => {
-	// 	try {
-	// 		if (email !== ""){
-	// 		} else if (phoneNumber !== ""){
-	//
-	// 		}
-	// 		const response = await axios.post(`${BASE_URL}/user`, {
-	// 			"phone_number": phoneNumber,
-	// 			"first_name": firstName,
-	// 			"last_name": lastName,
-	// 			"email": email,
-	// 			"description": null,
-	// 			"password": password,
-	// 			"role_id": 2,
-	// 			"biography": bio,
-	// 			"profile_picture": null,
-	// 			"pricing": 0.0,
-	// 			"address_id": null,
-	// 			"radius": null,
-	// 		});
-	//
-	// 		if (response.status === 201) {
-	// 			console.log(`Your account has been created: ${JSON.stringify(response.data)}`);
-	// 		}
-	// 	} catch (error) {
-	// 		console.log("An error has occurred: "+error);
-	// 	}
-	// };
-
-		if (email) {
-			signInWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => {
-				navigation.navigate('Prospect', {screen: 'HomeScreen'})
-			})
-			.catch((error) => {
-				const errorCode = error.code;
-				const errorMessage = error.message;
-				alert(errorMessage);
+	const onSignInPressed = async () => {
+		try {
+			const response = await axios.get(`${BASE_URL}/login`, {
+				params: {
+					"phone_number": phoneNumber.replaceAll(" ", "") || "",
+					"email": email || "",
+					"password": password || ""
+				}
 			});
+
+			if (response.status === 200) {
+				console.log(`Your connected`);
+				navigation.navigate('Prospect', {screen: 'HomeScreen'})
+			}
+		} catch (error) {
+			console.log("An error has occurred: "+error);
 		}
-		// else if (phoneNumber) {
-			// const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-			// 	'size': 'invisible',
-			// 	'callback': (response) => {
-			// 		// This callback will be called after reCAPTCHA verification
-			// 	},
-			// });
-			//
-			// signInWithPhoneNumber(auth, numberPhone, recaptchaVerifier)
-			// .then((userCredential) => {
-			// 	navigation.navigate('Prospect', {screen: 'HomeScreen'})
-			// 	console.warn(userCredential)
-			// })
-			// .catch((error) => {
-			// 	const errorCode = error.code;
-			// 	const errorMessage = error.message;
-			// 	console.log(errorMessage)
-			// 	alert(errorMessage);
-			// });
+	};
+
+		// if (email) {
+		// 	signInWithEmailAndPassword(auth, email, password)
+		// 	.then((userCredential) => {
+		// 		navigation.navigate('Prospect', {screen: 'HomeScreen'})
+		// 	})
+		// 	.catch((error) => {
+		// 		const errorCode = error.code;
+		// 		const errorMessage = error.message;
+		// 		alert(errorMessage);
+		// 	});
 		// }
-	}
+		// else if (phoneNumber) {
+		// 	const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+		// 		'size': 'invisible',
+		// 		'callback': (response) => {
+		// 			// This callback will be called after reCAPTCHA verification
+		// 		},
+		// 	});
+		//
+		// 	signInWithPhoneNumber(auth, numberPhone, recaptchaVerifier)
+		// 	.then((userCredential) => {
+		// 		navigation.navigate('Prospect', {screen: 'HomeScreen'})
+		// 		console.warn(userCredential)
+		// 	})
+		// 	.catch((error) => {
+		// 		const errorCode = error.code;
+		// 		const errorMessage = error.message;
+		// 		console.log(errorMessage)
+		// 		alert(errorMessage);
+		// 	});
+		// }
+	// }
 
 	const onForgotPasswordPressed = () => {
 		navigation.navigate('SignIn', { screen: "PasswordMailConfirmation" })
