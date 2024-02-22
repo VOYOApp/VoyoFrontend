@@ -84,74 +84,70 @@ const RegisterAdditionnalDetails = () => {
 	const toggleSwitch = () => setIsEnabled(previousState => !previousState)
 
 	const onRegisterPressed = async () => {
-	// 	try {
-	// 		console.log(`${BASE_URL}/utilisateurs`)
-	// 		const response = await axios.post(`${BASE_URL}/utilisateurs`, {
-	// 			"first_name": "Admin",
-	// 			"last_name": "User",
-	// 			"email": "admin.user@email.com",
-	// 			"address": "456 Admin St",
-	// 			"city": "Admin City",
-	// 			"postal_code": 54321,
-	// 			"tel": "9876543210",
-	// 			"note": null,
-	// 			"description": "Admin user account",
-	// 			"password": "adminpass",
-	// 			"role_id": 1
-	// 		});
+		try {
+			const response = await axios.post(`${BASE_URL}/inscription`, {
+				"phone_number": phoneNumber.replaceAll(" ", ""),
+				"first_name": firstName,
+				"last_name": lastName,
+				"email": email,
+				"password": password,
+				"role_id": 2,
+				"biography": bio,
+				"profile_picture": null,
+				"pricing": null,
+				"address_id": null,
+				"radius": null,
+			});
+
+			if (response.status === 201) {
+				console.log(`Your account has been created: ${JSON.stringify(response.data)}`);
+				navigation.navigate('Prospect', {screen: 'HomeScreen'})
+			}
+		} catch (error) {
+			console.log("An error has occurred: "+error);
+		}
+	};
+	// 	createUserWithEmailAndPassword(auth, email, password)
+	// 	.then((userCredential) => {
+	// 		// Registered
+	// 		const user = userCredential.user
 	//
-	// 		if (response.status === 201) {
-	// 			alert(` You have created: ${JSON.stringify(response.data)}`);
-	// 		} else {
-	// 			console.log(response.data)
-	// 			// throw new Error("An error has occurred");
-	// 		}
-	// 	} catch (error) {
-	// 		alert("An error has occurred");
-	// 		console.log(error);
-	// 	}
-	// };
-		createUserWithEmailAndPassword(auth, email, password)
-		.then((userCredential) => {
-			// Registered
-			const user = userCredential.user
-
-			// Mettez à jour le profil de l'utilisateur avec le nom et l'avatar
-			updateProfile(user, {
-				displayName: firstName + " " + lastName,
-				photoURL: avatar ? avatar : "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
-			})
-			.then(() => {
-				// Enregistrement réussi, mettez à jour le numéro de téléphone
-				user.phoneNumber = phoneNumber
-
-				// Mettez à jour l'objet utilisateur dans Firebase
-				auth.updateCurrentUser(user)
-				.then(() => {
-					// Numéro de téléphone mis à jour avec succès
-					console.log("Numéro de téléphone mis à jour avec succès :", user)
-					alert("Registered, please login.")
-					navigation.navigate("Prospect", { screen: "HomeScreen" })
-				})
-				.catch((error) => {
-					// Gérez les erreurs liées à la mise à jour du numéro de téléphone
-					console.error(error)
-					alert(error.message)
-				})
-			})
-			.catch((error) => {
-				// Gérez les erreurs liées à la mise à jour du profil
-				console.error(error)
-				alert(error.message)
-			})
-		})
-		.catch((error) => {
-			// Gérez les erreurs liées à la création de l'utilisateur avec e-mail et mot de passe
-			const errorCode = error.code
-			const errorMessage = error.message
-			alert(errorMessage)
-		})
-	}
+	// 		// Mettez à jour le profil de l'utilisateur avec le nom et l'avatar
+	// 		updateProfile(user, {
+	// 			displayName: firstName + " " + lastName,
+	// 			photoURL: avatar ? avatar : "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
+	// 		})
+	// 		.then(() => {
+	// 			// Enregistrement réussi, mettez à jour le numéro de téléphone
+	// 			user.phoneNumber = phoneNumber
+	//
+	// 			// Mettez à jour l'objet utilisateur dans Firebase
+	// 			auth.updateCurrentUser(user)
+	// 			.then(() => {
+	// 				// Numéro de téléphone mis à jour avec succès
+	// 				console.log("Numéro de téléphone mis à jour avec succès :", user)
+	// 				alert("Registered, please login.")
+	// 				navigation.navigate("Prospect", { screen: "HomeScreen" })
+	// 			})
+	// 			.catch((error) => {
+	// 				// Gérez les erreurs liées à la mise à jour du numéro de téléphone
+	// 				console.error(error)
+	// 				alert(error.message)
+	// 			})
+	// 		})
+	// 		.catch((error) => {
+	// 			// Gérez les erreurs liées à la mise à jour du profil
+	// 			console.error(error)
+	// 			alert(error.message)
+	// 		})
+	// 	})
+	// 	.catch((error) => {
+	// 		// Gérez les erreurs liées à la création de l'utilisateur avec e-mail et mot de passe
+	// 		const errorCode = error.code
+	// 		const errorMessage = error.message
+	// 		alert(errorMessage)
+	// 	})
+	// }
 
 
 	const onNextPressed = () => {

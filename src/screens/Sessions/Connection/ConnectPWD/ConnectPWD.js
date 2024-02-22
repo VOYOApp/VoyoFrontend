@@ -7,17 +7,47 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import { auth } from '../../../../../firebaseConfig';
 import { signInWithEmailAndPassword, signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
+import axios from 'axios';
+import {BASE_URL} from '@env'
 
 const ConnectPWD = () => {
 	const { t } = useTranslation()
-	const [password, setPassword] = useState("")
 	const navigation = useNavigation()
 	const route = useRoute()
-	const email = route.params?.email;
-	const numberPhone = route.params?.numberPhone;
+	const [phoneNumber, setPhoneNumber] = useState("+33 " + route.params?.numberPhone || "")
+	const [email, setEmail] = useState(route.params?.email || "")
+	const [password, setPassword] = useState("")
 	const { height } = useWindowDimensions()
 
 	const onSignInPressed = () => {
+	// 	try {
+	// 		if (email !== ""){
+	// 		} else if (phoneNumber !== ""){
+	//
+	// 		}
+	// 		const response = await axios.post(`${BASE_URL}/user`, {
+	// 			"phone_number": phoneNumber,
+	// 			"first_name": firstName,
+	// 			"last_name": lastName,
+	// 			"email": email,
+	// 			"description": null,
+	// 			"password": password,
+	// 			"role_id": 2,
+	// 			"biography": bio,
+	// 			"profile_picture": null,
+	// 			"pricing": 0.0,
+	// 			"address_id": null,
+	// 			"radius": null,
+	// 		});
+	//
+	// 		if (response.status === 201) {
+	// 			console.log(`Your account has been created: ${JSON.stringify(response.data)}`);
+	// 		}
+	// 	} catch (error) {
+	// 		console.log("An error has occurred: "+error);
+	// 	}
+	// };
+
 		if (email) {
 			signInWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
@@ -29,7 +59,7 @@ const ConnectPWD = () => {
 				alert(errorMessage);
 			});
 		}
-		else if (numberPhone) {
+		// else if (phoneNumber) {
 			// const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
 			// 	'size': 'invisible',
 			// 	'callback': (response) => {
@@ -48,7 +78,7 @@ const ConnectPWD = () => {
 			// 	console.log(errorMessage)
 			// 	alert(errorMessage);
 			// });
-		}
+		// }
 	}
 
 	const onForgotPasswordPressed = () => {
