@@ -57,31 +57,32 @@ const AdditionalDetailsVisitor = () => {
 			  <Text style={styles.title}>{t("common.register_to_voyo")}</Text>
 			  <Text style={{ marginBottom: 20 }}>{t("common.other_information")}</Text>
 
-			  <View className={"h-full"}>
-				  <View className={"h-full w-full rounded-3xl bg-gray-200 p-2 items-center mb-40"}>
-					  <Text style={styles.subtitle}>{t("common.reference_address")}</Text>
-					  <Text className={"text-start text-sm leading-4 mb-2"}>{t("common.address_description")}</Text>
-					  <View className={"h-full w-full"}>
-						  <View className={"items-start w-full h-full"}>
-							  <View className={"flex-row mb-2"}>
-								  <Text className={"top-3"}>Adresse : </Text>
+			  <View className={"h-full w-full"}>
+				  <View className={"h-full w-full items-center"}>
+					  <View className={"h-1/2 w-full rounded-3xl bg-gray-200 items-center"}>
+						  <Text style={styles.subtitle}>{t("common.reference_address")}</Text>
+						  <Text className={"text-start text-sm leading-4 mb-2"}>{t("common.address_description")}</Text>
+						  <View className={"w-full h-[80%]"}>
+							  <View className={"items-start w-full h-full"}>
+								  <View className={"flex-row p-2"}>
+									  <Text className={"top-3"}>Adresse : </Text>
 
 									  <GooglePlacesAutocomplete
-										minLength={2}
-										placeholder={t("common.searchMap.searchPlaceholder")}
-										onPress={callFunc}
-										query={{
-											key: "AIzaSyBznSC8S1mPU-GPjsxuagQqnNK3a8xVOl4",
-											language: "fr",
-											components: "country:fr", // Limit the search to France
-										}}
-										ref={ref}
-										nearbyPlacesAPI="GooglePlacesSearch"
-										debounce={400}
-										styles={styles.searchBar}
-										currentLocation={false}
-										currentLocationLabel="Current location"
-										renderRightButton={() => (<TouchableOpacity
+									    minLength={2}
+									    placeholder={t("common.searchMap.searchPlaceholder")}
+									    onPress={callFunc}
+									    query={{
+										    key: "AIzaSyBznSC8S1mPU-GPjsxuagQqnNK3a8xVOl4",
+										    language: "fr",
+										    components: "country:fr", // Limit the search to France
+									    }}
+									    ref={ref}
+									    nearbyPlacesAPI="GooglePlacesSearch"
+									    debounce={400}
+									    styles={styles.searchBar}
+									    currentLocation={false}
+									    currentLocationLabel="Current location"
+									    renderRightButton={() => (<TouchableOpacity
 										  onPress={() => {
 											  emptySearch()
 										  }}
@@ -89,37 +90,39 @@ const AdditionalDetailsVisitor = () => {
 										  style={{
 											  position: "absolute", top: 7, right: 10, zIndex: 1000, padding: 5,
 										  }}
-										>
-											<Icon name="close" size={20} source={Images.search} />
-										</TouchableOpacity>)}
+									    >
+										    <Icon name="close" size={20} source={Images.search} />
+									    </TouchableOpacity>)}
 
-									  />
-							  </View>
-
-							  <View className={"flex-row items-center"}>
-								  <Text>Rayon : </Text>
-								  <View className={"bg-[#F0F0F0] w-32 h-10 rounded-3xl p-3 flex-row items-center"}>
-									  <Image className={"mr-2 w-4 h-4"} source={Images.target}></Image>
-									  <TextInput
-									    value={radius.toString()}
-									    onChangeText={text => {
-										    const floatValue = parseFloat(text.replace(',', '.')); // Remplacer ',' par '.' pour permettre l'entrée de décimaux
-										    setRadius(isNaN(floatValue) ? '' : floatValue); // Vérifier si c'est un nombre, sinon laisser la chaîne vide
-									    }}
-									    placeholder="radius (km)"
-									    editable={true}
-									    maxLength={6}
-									    keyboardType="decimal-pad"
 									  />
 								  </View>
-							  </View>
-							  <View className={'h-1/2 w-full'}>
-								  <GMapInscription ref={GMapInscriptionRef} radius_visitor={radius} isSearch={isSearch} ></GMapInscription>
+
+								  <View className={"flex-row items-center p-2"}>
+									  <Text>Rayon : </Text>
+									  <View className={"bg-[#F0F0F0] w-32 h-10 rounded-3xl p-3 flex-row items-center"}>
+										  <Image className={"mr-2 w-4 h-4"} source={Images.target}></Image>
+										  <TextInput
+										    value={radius.toString()}
+										    onChangeText={text => {
+											    const floatValue = parseFloat(text.replace(',', '.')); // Remplacer ',' par '.' pour permettre l'entrée de décimaux
+											    setRadius(isNaN(floatValue) ? '' : floatValue); // Vérifier si c'est un nombre, sinon laisser la chaîne vide
+										    }}
+										    placeholder="radius (km)"
+										    editable={true}
+										    maxLength={6}
+										    keyboardType="decimal-pad"
+										  />
+									  </View>
+								  </View>
+								  <View className={'h-full w-full mt-4'}>
+									  <GMapInscription ref={GMapInscriptionRef} radius_visitor={radius} isSearch={isSearch} ></GMapInscription>
+								  </View>
 							  </View>
 						  </View>
-						  <View>
-							  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"black"} deactivated={btnDisabled} />
-						  </View>
+					  </View>
+
+					  <View className={'h-full w-[80%] mt-44'}>
+						  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"black"} deactivated={btnDisabled} />
 					  </View>
 				  </View>
 			  </View>
@@ -147,6 +150,7 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		marginBottom: 5,
 		fontWeight: "400",
+		padding:2,
 	},
 	link: {
 		color: "#FE881B",
