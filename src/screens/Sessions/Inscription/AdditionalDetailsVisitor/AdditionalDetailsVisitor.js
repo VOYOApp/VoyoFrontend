@@ -1,19 +1,17 @@
 import React, { useRef, useState } from "react"
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native"
-import CodeConfirmation from "../../../../components/CodeConfirmation"
 import BackButton from "../../../../components/BackButton"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import CustomButton from "../../../../components/CustomButton"
 import Images from "../../../../../assets"
-import CustomInput from "../../../../components/CustomInput"
 import GMapInscription from "../../../../components/GMapInscription"
 import { Icon } from "react-native-paper"
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
 
 const AdditionalDetailsVisitor = () => {
 	const { t } = useTranslation()
-	const [btnDisabled, setBtnDisabled] = useState(false)
+	const [btnDisabled, setBtnDisabled] = useState(true)
 	const [address, setAddress] = useState("")
 	const [radius, setRadius] = useState(100)
 	const [isSearch, setIsSearch] = useState(false)
@@ -27,20 +25,15 @@ const AdditionalDetailsVisitor = () => {
 	const route = useRoute()
 	// const user = route.params?.user
 
-	const onRegisterPressed = () => {
-		// TODO: resend phone number to API for get OTP code
-	}
-
-	const goToOtpVerification = () => {
-		// navigation.navigate('RegisterAdditionnalDetails', {numberPhone: phoneNumber, mail:user.mail})
-		//navigation.navigate('RegisterAdditionnalDetails')
-		// TODO: send phone number to API for get OTP code
+	const onNextPressed = () => {
+		navigation.navigate("VisitorAvailability")
 	}
 
 	const callFunc = (data) => {
 		if(GMapInscriptionRef.current) {
 			GMapInscriptionRef.current.handlePlaceSelected(data);
 			setIsSearch(true)
+			setBtnDisabled(false)
 		}else{
 			setIsSearch(false)
 		}
@@ -122,7 +115,7 @@ const AdditionalDetailsVisitor = () => {
 					  </View>
 
 					  <View className={'h-full w-[80%] mt-44'}>
-						  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"black"} deactivated={btnDisabled} />
+						  <CustomButton text={t("common.next")} onPress={onNextPressed} bgColor={"black"} deactivated={btnDisabled} />
 					  </View>
 				  </View>
 			  </View>

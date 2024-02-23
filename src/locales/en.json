@@ -24,6 +24,7 @@
     "other_information": "In order to finalize your registration, we need additional information.",
     "reference_address": "Reference address",
     "address_description": "This address will be the central point of your visiting area. It will never be disclosed to other users. You don't have to enter your personal address.",
+    "availability_description": "To appear in the search results, please enter your availability to visit properties. You can add, delete or modify your availability at any time via the parameters.",
     "details": "Details",
     "my_account": "My account",
     "first_name": "First name",
@@ -42,6 +43,7 @@
     "searchMap": {
       "searchPlaceholder": "Search an address"
     },
+    "availability": "Availability",
     "next": "Next",
     "validate": "Validate",
     "search": "Search",

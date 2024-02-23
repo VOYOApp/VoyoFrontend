@@ -14,6 +14,7 @@ import ForgotPassword from "../screens/Sessions/Connection/ForgotPassword"
 import PasswordMailConfirmation from "../screens/Sessions/Connection/PasswordMailConfirmation"
 import RegisterAdditionnalDetails from "../screens/Sessions/Inscription/RegisterAdditionnalDetails"
 import AdditionalDetailsVisitor from "../screens/Sessions/Inscription/AdditionalDetailsVisitor"
+import VisitorAvailability from "../screens/Sessions/Inscription/VisitorAvailability"
 import RegisterMail from "../screens/Sessions/Inscription/RegisterMail"
 import RegisterPhone from "../screens/Sessions/Inscription/RegisterPhone"
 import MailConfirmation from "../screens/Sessions/Inscription/MailConfirmation"
@@ -42,6 +43,7 @@ function SignUp() {
 		  <Stack.Screen name="MailConfirmation" component={MailConfirmation} />
 		  <Stack.Screen name="RegisterAdditionnalDetails" component={RegisterAdditionnalDetails} />
 		  <Stack.Screen name="AdditionalDetailsVisitor" component={AdditionalDetailsVisitor}/>
+		  <Stack.Screen name="VisitorAvailability" component={VisitorAvailability}/>
 	  </Stack.Navigator>
 	);
 }

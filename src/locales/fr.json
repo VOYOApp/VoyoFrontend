@@ -24,6 +24,7 @@
     "other_information": "Afin de finaliser votre inscription, nous avons besoin d’informations supplémentaires.",
     "reference_address": "Adresse de référence",
     "address_description": "Cette adresse sera le point central de votre zone de visites. Elle ne sera jamais divulguée aux autre utilisateurs. Vous n’êtes pas obligés de mettre votre adresse personelle.",
+    "availability_description": "Pour pouvoir apparaitre dans les résultats de recherche, merci de renseigner vos disponnibilités pour visiter des biens immobiliers. Vous pourrez, via les paramètres, en ajouter, supprimer ou modifier  à tout moment les disponnibilités que vous définissez.",
     "details": "Détails",
     "my_account": "Mon compte",
     "first_name": "Prénom",
@@ -42,6 +43,7 @@
     "searchMap": {
       "searchPlaceholder": "Rechercher une adresse"
     },
+    "availability": "Disponibilités",
     "next": "Suivant",
     "validate": "Valider",
     "search": "Rechercher",

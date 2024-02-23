@@ -153,6 +153,7 @@ const RegisterAdditionnalDetails = () => {
 
 
 	const onNextPressed = () => {
+		// TODO Ajouter les informations du users dans la route
 		navigation.navigate('AdditionalDetailsVisitor')
 	}
 
