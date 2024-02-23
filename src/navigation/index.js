@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Image } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeScreen from "../screens/Sessions/HomeScreen"
 import ConnectPhone from "../screens/Sessions/Connection/ConnectPhone"
@@ -26,9 +24,8 @@ import NoInternet from "../screens/NoInternet"
 import SearchMap from "../screens/Users/Common/SearchMap"
 import Chat from "../screens/Users/Common/Chat"
 import ChatChannel from "../screens/Users/Common/ChatChannel"
-
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../firebaseConfig';
+import CriteriaScreen from "../screens/Users/Prospect/CriteresPage"
+import RecapRequest from "../screens/Users/Prospect/RecapRequest"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -36,7 +33,7 @@ const Tab = createBottomTabNavigator()
 // AUTH STACKS (Home, SignIn, SignUp)
 function SignUp() {
 	return (
-	  <Stack.Navigator initialRouteName="AdditionalDetailsVisitor" screenOptions={{ headerShown: false }}>
+	  <Stack.Navigator initialRouteName="VisitorAvailability" screenOptions={{ headerShown: false }}>
 		  <Stack.Screen name="RegisterPhone" component={RegisterPhone} />
 		  <Stack.Screen name="PhoneConfirmation" component={PhoneConfirmation} />
 		  <Stack.Screen name="RegisterMail" component={RegisterMail} />
@@ -47,37 +44,37 @@ function SignUp() {
 	  </Stack.Navigator>
 	);
 }
+
 function SignIn() {
-	return (
-	  <Stack.Navigator initialRouteName="ConnectPhone" screenOptions={{ headerShown: false }}>
-		  <Stack.Screen name="ConnectPhone" component={ConnectPhone} />
-		  <Stack.Screen name="ConnectEmail" component={ConnectEmail} />
-		  <Stack.Screen name="ConnectPWD" component={ConnectPWD} />
-		  <Stack.Screen name="PasswordMailConfirmation" component={PasswordMailConfirmation} />
-		  <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-	  </Stack.Navigator>
-	);
+	return (<Stack.Navigator initialRouteName="ConnectPhone" screenOptions={{ headerShown: false }}>
+		<Stack.Screen name="ConnectPhone" component={ConnectPhone} />
+		<Stack.Screen name="ConnectEmail" component={ConnectEmail} />
+		<Stack.Screen name="ConnectPWD" component={ConnectPWD} />
+		<Stack.Screen name="PasswordMailConfirmation" component={PasswordMailConfirmation} />
+		<Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+	</Stack.Navigator>)
 }
 
 // PROSPECT STACKS (Home, Search, CustomListItem)
 function HomeProspect() {
-	return (
-	  <Stack.Navigator screenOptions={{ headerShown: false }}>
-		  <Stack.Screen name="ProspectHome" component={ProspectHome} />
-		  <Stack.Screen name="UserPage" component={UserPage} />
-		  <Stack.Screen name="DetailsVisitor" component={DetailsVisitor} />
-		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
-	  </Stack.Navigator>
-	);
+	return (<Stack.Navigator screenOptions={{ headerShown: false }}>
+		<Stack.Screen name="ProspectHome" component={ProspectHome} />
+		<Stack.Screen name="UserPage" component={UserPage} />
+		<Stack.Screen name="DetailsVisitor" component={DetailsVisitor} />
+		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+	</Stack.Navigator>)
 }
+
+
 function SearchProspect() {
-	return (
-	  <Stack.Navigator initialRouteName="SearchMap" screenOptions={{ headerShown: false }}>
-		  <Stack.Screen name="SearchMap" component={SearchMap} />
-		  {/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
-	  </Stack.Navigator>
-	);
+	return (<Stack.Navigator initialRouteName="SearchMap" screenOptions={{ headerShown: false }}>
+		<Stack.Screen name="SearchMap" component={SearchMap} />
+		<Stack.Screen name="Criteria" component={CriteriaScreen} />
+		<Stack.Screen name="Recap" component={RecapRequest} />
+		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+	</Stack.Navigator>)
 }
+
 // function ChatProspect() {
 // 	return (
 // 	  <Stack.Navigator initialRouteName="Chat">
@@ -89,44 +86,42 @@ function SearchProspect() {
 // }
 
 function Common() {
-	return (
-	  <Stack.Navigator>
-		  <Stack.Screen name="Chat" component={Chat} />
-	  </Stack.Navigator>
-	);
+	return (<Stack.Navigator>
+		<Stack.Screen name="Chat" component={Chat} />
+	</Stack.Navigator>)
 }
 
+
 function Prospect() {
-	return (
-	  <Tab.Navigator screenOptions={{ tabBarShowLabel: false,
-	  tabBarStyle: { marginBottom:0 }}}>
-		  <Tab.Screen name="HomeProspect" component={HomeProspect} options={{
-			  headerShown: false,
-			  tabBarLabel: 'Home',
-			  tabBarIcon: ({ color, focused }) => (
-			    // <MaterialCommunityIcons name="home" color={color} size={26} />
-				<Image source={require("../../assets/home_locked.png")} color={color} 
-				style={{ tintColor: focused ? '#F99342' : color, width: 22, height: 22 }}/>
-			  ),
-		  }}/>
-		  <Tab.Screen name="SearchProspect" component={SearchProspect} options={{
-			  headerShown: false,
-			  tabBarLabel: 'Search',
-			  tabBarIcon: ({ color, focused }) => (
-			    <Image source={require("../../assets/search_locked.png")} color={color} 
-				style={{ tintColor: focused ? '#FC4F45' : color, width: 22, height: 22 }}/>
-			  ),
-		  }}/>
-		  <Tab.Screen name="ChatChannel" component={ChatChannel} options={{
-			  tabBarLabel: 'Chat',
-			  tabBarIcon: ({ color, focused }) => (
-			    <Image source={require("../../assets/chat_locked.png")} 
-				style={{ tintColor: focused ? '#B34BFF' : color, width: 22, height: 22 }}/>
-			  ),
-		  }}/>
-		   {/*Ajoutez d'autres onglets si nécessaire*/}
-	  </Tab.Navigator>
-	);
+	return (<Tab.Navigator screenOptions={{
+		tabBarShowLabel: false, tabBarStyle: { marginBottom: 0 },
+	}}>
+		<Tab.Screen name="HomeProspect" component={HomeProspect} options={{
+			headerShown: false, tabBarLabel: "Home", tabBarIcon: ({ color, focused }) => (// <MaterialCommunityIcons name="home" color={color} size={26} />
+			  <Image source={require("../../assets/home_locked.png")} color={color}
+			         style={{ tintColor: focused ? "#F99342" : color, width: 22, height: 22 }} />),
+		}} />
+		<Tab.Screen name="SearchProspect" component={SearchProspect} options={{
+			headerShown: false,
+			tabBarLabel: "Search",
+			tabBarIcon: ({ color, focused }) => (<Image source={require("../../assets/search_locked.png")} color={color}
+			                                            style={{
+				                                            tintColor: focused ? "#FC4F45" : color,
+				                                            width: 22,
+				                                            height: 22,
+			                                            }} />),
+		}} />
+		<Tab.Screen name="ChatChannel" component={ChatChannel} options={{
+			tabBarLabel: "Chat",
+			tabBarIcon: ({ color, focused }) => (<Image source={require("../../assets/chat_locked.png")}
+			                                            style={{
+				                                            tintColor: focused ? "#B34BFF" : color,
+				                                            width: 22,
+				                                            height: 22,
+			                                            }} />),
+		}} />
+		{/*Ajoutez d'autres onglets si nécessaire*/}
+	</Tab.Navigator>)
 }
 
 // function Visitor() {
@@ -167,28 +162,26 @@ function Navigation() {
 	// };
 
 
-	return (
-	  <NavigationContainer>
-		  <Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
-			  {/*{isLoggedIn ? (*/}
-			  {/*  // Screens for logged in users*/}
-			  <Stack.Group>
-				  <Stack.Screen name="Prospect" component={Prospect} />
-				  <Stack.Screen name="Common" component={Common} />
-			  </Stack.Group>
-			  {/*) : (*/}
-				{/*// Auth screens*/}
-			  <Stack.Group>
-				  <Stack.Screen name="HomeScreen" component={HomeScreen} />
-				  <Stack.Screen name="SignUp" component={SignUp} />
-				  <Stack.Screen name="SignIn" component={SignIn} />
-			  </Stack.Group>
-			  {/*)}*/}
-			  {/* Common modal screens */}
-			  <Stack.Screen name="NoInternet" component={NoInternet} />
-		  </Stack.Navigator>
-	  </NavigationContainer>
-	);
+	return (<NavigationContainer>
+		<Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
+			{/*{isLoggedIn ? (*/}
+			{/*  // Screens for logged in users*/}
+			<Stack.Group>
+				<Stack.Screen name="Prospect" component={Prospect} />
+				<Stack.Screen name="Common" component={Common} />
+			</Stack.Group>
+			{/*) : (*/}
+			{/*// Auth screens*/}
+			<Stack.Group>
+				<Stack.Screen name="HomeScreen" component={HomeScreen} />
+				<Stack.Screen name="SignUp" component={SignUp} />
+				<Stack.Screen name="SignIn" component={SignIn} />
+			</Stack.Group>
+			{/*)}*/}
+			{/* Common modal screens */}
+			<Stack.Screen name="NoInternet" component={NoInternet} />
+		</Stack.Navigator>
+	</NavigationContainer>)
 }
 
 export default Navigation

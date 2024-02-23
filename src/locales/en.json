@@ -56,7 +56,15 @@
       "one": "Star",
       "other": "Stars"
     },
-    "distance": "Distance"
+    "distance": "Distance",
+    "photo": {
+      "one": "Photo",
+      "other": "Photos"
+    },
+    "video": {
+      "one": "Video",
+      "other": "Videos"
+    }
   },
   "prospect": {
     "programmed_visite": {
@@ -84,7 +92,12 @@
       "house": "House : 1h",
       "villa": "Villa : 1h30",
       "custom_duration": "Custom duration"
-    }
+    },
+    "send_request": "Send request",
+    "send_request_description": "To unblock access to the chat, please send a request. If your request is denied, you will be refunded.",
+    "send_request_description_2": "In order to make the payment, you will be redirected to the website of our external service provider Stripe.p",
+    "add_criteria": "Add criteria",
+    "criteria": "Criteria"
   },
   "visitor": {
     "upcoming_visits": {
