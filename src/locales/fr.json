@@ -16,6 +16,8 @@
       "one": "Message non lu",
       "other": "Messages non lus"
     },
+    "select_date": "Veuillez selectioner une date",
+    "select_time": "Veuillez selectionner une durée",
     "resend_code": "Renvoyer le code",
     "verification_code_sent": "Un code de vérification a été envoyé au {{phone}}",
     "verification_mail_code_sent": "Un code de vérification à été envoyé à votre email : {{mail}}",

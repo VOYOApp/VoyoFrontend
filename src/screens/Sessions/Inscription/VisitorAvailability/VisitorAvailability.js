@@ -1,5 +1,14 @@
 import React, { useRef, useState } from "react"
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native"
+import {
+	Image,
+	ScrollView,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	useWindowDimensions,
+	View,
+} from "react-native"
 import BackButton from "../../../../components/BackButton"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
@@ -9,16 +18,16 @@ import GMapInscription from "../../../../components/GMapInscription"
 import { Icon } from "react-native-paper"
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
 import AvailabilityCard from "../../../../components/AvailabilityCard"
+import CriteriaCard from "../../../../components/CriteriaCard"
 
 const VisitorAvailability = () => {
 	const { t } = useTranslation()
 	const [btnDisabled, setBtnDisabled] = useState(true)
-	const [address, setAddress] = useState("")
-	const [radius, setRadius] = useState(100)
-	const [isSearch, setIsSearch] = useState(false)
-
-	const GMapInscriptionRef = useRef(null)
-	const ref = useRef()
+	const [criteriaList, setCriteriaList] = useState([{
+		id: 1, text: "Criteria 1",
+	}, {
+		id: 2, text: "Criteria 2",
+	}])
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
@@ -30,25 +39,60 @@ const VisitorAvailability = () => {
 		// navigation.navigate()
 	}
 
+	const addCriteriaCard = () => {
+		const newCriteriaList = [...criteriaList, { id: Date.now(), text: "New Criteria" }]
+		setCriteriaList(newCriteriaList)
+	}
+
+	const removeCriteriaCard = (id) => {
+		if (criteriaList.length === 1) return
+		const updatedCriteriaList = criteriaList.filter((criteria) => criteria.id !== id)
+		setCriteriaList(updatedCriteriaList)
+	}
+
+	const scrollViewRef = useRef(null)
+
 	return (
 	  <View style={styles.root}>
 		  <BackButton />
 		  <View className={"w-full h-full"}>
 			  <Text style={styles.title}>{t("common.register_to_voyo")}</Text>
-			  <Text style={{ marginBottom: 20 }}>{t("common.other_information")}</Text>
+			  <Text style={{ marginBottom: 10 }}>{t("common.other_information")}</Text>
 
 			  <View className={"h-full w-full"}>
 				  <View className={"h-full w-full items-center"}>
-					  <View className={"h-[80%] w-full rounded-3xl bg-gray-200 items-center"}>
+					  <View className={"h-[70%] w-full rounded-3xl bg-gray-200 items-center"}>
 						  <Text style={styles.subtitle}>{t("common.availability")}</Text>
-						  <Text className={"text-justify text-sm p-3 leading-4 mb-2"}>{t("common.availability_description")}</Text>
-						  <View className={"w-full h-full"}>
-							  <AvailabilityCard></AvailabilityCard>
-						  </View>
+						  <Text className={"text-justify text-xs p-3 leading-4"}>{t("common.availability_description")}</Text>
+
+						  <ScrollView
+						    className={"w-[95%] rounded-3xl"}
+						    style={styles.scrollView}
+						    showsVerticalScrollIndicator={false}
+						    showsHorizontalScrollIndicator={false}
+						    ref={scrollViewRef}
+						    onContentSizeChange={() => {
+							    scrollViewRef.current?.scrollToEnd()
+						    }}
+						  >
+							  {criteriaList.map((criteria) => (<AvailabilityCard key={criteria.id}
+							                                                 text={criteria.text}
+							                                                 onDelete={() => removeCriteriaCard(criteria.id)} />))}
+
+							  <View style={styles.iAmABlankSpace} />
+						  </ScrollView>
+
 					  </View>
 
-					  <View className={'h-full w-[80%] mt-44'}>
-						  <CustomButton text={t("common.next")} onPress={onNextPressed} bgColor={"black"} deactivated={btnDisabled} />
+					  <TouchableOpacity style={styles.plusBtn} onPress={addCriteriaCard}>
+						  <View style={styles.icon}>
+							  <Icon source={Images.add} size={25} />
+						  </View>
+						  <Text>{t("prospect.add_criteria")}</Text>
+					  </TouchableOpacity>
+
+					  <View className={'h-full w-[80%]'}>
+						  <CustomButton text={t("common.next")} onPress={onNextPressed} bgColor={"orange"} deactivated={btnDisabled} />
 					  </View>
 				  </View>
 			  </View>
@@ -80,6 +124,29 @@ const styles = StyleSheet.create({
 	link: {
 		color: "#FE881B",
 		marginTop: 10,
+	}, scrollView: {
+		width: "95%",
+		padding: 10,
+		backgroundColor: "white",
+		marginBottom: 10,
+	},
+	iAmABlankSpace: {
+		height: 10,
+	}, plusBtn: {
+		marginVertical: 5,
+		height: 40,
+		backgroundColor: "#f4f3f4",
+		borderRadius: 100,
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "row",
+		paddingHorizontal: 10,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0, height: 0,
+		},
+	}, icon: {
+		marginRight: 10,
 	}
 })
 

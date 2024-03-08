@@ -16,6 +16,8 @@
       "one": "Unread message",
       "other": "Unread messages"
     },
+    "select_date": "Please select a date",
+    "select_time": "Please select a duration",
     "resend_code": "Resend code",
     "verification_code_sent": "A verification code has been sent to {{phone}}",
     "verification_mail_code_sent": "A verification code has been sent to {{email}}",

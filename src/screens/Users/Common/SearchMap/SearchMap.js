@@ -208,7 +208,6 @@ const SearchMap = () => {
 								  onConfirm={handleConfirm}
 								  onCancel={hideDatePicker}
 								  date={date}
-
 								/>
 							</View>
 
