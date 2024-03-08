@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import CustomButton from "../CustomButton"
 import { useTranslation } from "react-i18next"
 import { useNavigation } from "@react-navigation/native"
@@ -14,16 +14,22 @@ const SearchResultPerson = (data) => {
 	styles.rowWithImage.maxWidth = width - (styles.profilePicture.width + styles.btn.marginRight + 80 + 20 + 10 + 10)
 
 	const goToProfilePage = () => {
-		navigation.navigate("HomeProspect", { params: {data}, screen: "DetailsVisitor" })
+		navigation.navigate("HomeProspect", { params: { data }, screen: "DetailsVisitor" })
 	}
 
-	return (
-	  <View style={styles.card}>
+	const goToRDV = () => {
+		navigation.navigate("SearchProspect", { screen: "Criteria" })
+	}
 
-		  <Image
-			src={data.profilePicture}
-			style={[styles.profilePicture]}
-			resizeMode="contain" />
+	return (<View style={styles.card}>
+
+		  <TouchableOpacity
+			onPress={goToProfilePage}>
+			  <Image
+				src={data.profilePicture}
+				style={[styles.profilePicture]}
+				resizeMode="contain" />
+		  </TouchableOpacity>
 
 
 		  <View>
@@ -46,7 +52,7 @@ const SearchResultPerson = (data) => {
 		  </View>
 
 		  <View style={styles.btn}>
-			  <CustomButton text={"RDV"} widthBtn={80} heightBtn={40} onPress={goToProfilePage}/>
+			  <CustomButton text={"RDV"} widthBtn={80} heightBtn={40} onPress={goToRDV} />
 		  </View>
 	  </View>
 
@@ -64,8 +70,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		marginLeft: 5,
 		marginRight: 5,
-	},
-	card: {
+	}, card: {
 		width: "100%",
 		backgroundColor: "rgba(0,0,0,0.05)",
 		borderRadius: 10,
@@ -77,8 +82,7 @@ const styles = StyleSheet.create({
 		paddingBottom: 10,
 		paddingLeft: 5,
 		justifyContent: "space-between",
-	},
-	rowWithImage: {
+	}, rowWithImage: {
 		display: "flex",
 		flexDirection: "row",
 		alignItems: "center",
@@ -86,19 +90,11 @@ const styles = StyleSheet.create({
 		marginTop: 3,
 		marginLeft: 7,
 		maxWidth: 150,
-	},
-	logo: {
-		maxWidth: 20,
-		maxHeight: 20,
-		marginRight: 12,
-	},
-	logoBigger: {
-		maxWidth: 25,
-		maxHeight: 25,
-		marginLeft: -2,
-		marginRight: 10,
-	},
-	btn: {
+	}, logo: {
+		maxWidth: 20, maxHeight: 20, marginRight: 12,
+	}, logoBigger: {
+		maxWidth: 25, maxHeight: 25, marginLeft: -2, marginRight: 10,
+	}, btn: {
 		marginRight: 20,
 	},
 })
