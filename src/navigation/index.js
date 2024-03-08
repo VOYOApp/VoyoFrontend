@@ -41,6 +41,7 @@ function SignUp() {
 		  <Stack.Screen name="RegisterAdditionnalDetails" component={RegisterAdditionnalDetails} />
 		  <Stack.Screen name="AdditionalDetailsVisitor" component={AdditionalDetailsVisitor}/>
 		  <Stack.Screen name="VisitorAvailability" component={VisitorAvailability}/>
+		  <Stack.Screen name="Criteria" component={CriteriaScreen} />
 	  </Stack.Navigator>
 	);
 }

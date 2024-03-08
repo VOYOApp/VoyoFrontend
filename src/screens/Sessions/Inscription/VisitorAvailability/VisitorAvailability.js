@@ -39,10 +39,12 @@ const VisitorAvailability = () => {
 
 			  <View className={"h-full w-full"}>
 				  <View className={"h-full w-full items-center"}>
-					  <View className={"h-1/2 w-full rounded-3xl bg-gray-200 items-center"}>
+					  <View className={"h-[80%] w-full rounded-3xl bg-gray-200 items-center"}>
 						  <Text style={styles.subtitle}>{t("common.availability")}</Text>
 						  <Text className={"text-justify text-sm p-3 leading-4 mb-2"}>{t("common.availability_description")}</Text>
-						  <AvailabilityCard></AvailabilityCard>
+						  <View className={"w-full h-full"}>
+							  <AvailabilityCard></AvailabilityCard>
+						  </View>
 					  </View>
 
 					  <View className={'h-full w-[80%] mt-44'}>
