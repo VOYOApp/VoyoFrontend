@@ -33,7 +33,7 @@ const Tab = createBottomTabNavigator()
 // AUTH STACKS (Home, SignIn, SignUp)
 function SignUp() {
 	return (
-	  <Stack.Navigator initialRouteName="VisitorAvailability" screenOptions={{ headerShown: false }}>
+	  <Stack.Navigator initialRouteName="RegisterPhone" screenOptions={{ headerShown: false }}>
 		  <Stack.Screen name="RegisterPhone" component={RegisterPhone} />
 		  <Stack.Screen name="PhoneConfirmation" component={PhoneConfirmation} />
 		  <Stack.Screen name="RegisterMail" component={RegisterMail} />
@@ -41,7 +41,6 @@ function SignUp() {
 		  <Stack.Screen name="RegisterAdditionnalDetails" component={RegisterAdditionnalDetails} />
 		  <Stack.Screen name="AdditionalDetailsVisitor" component={AdditionalDetailsVisitor}/>
 		  <Stack.Screen name="VisitorAvailability" component={VisitorAvailability}/>
-		  <Stack.Screen name="Criteria" component={CriteriaScreen} />
 	  </Stack.Navigator>
 	);
 }
