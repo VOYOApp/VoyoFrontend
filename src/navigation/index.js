@@ -11,6 +11,8 @@ import ConnectPWD from "../screens/Sessions/Connection/ConnectPWD"
 import ForgotPassword from "../screens/Sessions/Connection/ForgotPassword"
 import PasswordMailConfirmation from "../screens/Sessions/Connection/PasswordMailConfirmation"
 import RegisterAdditionnalDetails from "../screens/Sessions/Inscription/RegisterAdditionnalDetails"
+import AdditionalDetailsVisitor from "../screens/Sessions/Inscription/AdditionalDetailsVisitor"
+import VisitorAvailability from "../screens/Sessions/Inscription/VisitorAvailability"
 import RegisterMail from "../screens/Sessions/Inscription/RegisterMail"
 import RegisterPhone from "../screens/Sessions/Inscription/RegisterPhone"
 import MailConfirmation from "../screens/Sessions/Inscription/MailConfirmation"
@@ -30,13 +32,18 @@ const Tab = createBottomTabNavigator()
 
 // AUTH STACKS (Home, SignIn, SignUp)
 function SignUp() {
-	return (<Stack.Navigator initialRouteName="RegisterPhone" screenOptions={{ headerShown: false }}>
-		<Stack.Screen name="RegisterPhone" component={RegisterPhone} />
-		<Stack.Screen name="PhoneConfirmation" component={PhoneConfirmation} />
-		<Stack.Screen name="RegisterMail" component={RegisterMail} />
-		<Stack.Screen name="MailConfirmation" component={MailConfirmation} />
-		<Stack.Screen name="RegisterAdditionnalDetails" component={RegisterAdditionnalDetails} />
-	</Stack.Navigator>)
+	return (
+	  <Stack.Navigator initialRouteName="VisitorAvailability" screenOptions={{ headerShown: false }}>
+		  <Stack.Screen name="RegisterPhone" component={RegisterPhone} />
+		  <Stack.Screen name="PhoneConfirmation" component={PhoneConfirmation} />
+		  <Stack.Screen name="RegisterMail" component={RegisterMail} />
+		  <Stack.Screen name="MailConfirmation" component={MailConfirmation} />
+		  <Stack.Screen name="RegisterAdditionnalDetails" component={RegisterAdditionnalDetails} />
+		  <Stack.Screen name="AdditionalDetailsVisitor" component={AdditionalDetailsVisitor}/>
+		  <Stack.Screen name="VisitorAvailability" component={VisitorAvailability}/>
+		  <Stack.Screen name="Criteria" component={CriteriaScreen} />
+	  </Stack.Navigator>
+	);
 }
 
 function SignIn() {
