@@ -66,7 +66,7 @@ const VisitorAvailability = () => {
 						  <Text className={"text-justify text-xs p-3 leading-4"}>{t("common.availability_description")}</Text>
 
 						  <ScrollView
-						    className={"w-[95%] rounded-3xl"}
+						    className={"w-[95%] rounded-2xl"}
 						    style={styles.scrollView}
 						    showsVerticalScrollIndicator={false}
 						    showsHorizontalScrollIndicator={false}

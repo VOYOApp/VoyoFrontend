@@ -4,7 +4,7 @@ import { Checkbox, Icon } from "react-native-paper"
 import Images from "../../../assets"
 import { useTranslation } from "react-i18next"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
-import CustomButton from "../CustomButton"
+import RadioForm from 'react-native-simple-radio-button';
 
 const AvailabilityCard = ({ text, onDelete }) => {
 	const { t } = useTranslation()
@@ -14,8 +14,17 @@ const AvailabilityCard = ({ text, onDelete }) => {
 	const [dateIsSet, setDateIsSet] = useState(true)
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
 	const [isTimePickerVisibility, setTimePickerVisibility] = useState(false)
-	const [checkedPhoto, setCheckedPhoto] = React.useState(false)
-	const [checkedVideo, setCheckedVideo] = React.useState(false)
+	const [checkedRepeat, setCheckedRepeat] = React.useState(false)
+	const [checkedUniqueAvailability, setCheckedUniqueAvailability] = React.useState(false)
+	const [chosenOption, setChosenOption] = useState('Quotidien');
+
+	//TODO : Cette Partie devra être charger via un call
+	const options_repeat = [
+		{ label: 'Quotidien', value: 'DAILY' },
+		{ label: 'Hebdomadaire', value: 'WEEKLY' },
+		{ label: 'Mensuel', value: 'MONTHLY' },
+		{label: 'Annuel', value: 'YEARLY'}
+	];
 
 	const options = {
 		weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric",
@@ -51,7 +60,7 @@ const AvailabilityCard = ({ text, onDelete }) => {
 	return (
 	  <View style={styles.container}>
 		  <View>
-			  <TouchableOpacity onPress={showDatePicker} className={'bg-black p-3 mb-1 rounded-md flex-row items-center'}>
+			  <TouchableOpacity onPress={showDatePicker} className={'bg-indigo-400 p-3 mb-1 rounded-md flex-row items-center'}>
 				  <Icon source={Images.calendarBlue} size={25} />
 				  <Text className={'ml-2 text-white'}>{date ? 'Date : ' + Intl.DateTimeFormat("fr-FR", options).format(date).charAt(0).toUpperCase() + Intl.DateTimeFormat("fr-FR", options).format(date).slice(1): t("common.select_date")}</Text>
 			  </TouchableOpacity>
@@ -65,7 +74,7 @@ const AvailabilityCard = ({ text, onDelete }) => {
 			  />
 		  </View>
 		  <View>
-			  <TouchableOpacity disabled={dateIsSet} onPress={showTimePicker} className={'bg-orange-700 p-3 rounded-md flex-row items-center'}>
+			  <TouchableOpacity disabled={dateIsSet} onPress={showTimePicker} className={'bg-orange-400 p-3 rounded-md flex-row items-center'}>
 				  <Icon source={Images.clock} size={25} />
 				  <Text className={'ml-2 text-white'}>{time ? 'Durée : ' + time : t("common.select_time")}</Text>
 			  </TouchableOpacity>
@@ -84,21 +93,35 @@ const AvailabilityCard = ({ text, onDelete }) => {
 			  <View style={styles.checkboxes}>
 				  <View style={styles.checkbox}>
 					  <Checkbox
-						status={checkedPhoto ? "checked" : "unchecked"}
+						status={checkedRepeat ? "checked" : "unchecked"}
 						onPress={() => {
-							setCheckedPhoto(!checkedPhoto)
+							setCheckedRepeat(!checkedRepeat)
 						}}
+						color="orange"
 					  />
-					  <Text>{t("common.photo.one")}</Text>
+					  <Text>{t("common.repeat")}</Text>
 				  </View>
+				  {checkedRepeat ? <View className={'ml-10'}>
+					  <RadioForm
+					    radio_props={options_repeat}
+					    initial={0}
+					    buttonColor={'orange'}
+					    buttonSize={10}
+					    selectedButtonColor={'orange'}
+					    onPress={(value) => {
+						    setChosenOption(value);
+					    }}
+					  />
+				  </View> : ''}
 				  <View style={styles.checkbox}>
 					  <Checkbox
-						status={checkedVideo ? "checked" : "unchecked"}
+						status={checkedUniqueAvailability ? "checked" : "unchecked"}
 						onPress={() => {
-							setCheckedVideo(!checkedVideo)
+							setCheckedUniqueAvailability(!checkedUniqueAvailability)
 						}}
+						color="orange"
 					  />
-					  <Text>{t("common.video.one")}</Text>
+					  <Text>{t("common.unique_availability")}</Text>
 				  </View>
 			  </View>
 

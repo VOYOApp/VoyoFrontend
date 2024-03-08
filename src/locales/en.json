@@ -46,6 +46,8 @@
       "searchPlaceholder": "Search an address"
     },
     "availability": "Availability",
+    "repeat": "Repeat :",
+    "unique_availability": "Unique availability",
     "next": "Next",
     "validate": "Validate",
     "search": "Search",
