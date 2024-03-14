@@ -9,6 +9,7 @@ import { auth } from '../../../../../firebaseConfig';
 import { signInWithEmailAndPassword, signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 import axios from 'axios';
 import {BASE_URL} from '@env'
+import { storeToken } from "../../../../context/AuthContext"
 
 const ConnectPWD = () => {
 	const { t } = useTranslation()
@@ -22,19 +23,25 @@ const ConnectPWD = () => {
 	const onSignInPressed = async () => {
 		try {
 			const response = await axios.get(`${BASE_URL}/api/user/login`, {
+
+			if (phoneNumber.includes("undefined")) setPhoneNumber("")
+
+			const response = await axios.get(`${BASE_URL}/api/security/login`, {
 				params: {
 					"phone_number": phoneNumber.replaceAll(" ", "") || "",
 					"email": email || "",
-					"password": password || ""
-				}
+					"password": password || "",
+				},
 			});
 
 			if (response.status === 200) {
-				console.log(`Your connected`);
-				navigation.navigate('Prospect', {screen: 'HomeScreen'})
+				// Save the token in the context
+				await storeToken(response.data.token);
+
+				navigation.navigate('Prospect', { screen: 'HomeScreen' });
 			}
 		} catch (error) {
-			console.log("An error has occurred: "+error);
+			console.log('An error has occurred: ' + error);
 		}
 	};
 
