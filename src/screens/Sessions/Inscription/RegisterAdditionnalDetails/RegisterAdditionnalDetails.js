@@ -87,7 +87,7 @@ const RegisterAdditionnalDetails = () => {
 
 	const onRegisterPressed = async () => {
 		try {
-			const response = await axios.post(`${BASE_URL}/register`, {
+			const response = await axios.post(`${BASE_URL}/api/register`, {
 				"phone_number": phoneNumber.replaceAll(" ", ""),
 				"first_name": firstName,
 				"last_name": lastName,
