@@ -19,6 +19,11 @@ const AvailabilityCard = ({ text, onDelete }) => {
 	const [chosenOption, setChosenOption] = useState('Quotidien');
 
 	//TODO : Cette Partie devra être charger via un call
+	const initial_options = [
+		{ label: t("common.unique_availability"), value: 'UNIQUE' },
+	  { label: t("common.repeat"), value: 'REPEAT' },
+
+	];
 	const options_repeat = [
 		{ label: 'Quotidien', value: 'DAILY' },
 		{ label: 'Hebdomadaire', value: 'WEEKLY' },
@@ -52,9 +57,9 @@ const AvailabilityCard = ({ text, onDelete }) => {
 		setTimePickerVisibility(false)
 	}
 	const handleTimeChange = (date) => {
-		const formattedTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
+		const formattedTime = `${String(date.getHours()).padStart(2, '0')}h : ${String(date.getMinutes()).padStart(2, '0')}m : ${String(date.getSeconds()).padStart(2, '0')}s`;
 		setTime(formattedTime);
-		hideDatePicker()
+		hideTimePicker()
 	}
 
 	return (
@@ -83,7 +88,6 @@ const AvailabilityCard = ({ text, onDelete }) => {
 			    date={date}
 			    mode="time"
 			    isVisible={isTimePickerVisibility}
-			    is24Hour
 			    onConfirm={handleTimeChange}
 			    onCancel={hideTimePicker}
 			  />
@@ -91,15 +95,17 @@ const AvailabilityCard = ({ text, onDelete }) => {
 
 		  <View style={styles.underTheTextArea}>
 			  <View style={styles.checkboxes}>
-				  <View style={styles.checkbox}>
-					  <Checkbox
-						status={checkedRepeat ? "checked" : "unchecked"}
-						onPress={() => {
-							setCheckedRepeat(!checkedRepeat)
-						}}
-						color="orange"
+				  <View className={'ml-2'}>
+					  <RadioForm
+					    radio_props={initial_options}
+					    buttonColor={'orange'}
+					    buttonSize={15}
+					    selectedButtonColor={'orange'}
+					    onPress={(value) => {
+						    setChosenOption(value);
+							value === 'REPEAT' ? setCheckedRepeat(true) : setCheckedRepeat(false)
+					    }}
 					  />
-					  <Text>{t("common.repeat")}</Text>
 				  </View>
 				  {checkedRepeat ? <View className={'ml-10'}>
 					  <RadioForm
@@ -113,16 +119,6 @@ const AvailabilityCard = ({ text, onDelete }) => {
 					    }}
 					  />
 				  </View> : ''}
-				  <View style={styles.checkbox}>
-					  <Checkbox
-						status={checkedUniqueAvailability ? "checked" : "unchecked"}
-						onPress={() => {
-							setCheckedUniqueAvailability(!checkedUniqueAvailability)
-						}}
-						color="orange"
-					  />
-					  <Text>{t("common.unique_availability")}</Text>
-				  </View>
 			  </View>
 
 			  <TouchableOpacity style={styles.icon} onPress={onDelete}>
