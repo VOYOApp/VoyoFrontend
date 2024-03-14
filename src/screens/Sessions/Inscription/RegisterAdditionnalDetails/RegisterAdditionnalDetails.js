@@ -86,8 +86,9 @@ const RegisterAdditionnalDetails = () => {
 	const toggleSwitch = () => setIsEnabled(previousState => !previousState)
 
 	const onRegisterPressed = async () => {
+		setBtnDisabled(true);
 		try {
-			const response = await axios.post(`${BASE_URL}/register`, {
+			const response = await axios.post(`${BASE_URL}/api/user`, {
 				"phone_number": phoneNumber.replaceAll(" ", ""),
 				"first_name": firstName,
 				"last_name": lastName,
@@ -103,9 +104,11 @@ const RegisterAdditionnalDetails = () => {
 
 			if (response.status === 201) {
 				console.log(`Your account has been created: ${JSON.stringify(response.data)}`);
-				// navigation.navigate('AdditionalDetailsVisitor')
+				navigation.navigate("Prospect", { screen: "ProspectHome" })
 			}
 		} catch (error) {
+			setBtnDisabled(false);
+			alert("An error has occurred: "+error);
 			console.log("An error has occurred: "+error);
 		}
 	};

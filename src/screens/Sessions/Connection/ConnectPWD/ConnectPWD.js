@@ -21,7 +21,7 @@ const ConnectPWD = () => {
 
 	const onSignInPressed = async () => {
 		try {
-			const response = await axios.get(`${BASE_URL}/login`, {
+			const response = await axios.get(`${BASE_URL}/api/user/login`, {
 				params: {
 					"phone_number": phoneNumber.replaceAll(" ", "") || "",
 					"email": email || "",
