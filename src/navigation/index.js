@@ -26,6 +26,7 @@ import Chat from "../screens/Users/Common/Chat"
 import ChatChannel from "../screens/Users/Common/ChatChannel"
 import CriteriaScreen from "../screens/Users/Prospect/CriteresPage"
 import RecapRequest from "../screens/Users/Prospect/RecapRequest"
+import AdminHome from "../screens/Users/Admin/AdminHome"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()

@@ -25,6 +25,10 @@ const HomeScreen = () => {
 		navigation.navigate("Prospect", { screen: "ProspectHome" })
 	}
 
+	const onHomeAdminPressed = () => {
+		navigation.navigate("Admin", { screen: "AdminHome" })
+	}
+
 	return (<View style={styles.root}>
 
 		  <Image source={require("../../../../assets/logos/banner-voyo.png")} style={[styles.logo, { height: height }]}
@@ -38,6 +42,7 @@ const HomeScreen = () => {
 			                widthBtn={"40%"} />
 		  </View>
 		  <CustomButton text="HomeProspect" onPress={onHomeProspectPressed} bgColor={"magenta"} widthBtn={"40%"} />
+		  <CustomButton text="HomeAdmin" onPress={onHomeAdminPressed} bgColor={"red"} widthBtn={"40%"} />
 	  </View>)
 }
 
