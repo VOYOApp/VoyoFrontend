@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Image } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { BASE_URL } from "@env"
 
 import HomeScreen from "../screens/Sessions/HomeScreen"
 import ConnectPhone from "../screens/Sessions/Connection/ConnectPhone"
@@ -26,6 +27,9 @@ import Chat from "../screens/Users/Common/Chat"
 import ChatChannel from "../screens/Users/Common/ChatChannel"
 import CriteriaScreen from "../screens/Users/Prospect/CriteresPage"
 import RecapRequest from "../screens/Users/Prospect/RecapRequest"
+import { getToken, removeToken, storeToken } from "../context/AuthContext"
+import axios from "axios"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -39,10 +43,10 @@ function SignUp() {
 		  <Stack.Screen name="RegisterMail" component={RegisterMail} />
 		  <Stack.Screen name="MailConfirmation" component={MailConfirmation} />
 		  <Stack.Screen name="RegisterAdditionnalDetails" component={RegisterAdditionnalDetails} />
-		  <Stack.Screen name="AdditionalDetailsVisitor" component={AdditionalDetailsVisitor}/>
-		  <Stack.Screen name="VisitorAvailability" component={VisitorAvailability}/>
+		  <Stack.Screen name="AdditionalDetailsVisitor" component={AdditionalDetailsVisitor} />
+		  <Stack.Screen name="VisitorAvailability" component={VisitorAvailability} />
 	  </Stack.Navigator>
-	);
+	)
 }
 
 function SignIn() {
@@ -150,38 +154,60 @@ function Prospect() {
 // 	);
 // }
 
-function Navigation() {
-	// const [isLoggedIn, setLoggedIn] = React.useState(false);
+function Navigation({ isLoggedIn }) {
+	// const checkTokenValidity = async () => {
+	// 	try {
+	// 		if (await getToken() !== null){
+	// 			// If a token exists, check its validity
+	// 			const response = await axios.get(`${BASE_URL}/api/security`, {
+	// 				headers: {
+	// 					Authorization: `Bearer ${await getToken()}`,
+	// 				},
+	// 			});
 	//
-	// const handleLogin = () => {
-	// 	setLoggedIn(true);
+	// 			if (response.status === 200) {
+	// 				console.log('Token is valid. Redirecting to the homepage.');
+	// 				setLoggedIn(true);
+	// 			}
+	// 		} else {
+	// 			console.log('No token found. Redirecting to the welcome page.');
+	// 			setLoggedIn(false);
+	// 		}
+	// 	} catch (error) {
+	// 		console.log('Token is invalid or an error occurred. Redirecting to the login page.');
+	// 		// console.error('Error:', error);
+	// 		setLoggedIn(false);
+	// 		await removeToken();
+	// 	}
 	// };
 	//
-	// const handleLogout = () => {
-	// 	setLoggedIn(false);
-	// };
+	// useEffect(() => {
+	// 	async function fetchData() {
+	// 		return await checkTokenValidity();
+	// 	}
+	// 	fetchData().then(() => console.log(isLoggedIn));
+	// }, []);
 
-
+	console.log(isLoggedIn)
 	return (<NavigationContainer>
-		<Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
-			{/*{isLoggedIn ? (*/}
-			{/*  // Screens for logged in users*/}
-			<Stack.Group>
-				<Stack.Screen name="Prospect" component={Prospect} />
-				<Stack.Screen name="Common" component={Common} />
-			</Stack.Group>
-			{/*) : (*/}
-			{/*// Auth screens*/}
-			<Stack.Group>
+		{isLoggedIn ? (
+		  <Stack.Navigator initialRouteName={"Prospect"} screenOptions={{ headerShown: false }}>
+			  <Stack.Screen name="Prospect" component={Prospect} />
+			  <Stack.Screen name="Common" component={Common} />
+			  <Stack.Screen name="HomeScreen" component={HomeScreen} />
+			  <Stack.Screen name="SignUp" component={SignUp} />
+			  <Stack.Screen name="SignIn" component={SignIn} />
+			  <Stack.Screen name="NoInternet" component={NoInternet} />
+		  </Stack.Navigator>
+		) : (
+			<Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="HomeScreen" component={HomeScreen} />
 				<Stack.Screen name="SignUp" component={SignUp} />
 				<Stack.Screen name="SignIn" component={SignIn} />
-			</Stack.Group>
-			{/*)}*/}
-			{/* Common modal screens */}
-			<Stack.Screen name="NoInternet" component={NoInternet} />
-		</Stack.Navigator>
-	</NavigationContainer>)
-}
+				<Stack.Screen name="NoInternet" component={NoInternet} />
+			</Stack.Navigator>
+		)}
+		  < /NavigationContainer>)
+		}
 
-export default Navigation
+		export default Navigation

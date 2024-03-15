@@ -18,15 +18,15 @@ const ConnectPWD = () => {
 	const [phoneNumber, setPhoneNumber] = useState("+33 " + route.params?.numberPhone || "")
 	const [email, setEmail] = useState(route.params?.email || "")
 	const [password, setPassword] = useState("")
+	const [btnDisabled, setBtnDisabled] = useState(false)
 	const { height } = useWindowDimensions()
 
 	const onSignInPressed = async () => {
 		try {
-			const response = await axios.get(`${BASE_URL}/api/user/login`, {
-
+			setBtnDisabled(true)
 			if (phoneNumber.includes("undefined")) setPhoneNumber("")
 
-			const response = await axios.get(`${BASE_URL}/api/security/login`, {
+			const response = await axios.get(`${BASE_URL}/api/user/login`, {
 				params: {
 					"phone_number": phoneNumber.replaceAll(" ", "") || "",
 					"email": email || "",
@@ -36,12 +36,15 @@ const ConnectPWD = () => {
 
 			if (response.status === 200) {
 				// Save the token in the context
-				await storeToken(response.data.token);
+				await storeToken(response.data.token).then(setTimeout(() => {
+					console.log('Token stored successfully');
+					navigation.navigate('Prospect', {screen: 'HomeScreen'})
+				}, 1000));
 
-				navigation.navigate('Prospect', { screen: 'HomeScreen' });
 			}
 		} catch (error) {
 			console.log('An error has occurred: ' + error);
+			setBtnDisabled(false)
 		}
 	};
 
@@ -99,7 +102,7 @@ const ConnectPWD = () => {
 				  <Text onPress={onForgotPasswordPressed} style={styles.link}>{t("common.forgot_password")}</Text>
 			  </View>
 
-			  <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"} />
+			  <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"} deactivated={btnDisabled}/>
 		  </View>
 	  </View>
 	)
