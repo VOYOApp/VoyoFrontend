@@ -9,6 +9,7 @@ import { createUserWithEmailAndPassword, updateProfile, linkWithCredential, Phon
 import axios from 'axios';
 import {BASE_URL} from '@env'
 import { useTranslation } from "react-i18next"
+import { storeToken } from "../../../../context/AuthContext"
 
 const RegisterAdditionnalDetails = () => {
 	const { t } = useTranslation()
@@ -23,64 +24,58 @@ const RegisterAdditionnalDetails = () => {
 	const [email, setEmail] = useState(user.email || "")
 	const [password, setPassword] = useState("")
 	const [passwordConfirmation, setPasswordConfirmation] = useState("")
+
 	const [isEnabled, setIsEnabled] = useState(false)
-	const [btnDisabled, setBtnDisabled] = useState(false)
-	const [isPasswordValid, setIsPasswordValid] = useState(false)
-	const [passwordMatch, setPasswordMatch] = useState(true)
+	const [btnDisabled, setBtnDisabled] = useState(true)
+
 	const [isLengthValid, setIsLengthValid] = useState(false)
 	const [hasSpecialChar, setHasSpecialChar] = useState(false)
 	const [hasNumber, setHasNumber] = useState(false)
 	const [hasUpperCase, setHasUpperCase] = useState(false)
-	// const [allCriteriaValid, setAllCriteriaValid] = useState(false);
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
 
-	// const allCriteriaIsValid = () => {
-	// 	const isValid =
-	// 	  isPasswordValid &&
-	// 	  lastName !== '' &&
-	// 	  firstName !== '' &&
-	// 	  bio !== '' &&
-	// 	  phoneNumber !== '';
-	//
-	// 	setAllCriteriaValid(isValid);
-	// 	setBtnDisabled(!isValid);
-	// };
-	// const handleLastNameChange = (text) => {
-	// 	setLastName(text)
-	// }
-	// const handleFirstNameChange = (text) => {
-	// 	setFirstName(text)
-	// }
+	const allCriteriaIsValid = (fn, ls, pswd, confirm_pswd, description) => {
+		let passwordMatch = pswd === confirm_pswd;
+		let passwordIsNotEmpty = pswd !== '';
+		let isLengthValid = pswd.length >= 8;
+		let hasSpecialChar = /[!@#$%^&*()_+={}\[\]:;<>,.?/~`"'\-|\\]/.test(pswd);
+		let hasNumber = /\d/.test(pswd);
+		let hasUpperCase = /[A-Z]/.test(pswd);
+		let isPasswordValid = passwordMatch && passwordIsNotEmpty && isLengthValid && hasSpecialChar && hasNumber && hasUpperCase;
+
+		setIsLengthValid(isLengthValid)
+		setHasSpecialChar(hasSpecialChar)
+		setHasNumber(hasNumber)
+		setHasUpperCase(hasUpperCase)
+
+		let isValid = isPasswordValid && ls !== '' &&  fn !== '' && description !== '';
+
+		setBtnDisabled(!isValid);
+	};
+	const handleLastNameChange = (text) => {
+		setLastName(text)
+		allCriteriaIsValid(firstName, text, password, passwordConfirmation, bio)
+	}
+	const handleFirstNameChange = (text) => {
+		setFirstName(text)
+		allCriteriaIsValid(text, lastName, password, passwordConfirmation, bio)
+	}
 
 	const handleBioChange = (text) => {
 		setBio(text)
+		allCriteriaIsValid(firstName, lastName, password, passwordConfirmation, text)
 	}
 
 	const handlePasswordChange = (text) => {
 		setPassword(text)
-
-		setIsLengthValid(text.length >= 8)
-		setHasSpecialChar(/[!@#$%^&*()_+={}\[\]:;<>,.?/~`"'\-|\\]/.test(text))
-		setHasNumber(/\d/.test(text))
-		setHasUpperCase(/[A-Z]/.test(text))
-
-		setIsPasswordValid(text === passwordConfirmation &&
-		  text !== "" &&
-		  isLengthValid &&
-		  hasSpecialChar &&
-		  hasNumber &&
-		  hasUpperCase)
-
-		setPasswordMatch(isPasswordValid)
-		setBtnDisabled(!isPasswordValid)
+		allCriteriaIsValid(firstName, lastName, text, passwordConfirmation, bio)
 	}
 
 	const handlePasswordConfirmationChange = (text) => {
 		setPasswordConfirmation(text)
-		text === password && text !== "" ? setPasswordMatch(true) : setPasswordMatch(false)
-		text === password && text !== "" ? setBtnDisabled(false) : setBtnDisabled(true)
+		allCriteriaIsValid(firstName, lastName, password, text, bio)
 	}
 
 	const toggleSwitch = () => setIsEnabled(previousState => !previousState)
@@ -104,7 +99,12 @@ const RegisterAdditionnalDetails = () => {
 
 			if (response.status === 201) {
 				console.log(`Your account has been created: ${JSON.stringify(response.data)}`);
-				navigation.navigate("Prospect", { screen: "ProspectHome" })
+				await storeToken(response.data.token).then(
+				  () => {
+					  console.log("Token stored successfully");
+					  navigation.navigate("Prospect", { screen: "ProspectHome" })
+				  }
+				)
 			}
 		} catch (error) {
 			setBtnDisabled(false);
@@ -172,7 +172,6 @@ const RegisterAdditionnalDetails = () => {
 		}
 	}
 
-
 	return (
 	  <KeyboardAvoidingView style={styles.bottomContainer} behavior={Platform.OS === "ios" ? "padding" : "height"}>
 		  <View style={styles.root}>
@@ -190,12 +189,12 @@ const RegisterAdditionnalDetails = () => {
 			  <View style={{ width: "70%" }}>
 				  <CustomInput placeHolder="First Name"
 				               value={firstName}
-				               setValue={setFirstName}
+				               setValue={handleFirstNameChange}
 				               inputype="name"
 				  />
 				  <CustomInput placeHolder="Last Name"
 				               value={lastName}
-				               setValue={setLastName}
+				               setValue={handleLastNameChange}
 				               inputype="familyName"
 				  />
 			  </View>
