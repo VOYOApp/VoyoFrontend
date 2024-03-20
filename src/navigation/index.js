@@ -155,48 +155,12 @@ function Prospect() {
 // }
 
 function Navigation({ isLoggedIn }) {
-	// const checkTokenValidity = async () => {
-	// 	try {
-	// 		if (await getToken() !== null){
-	// 			// If a token exists, check its validity
-	// 			const response = await axios.get(`${BASE_URL}/api/security`, {
-	// 				headers: {
-	// 					Authorization: `Bearer ${await getToken()}`,
-	// 				},
-	// 			});
-	//
-	// 			if (response.status === 200) {
-	// 				console.log('Token is valid. Redirecting to the homepage.');
-	// 				setLoggedIn(true);
-	// 			}
-	// 		} else {
-	// 			console.log('No token found. Redirecting to the welcome page.');
-	// 			setLoggedIn(false);
-	// 		}
-	// 	} catch (error) {
-	// 		console.log('Token is invalid or an error occurred. Redirecting to the login page.');
-	// 		// console.error('Error:', error);
-	// 		setLoggedIn(false);
-	// 		await removeToken();
-	// 	}
-	// };
-	//
-	// useEffect(() => {
-	// 	async function fetchData() {
-	// 		return await checkTokenValidity();
-	// 	}
-	// 	fetchData().then(() => console.log(isLoggedIn));
-	// }, []);
 
-	console.log(isLoggedIn)
 	return (<NavigationContainer>
 		{isLoggedIn ? (
 		  <Stack.Navigator initialRouteName={"Prospect"} screenOptions={{ headerShown: false }}>
 			  <Stack.Screen name="Prospect" component={Prospect} />
 			  <Stack.Screen name="Common" component={Common} />
-			  <Stack.Screen name="HomeScreen" component={HomeScreen} />
-			  <Stack.Screen name="SignUp" component={SignUp} />
-			  <Stack.Screen name="SignIn" component={SignIn} />
 			  <Stack.Screen name="NoInternet" component={NoInternet} />
 		  </Stack.Navigator>
 		) : (

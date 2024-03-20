@@ -14,7 +14,6 @@ const App = () => {
 			const tokenChangeInterval = setInterval(async () => {
 				try {
 					const token = await AsyncStorage.getItem('token');
-					console.log(token)
 					if (token && !isLoggedIn) {
 						setLoggedIn(true);
 					} else if (!token && isLoggedIn) {

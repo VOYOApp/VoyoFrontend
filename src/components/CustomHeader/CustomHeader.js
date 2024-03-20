@@ -13,7 +13,6 @@ const CustomHeader = () => {
 
 	const Logout = async () => {
 		await removeToken();
-		navigation.navigate('HomeScreen');
 	}
 	return (
 	  <View style={{
