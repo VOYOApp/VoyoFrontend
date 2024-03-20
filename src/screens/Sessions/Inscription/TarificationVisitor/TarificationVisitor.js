@@ -19,38 +19,33 @@ import { Icon } from "react-native-paper"
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
 import AvailabilityCard from "../../../../components/AvailabilityCard"
 import CriteriaCard from "../../../../components/CriteriaCard"
+import DateTimePickerModal from "react-native-modal-datetime-picker"
+import CustomInput from "../../../../components/CustomInput"
 
 const TarificationVisitor = () => {
 	const { t } = useTranslation()
 	const [btnDisabled, setBtnDisabled] = useState(true)
-	const [criteriaList, setCriteriaList] = useState([{
-		id: 1, text: "Criteria 1",
-	}, {
-		id: 2, text: "Criteria 2",
-	}])
+	const [pricing, setPricing] = useState('')
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
 	const route = useRoute()
 	const user = route.params?.user
-	console.log("user", user)
 
-	const onNextPressed = () => {
-		// navigation.navigate()
+	const onRegisterPressed = async () => {
+		setBtnDisabled(true);
+		try {
+
+		} catch (error) {
+			setBtnDisabled(false);
+			alert("An error has occurred: "+error);
+			console.log("An error has occurred: "+error);
+		}
 	}
 
-	const addCriteriaCard = () => {
-		const newCriteriaList = [...criteriaList, { id: Date.now(), text: "New Criteria" }]
-		setCriteriaList(newCriteriaList)
-	}
+	const handlePricing = () => {
 
-	const removeCriteriaCard = (id) => {
-		if (criteriaList.length === 1) return
-		const updatedCriteriaList = criteriaList.filter((criteria) => criteria.id !== id)
-		setCriteriaList(updatedCriteriaList)
 	}
-
-	const scrollViewRef = useRef(null)
 
 	return (
 	  <View style={styles.root}>
@@ -61,44 +56,40 @@ const TarificationVisitor = () => {
 
 			  <View className={"h-full w-full"}>
 				  <View className={"h-full w-full items-center"}>
-					  <View className={"h-[70%] w-full rounded-3xl bg-gray-200 items-center"}>
-						  <Text style={styles.subtitle}>{t("common.availability")}</Text>
-						  <Text className={"text-justify text-xs p-3 leading-4"}>{t("common.availability_description")}</Text>
+					  <View className={"w-full rounded-3xl bg-gray-200 items-center"}>
+						  <Text style={styles.subtitle}>{t("common.pricing")}</Text>
+						  <Text
+							className={"text-justify text-xs p-3 leading-4"}>{t("common.pricing_description")}</Text>
 
-						  <ScrollView
-						    className={"w-[95%] rounded-2xl"}
-						    style={styles.scrollView}
-						    showsVerticalScrollIndicator={false}
-						    showsHorizontalScrollIndicator={false}
-						    ref={scrollViewRef}
-						    onContentSizeChange={() => {
-							    scrollViewRef.current?.scrollToEnd()
-						    }}
-						  >
-							  {criteriaList.map((criteria) => (<AvailabilityCard key={criteria.id}
-							                                                 text={criteria.text}
-							                                                 onDelete={() => removeCriteriaCard(criteria.id)} />))}
+							  <View className={"w-[95%] h-1/4 items-center"}>
 
-							  <View style={styles.iAmABlankSpace} />
-						  </ScrollView>
+								  <View className={"bg-green-700 p-3 my-3 rounded-md flex-row items-center w-[95%]"}>
+									  <Icon source={Images.dollar} size={25} />
+									  <TextInput onChangeText={(value) => {
+										  setPricing(value)
+										  value ? setBtnDisabled(false) : setBtnDisabled(true)
+									  }}
+									             value={pricing}
+									             keyboardType={"number-pad"} className={"ml-2 text-white"} placeholderTextColor={"white"}
+									             placeholder={t("common.pricing") + " : " + t("common.select_pricing")}></TextInput>
+								  </View>
+
+								  <View className={'bg-orange-400 p-3 rounded-md flex-row items-center w-[95%]'}>
+									  <Icon source={Images.platform_tarification} size={25} />
+									  <TextInput editable={false} className={"ml-2"} placeholderTextColor={"white"}
+									             placeholder={t("common.platform_costs", { price: "0.50 €" })}></TextInput>
+								  </View>
+							  </View>
 
 					  </View>
 
-					  <TouchableOpacity style={styles.plusBtn} onPress={addCriteriaCard}>
-						  <View style={styles.icon}>
-							  <Icon source={Images.add} size={25} />
-						  </View>
-						  <Text>{t("prospect.add_criteria")}</Text>
-					  </TouchableOpacity>
-
-					  <View className={'h-full w-[80%]'}>
-						  <CustomButton text={t("common.next")} onPress={onNextPressed} bgColor={"orange"} deactivated={btnDisabled} />
+					  <View className={"h-full w-[80%] mt-4"}>
+						  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"orange"}
+						                deactivated={btnDisabled} />
 					  </View>
 				  </View>
 			  </View>
-
 		  </View>
-
 	  </View>
 	)
 }
@@ -121,33 +112,6 @@ const styles = StyleSheet.create({
 		fontWeight: "400",
 		padding: 3,
 	},
-	link: {
-		color: "#FE881B",
-		marginTop: 10,
-	}, scrollView: {
-		width: "95%",
-		padding: 10,
-		backgroundColor: "white",
-		marginBottom: 10,
-	},
-	iAmABlankSpace: {
-		height: 10,
-	}, plusBtn: {
-		marginVertical: 5,
-		height: 40,
-		backgroundColor: "#f4f3f4",
-		borderRadius: 100,
-		justifyContent: "center",
-		alignItems: "center",
-		flexDirection: "row",
-		paddingHorizontal: 10,
-		shadowColor: "#000",
-		shadowOffset: {
-			width: 0, height: 0,
-		},
-	}, icon: {
-		marginRight: 10,
-	}
 })
 
 export default TarificationVisitor

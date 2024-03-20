@@ -15,6 +15,7 @@ const Images = {
 	calendarBlue: require("./icons/012-calendar.png"),
 	homeSmall: require("./icons/home.png"),
 	clock: require('./icons/013-clock.png'),
+	platform_tarification: require('./icons/019-platform-costs.png'),
 };
 
 export default Images

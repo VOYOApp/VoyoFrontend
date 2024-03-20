@@ -16,6 +16,8 @@
       "one": "Message non lu",
       "other": "Messages non lus"
     },
+    "platform_costs": "Frais de plateforme : {{price}}",
+    "select_pricing": "Veuillez tarification par heure",
     "select_date": "Veuillez selectioner une date",
     "select_time": "Veuillez selectionner une durée",
     "resend_code": "Renvoyer le code",
@@ -27,6 +29,7 @@
     "reference_address": "Adresse de référence",
     "address_description": "Cette adresse sera le point central de votre zone de visites. Elle ne sera jamais divulguée aux autre utilisateurs. Vous n’êtes pas obligés de mettre votre adresse personelle.",
     "availability_description": "Pour pouvoir apparaitre dans les résultats de recherche, merci de renseigner vos disponnibilités pour visiter des biens immobiliers. Vous pourrez, via les paramètres, en ajouter, supprimer ou modifier  à tout moment les disponnibilités que vous définissez.",
+    "pricing_description": "Grâce à VOYO, vous allez pouvoir gagner de l’argent. En effet, toute visite que vous effectuez avec VOYO sera rémunérée. Et le mieux dans tout ça ? C’est vous qui définissez votre taux horaire !",
     "details": "Détails",
     "my_account": "Mon compte",
     "first_name": "Prénom",
@@ -55,6 +58,7 @@
       "one": "Résultat",
       "other": "Résultats"
     },
+    "pricing": "Tarification",
     "price": "Prix",
     "star": {
       "one": "Note",
