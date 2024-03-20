@@ -14,6 +14,7 @@ import PasswordMailConfirmation from "../screens/Sessions/Connection/PasswordMai
 import RegisterAdditionnalDetails from "../screens/Sessions/Inscription/RegisterAdditionnalDetails"
 import AdditionalDetailsVisitor from "../screens/Sessions/Inscription/AdditionalDetailsVisitor"
 import VisitorAvailability from "../screens/Sessions/Inscription/VisitorAvailability"
+import TarificationVisitor from "../screens/Sessions/Inscription/TarificationVisitor"
 import RegisterMail from "../screens/Sessions/Inscription/RegisterMail"
 import RegisterPhone from "../screens/Sessions/Inscription/RegisterPhone"
 import MailConfirmation from "../screens/Sessions/Inscription/MailConfirmation"
@@ -27,9 +28,6 @@ import Chat from "../screens/Users/Common/Chat"
 import ChatChannel from "../screens/Users/Common/ChatChannel"
 import CriteriaScreen from "../screens/Users/Prospect/CriteresPage"
 import RecapRequest from "../screens/Users/Prospect/RecapRequest"
-import { getToken, removeToken, storeToken } from "../context/AuthContext"
-import axios from "axios"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -45,6 +43,7 @@ function SignUp() {
 		  <Stack.Screen name="RegisterAdditionnalDetails" component={RegisterAdditionnalDetails} />
 		  <Stack.Screen name="AdditionalDetailsVisitor" component={AdditionalDetailsVisitor} />
 		  <Stack.Screen name="VisitorAvailability" component={VisitorAvailability} />
+		  <Stack.Screen name="TarificationVisitor" component={TarificationVisitor} />
 	  </Stack.Navigator>
 	)
 }

@@ -16,7 +16,7 @@ const RegisterAdditionnalDetails = () => {
 	const route = useRoute()
 	const user = route.params?.user
 
-	const [avatar, setAvatar] = useState("")
+	const [avatar, setAvatar] = useState("https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x")
 	const [lastName, setLastName] = useState("")
 	const [firstName, setFirstName] = useState("")
 	const [bio, setBio] = useState("")
@@ -91,7 +91,7 @@ const RegisterAdditionnalDetails = () => {
 				"password": password,
 				"role_id": 2,
 				"biography": bio,
-				"profile_picture": null,
+				"profile_picture": avatar,
 				"pricing": null,
 				"address_id": null,
 				"radius": null,
@@ -156,8 +156,22 @@ const RegisterAdditionnalDetails = () => {
 
 
 	const onNextPressed = () => {
-		// TODO Ajouter les informations du users dans la route
-		navigation.navigate('AdditionalDetailsVisitor')
+		navigation.navigate('SignUp', {
+			screen: 'AdditionalDetailsVisitor',
+			params: {
+				user: {
+					phone_number: phoneNumber.replaceAll(" ", ""),
+					first_name: firstName,
+					last_name: lastName,
+					email: email,
+					password: password,
+					role_id: 2,
+					biography: bio,
+					profile_picture: avatar,
+					pricing: null,
+				}
+			}
+		})
 	}
 
 	const renderButton = () => {

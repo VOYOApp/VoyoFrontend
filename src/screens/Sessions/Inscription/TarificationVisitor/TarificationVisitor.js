@@ -20,9 +20,9 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import AvailabilityCard from "../../../../components/AvailabilityCard"
 import CriteriaCard from "../../../../components/CriteriaCard"
 
-const VisitorAvailability = () => {
+const TarificationVisitor = () => {
 	const { t } = useTranslation()
-	const [btnDisabled, setBtnDisabled] = useState(false)
+	const [btnDisabled, setBtnDisabled] = useState(true)
 	const [criteriaList, setCriteriaList] = useState([{
 		id: 1, text: "Criteria 1",
 	}, {
@@ -33,16 +33,10 @@ const VisitorAvailability = () => {
 	const navigation = useNavigation()
 	const route = useRoute()
 	const user = route.params?.user
+	console.log("user", user)
 
 	const onNextPressed = () => {
-		navigation.navigate("SignUp", {
-			screen: "TarificationVisitor",
-			params: {
-				user: {
-					...user,
-				},
-			},
-		})
+		// navigation.navigate()
 	}
 
 	const addCriteriaCard = () => {
@@ -69,22 +63,21 @@ const VisitorAvailability = () => {
 				  <View className={"h-full w-full items-center"}>
 					  <View className={"h-[70%] w-full rounded-3xl bg-gray-200 items-center"}>
 						  <Text style={styles.subtitle}>{t("common.availability")}</Text>
-						  <Text
-							className={"text-justify text-xs p-3 leading-4"}>{t("common.availability_description")}</Text>
+						  <Text className={"text-justify text-xs p-3 leading-4"}>{t("common.availability_description")}</Text>
 
 						  <ScrollView
-							className={"w-[95%] rounded-2xl"}
-							style={styles.scrollView}
-							showsVerticalScrollIndicator={false}
-							showsHorizontalScrollIndicator={false}
-							ref={scrollViewRef}
-							onContentSizeChange={() => {
-								scrollViewRef.current?.scrollToEnd()
-							}}
+						    className={"w-[95%] rounded-2xl"}
+						    style={styles.scrollView}
+						    showsVerticalScrollIndicator={false}
+						    showsHorizontalScrollIndicator={false}
+						    ref={scrollViewRef}
+						    onContentSizeChange={() => {
+							    scrollViewRef.current?.scrollToEnd()
+						    }}
 						  >
 							  {criteriaList.map((criteria) => (<AvailabilityCard key={criteria.id}
-							                                                     text={criteria.text}
-							                                                     onDelete={() => removeCriteriaCard(criteria.id)} />))}
+							                                                 text={criteria.text}
+							                                                 onDelete={() => removeCriteriaCard(criteria.id)} />))}
 
 							  <View style={styles.iAmABlankSpace} />
 						  </ScrollView>
@@ -98,9 +91,8 @@ const VisitorAvailability = () => {
 						  <Text>{t("prospect.add_criteria")}</Text>
 					  </TouchableOpacity>
 
-					  <View className={"h-full w-[80%]"}>
-						  <CustomButton text={t("common.next")} onPress={onNextPressed} bgColor={"orange"}
-						                deactivated={btnDisabled} />
+					  <View className={'h-full w-[80%]'}>
+						  <CustomButton text={t("common.next")} onPress={onNextPressed} bgColor={"orange"} deactivated={btnDisabled} />
 					  </View>
 				  </View>
 			  </View>
@@ -155,7 +147,7 @@ const styles = StyleSheet.create({
 		},
 	}, icon: {
 		marginRight: 10,
-	},
+	}
 })
 
-export default VisitorAvailability
+export default TarificationVisitor
