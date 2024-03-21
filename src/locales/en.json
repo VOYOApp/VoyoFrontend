@@ -111,6 +111,14 @@
     "upcoming_visits": {
       "one": "Upcoming visit",
       "other": "Upcoming visits"
+    },
+    "pending_acceptance": {
+      "one": "Application pending acceptance",
+      "other": "Applications pending acceptance"
+    },
+    "review_pending": {
+      "one": "Review pending",
+      "other": "Reviews pending"
     }
   },
   "admin": {}

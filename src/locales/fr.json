@@ -111,6 +111,14 @@
     "upcoming_visits": {
       "one": "Visite à venir",
       "other": "Visites à venir"
+    },
+    "pending_acceptance": {
+      "one": "Demande en attente d’acceptation",
+      "other": "Demandes en attente d’acceptation"
+    },
+    "review_pending": {
+      "one": "Revue en attente",
+      "other": "Revues en attente"
     }
   },
   "admin": {}
