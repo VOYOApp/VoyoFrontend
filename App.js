@@ -6,6 +6,7 @@ import * as eva from '@eva-design/eva';
 import i18n from './i18n';
 import Navigation from "./src/navigation";
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import "core-js/stable/atob";
 
 const App = () => {
 	const [isLoggedIn, setLoggedIn] = useState(false);

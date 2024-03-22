@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next"
 import CustomStatCard from "../CustomStatCard"
 import axios from "axios"
 import { BASE_URL } from "@env"
-import { getToken } from "../../context/AuthContext"
+import { getGlobal, getToken, removeGlobal } from "../../context/AuthContext"
 
 const HomeStats = ({ StatsType }) => {
 	const { t } = useTranslation()
@@ -20,6 +20,7 @@ const HomeStats = ({ StatsType }) => {
 
 	const getStats = async () => {
 		try {
+			console.log(await getGlobal("user_details"))
 			return await axios.get(`${BASE_URL}/api/user/homeStats`, {
 				headers: { Authorization: `Bearer ${await getToken()}` },
 			})

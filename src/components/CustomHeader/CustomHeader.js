@@ -3,7 +3,7 @@ import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import BackButton from "../../components/BackButton"
 import { useTranslation } from "react-i18next"
-import { removeToken } from "../../context/AuthContext"
+import { removeGlobal, removeToken } from "../../context/AuthContext"
 
 const CustomHeader = () => {
 	const { t } = useTranslation()
@@ -12,6 +12,7 @@ const CustomHeader = () => {
 	const navigation = useNavigation()
 
 	const Logout = async () => {
+		await removeGlobal("user_details")
 		await removeToken();
 	}
 	return (

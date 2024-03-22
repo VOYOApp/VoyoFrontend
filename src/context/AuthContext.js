@@ -36,4 +36,37 @@ const removeToken = async () => {
 	}
 }
 
-export { storeToken, getToken, removeToken };
+const storeGlobal = async (key, value) => {
+	try {
+		await AsyncStorage.setItem(key, value);
+		console.log('Global stored successfully');
+	} catch (error) {
+		console.error('Error storing global:', error);
+	}
+}
+
+const getGlobal = async (key) => {
+	try {
+		const value = await AsyncStorage.getItem(key);
+		if (value !== null) {
+			return value;
+		} else {
+			console.log('Global not found');
+			return null;
+		}
+	} catch (error) {
+		console.error('Error getting global:', error);
+		return null;
+	}
+}
+
+const removeGlobal = async (key) => {
+	try {
+		await AsyncStorage.removeItem(key);
+		console.log('Global removed successfully');
+	} catch (error) {
+		console.error('Error removing global:', error);
+	}
+}
+
+export { storeToken, getToken, removeToken, storeGlobal, getGlobal, removeGlobal };

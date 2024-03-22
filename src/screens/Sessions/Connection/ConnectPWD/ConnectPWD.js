@@ -5,11 +5,12 @@ import CustomButton from "../../../../components/CustomButton"
 import BackButton from "../../../../components/BackButton"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
+import { jwtDecode } from "jwt-decode";
 import { auth } from '../../../../../firebaseConfig';
 import { signInWithEmailAndPassword, signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 import axios from 'axios';
-import {BASE_URL} from '@env'
-import { storeToken } from "../../../../context/AuthContext"
+import {BASE_URL, JWT_KEY} from '@env'
+import { storeGlobal, storeToken } from "../../../../context/AuthContext"
 
 const ConnectPWD = () => {
 	const { t } = useTranslation()
@@ -36,11 +37,57 @@ const ConnectPWD = () => {
 
 			if (response.status === 200) {
 				// Save the token in the context
-				await storeToken(response.data.token).then(setTimeout(() => {
+				await storeToken(response.data.token).then(setTimeout(async () => {
 					console.log('Token stored successfully');
-					navigation.navigate('Prospect', {screen: 'HomeScreen'})
-				}, 1000));
+					try {
+						const decodedToken = jwtDecode(response.data.token);
+						console.log(decodedToken?.phone_number)
 
+						const user_info = await axios.get(`${BASE_URL}/api/user`, {
+							headers: { Authorization: `Bearer ${response.data.token}` },
+							params: {
+								id: decodedToken?.phone_number
+							}
+						})
+						if (user_info.status === 200) {
+							const result = {
+								"first_name": user_info.data?.first_name,
+								"last_name": user_info.data?.last_name,
+								"email": user_info.data?.email,
+								"biography": user_info.data?.biography,
+								"profil_picture": user_info.data?.profil_picture,
+								"pricing": user_info.data?.pricing,
+								"radius": user_info.data?.radius,
+								"x": user_info.data?.x,
+								"y": user_info.data?.y,
+							}
+							await storeGlobal('user_details', JSON.stringify(result))
+							navigation.navigate('Prospect', { screen: 'HomeScreen' })
+						}
+					}catch (error) {
+						console.log('An error has occurred: ' + error);
+						setBtnDisabled(false)
+					}
+
+					// decode(response.data.token,JWT_KEY, {
+					// 	skipValidation: true
+					// }).then((decodedToken) => {
+					// 	console.log(decodedToken)
+					// 	console.log(decodedToken?.phone_number)
+					// 	const user_info = await axios.get(`${BASE_URL}/api/user`, {
+					// 		headers: { Authorization: `Bearer ${response.data.token}` },
+					// 		params: {
+					// 			id: decodedToken?.phone_number
+					// 		}
+					// 	})
+					// 	if (user_info.status === 200) {
+					// 		console.log("JSON : " + JSON.stringify(user_info.data))
+					// 		await storeGlobal('user', JSON.stringify(user_info.data))
+					// 		navigation.navigate('Prospect', { screen: 'HomeScreen' })
+					// 	}
+					//   }
+					// )
+				}, 1000));
 			}
 		} catch (error) {
 			console.log('An error has occurred: ' + error);
