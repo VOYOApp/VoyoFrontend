@@ -1,15 +1,28 @@
 import React, { useState } from "react"
-import { Image, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, StyleSheet, Switch, Text, TextInput, useWindowDimensions, View } from "react-native"
+import {
+	Image,
+	KeyboardAvoidingView,
+	Platform,
+	TouchableWithoutFeedback,
+	Keyboard,
+	StyleSheet,
+	Switch,
+	Text,
+	TextInput,
+	useWindowDimensions,
+	View,
+} from "react-native"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import CustomInput from "../../../../components/CustomInput"
 import CustomButton from "../../../../components/CustomButton"
 import BackButton from "../../../../components/BackButton"
 import { auth } from "../../../../../firebaseConfig"
 import { createUserWithEmailAndPassword, updateProfile, linkWithCredential, PhoneAuthProvider } from "firebase/auth"
-import axios from 'axios';
-import {BASE_URL} from '@env'
+import axios from "axios"
+import { BASE_URL } from "@env"
 import { useTranslation } from "react-i18next"
-import { storeToken } from "../../../../context/AuthContext"
+import { storeGlobal, storeToken } from "../../../../context/AuthContext"
+import { jwtDecode } from "jwt-decode"
 
 const RegisterAdditionnalDetails = () => {
 	const { t } = useTranslation()
@@ -37,23 +50,23 @@ const RegisterAdditionnalDetails = () => {
 	const navigation = useNavigation()
 
 	const allCriteriaIsValid = (fn, ls, pswd, confirm_pswd, description) => {
-		let passwordMatch = pswd === confirm_pswd;
-		let passwordIsNotEmpty = pswd !== '';
-		let isLengthValid = pswd.length >= 8;
-		let hasSpecialChar = /[!@#$%^&*()_+={}\[\]:;<>,.?/~`"'\-|\\]/.test(pswd);
-		let hasNumber = /\d/.test(pswd);
-		let hasUpperCase = /[A-Z]/.test(pswd);
-		let isPasswordValid = passwordMatch && passwordIsNotEmpty && isLengthValid && hasSpecialChar && hasNumber && hasUpperCase;
+		let passwordMatch = pswd === confirm_pswd
+		let passwordIsNotEmpty = pswd !== ""
+		let isLengthValid = pswd.length >= 8
+		let hasSpecialChar = /[!@#$%^&*()_+={}\[\]:;<>,.?/~`"'\-|\\]/.test(pswd)
+		let hasNumber = /\d/.test(pswd)
+		let hasUpperCase = /[A-Z]/.test(pswd)
+		let isPasswordValid = passwordMatch && passwordIsNotEmpty && isLengthValid && hasSpecialChar && hasNumber && hasUpperCase
 
 		setIsLengthValid(isLengthValid)
 		setHasSpecialChar(hasSpecialChar)
 		setHasNumber(hasNumber)
 		setHasUpperCase(hasUpperCase)
 
-		let isValid = isPasswordValid && ls !== '' &&  fn !== '' && description !== '';
+		let isValid = isPasswordValid && ls !== "" && fn !== "" && description !== ""
 
-		setBtnDisabled(!isValid);
-	};
+		setBtnDisabled(!isValid)
+	}
 	const handleLastNameChange = (text) => {
 		setLastName(text)
 		allCriteriaIsValid(firstName, text, password, passwordConfirmation, bio)
@@ -81,8 +94,9 @@ const RegisterAdditionnalDetails = () => {
 	const toggleSwitch = () => setIsEnabled(previousState => !previousState)
 
 	const onRegisterPressed = async () => {
-		setBtnDisabled(true);
 		try {
+			setBtnDisabled(true)
+
 			const response = await axios.post(`${BASE_URL}/api/user`, {
 				"phone_number": phoneNumber.replaceAll(" ", ""),
 				"first_name": firstName,
@@ -95,23 +109,52 @@ const RegisterAdditionnalDetails = () => {
 				"pricing": null,
 				"address_id": null,
 				"radius": null,
-			});
+			})
 
 			if (response.status === 201) {
-				console.log(`Your account has been created: ${JSON.stringify(response.data)}`);
-				await storeToken(response.data.token).then(
-				  () => {
-					  console.log("Token stored successfully");
-					  navigation.navigate("Prospect", { screen: "ProspectHome" })
-				  }
-				)
+				console.log(`Your account has been created: ${JSON.stringify(response.data)}`)
+				await storeToken(response.data.token).then(setTimeout(async () => {
+					console.log("Token stored successfully")
+
+					try {
+						const decodedToken = jwtDecode(response.data.token)
+						console.log(decodedToken?.phone_number)
+
+						const user_info = await axios.get(`${BASE_URL}/api/user`, {
+							headers: { Authorization: `Bearer ${response.data.token}` },
+							params: {
+								id: decodedToken?.phone_number,
+							},
+						})
+						if (user_info.status === 200) {
+							const result = {
+								"first_name": user_info.data?.first_name,
+								"last_name": user_info.data?.last_name,
+								"email": user_info.data?.email,
+								"biography": user_info.data?.biography,
+								"profil_picture": user_info.data?.profile_picture,
+								"pricing": user_info.data?.pricing,
+								"radius": user_info.data?.radius,
+								"x": user_info.data?.x,
+								"y": user_info.data?.y,
+							}
+							await storeGlobal('user_details', JSON.stringify(result)).then(() => {
+								console.log('User details stored successfully');
+								navigation.navigate("Prospect", { screen: "ProspectHome" })
+							})
+						}
+					} catch (error) {
+						console.log("An error has occurred: " + error)
+						setBtnDisabled(false)
+					}
+				}, 1000))
 			}
 		} catch (error) {
-			setBtnDisabled(false);
-			alert("An error has occurred: "+error);
-			console.log("An error has occurred: "+error);
+			setBtnDisabled(false)
+			alert("An error has occurred: " + error)
+			console.log("An error has occurred: " + error)
 		}
-	};
+	}
 	// 	createUserWithEmailAndPassword(auth, email, password)
 	// 	.then((userCredential) => {
 	// 		// Registered
@@ -156,8 +199,8 @@ const RegisterAdditionnalDetails = () => {
 
 
 	const onNextPressed = () => {
-		navigation.navigate('SignUp', {
-			screen: 'AdditionalDetailsVisitor',
+		navigation.navigate("SignUp", {
+			screen: "AdditionalDetailsVisitor",
 			params: {
 				user: {
 					phone_number: phoneNumber.replaceAll(" ", ""),
@@ -169,19 +212,21 @@ const RegisterAdditionnalDetails = () => {
 					biography: bio,
 					profile_picture: avatar,
 					pricing: null,
-				}
-			}
+				},
+			},
 		})
 	}
 
 	const renderButton = () => {
 		if (isEnabled) {
 			return (
-			  <CustomButton text={t("common.next")} onPress={onNextPressed} bgColor={"#FE881B"} deactivated={btnDisabled} />
+			  <CustomButton text={t("common.next")} onPress={onNextPressed} bgColor={"#FE881B"}
+			                deactivated={btnDisabled} />
 			)
 		} else {
 			return (
-			  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"black"} deactivated={btnDisabled} />
+			  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"black"}
+			                deactivated={btnDisabled} />
 			)
 		}
 	}
@@ -189,55 +234,30 @@ const RegisterAdditionnalDetails = () => {
 	return (
 	  <KeyboardAvoidingView style={styles.bottomContainer} behavior={Platform.OS === "ios" ? "padding" : "height"}>
 		  <View style={styles.root}>
-		  <BackButton />
+			  <BackButton />
 
-		  <Text style={styles.title}>Inscription à VOYO</Text>
-		  <Text style={{ fontSize: 12, fontWeight: "300" }}>fin de finaliser votre inscription, nous
-			  avons besoin d’informations supplémentaires.</Text>
+			  <Text style={styles.title}>Inscription à VOYO</Text>
+			  <Text style={{ fontSize: 12, fontWeight: "300" }}>fin de finaliser votre inscription, nous
+				  avons besoin d’informations supplémentaires.</Text>
 
-		  <View style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-			  <View style={{ display: "flex", justifyContent: "center", width: "30%" }}>
-				  <Image source={require("../../../../../assets/avatar.png")}
-				         style={{ width: 100, height: 100, marginRight: 20 }} />
+			  <View style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+				  <View style={{ display: "flex", justifyContent: "center", width: "30%" }}>
+					  <Image source={require("../../../../../assets/avatar.png")}
+					         style={{ width: 100, height: 100, marginRight: 20 }} />
+				  </View>
+				  <View style={{ width: "70%" }}>
+					  <CustomInput placeHolder="First Name"
+					               value={firstName}
+					               setValue={handleFirstNameChange}
+					               inputype="name"
+					  />
+					  <CustomInput placeHolder="Last Name"
+					               value={lastName}
+					               setValue={handleLastNameChange}
+					               inputype="familyName"
+					  />
+				  </View>
 			  </View>
-			  <View style={{ width: "70%" }}>
-				  <CustomInput placeHolder="First Name"
-				               value={firstName}
-				               setValue={handleFirstNameChange}
-				               inputype="name"
-				  />
-				  <CustomInput placeHolder="Last Name"
-				               value={lastName}
-				               setValue={handleLastNameChange}
-				               inputype="familyName"
-				  />
-			  </View>
-		  </View>
-
-		  <View style={{
-			  borderBottomColor: "black",
-			  borderBottomWidth: 1,
-			  width: 40,
-			  marginBottom: 5,
-			  marginTop: 5,
-			  alignSelf: "center",
-		  }} />
-
-
-		  <View>
-			  <TextInput
-				multiline={true}
-				placeholder="Bio"
-				value={bio}
-				onChangeText={handleBioChange}
-				maxLength={400}
-				style={{
-					backgroundColor: "#f0f0f0",
-					height: 50,
-					borderRadius: 18,
-					padding: 10,
-				}}
-			  />
 
 			  <View style={{
 				  borderBottomColor: "black",
@@ -248,103 +268,143 @@ const RegisterAdditionnalDetails = () => {
 				  alignSelf: "center",
 			  }} />
 
-			  <CustomInput placeHolder="Phone Number"
-			               value={phoneNumber}
-			               setValue={setPhoneNumber}
-			               editable={false}
-			  />
-			  <CustomInput placeHolder="Email"
-			               value={email}
-			               setValue={setEmail}
-			               editable={false}
-			  />
-
-			  <View style={{
-				  borderBottomColor: "black",
-				  borderBottomWidth: 1,
-				  width: 40,
-				  marginBottom: 5,
-				  marginTop: 5,
-				  alignSelf: "center",
-			  }} />
 
 			  <View>
-				  <CustomInput placeHolder="Mot de passe"
-				               value={password}
-				               setValue={handlePasswordChange}
-				               secureTextEntry={true}
-				               inputype="password"
+				  <TextInput
+					multiline={true}
+					placeholder="Bio"
+					value={bio}
+					onChangeText={handleBioChange}
+					maxLength={400}
+					style={{
+						backgroundColor: "#f0f0f0",
+						height: 50,
+						borderRadius: 18,
+						padding: 10,
+					}}
 				  />
-				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image
-						source={require("../../../../../assets/check-mark-validate.png")}
-						style={{ width: 12, height: 12, marginRight: 5, tintColor: isLengthValid ? "green" : "grey" }}
-					  />
-					  <Text style={{ color: isLengthValid ? "green" : "grey" }}>8 caractères ou plus</Text>
-				  </View>
-				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image
-						source={require("../../../../../assets/check-mark-validate.png")}
-						style={{ width: 12, height: 12, marginRight: 5, tintColor: hasSpecialChar ? "green" : "grey" }}
-					  />
-					  <Text style={{ color: hasSpecialChar ? "green" : "grey" }}>Charactères spéciaux</Text>
-				  </View>
-				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image
-						source={require("../../../../../assets/check-mark-validate.png")}
-						style={{ width: 12, height: 12, marginRight: 5, tintColor: hasNumber ? "green" : "grey" }}
-					  />
-					  <Text style={{ color: hasNumber ? "green" : "grey" }}>Chiffres</Text>
-				  </View>
-				  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-					  <Image
-						source={require("../../../../../assets/check-mark-validate.png")}
-						style={{ width: 12, height: 12, marginRight: 5, tintColor: hasUpperCase ? "green" : "grey" }}
-					  />
-					  <Text style={{ color: hasUpperCase ? "green" : "grey" }}>Majuscules</Text>
-				  </View>
 
-				  <CustomInput placeHolder="Confirmer le mot de passe"
-				               value={passwordConfirmation}
-				               setValue={handlePasswordConfirmationChange}
-				               secureTextEntry
+				  <View style={{
+					  borderBottomColor: "black",
+					  borderBottomWidth: 1,
+					  width: 40,
+					  marginBottom: 5,
+					  marginTop: 5,
+					  alignSelf: "center",
+				  }} />
+
+				  <CustomInput placeHolder="Phone Number"
+				               value={phoneNumber}
+				               setValue={setPhoneNumber}
+				               editable={false}
 				  />
+				  <CustomInput placeHolder="Email"
+				               value={email}
+				               setValue={setEmail}
+				               editable={false}
+				  />
+
+				  <View style={{
+					  borderBottomColor: "black",
+					  borderBottomWidth: 1,
+					  width: 40,
+					  marginBottom: 5,
+					  marginTop: 5,
+					  alignSelf: "center",
+				  }} />
+
+				  <View>
+					  <CustomInput placeHolder="Mot de passe"
+					               value={password}
+					               setValue={handlePasswordChange}
+					               secureTextEntry={true}
+					               inputype="password"
+					  />
+					  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
+						  <Image
+							source={require("../../../../../assets/check-mark-validate.png")}
+							style={{
+								width: 12,
+								height: 12,
+								marginRight: 5,
+								tintColor: isLengthValid ? "green" : "grey",
+							}}
+						  />
+						  <Text style={{ color: isLengthValid ? "green" : "grey" }}>8 caractères ou plus</Text>
+					  </View>
+					  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
+						  <Image
+							source={require("../../../../../assets/check-mark-validate.png")}
+							style={{
+								width: 12,
+								height: 12,
+								marginRight: 5,
+								tintColor: hasSpecialChar ? "green" : "grey",
+							}}
+						  />
+						  <Text style={{ color: hasSpecialChar ? "green" : "grey" }}>Charactères spéciaux</Text>
+					  </View>
+					  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
+						  <Image
+							source={require("../../../../../assets/check-mark-validate.png")}
+							style={{ width: 12, height: 12, marginRight: 5, tintColor: hasNumber ? "green" : "grey" }}
+						  />
+						  <Text style={{ color: hasNumber ? "green" : "grey" }}>Chiffres</Text>
+					  </View>
+					  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
+						  <Image
+							source={require("../../../../../assets/check-mark-validate.png")}
+							style={{
+								width: 12,
+								height: 12,
+								marginRight: 5,
+								tintColor: hasUpperCase ? "green" : "grey",
+							}}
+						  />
+						  <Text style={{ color: hasUpperCase ? "green" : "grey" }}>Majuscules</Text>
+					  </View>
+
+					  <CustomInput placeHolder="Confirmer le mot de passe"
+					               value={passwordConfirmation}
+					               setValue={handlePasswordConfirmationChange}
+					               secureTextEntry
+					  />
+				  </View>
 			  </View>
+
+			  <View style={{
+				  borderBottomColor: "black",
+				  borderBottomWidth: 1,
+				  width: 40,
+				  marginBottom: 5,
+				  marginTop: 5,
+				  alignSelf: "center",
+			  }} />
+
+			  <View style={{
+				  display: "flex",
+				  alignItems: "center",
+				  justifyContent: "center",
+				  flexDirection: "row",
+				  marginBottom: 10,
+				  width: "100%",
+			  }}>
+				  <Text style={{ textAlign: "center", width: "45%" }}>{t("common.create_prospect_account")}</Text>
+				  <Switch
+					style={{ marginLeft: 10, marginRight: 10 }}
+					trackColor={{ false: "#767577", true: "#FE881B" }}
+					thumbColor={isEnabled ? "#D9D9D9" : "#f4f3f4"}
+					ios_backgroundColor="#3e3e3e"
+					onValueChange={toggleSwitch}
+					value={isEnabled}
+				  />
+				  <Text style={{ textAlign: "center", width: "45%" }}>{t("common.create_visitor_account")}</Text>
+			  </View>
+
+			  {renderButton()}
+
 		  </View>
-
-		  <View style={{
-			  borderBottomColor: "black",
-			  borderBottomWidth: 1,
-			  width: 40,
-			  marginBottom: 5,
-			  marginTop: 5,
-			  alignSelf: "center",
-		  }} />
-
-		  <View style={{
-			  display: "flex",
-			  alignItems: "center",
-			  justifyContent: "center",
-			  flexDirection: "row",
-			  marginBottom: 10,
-			  width: "100%",
-		  }}>
-			  <Text style={{ textAlign: "center", width: "45%" }}>{t("common.create_prospect_account")}</Text>
-			  <Switch
-				style={{ marginLeft: 10, marginRight: 10 }}
-				trackColor={{ false: "#767577", true: "#FE881B" }}
-				thumbColor={isEnabled ? "#D9D9D9" : "#f4f3f4"}
-				ios_backgroundColor="#3e3e3e"
-				onValueChange={toggleSwitch}
-				value={isEnabled}
-			  />
-			  <Text style={{ textAlign: "center", width: "45%" }}>{t("common.create_visitor_account")}</Text>
-		  </View>
-
-		  {renderButton()}
-
-		  </View>
-</KeyboardAvoidingView>
+	  </KeyboardAvoidingView>
 	)
 }
 
@@ -353,13 +413,13 @@ const styles = StyleSheet.create({
 	root: {
 		backgroundColor: "white",
 		marginTop: 10,
-		justifyContent: 'center',
+		justifyContent: "center",
 		padding: 30,
 		// width: "100%",
 		// height: "100%",
 	},
 	bottomContainer: {
-		width: '100%',
+		width: "100%",
 	},
 	title: {
 		fontSize: 28,

@@ -35,14 +35,13 @@ const ConnectPWD = () => {
 				},
 			});
 
+			console.log(response.status)
 			if (response.status === 200) {
 				// Save the token in the context
 				await storeToken(response.data.token).then(setTimeout(async () => {
 					console.log('Token stored successfully');
 					try {
 						const decodedToken = jwtDecode(response.data.token);
-						console.log(decodedToken?.phone_number)
-
 						const user_info = await axios.get(`${BASE_URL}/api/user`, {
 							headers: { Authorization: `Bearer ${response.data.token}` },
 							params: {
@@ -55,38 +54,21 @@ const ConnectPWD = () => {
 								"last_name": user_info.data?.last_name,
 								"email": user_info.data?.email,
 								"biography": user_info.data?.biography,
-								"profil_picture": user_info.data?.profil_picture,
+								"profile_picture": user_info.data?.profile_picture,
 								"pricing": user_info.data?.pricing,
 								"radius": user_info.data?.radius,
 								"x": user_info.data?.x,
 								"y": user_info.data?.y,
 							}
-							await storeGlobal('user_details', JSON.stringify(result))
-							navigation.navigate('Prospect', { screen: 'HomeScreen' })
+							await storeGlobal('user_details', JSON.stringify(result)).then(() => {
+								console.log('User details stored successfully');
+								navigation.navigate('Prospect', { screen: 'HomeScreen' })
+							})
 						}
 					}catch (error) {
 						console.log('An error has occurred: ' + error);
 						setBtnDisabled(false)
 					}
-
-					// decode(response.data.token,JWT_KEY, {
-					// 	skipValidation: true
-					// }).then((decodedToken) => {
-					// 	console.log(decodedToken)
-					// 	console.log(decodedToken?.phone_number)
-					// 	const user_info = await axios.get(`${BASE_URL}/api/user`, {
-					// 		headers: { Authorization: `Bearer ${response.data.token}` },
-					// 		params: {
-					// 			id: decodedToken?.phone_number
-					// 		}
-					// 	})
-					// 	if (user_info.status === 200) {
-					// 		console.log("JSON : " + JSON.stringify(user_info.data))
-					// 		await storeGlobal('user', JSON.stringify(user_info.data))
-					// 		navigation.navigate('Prospect', { screen: 'HomeScreen' })
-					// 	}
-					//   }
-					// )
 				}, 1000));
 			}
 		} catch (error) {

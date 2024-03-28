@@ -49,14 +49,24 @@ const getGlobal = async (key) => {
 	try {
 		const value = await AsyncStorage.getItem(key);
 		if (value !== null) {
-			return value;
+			return JSON.parse(value);
 		} else {
 			console.log('Global not found');
 			return null;
 		}
-	} catch (error) {
-		console.error('Error getting global:', error);
-		return null;
+	} catch {
+		try {
+			const value = await AsyncStorage.getItem(key);
+			if (value !== null) {
+				return value;
+			} else {
+				console.log('Global not found');
+				return null;
+			}
+		} catch (error) {
+			console.error('Error getting global:', error);
+			return null;
+		}
 	}
 }
 

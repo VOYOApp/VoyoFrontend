@@ -18,18 +18,17 @@ const HomeStats = ({ StatsType }) => {
 	const [indicator3TranslationKey, setIndicator3TranslationKey] = useState("")
 	const [indicator4TranslationKey, setIndicator4TranslationKey] = useState("")
 
-	const getStats = async () => {
-		try {
-			console.log(await getGlobal("user_details"))
-			return await axios.get(`${BASE_URL}/api/user/homeStats`, {
-				headers: { Authorization: `Bearer ${await getToken()}` },
-			})
-		}catch (error) {
-			console.log('An error has occurred: ' + error);
-		}
-	}
-
 	useEffect(() => {
+		async function getStats() {
+			try {
+				return await axios.get(`${BASE_URL}/api/user/homeStats`, {
+					headers: { Authorization: `Bearer ${await getToken()}` },
+				})
+			}catch (error) {
+				console.log('An error has occurred: ' + error);
+			}
+		}
+
 		getStats().then(r => {
 			if (StatsType === "prospect") {
 				setIndicator1(r.data["programmed_visits"])
