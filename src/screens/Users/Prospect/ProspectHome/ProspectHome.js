@@ -34,22 +34,21 @@ const ProspectHome = () => {
 	return (<View style={styles.root}>
 		<HeaderHome name={firstname} profilePicture={icon}/>
 
-		{/*<ScrollView style={{ width: "100%"}}*/}
-		{/*            showsVerticalScrollIndicator={false}*/}
-		{/*            showsHorizontalScrollIndicator={false}*/}
-		{/*            ref={scrollViewRef}*/}
-		{/*            onContentSizeChange={() => {*/}
-		{/*	            scrollViewRef.current?.scrollToEnd()*/}
-		{/*            }}*/}
-		{/*>*/}
+		<ScrollView style={{ width: "100%"}}
+		            showsVerticalScrollIndicator={false}
+		            showsHorizontalScrollIndicator={false}
+		            ref={scrollViewRef}
+		            onContentSizeChange={() => {
+			            scrollViewRef.current?.scrollToEnd()
+		            }}
+		>
 			<HomeStats StatsType={"prospect"} />
-			{/*<CardListHomeProspect type={"PASSED"}></CardListHomeProspect>*/}
-			<ScrollView style={{ width: "100%" }}
-			            showsVerticalScrollIndicator={false}
-			            showsHorizontalScrollIndicator={false}
-			>
+			{/*<ScrollView style={{ width: "100%" }}*/}
+			{/*            showsVerticalScrollIndicator={false}*/}
+			{/*            showsHorizontalScrollIndicator={false}*/}
+			{/*>*/}
 				<Tab.Navigator style={{
-					height: height
+					height: 2000
 				}} screenOptions={{
 					tabBarStyle: {
 						backgroundColor: "#f4f3f4",
@@ -60,8 +59,8 @@ const ProspectHome = () => {
 					<Tab.Screen name={t("prospect.programmed_visits")} component={() => <CardListHomeProspect/>} />
 					<Tab.Screen name={t("prospect.passed_visits")} component={() => <CardListHomeProspect type={"PASSED"}/>} />
 				</Tab.Navigator>
-			</ScrollView>
-		{/*</ScrollView>*/}
+			{/*</ScrollView>*/}
+		</ScrollView>
 
 
 		<CustomFooter currentOption={"home"} />
