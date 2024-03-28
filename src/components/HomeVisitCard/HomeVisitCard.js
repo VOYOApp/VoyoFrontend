@@ -9,7 +9,7 @@ const HomeVisitCard = ({ data }) => {
 	const opt_date_title = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 	const opt_date = { year: 'numeric', month: 'long', day: 'numeric' };
 
-	console.log(data)
+	// console.log(data)
 
 	return (
 	  <View>
