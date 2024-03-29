@@ -44,9 +44,9 @@ const ConnectPWD = () => {
 						const decodedToken = jwtDecode(response.data.token);
 						const user_info = await axios.get(`${BASE_URL}/api/user`, {
 							headers: { Authorization: `Bearer ${response.data.token}` },
-							params: {
-								id: decodedToken?.phone_number
-							}
+							// params: {
+							// 	id: decodedToken?.phone_number
+							// }
 						})
 						if (user_info.status === 200) {
 							const result = {
@@ -59,10 +59,11 @@ const ConnectPWD = () => {
 								"radius": user_info.data?.radius,
 								"x": user_info.data?.x,
 								"y": user_info.data?.y,
+								"password":password
 							}
 							await storeGlobal('user_details', JSON.stringify(result)).then(() => {
 								console.log('User details stored successfully');
-								navigation.navigate('Prospect', { screen: 'HomeScreen' })
+								// navigation.navigate('Prospect', { screen: 'HomeScreen' })
 							})
 						}
 					}catch (error) {

@@ -8,6 +8,8 @@ import CustomFooter from "../../../../components/CustomFooter"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import CardListHomeProspect from "../CardListHomeProspect"
 import { getGlobal } from "../../../../context/AuthContext"
+import { signInWithEmailAndPassword } from "firebase/auth"
+import { auth } from "../../../../../firebaseConfig"
 
 const ProspectHome = () => {
 	const { t } = useTranslation()
@@ -24,12 +26,29 @@ const ProspectHome = () => {
 	}
 
 	useEffect(() => {
+		function firebaseCnx(email, pswd) {
+			if (email) {
+				signInWithEmailAndPassword(auth, email, pswd)
+				.then((userCredential) => {
+					console.log("Connection firebase successful !")
+				})
+				.catch((error) => {
+					const errorCode = error.code;
+					const errorMessage = error.message;
+					console.log(errorCode)
+					console.log(errorMessage)
+				});
+			}
+		}
+
 		getGlobal("user_details").then((data) => {
 			setFirstname(data?.first_name)
 			setIcon(data?.profile_picture)
+			//TODO SI CO PAS BESOIN DE LE FAIRE
+			firebaseCnx(data.email, data.password)
 		})
 	}, [])
-	const scrollViewRef = useRef(null)
+	// const scrollViewRef = useRef(null)
 
 	return (<View style={styles.root}>
 		<HeaderHome name={firstname} profilePicture={icon}/>
@@ -37,10 +56,10 @@ const ProspectHome = () => {
 		<ScrollView style={{ width: "100%"}}
 		            showsVerticalScrollIndicator={false}
 		            showsHorizontalScrollIndicator={false}
-		            ref={scrollViewRef}
-		            onContentSizeChange={() => {
-			            scrollViewRef.current?.scrollToEnd()
-		            }}
+		            // ref={scrollViewRef}
+		            // onContentSizeChange={() => {
+			        //     scrollViewRef.current?.scrollToEnd()
+		            // }}
 		>
 			<HomeStats StatsType={"prospect"} />
 			{/*<ScrollView style={{ width: "100%" }}*/}
@@ -56,8 +75,8 @@ const ProspectHome = () => {
 						backgroundColor: "#FE881B",
 					},
 				}}>
-					<Tab.Screen name={t("prospect.programmed_visits")} component={() => <CardListHomeProspect/>} />
-					<Tab.Screen name={t("prospect.passed_visits")} component={() => <CardListHomeProspect type={"PASSED"}/>} />
+					<Tab.Screen name={t("prospect.programmed_visits")} component={() => <CardListHomeProspect type={"PASSED"}/>} />
+					<Tab.Screen name={t("prospect.passed_visits")} component={() => <CardListHomeProspect/>} />
 				</Tab.Navigator>
 			{/*</ScrollView>*/}
 		</ScrollView>

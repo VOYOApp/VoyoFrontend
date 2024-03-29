@@ -4,6 +4,8 @@ import { useNavigation } from "@react-navigation/native"
 import BackButton from "../../components/BackButton"
 import { useTranslation } from "react-i18next"
 import { removeGlobal, removeToken } from "../../context/AuthContext"
+import { signOut } from "firebase/auth"
+import { auth } from "../../../firebaseConfig"
 
 const CustomHeader = () => {
 	const { t } = useTranslation()
@@ -14,6 +16,7 @@ const CustomHeader = () => {
 	const Logout = async () => {
 		await removeGlobal("user_details")
 		await removeToken();
+		await signOut(auth)
 	}
 	return (
 	  <View style={{

@@ -118,13 +118,13 @@ const RegisterAdditionnalDetails = () => {
 
 					try {
 						const decodedToken = jwtDecode(response.data.token)
-						console.log(decodedToken?.phone_number)
+						// console.log(decodedToken?.phone_number)
 
 						const user_info = await axios.get(`${BASE_URL}/api/user`, {
 							headers: { Authorization: `Bearer ${response.data.token}` },
-							params: {
-								id: decodedToken?.phone_number,
-							},
+							// params: {
+							// 	id: decodedToken?.phone_number,
+							// },
 						})
 						if (user_info.status === 200) {
 							const result = {
@@ -137,10 +137,53 @@ const RegisterAdditionnalDetails = () => {
 								"radius": user_info.data?.radius,
 								"x": user_info.data?.x,
 								"y": user_info.data?.y,
+								"password": password
 							}
 							await storeGlobal('user_details', JSON.stringify(result)).then(() => {
 								console.log('User details stored successfully');
-								navigation.navigate("Prospect", { screen: "ProspectHome" })
+								console.log(result.email)
+								try {
+									createUserWithEmailAndPassword(auth, result.email, result.password)
+									.then((userCredential) => {
+										// Registered
+										const user = userCredential.user
+
+										// Mettez à jour le profil de l'utilisateur avec le nom et l'avatar
+										updateProfile(user, {
+											displayName: result.first_name + " " + result.last_name,
+											photoURL: result.profil_picture ? result.profil_picture : "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
+										})
+										.then(() => {
+											// Enregistrement réussi, mettez à jour le numéro de téléphone
+											user.phoneNumber = decodedToken?.phone_number
+
+											// Mettez à jour l'objet utilisateur dans Firebase
+											auth.updateCurrentUser(user)
+											.then(() => {
+												// Numéro de téléphone mis à jour avec succès
+												// console.log("Numéro de téléphone mis à jour avec succès :", user)
+												navigation.navigate("Prospect", { screen: "ProspectHome" })
+											})
+											.catch((error) => {
+												// Gérez les erreurs liées à la mise à jour du numéro de téléphone
+												console.error(error.message)
+											})
+										})
+										.catch((error) => {
+											// Gérez les erreurs liées à la mise à jour du profil
+											console.error(error.message)
+										})
+									})
+									.catch((error) => {
+										// Gérez les erreurs liées à la création de l'utilisateur avec e-mail et mot de passe
+										const errorCode = error.code
+										const errorMessage = error.message
+										console.log(errorCode)
+										console.log(errorMessage)
+									})
+								}catch (e){
+									console.log("An error has occurred: " + e)
+								}
 							})
 						}
 					} catch (error) {
@@ -155,48 +198,6 @@ const RegisterAdditionnalDetails = () => {
 			console.log("An error has occurred: " + error)
 		}
 	}
-	// 	createUserWithEmailAndPassword(auth, email, password)
-	// 	.then((userCredential) => {
-	// 		// Registered
-	// 		const user = userCredential.user
-	//
-	// 		// Mettez à jour le profil de l'utilisateur avec le nom et l'avatar
-	// 		updateProfile(user, {
-	// 			displayName: firstName + " " + lastName,
-	// 			photoURL: avatar ? avatar : "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
-	// 		})
-	// 		.then(() => {
-	// 			// Enregistrement réussi, mettez à jour le numéro de téléphone
-	// 			user.phoneNumber = phoneNumber
-	//
-	// 			// Mettez à jour l'objet utilisateur dans Firebase
-	// 			auth.updateCurrentUser(user)
-	// 			.then(() => {
-	// 				// Numéro de téléphone mis à jour avec succès
-	// 				console.log("Numéro de téléphone mis à jour avec succès :", user)
-	// 				alert("Registered, please login.")
-	// 				navigation.navigate("Prospect", { screen: "HomeScreen" })
-	// 			})
-	// 			.catch((error) => {
-	// 				// Gérez les erreurs liées à la mise à jour du numéro de téléphone
-	// 				console.error(error)
-	// 				alert(error.message)
-	// 			})
-	// 		})
-	// 		.catch((error) => {
-	// 			// Gérez les erreurs liées à la mise à jour du profil
-	// 			console.error(error)
-	// 			alert(error.message)
-	// 		})
-	// 	})
-	// 	.catch((error) => {
-	// 		// Gérez les erreurs liées à la création de l'utilisateur avec e-mail et mot de passe
-	// 		const errorCode = error.code
-	// 		const errorMessage = error.message
-	// 		alert(errorMessage)
-	// 	})
-	// }
-
 
 	const onNextPressed = () => {
 		navigation.navigate("SignUp", {

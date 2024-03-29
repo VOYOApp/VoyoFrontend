@@ -16,9 +16,14 @@ const App = () => {
 				try {
 					const token = await AsyncStorage.getItem('token');
 					if (token && !isLoggedIn) {
-						setLoggedIn(true);
+						setTimeout(() => {
+							setLoggedIn(true);
+						}, 1200);
+
 					} else if (!token && isLoggedIn) {
-						setLoggedIn(false);
+						setTimeout(() => {
+							setLoggedIn(false);
+						}, 1200);
 					}
 				} catch (error) {
 					console.error('Erreur lors de la récupération du token :', error);
