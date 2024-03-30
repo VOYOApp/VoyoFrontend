@@ -7,33 +7,44 @@ import i18n from './i18n';
 import Navigation from "./src/navigation";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import "core-js/stable/atob";
+import LoadVoyo from "./src/screens/LoadVoyo"
+import { NavigationContainer } from "@react-navigation/native"
 
 const App = () => {
 	const [isLoggedIn, setLoggedIn] = useState(false);
+	const [isLoading, setLoading] = useState(true); // Ajoutez un état pour gérer le chargement initial
 
 	useEffect(() => {
-			const tokenChangeInterval = setInterval(async () => {
-				try {
-					const token = await AsyncStorage.getItem('token');
-					if (token && !isLoggedIn) {
-						setTimeout(() => {
-							setLoggedIn(true);
-						}, 1200);
+		const tokenChangeInterval = setInterval(async () => {
+			try {
+				const token = await AsyncStorage.getItem('token');
+				if (token && !isLoggedIn) {
+					setTimeout(() => {
+						setLoggedIn(true);
+						setLoading(false);
+					}, 1000);
 
-					} else if (!token && isLoggedIn) {
-						setTimeout(() => {
-							setLoggedIn(false);
-						}, 1200);
-					}
-				} catch (error) {
-					console.error('Erreur lors de la récupération du token :', error);
+				} else if (!token && isLoggedIn) {
+					setTimeout(() => {
+						setLoggedIn(false);
+						setLoading(false);
+					}, 1000);
+				} else {
+					setLoading(false);
 				}
-			}, 1000);
+			} catch (error) {
+				console.error('Erreur lors de la récupération du token :', error);
+			}
+		}, 1000);
 
-			return () => {
-				clearInterval(tokenChangeInterval);
-			};
+		return () => {
+			clearInterval(tokenChangeInterval);
+		};
 	}, [isLoggedIn]);
+
+	if (isLoading) {
+		return (<NavigationContainer><LoadVoyo/></NavigationContainer>); // Rendre l'écran de chargement s'il est en cours de chargement
+	}
 
 	return (
 		  <ApplicationProvider {...eva} theme={eva.light}>
