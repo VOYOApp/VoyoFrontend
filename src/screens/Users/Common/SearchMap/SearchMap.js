@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import { useTranslation } from "react-i18next"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
@@ -8,7 +8,9 @@ import { BottomSheetModal, BottomSheetModalProvider } from "@gorhom/bottom-sheet
 import SearchResultPerson from "../../../../components/SearchResultPerson"
 import { IndexPath, Select, SelectItem } from "@ui-kitten/components"
 import GMap from "../../../../components/GMap"
-
+import axios from "axios"
+import {BASE_URL} from '@env'
+import { getToken } from "../../../../context/AuthContext"
 
 const SearchMap = () => {
 	// ref
@@ -33,6 +35,8 @@ const SearchMap = () => {
 	const [showResults, setShowResults] = useState(false)
 	const [showDuration, setShowDuration] = useState(false)
 	const [showDate, setShowDate] = useState(false)
+	const [x, setX] = useState(0.0)
+	const [y, setY] = useState(0.0)
 
 
 	const [searchResults, setSearchResults] = useState([{
@@ -118,13 +122,13 @@ const SearchMap = () => {
 	const [selectedValue, setSelectedValue] = useState("")
 
 	const radioItems = [{
-		label: t("prospect.visits_duration.studio"), value: "option1",
+		label: t("prospect.visits_duration.studio"), value: 1,
 	}, {
-		label: t("prospect.visits_duration.t2_to_t4"), value: "option2",
+		label: t("prospect.visits_duration.t2_to_t4"), value: 2,
 	}, {
-		label: t("prospect.visits_duration.t5_and_more"), value: "option3",
-	}, { label: t("prospect.visits_duration.house"), value: "option4" }, {
-		label: t("prospect.visits_duration.villa"), value: "option5",
+		label: t("prospect.visits_duration.t5_and_more"), value: 3,
+	}, { label: t("prospect.visits_duration.house"), value: 4 }, {
+		label: t("prospect.visits_duration.villa"), value: 5,
 	}, // { label: t("prospect.visits_duration.custom_duration"), value: "option6" },
 	]
 
@@ -148,14 +152,50 @@ const SearchMap = () => {
 
 
 	const [dataFromChild, setDataFromChild] = useState()
-	const handleDataFromChild = useCallback((data) => {
+	const handleDataFromChild = useCallback((data, details) => {
+		// console.log(details)
+		// console.log(details["geometry"]["location"]["lat"])
+		// console.log(details["geometry"]["location"]["lng"])
 		setDataFromChild(data)
+
+		setX(details["geometry"]["location"]["lat"])
+		setY(details["geometry"]["location"]["lng"])
 
 		setShowDate(true)
 		setShowDuration(false)
 		setShowResults(false)
 		handlePresentModalPress()
 	}, [])
+
+	const getPersonWithSearch = async (x,y,date,id_type_real_estate) => {
+		console.log(x)
+		console.log(y)
+		console.log(date)
+		console.log(id_type_real_estate)
+		try {
+			const token = await getToken()
+			const listUsers = await axios.get(`${BASE_URL}/api/search`, {
+				headers: { Authorization: `Bearer ${token}` },
+				params: {
+					x:x,
+					y:y,
+					date: date,
+					idTypeRealEstate: id_type_real_estate
+				}
+			})
+			console.log(listUsers.data)
+			if (listUsers.status === 200){
+				setSearchResults(listUsers.data)
+			}
+		}catch (e) {
+			console.log(e)
+		}
+	}
+
+	// useEffect(() => {
+	// 	function getPersonWithSearch(x,y,date,type_real_estate) {
+	// 	}
+	// }, [])
 
 
 	return (<View style={styles.root}>
@@ -254,6 +294,7 @@ const SearchMap = () => {
 								  if (selectedValue === "") {
 									  alert("Please select a value")
 								  } else {
+									  getPersonWithSearch(x,y,date, selectedValue)
 									  setShowDate(false)
 									  setShowDuration(false)
 									  setShowResults(true)

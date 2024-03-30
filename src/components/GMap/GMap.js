@@ -23,17 +23,17 @@ const GMap = ({ hasSearch = false, marker, onData }) => {
 
 	let searchResults = []
 
-	const sendDataToParent = useCallback((dataToSend) => {
-		onData(dataToSend)
+	const sendDataToParent = useCallback((dataToSend, details) => {
+		onData(dataToSend, details)
 	}, [])
 
 
-	const handlePlaceSelected = (data) => {
+	const handlePlaceSelected = (data, details) => {
 		styles.map.height = "50%"
 
 		let placeId = data.place_id
 
-		sendDataToParent(data)
+		sendDataToParent(data, details)
 
 		try {
 			fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${GOOGLE_MAPS_KEY}&place_id=${placeId}`)
@@ -115,6 +115,7 @@ const GMap = ({ hasSearch = false, marker, onData }) => {
 			  key: "AIzaSyBznSC8S1mPU-GPjsxuagQqnNK3a8xVOl4", language: "fr", components: "country:fr", // Limit the search to France
 		  }}
 		  ref={ref}
+		  fetchDetails={true}
 		  nearbyPlacesAPI="GooglePlacesSearch"
 		  debounce={400}
 		  styles={styles.searchBar}
