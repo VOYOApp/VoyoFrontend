@@ -42,6 +42,8 @@ const ProspectHome = () => {
 		}
 
 		getGlobal("user_details").then((data) => {
+			console.log(data)
+
 			setFirstname(data?.first_name)
 			setIcon(data?.profile_picture)
 			//TODO SI CO PAS BESOIN DE LE FAIRE

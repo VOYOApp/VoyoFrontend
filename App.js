@@ -22,13 +22,13 @@ const App = () => {
 					setTimeout(() => {
 						setLoggedIn(true);
 						setLoading(false);
-					}, 1000);
+					}, 1200);
 
 				} else if (!token && isLoggedIn) {
 					setTimeout(() => {
 						setLoggedIn(false);
 						setLoading(false);
-					}, 1000);
+					}, 1200);
 				} else {
 					setLoading(false);
 				}

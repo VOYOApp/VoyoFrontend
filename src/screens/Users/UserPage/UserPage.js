@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Image, StyleSheet, TextInput, useWindowDimensions, View } from "react-native"
 import CustomInput from "../../../components/CustomInput"
 import CustomButton from "../../../components/CustomButton"
@@ -6,10 +6,13 @@ import CustomHeader from "../../../components/CustomHeader"
 import CustomFooter from "../../../components/CustomFooter"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
+import { getGlobal, getToken } from "../../../context/AuthContext"
+import { jwtDecode } from "jwt-decode"
 
 
 const UserPage = () => {
 	const { t } = useTranslation()
+	const [avatar, setAvatar] = useState("https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x")
 	const [lastName, setLastName] = useState("")
 	const [firstName, setFirstName] = useState("")
 	const [bio, setBio] = useState("")
@@ -34,6 +37,21 @@ const UserPage = () => {
 		setBio(text)
 	}
 
+	useEffect(() => {
+		getGlobal("user_details").then(async (user) => {
+			await getToken().then((token) => {
+				const decodedToken = jwtDecode(token)
+
+				setLastName(user.last_name)
+				setFirstName(user.first_name)
+				setAvatar(user.profile_picture)
+				setBio(user.biography)
+				setEmail(user.email)
+				setPhoneNumber(decodedToken.phone_number)
+			})
+		})
+	}, [])
+
 	return (
 	  <View style={styles.root}>
 		  <CustomHeader />
@@ -42,8 +60,8 @@ const UserPage = () => {
 		  <View style={styles.body}>
 			  <View style={{ flexDirection: "row", width: "100%" }}>
 				  <View style={{ justifyContent: "center", width: "30%" }}>
-					  <Image source={require("../../../../assets/avatar.png")}
-					         style={{ width: 100, height: 100, marginRight: 20 }} />
+					  <Image src={avatar}
+					         style={{ width: 100, height: 100, marginRight: 20, borderRadius:100 }} />
 				  </View>
 				  <View style={{ marginLeft: 10, width: "65%" }}>
 					  <CustomInput placeHolder={t("common.first_name")}
@@ -75,7 +93,7 @@ const UserPage = () => {
 					value={bio}
 					onChangeText={handleBioChange}
 					maxLength={200}
-					editable={false}
+					editable={true}
 					style={{
 						backgroundColor: "#f0f0f0",
 						height: 60,
@@ -98,6 +116,7 @@ const UserPage = () => {
 				               value={phoneNumber}
 				               setValue={setPhoneNumber}
 				               showPen={true}
+				               editable={false}
 				  />
 				  <CustomInput placeHolder={t("common.email")}
 				               value={email}
@@ -180,10 +199,7 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "row",
 		alignItems: "center",
-	},
-	gradientBackground: {
-		...StyleSheet.absoluteFillObject,
-	},
+	}
 })
 
 export default UserPage

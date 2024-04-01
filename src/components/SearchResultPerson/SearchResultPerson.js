@@ -4,17 +4,16 @@ import CustomButton from "../CustomButton"
 import { useTranslation } from "react-i18next"
 import { useNavigation } from "@react-navigation/native"
 
-const SearchResultPerson = (data) => {
+const SearchResultPerson = ({data, allPersons}) => {
 	const { t } = useTranslation()
 	const navigation = useNavigation()
-	data = data.data
 
 	// Screen width
 	const width = window.innerWidth
 	styles.rowWithImage.maxWidth = width - (styles.profilePicture.width + styles.btn.marginRight + 80 + 20 + 10 + 10)
 
 	const goToProfilePage = () => {
-		navigation.navigate("HomeProspect", { params: { data }, screen: "DetailsVisitor" })
+		navigation.navigate("HomeProspect", { params: { data, allPersons }, screen: "DetailsVisitor" })
 	}
 
 	const goToRDV = () => {
@@ -35,19 +34,19 @@ const SearchResultPerson = (data) => {
 		  <View>
 			  <View style={styles.rowWithImage}>
 				  <Image source={require("../../../assets/icons/010-user.png")} style={styles.logo} />
-				  <Text>{data.name}</Text>
+				  <Text>{data.firstName +" " + data.lastName}</Text>
 			  </View>
 			  <View style={styles.rowWithImage}>
 				  <Image source={require("../../../assets/icons/star.png")} style={styles.logoBigger} />
-				  <Text>{data.note}/5</Text>
+				  <Text>{data.noteAvg.Float64.toFixed(1)}/5</Text>
 			  </View>
 			  <View style={styles.rowWithImage}>
 				  <Image source={require("../../../assets/icons/long-distance.png")} style={styles.logoBigger} />
-				  <Text>{data.distance} m</Text>
+				  <Text>{data.roundedDistance} m</Text>
 			  </View>
 			  <View style={styles.rowWithImage}>
 				  <Image source={require("../../../assets/icons/008-dollar.png")} style={styles.logo} />
-				  <Text>{data.price}€/h</Text>
+				  <Text>{data.pricing}€/h</Text>
 			  </View>
 		  </View>
 

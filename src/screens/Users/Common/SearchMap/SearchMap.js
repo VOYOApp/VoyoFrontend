@@ -38,72 +38,22 @@ const SearchMap = () => {
 	const [x, setX] = useState(0.0)
 	const [y, setY] = useState(0.0)
 
-
-	const [searchResults, setSearchResults] = useState([{
-		profilePicture: "https://randomuser.me/api/portraits/women/69.jpg",
-		name: "Marie K.",
-		note: 3,
-		distance: 5989,
-		price: 8.8,
-		map: {
-			coordinates: { "latitude": 44.91689119999999, "longitude": 4.9328504 }, radius: 1000,
-		},
-		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures " +
-		  "logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En " +
-		  "dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du " +
-		  "développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire " +
-		  "passionnante. 💻🚀",
-		nbOfVisits: 5,
-	}, {
-		profilePicture: "https://randomuser.me/api/portraits/men/95.jpg",
-		name: "Jean T.",
-		note: 5,
-		distance: 49,
-		price: 12,
-		map: {
-			coordinates: { "latitude": 44.925527, "longitude": 4.92091 }, radius: 1500,
-		},
-		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures " +
-		  "logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En " +
-		  "dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du " +
-		  "développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire " +
-		  "passionnante. 💻🚀",
-		nbOfVisits: 5,
-	}, {
-		profilePicture: "https://randomuser.me/api/portraits/women/59.jpg",
-		name: "Bertha F.",
-		note: 4,
-		distance: 489,
-		price: 10,
-		map: {
-			coordinates: { "latitude": 44.933393, "longitude": 4.89236 }, radius: 2000,
-		},
-		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures " +
-		  "logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En " +
-		  "dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du " +
-		  "développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire " +
-		  "passionnante. 💻🚀",
-		nbOfVisits: 5,
-	}, {
-		profilePicture: "https://randomuser.me/api/portraits/women/59.jpg",
-		name: "Bertha F.",
-		note: 4,
-		distance: 1,
-		price: 10,
-		map: {
-			coordinates: { "latitude": 44.920177, "longitude": 4.899143 }, radius: 1700,
-		},
-		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures " +
-		  "logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En " +
-		  "dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du " +
-		  "développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire " +
-		  "passionnante. 💻🚀",
-		nbOfVisits: 5,
-	}])
+	const [searchResults, setSearchResults] = useState([])
 
 	const options = {
 		weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric",
 	}
+
+	const options_search = new Intl.DateTimeFormat('en-US', {
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+		hour: '2-digit',
+		minute: '2-digit',
+		second: '2-digit',
+		fractionalSecondDigits: 6,
+	});
+
 
 	const showDatePicker = () => {
 		setDatePickerVisibility(true)
@@ -140,11 +90,11 @@ const SearchMap = () => {
 		let sortedResults = []
 
 		if (index.row === 0) {
-			sortedResults = [...searchResults].sort((a, b) => b.note - a.note)
+			sortedResults = [...searchResults].sort((a, b) => b.noteAvg.Float64 - a.noteAvg.Float64)
 		} else if (index.row === 1) {
-			sortedResults = [...searchResults].sort((a, b) => a.price - b.price)
+			sortedResults = [...searchResults].sort((a, b) => a.pricing - b.pricing)
 		} else if (index.row === 2) {
-			sortedResults = [...searchResults].sort((a, b) => a.distance - b.distance)
+			sortedResults = [...searchResults].sort((a, b) => a.roundedDistance - b.roundedDistance)
 		}
 
 		setSearchResults(sortedResults)
@@ -153,9 +103,6 @@ const SearchMap = () => {
 
 	const [dataFromChild, setDataFromChild] = useState()
 	const handleDataFromChild = useCallback((data, details) => {
-		// console.log(details)
-		// console.log(details["geometry"]["location"]["lat"])
-		// console.log(details["geometry"]["location"]["lng"])
 		setDataFromChild(data)
 
 		setX(details["geometry"]["location"]["lat"])
@@ -168,10 +115,7 @@ const SearchMap = () => {
 	}, [])
 
 	const getPersonWithSearch = async (x,y,date,id_type_real_estate) => {
-		console.log(x)
-		console.log(y)
-		console.log(date)
-		console.log(id_type_real_estate)
+		const dateFormatee = options_search.format(date);
 		try {
 			const token = await getToken()
 			const listUsers = await axios.get(`${BASE_URL}/api/search`, {
@@ -179,11 +123,10 @@ const SearchMap = () => {
 				params: {
 					x:x,
 					y:y,
-					date: date,
+					date: dateFormatee,
 					idTypeRealEstate: id_type_real_estate
 				}
 			})
-			console.log(listUsers.data)
 			if (listUsers.status === 200){
 				setSearchResults(listUsers.data)
 			}
@@ -191,12 +134,6 @@ const SearchMap = () => {
 			console.log(e)
 		}
 	}
-
-	// useEffect(() => {
-	// 	function getPersonWithSearch(x,y,date,type_real_estate) {
-	// 	}
-	// }, [])
-
 
 	return (<View style={styles.root}>
 		<BottomSheetModalProvider>
@@ -304,7 +241,8 @@ const SearchMap = () => {
 						</View>) : null}
 
 
-						{showResults ? (<View style={styles.detailsBox}>
+						{showResults ? (
+						  <View style={styles.detailsBox}>
 							<View>
 								<View style={styles.titleAndFilter}>
 									<View style={styles.titleWithImageContainer}>
@@ -334,7 +272,7 @@ const SearchMap = () => {
 							</View>
 							<ScrollView style={styles.searchResults} contentContainerStyle={{ flexGrow: 1 }}>
 								{searchResults.map((person, index) => (<View key={index}>
-									<SearchResultPerson data={person} />
+									<SearchResultPerson data={person} allPersons={searchResults}/>
 								</View>))}
 							</ScrollView>
 						</View>) : null}

@@ -24,7 +24,7 @@ const CustomHeader = () => {
 		  flexDirection: "row",
 		  alignItems: "center",
 
-		  backgroundColor: "rgba(92, 56, 11, 0.71)",
+		  backgroundColor: "orange",
 		  paddingLeft: 20,
 		  paddingRight: 20,
 		  paddingTop: 40,
