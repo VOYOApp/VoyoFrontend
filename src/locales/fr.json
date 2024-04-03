@@ -1,5 +1,6 @@
 {
   "common": {
+    "loading": "Chargement",
     "login": "Connexion",
     "logout": "Déconnexion",
     "register": "Inscription",
