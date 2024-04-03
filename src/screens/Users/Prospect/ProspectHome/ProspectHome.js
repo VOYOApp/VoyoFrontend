@@ -16,7 +16,7 @@ const ProspectHome = () => {
 	const Tab = createMaterialTopTabNavigator()
 
 	const [firstname, setFirstname] = React.useState("")
-	const [icon, setIcon] = React.useState("https://2.bp.blogspot.com/-0rLFh_JbOzQ/VVTtjHV98DI/AAAAAAAAB6M/cOJ84R_cUpk/s1600/whatsappimages%2Bfunny%2Bdp%2B(9).jpg")
+	const [icon, setIcon] = React.useState("https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x")
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
@@ -33,23 +33,26 @@ const ProspectHome = () => {
 					console.log("Connection firebase successful !")
 				})
 				.catch((error) => {
-					const errorCode = error.code;
-					const errorMessage = error.message;
-					console.log(errorCode)
-					console.log(errorMessage)
+					console.log(error.code)
+					console.log(error.message)
 				});
 			}
 		}
-
-		getGlobal("user_details").then((data) => {
-			console.log(data)
-
-			setFirstname(data?.first_name)
-			setIcon(data?.profile_picture)
-			//TODO SI CO PAS BESOIN DE LE FAIRE
-			firebaseCnx(data.email, data.password)
-		})
 	}, [])
+
+	useEffect(() => {
+		// setTimeout(() => {
+			getGlobal("user_details").then((data) => {
+				setFirstname(data?.first_name)
+				setIcon(data?.profile_picture)
+			})
+		// }, 500)
+	}, [firstname, icon])
+
+	if (firstname ==="") {
+		console.log("firstname is empty")
+	}
+
 	// const scrollViewRef = useRef(null)
 
 	return (<View style={styles.root}>

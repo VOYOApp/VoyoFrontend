@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import { useTranslation } from "react-i18next"
 import { useNavigation } from "@react-navigation/native"
@@ -9,7 +9,6 @@ const HeaderHome = ({ name, profilePicture }) => {
 	const { t } = useTranslation()
 	const navigation = useNavigation()
 
-	console.log(profilePicture)
 	return (
 	  <View style={styles.header}>
 		  <TouchableOpacity style={styles.img_container} onPress={() => navigation.navigate("HomeProspect", { screen: "UserPage" })} >
