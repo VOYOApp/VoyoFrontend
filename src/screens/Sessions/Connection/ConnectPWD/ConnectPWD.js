@@ -35,7 +35,6 @@ const ConnectPWD = () => {
 				},
 			});
 
-			console.log(response.status)
 			if (response.status === 200) {
 				// Save the token in the context
 				await storeToken(response.data.token).then(setTimeout(async () => {
