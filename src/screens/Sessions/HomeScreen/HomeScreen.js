@@ -26,7 +26,7 @@ const HomeScreen = () => {
 	}
 
 	const onHomeAdminPressed = () => {
-		navigation.navigate("Admin", { screen: "AdminHome" })
+		navigation.navigate("Admin", { screen: "HomeAdmin" })
 	}
 
 	return (<View style={styles.root}>
@@ -41,8 +41,11 @@ const HomeScreen = () => {
 			  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"orange"}
 			                widthBtn={"40%"} />
 		  </View>
-		  <CustomButton text="HomeProspect" onPress={onHomeProspectPressed} bgColor={"magenta"} widthBtn={"40%"} />
-		  <CustomButton text="HomeAdmin" onPress={onHomeAdminPressed} bgColor={"red"} widthBtn={"40%"} />
+		  <View className="w-full items-center flex-row justify-around">
+				<CustomButton text="HomeProspect" onPress={onHomeProspectPressed} bgColor={"magenta"} widthBtn={"40%"} />
+				<CustomButton text="HomeAdmin" onPress={onHomeAdminPressed} bgColor={"red"} widthBtn={"40%"} />
+		  </View>
+		  
 	  </View>)
 }
 

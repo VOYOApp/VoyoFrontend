@@ -2,11 +2,11 @@ import React from "react"
 import { ScrollView, StyleSheet, useWindowDimensions, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
-import HomeStats from "../../../../components/HomeStats"
-import HeaderHome from "../../../../components/HeaderHome"
-import CustomFooter from "../../../../components/CustomFooter"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import CardListHomeProspect from "../CardListHomeProspect"
+import HeaderHome from "../../../../components/HeaderHome"
+import HomeStats from "../../../../components/HomeStats"
+import ValidationListAdmin from "../ValidationListAdmin/ValidationListAdmin"
+import ReportListAdmin from "../ReportListAdmin/ReportListAdmin"
 
 const ProspectHome = () => {
 	const { t } = useTranslation()
@@ -15,21 +15,15 @@ const ProspectHome = () => {
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
-	const onBtnPressed = () => {
-		// console.warn('Sign in pressed')
-		navigation.navigate("SignInScreen")
-	}
 
 
-	return (<View style={styles.root}>
+	return (
+	<View style={styles.root}>
 		<HeaderHome />
-
-
 		<ScrollView style={{ width: "100%" }}
 		            showsVerticalScrollIndicator={false}
 		            showsHorizontalScrollIndicator={false}
 		>
-			<HomeStats StatsType={"prospect"} />
 
 			<ScrollView style={{ width: "100%" }}
 			            showsVerticalScrollIndicator={false}
@@ -45,15 +39,15 @@ const ProspectHome = () => {
 						backgroundColor: "#FE881B",
 					},
 				}}>
-					<Tab.Screen name={t("prospect.programmed_visits")} component={CardListHomeProspect} />
-					<Tab.Screen name={t("prospect.passed_visits")} component={CardListHomeProspect} />
+					<Tab.Screen name={t("admin.account_validation_request")} component={ValidationListAdmin} />
+					<Tab.Screen name={t("admin.reported_users")} component={ReportListAdmin} />
 				</Tab.Navigator>
 
 			</ScrollView>
 		</ScrollView>
 
+						
 
-		<CustomFooter currentOption={"home"} />
 	</View>)
 }
 

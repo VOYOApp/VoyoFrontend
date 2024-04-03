@@ -29,6 +29,8 @@ import ChatChannel from "../screens/Users/Common/ChatChannel"
 import CriteriaScreen from "../screens/Users/Prospect/CriteresPage"
 import RecapRequest from "../screens/Users/Prospect/RecapRequest"
 import AdminHome from "../screens/Users/Admin/AdminHome"
+import SearchUser from "../screens/Users/Admin/AdminHome/SearchUser"
+import ValidateRequest from "../screens/Users/Admin/AdminHome/ValidateRequest"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -68,7 +70,6 @@ function HomeProspect() {
 		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
 	</Stack.Navigator>)
 }
-
 
 function SearchProspect() {
 	return (<Stack.Navigator initialRouteName="SearchMap" screenOptions={{ headerShown: false }}>
@@ -128,6 +129,46 @@ function Prospect() {
 	</Tab.Navigator>)
 }
 
+
+// PROSPECT STACKS (Home, Search, CustomListItem)
+function HomeAdmin() {
+	return (<Stack.Navigator screenOptions={{ headerShown: false }}>
+		<Stack.Screen name="AdminHome" component={AdminHome} />
+		<Stack.Screen name="ValidateRequest" component={ValidateRequest} />
+		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+	</Stack.Navigator>)
+}
+
+function AdminListUsers() {
+	return (<Stack.Navigator screenOptions={{ headerShown: false }}>
+		<Stack.Screen name="AdminHome" component={AdminHome} />
+		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+	</Stack.Navigator>)
+}
+
+function Admin() {
+	return (<Tab.Navigator screenOptions={{
+		tabBarShowLabel: false, tabBarStyle: { marginBottom: 0 },
+	}}>
+		<Tab.Screen name="HomeAdmin" component={HomeAdmin} options={{
+			headerShown: false, tabBarLabel: "Home", tabBarIcon: ({ color, focused }) => (// <MaterialCommunityIcons name="home" color={color} size={26} />
+			  <Image source={require("../../assets/home_locked.png")} color={color}
+			         style={{ tintColor: focused ? "#F99342" : color, width: 22, height: 22 }} />),
+		}} />
+		<Tab.Screen name="SearchUser" component={SearchUser} options={{
+			headerShown: false, tabBarLabel: "Search", tabBarIcon: ({ color, focused }) => (// <MaterialCommunityIcons name="home" color={color} size={26} />
+			<Image source={require("../../assets/search_locked.png")} color={color}
+			style={{
+				tintColor: focused ? "#FC4F45" : color,
+				width: 22,
+				height: 22,
+			}} />),
+		}} />
+		{/*Ajoutez d'autres onglets si nécessaire*/}
+	</Tab.Navigator>)
+}
+
+
 // function Visitor() {
 // 	return (
 // 	  <Tab.Navigator initialRouteName="HomeVisitor" screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
@@ -157,6 +198,7 @@ function Prospect() {
 function Navigation({ isLoggedIn }) {
 
 	return (<NavigationContainer>
+<<<<<<< Updated upstream
 		{isLoggedIn ? (
 		  <Stack.Navigator initialRouteName={"Prospect"} screenOptions={{ headerShown: false }}>
 			  <Stack.Screen name="Prospect" component={Prospect} />
@@ -165,6 +207,19 @@ function Navigation({ isLoggedIn }) {
 		  </Stack.Navigator>
 		) : (
 			<Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
+=======
+		<Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
+			{/*{isLoggedIn ? (*/}
+			{/*  // Screens for logged in users*/}
+			<Stack.Group>
+				<Stack.Screen name="Prospect" component={Prospect} />
+				<Stack.Screen name="Common" component={Common} />
+				<Stack.Screen name="Admin" component={Admin} />
+			</Stack.Group>
+			{/*) : (*/}
+			{/*// Auth screens*/}
+			<Stack.Group>
+>>>>>>> Stashed changes
 				<Stack.Screen name="HomeScreen" component={HomeScreen} />
 				<Stack.Screen name="SignUp" component={SignUp} />
 				<Stack.Screen name="SignIn" component={SignIn} />

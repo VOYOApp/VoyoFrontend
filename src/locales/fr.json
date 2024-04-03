@@ -32,6 +32,7 @@
     "pricing_description": "Grâce à VOYO, vous allez pouvoir gagner de l’argent. En effet, toute visite que vous effectuez avec VOYO sera rémunérée. Et le mieux dans tout ça ? C’est vous qui définissez votre taux horaire !",
     "details": "Détails",
     "my_account": "Mon compte",
+    "card_id": "Papiers d'identité",
     "first_name": "Prénom",
     "last_name": "Nom",
     "bio": "Bio",
@@ -121,5 +122,16 @@
       "other": "Revues en attente"
     }
   },
-  "admin": {}
+  "admin": {
+    "account_validation_request": "Demandes de validation",
+    "report_request":"Demande de suivi de l'utilisateur :",
+    "reported_users" : "Signalements",
+    "reported_by" : "Signalé par",
+    "motive":"Motif :",
+    "validation_request":"Demande de validation :",
+    "accept_request":"Valider l'inscription",
+    "reject_request":"Refuser l'inscription",
+    "search_user":"Rechercher un utilisateur",
+    "clients_and_visitors":"Utilisateurs (visiteurs et clients)"
+  }
 }
