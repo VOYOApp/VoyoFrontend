@@ -13,9 +13,11 @@ const LoadVoyo = () => {
 
 	return (
 	  <View style={styles.root}>
-		  <Icon source={Images.voyo_banner} size={550} />
-		  <Text className={"absolute top-[60%] text-3xl text-orange-400 font-bold"}>{t("common.loading")}</Text>
-		  <ActivityIndicator className={"absolute top-[70%]"} size={100} color="orange" />
+		  <View className={'absolute bottom-[35%]'}>
+			  <Icon source={Images.voyo_banner_full} size={500} />
+		  </View>
+		  {/*<Text className={"absolute top-[60%] text-3xl text-orange-400 font-bold"}>{t("common.loading")}</Text>*/}
+		  <ActivityIndicator className={"absolute top-[50%]"} size={100} color="orange" />
 	  </View>
 	)
 }
