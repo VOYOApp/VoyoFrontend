@@ -6,17 +6,15 @@ import { signOut } from "firebase/auth"
 import { collection, addDoc, doc, updateDoc, serverTimestamp, getDocs, query, orderBy, onSnapshot } from "firebase/firestore"
 import { GiftedChat } from "react-native-gifted-chat"
 import BackButton from "../../../../components/BackButton"
+import { removeGlobal, removeToken } from "../../../../context/AuthContext"
 
 const Chat = ({ navigation, route }) => {
 	const [messages, setMessages] = useState([])
 	const { chatName, id } = route.params
-	const signOutNow = () => {
-		signOut(auth).then(() => {
-			// Sign-out successful.
-			navigation.replace("HomeScreen")
-		}).catch((error) => {
-			// An error happened.
-		})
+	const signOutNow = async () => {
+		await removeGlobal("user_details")
+		await removeToken();
+		await signOut(auth)
 	}
 	useLayoutEffect(() => {
 		navigation.setOptions({

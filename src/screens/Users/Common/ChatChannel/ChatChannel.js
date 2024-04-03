@@ -5,10 +5,12 @@ import { auth, db } from '../../../../../firebaseConfig';
 import { collection, addDoc, getDocs, query, orderBy, onSnapshot, where } from "firebase/firestore"
 import CustomListItem from "../../../../components/CustomListItem"
 import BackButton from "../../../../components/BackButton"
+import { getGlobal } from "../../../../context/AuthContext"
 const ChatChannel = ({navigation}) => {
 	const [chats, setChats] = useState([])
 
 	useEffect(() => {
+
 		const q = query(collection(db, "chats"), where("members", "array-contains", auth.currentUser.email), orderBy("lastActivity", "desc"));
 		const unsubscribe = onSnapshot(q, (snapshot) =>
 		  setChats(
@@ -25,9 +27,12 @@ const ChatChannel = ({navigation}) => {
 	}, []);
 
 
-	useLayoutEffect(() => {
+	useLayoutEffect(async () => {
+		let user_details = await getGlobal("user_details");
+		console.log(user_details)
+
 		navigation.setOptions({
-			title: auth?.currentUser?.displayName || "Chat",
+			title: (auth?.currentUser?.displayName || user_details?.first_name) ?? "Chat",
 			headerTitleStyle: { fontSize: 18 },
 			headerLeft: () => (
 			  <View className={'flex-row items-center ml-4'}>
@@ -36,7 +41,7 @@ const ChatChannel = ({navigation}) => {
 					  <Avatar
 					    rounded
 					    source={{
-						    uri: auth?.currentUser?.photoURL || require("../../../../../assets/avatar.png"),
+						    uri: (auth?.currentUser?.photoURL || user_details?.profile_picture) ?? "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
 					    }}
 					  />
 				  </TouchableOpacity>

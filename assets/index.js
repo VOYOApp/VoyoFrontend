@@ -15,6 +15,9 @@ const Images = {
 	calendarBlue: require("./icons/012-calendar.png"),
 	homeSmall: require("./icons/home.png"),
 	clock: require('./icons/013-clock.png'),
+	platform_tarification: require('./icons/019-platform-costs.png'),
+	voyo_banner_full: require('./logos/banner-voyo-full.png'),
+	voyo_banner: require('./logos/banner-voyo.png'),
 };
 
 export default Images

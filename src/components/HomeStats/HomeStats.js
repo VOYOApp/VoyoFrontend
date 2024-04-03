@@ -1,63 +1,79 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { useTranslation } from "react-i18next"
 import CustomStatCard from "../CustomStatCard"
+import axios from "axios"
+import { BASE_URL } from "@env"
+import { getGlobal, getToken, removeGlobal } from "../../context/AuthContext"
 
 const HomeStats = ({ StatsType }) => {
-
 	const { t } = useTranslation()
 
-	let indicator1 = 0
-	let indicator2 = 0
-	let indicator3 = 0
-	let indicator4 = 0
-	let indicator1TranslationKey = ""
-	let indicator2TranslationKey = ""
-	let indicator3TranslationKey = ""
-	let indicator4TranslationKey = ""
+	const [indicator1, setIndicator1] = useState(0)
+	const [indicator2, setIndicator2] = useState(0)
+	const [indicator3, setIndicator3] = useState(0)
+	const [indicator4, setIndicator4] = useState(0)
+	const [indicator1TranslationKey, setIndicator1TranslationKey] = useState("")
+	const [indicator2TranslationKey, setIndicator2TranslationKey] = useState("")
+	const [indicator3TranslationKey, setIndicator3TranslationKey] = useState("")
+	const [indicator4TranslationKey, setIndicator4TranslationKey] = useState("")
 
-	if (StatsType == "prospect") {
-		indicator1 = 1
-		indicator1TranslationKey = indicator1 === 1
-		  ? "prospect.programmed_visite.one"
-		  : "prospect.programmed_visite.other"
+	useEffect(() => {
+		async function getStats() {
+			try {
+				return await axios.get(`${BASE_URL}/api/user/homeStats`, {
+					headers: { Authorization: `Bearer ${await getToken()}` },
+				})
+			}catch (error) {
+				console.log('An error has occurred: ' + error);
+			}
+		}
 
-		indicator2 = 2
-		indicator2TranslationKey = indicator2 === 1
-		  ? "common.unread_messages.one"
-		  : "common.unread_messages.other"
+		getStats().then(r => {
+			if (StatsType === "prospect") {
+				setIndicator1(r.data["programmed_visits"])
+				setIndicator1TranslationKey(indicator1 === 1
+				  ? "prospect.programmed_visite.one"
+				  : "prospect.programmed_visite.other")
 
-		indicator3 = 3
-		indicator3TranslationKey = indicator3 === 1
-		  ? "prospect.number_of_visits.one"
-		  : "prospect.number_of_visits.other"
+				setIndicator2(r.data["unread_messages"])
+				setIndicator2TranslationKey(indicator2 === 1
+				  ? "common.unread_messages.one"
+				  : "common.unread_messages.other")
 
-		indicator4 = 4
-		indicator4TranslationKey = indicator4 === 1
-		  ? "prospect.feedback_waiting.one"
-		  : "prospect.feedback_waiting.other"
+				setIndicator3(r.data["visited_done"])
+				setIndicator3TranslationKey(indicator3 === 1
+				  ? "prospect.number_of_visits.one"
+				  : "prospect.number_of_visits.other")
 
-	} else if (StatsType == "visitor") {
-		indicator1 = 1
-		indicator1TranslationKey = indicator1 === 1
-		  ? "common.unread_messages.one"
-		  : "common.unread_messages.other"
+				setIndicator4(r.data["waiting_reviews"])
+				setIndicator4TranslationKey(indicator4 === 1
+				  ? "prospect.feedback_waiting.one"
+				  : "prospect.feedback_waiting.other")
 
-		indicator2 = 2
-		indicator2TranslationKey = indicator2 === 1
-		  ? "visitor.upcoming_visits.one"
-		  : "visitor.upcoming_visits.other"
+			} else if (StatsType === "visitor") {
+				setIndicator1(r.data["upcoming_visits"])
+				setIndicator1TranslationKey(indicator1 === 1
+				  ? "visitor.upcoming_visits.one"
+				  : "visitor.upcoming_visits.other")
 
-		indicator3 = 3
-		indicator3TranslationKey = indicator3 === 1
-		  ? "visitor.upcoming_visits.one"
-		  : "visitor.upcoming_visits.other"
+				setIndicator2(r.data["unread_messages"])
+				setIndicator2TranslationKey(indicator2 === 1
+				  ? "common.unread_messages.one"
+				  : "common.unread_messages.other")
 
-		indicator4 = 4
-		indicator4TranslationKey = indicator4 === 1
-		  ? "visitor.upcoming_visits.one"
-		  : "visitor.upcoming_visits.other"
-	}
+				setIndicator3(r.data["awaiting_approval"])
+				setIndicator3TranslationKey(indicator3 === 1
+				  ? "visitor.pending_acceptance.one"
+				  : "visitor.pending_acceptance.other")
+
+				setIndicator4(r.data["waiting_reviews"])
+				setIndicator4TranslationKey(indicator4 === 1
+				  ? "visitor.review_pending.one"
+				  : "visitor.review_pending.other")
+			}
+		});
+	}, []);
 
 	return (
 	  <View style={styles.stats}>

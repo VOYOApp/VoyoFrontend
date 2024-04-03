@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import { useTranslation } from "react-i18next"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
@@ -8,7 +8,9 @@ import { BottomSheetModal, BottomSheetModalProvider } from "@gorhom/bottom-sheet
 import SearchResultPerson from "../../../../components/SearchResultPerson"
 import { IndexPath, Select, SelectItem } from "@ui-kitten/components"
 import GMap from "../../../../components/GMap"
-
+import axios from "axios"
+import {BASE_URL} from '@env'
+import { getToken } from "../../../../context/AuthContext"
 
 const SearchMap = () => {
 	// ref
@@ -33,73 +35,25 @@ const SearchMap = () => {
 	const [showResults, setShowResults] = useState(false)
 	const [showDuration, setShowDuration] = useState(false)
 	const [showDate, setShowDate] = useState(false)
+	const [x, setX] = useState(0.0)
+	const [y, setY] = useState(0.0)
 
-
-	const [searchResults, setSearchResults] = useState([{
-		profilePicture: "https://randomuser.me/api/portraits/women/69.jpg",
-		name: "Marie K.",
-		note: 3,
-		distance: 5989,
-		price: 8.8,
-		map: {
-			coordinates: { "latitude": 44.91689119999999, "longitude": 4.9328504 }, radius: 1000,
-		},
-		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures " +
-		  "logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En " +
-		  "dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du " +
-		  "développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire " +
-		  "passionnante. 💻🚀",
-		nbOfVisits: 5,
-	}, {
-		profilePicture: "https://randomuser.me/api/portraits/men/95.jpg",
-		name: "Jean T.",
-		note: 5,
-		distance: 49,
-		price: 12,
-		map: {
-			coordinates: { "latitude": 44.925527, "longitude": 4.92091 }, radius: 1500,
-		},
-		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures " +
-		  "logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En " +
-		  "dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du " +
-		  "développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire " +
-		  "passionnante. 💻🚀",
-		nbOfVisits: 5,
-	}, {
-		profilePicture: "https://randomuser.me/api/portraits/women/59.jpg",
-		name: "Bertha F.",
-		note: 4,
-		distance: 489,
-		price: 10,
-		map: {
-			coordinates: { "latitude": 44.933393, "longitude": 4.89236 }, radius: 2000,
-		},
-		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures " +
-		  "logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En " +
-		  "dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du " +
-		  "développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire " +
-		  "passionnante. 💻🚀",
-		nbOfVisits: 5,
-	}, {
-		profilePicture: "https://randomuser.me/api/portraits/women/59.jpg",
-		name: "Bertha F.",
-		note: 4,
-		distance: 1,
-		price: 10,
-		map: {
-			coordinates: { "latitude": 44.920177, "longitude": 4.899143 }, radius: 1700,
-		},
-		bio: "En tant que développeur Full Stack passionné, je façonne des expériences numériques novatrices. Expert en architectures " +
-		  "logicielles et en optimisation UX, je reste à la pointe des tendances technologiques. En " +
-		  "dehors du code, les sports extrêmes alimentent ma créativité, repoussant les limites du " +
-		  "développement. Suivez mon parcours digital, où chaque ligne de code contribue à une histoire " +
-		  "passionnante. 💻🚀",
-		nbOfVisits: 5,
-	}])
+	const [searchResults, setSearchResults] = useState([])
 
 	const options = {
 		weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric",
 	}
+
+	const options_search = new Intl.DateTimeFormat('en-US', {
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+		hour: '2-digit',
+		minute: '2-digit',
+		second: '2-digit',
+		fractionalSecondDigits: 6,
+	});
+
 
 	const showDatePicker = () => {
 		setDatePickerVisibility(true)
@@ -118,13 +72,13 @@ const SearchMap = () => {
 	const [selectedValue, setSelectedValue] = useState("")
 
 	const radioItems = [{
-		label: t("prospect.visits_duration.studio"), value: "option1",
+		label: t("prospect.visits_duration.studio"), value: 1,
 	}, {
-		label: t("prospect.visits_duration.t2_to_t4"), value: "option2",
+		label: t("prospect.visits_duration.t2_to_t4"), value: 2,
 	}, {
-		label: t("prospect.visits_duration.t5_and_more"), value: "option3",
-	}, { label: t("prospect.visits_duration.house"), value: "option4" }, {
-		label: t("prospect.visits_duration.villa"), value: "option5",
+		label: t("prospect.visits_duration.t5_and_more"), value: 3,
+	}, { label: t("prospect.visits_duration.house"), value: 4 }, {
+		label: t("prospect.visits_duration.villa"), value: 5,
 	}, // { label: t("prospect.visits_duration.custom_duration"), value: "option6" },
 	]
 
@@ -136,11 +90,11 @@ const SearchMap = () => {
 		let sortedResults = []
 
 		if (index.row === 0) {
-			sortedResults = [...searchResults].sort((a, b) => b.note - a.note)
+			sortedResults = [...searchResults].sort((a, b) => b.noteAvg.Float64 - a.noteAvg.Float64)
 		} else if (index.row === 1) {
-			sortedResults = [...searchResults].sort((a, b) => a.price - b.price)
+			sortedResults = [...searchResults].sort((a, b) => a.pricing - b.pricing)
 		} else if (index.row === 2) {
-			sortedResults = [...searchResults].sort((a, b) => a.distance - b.distance)
+			sortedResults = [...searchResults].sort((a, b) => a.roundedDistance - b.roundedDistance)
 		}
 
 		setSearchResults(sortedResults)
@@ -148,8 +102,11 @@ const SearchMap = () => {
 
 
 	const [dataFromChild, setDataFromChild] = useState()
-	const handleDataFromChild = useCallback((data) => {
+	const handleDataFromChild = useCallback((data, details) => {
 		setDataFromChild(data)
+
+		setX(details["geometry"]["location"]["lat"])
+		setY(details["geometry"]["location"]["lng"])
 
 		setShowDate(true)
 		setShowDuration(false)
@@ -157,6 +114,26 @@ const SearchMap = () => {
 		handlePresentModalPress()
 	}, [])
 
+	const getPersonWithSearch = async (x,y,date,id_type_real_estate) => {
+		const dateFormatee = options_search.format(date);
+		try {
+			const token = await getToken()
+			const listUsers = await axios.get(`${BASE_URL}/api/search`, {
+				headers: { Authorization: `Bearer ${token}` },
+				params: {
+					x:x,
+					y:y,
+					date: dateFormatee,
+					idTypeRealEstate: id_type_real_estate
+				}
+			})
+			if (listUsers.status === 200){
+				setSearchResults(listUsers.data)
+			}
+		}catch (e) {
+			console.log(e)
+		}
+	}
 
 	return (<View style={styles.root}>
 		<BottomSheetModalProvider>
@@ -254,6 +231,7 @@ const SearchMap = () => {
 								  if (selectedValue === "") {
 									  alert("Please select a value")
 								  } else {
+									  getPersonWithSearch(x,y,date, selectedValue)
 									  setShowDate(false)
 									  setShowDuration(false)
 									  setShowResults(true)
@@ -263,7 +241,8 @@ const SearchMap = () => {
 						</View>) : null}
 
 
-						{showResults ? (<View style={styles.detailsBox}>
+						{showResults ? (
+						  <View style={styles.detailsBox}>
 							<View>
 								<View style={styles.titleAndFilter}>
 									<View style={styles.titleWithImageContainer}>
@@ -293,7 +272,7 @@ const SearchMap = () => {
 							</View>
 							<ScrollView style={styles.searchResults} contentContainerStyle={{ flexGrow: 1 }}>
 								{searchResults.map((person, index) => (<View key={index}>
-									<SearchResultPerson data={person} />
+									<SearchResultPerson data={person} allPersons={searchResults}/>
 								</View>))}
 							</ScrollView>
 						</View>) : null}

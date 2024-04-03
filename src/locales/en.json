@@ -16,6 +16,8 @@
       "one": "Unread message",
       "other": "Unread messages"
     },
+    "platform_costs": "Platform costs : {{price}}",
+    "select_pricing": "Select hourly rates",
     "select_date": "Please select a date",
     "select_time": "Please select a duration",
     "resend_code": "Resend code",
@@ -27,6 +29,7 @@
     "reference_address": "Reference address",
     "address_description": "This address will be the central point of your visiting area. It will never be disclosed to other users. You don't have to enter your personal address.",
     "availability_description": "To appear in the search results, please enter your availability to visit properties. You can add, delete or modify your availability at any time via the parameters.",
+    "pricing_description": "With VOYO, you can earn money. In fact, you'll be paid for every visit you make with VOYO. And the best part? You set your own hourly rate!",
     "details": "Details",
     "my_account": "My account",
     "first_name": "First name",
@@ -55,6 +58,7 @@
       "one": "Result",
       "other": "Results"
     },
+    "pricing": "Pricing",
     "price": "Price",
     "star": {
       "one": "Star",
@@ -107,6 +111,14 @@
     "upcoming_visits": {
       "one": "Upcoming visit",
       "other": "Upcoming visits"
+    },
+    "pending_acceptance": {
+      "one": "Application pending acceptance",
+      "other": "Applications pending acceptance"
+    },
+    "review_pending": {
+      "one": "Review pending",
+      "other": "Reviews pending"
     }
   },
   "admin": {}

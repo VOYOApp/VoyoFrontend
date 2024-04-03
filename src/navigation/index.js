@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Image } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { BASE_URL } from "@env"
 
 import HomeScreen from "../screens/Sessions/HomeScreen"
 import ConnectPhone from "../screens/Sessions/Connection/ConnectPhone"
@@ -13,6 +14,7 @@ import PasswordMailConfirmation from "../screens/Sessions/Connection/PasswordMai
 import RegisterAdditionnalDetails from "../screens/Sessions/Inscription/RegisterAdditionnalDetails"
 import AdditionalDetailsVisitor from "../screens/Sessions/Inscription/AdditionalDetailsVisitor"
 import VisitorAvailability from "../screens/Sessions/Inscription/VisitorAvailability"
+import TarificationVisitor from "../screens/Sessions/Inscription/TarificationVisitor"
 import RegisterMail from "../screens/Sessions/Inscription/RegisterMail"
 import RegisterPhone from "../screens/Sessions/Inscription/RegisterPhone"
 import MailConfirmation from "../screens/Sessions/Inscription/MailConfirmation"
@@ -40,10 +42,11 @@ function SignUp() {
 		  <Stack.Screen name="RegisterMail" component={RegisterMail} />
 		  <Stack.Screen name="MailConfirmation" component={MailConfirmation} />
 		  <Stack.Screen name="RegisterAdditionnalDetails" component={RegisterAdditionnalDetails} />
-		  <Stack.Screen name="AdditionalDetailsVisitor" component={AdditionalDetailsVisitor}/>
-		  <Stack.Screen name="VisitorAvailability" component={VisitorAvailability}/>
+		  <Stack.Screen name="AdditionalDetailsVisitor" component={AdditionalDetailsVisitor} />
+		  <Stack.Screen name="VisitorAvailability" component={VisitorAvailability} />
+		  <Stack.Screen name="TarificationVisitor" component={TarificationVisitor} />
 	  </Stack.Navigator>
-	);
+	)
 }
 
 function SignIn() {
@@ -151,38 +154,24 @@ function Prospect() {
 // 	);
 // }
 
-function Navigation() {
-	// const [isLoggedIn, setLoggedIn] = React.useState(false);
-	//
-	// const handleLogin = () => {
-	// 	setLoggedIn(true);
-	// };
-	//
-	// const handleLogout = () => {
-	// 	setLoggedIn(false);
-	// };
-
+function Navigation({ isLoggedIn }) {
 
 	return (<NavigationContainer>
-		<Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
-			{/*{isLoggedIn ? (*/}
-			{/*  // Screens for logged in users*/}
-			<Stack.Group>
-				<Stack.Screen name="Prospect" component={Prospect} />
-				<Stack.Screen name="Common" component={Common} />
-			</Stack.Group>
-			{/*) : (*/}
-			{/*// Auth screens*/}
-			<Stack.Group>
+		{isLoggedIn ? (
+		  <Stack.Navigator initialRouteName={"Prospect"} screenOptions={{ headerShown: false }}>
+			  <Stack.Screen name="Prospect" component={Prospect} />
+			  <Stack.Screen name="Common" component={Common} />
+			  <Stack.Screen name="NoInternet" component={NoInternet} />
+		  </Stack.Navigator>
+		) : (
+			<Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="HomeScreen" component={HomeScreen} />
 				<Stack.Screen name="SignUp" component={SignUp} />
 				<Stack.Screen name="SignIn" component={SignIn} />
-			</Stack.Group>
-			{/*)}*/}
-			{/* Common modal screens */}
-			<Stack.Screen name="NoInternet" component={NoInternet} />
-		</Stack.Navigator>
-	</NavigationContainer>)
-}
+				<Stack.Screen name="NoInternet" component={NoInternet} />
+			</Stack.Navigator>
+		)}
+		  < /NavigationContainer>)
+		}
 
-export default Navigation
+		export default Navigation

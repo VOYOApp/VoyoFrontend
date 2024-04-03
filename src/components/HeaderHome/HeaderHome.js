@@ -3,21 +3,22 @@ import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } 
 import { useTranslation } from "react-i18next"
 import { useNavigation } from "@react-navigation/native"
 
-const HeaderHome = () => {
+const HeaderHome = ({ name, profilePicture }) => {
 
 	const { height } = useWindowDimensions()
 	const { t } = useTranslation()
 	const navigation = useNavigation()
 
+	console.log(profilePicture)
 	return (
 	  <View style={styles.header}>
 		  <TouchableOpacity style={styles.img_container} onPress={() => navigation.navigate("HomeProspect", { screen: "UserPage" })} >
 			  <Image
-			    src={"https://2.bp.blogspot.com/-0rLFh_JbOzQ/VVTtjHV98DI/AAAAAAAAB6M/cOJ84R_cUpk/s1600/whatsappimages%2Bfunny%2Bdp%2B(9).jpg"}
+			    src={profilePicture}
 			    style={[styles.profilePic, { height: height }]}
 			    resizeMode="contain" />
 		  </TouchableOpacity>
-		  <Text style={styles.title}>{t("common.greetings_name", { name: "Yohann" })}</Text>
+		  <Text style={styles.title}>{t("common.greetings_name", { name: name })}</Text>
 	  </View>)
 }
 

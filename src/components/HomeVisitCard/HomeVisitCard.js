@@ -3,31 +3,62 @@ import { Image, StyleSheet, Text, View } from "react-native"
 import CustomButton from "../CustomButton"
 import { useTranslation } from "react-i18next"
 
-const HomeVisitCard = () => {
+const HomeVisitCard = ({ data }) => {
 	const { t } = useTranslation()
 
+	const opt_date_title = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+	const opt_date = { year: 'numeric', month: 'long', day: 'numeric' };
+
+	// console.log(data)
+
 	return (
-	  <View style={styles.card}>
-		  <View>
-			  <View style={styles.rowWithImage}>
-				  <Image source={require("../../../assets/icons/010-user.png")} style={styles.logo} />
-				  <Text>Bernard</Text>
-			  </View>
-			  <View style={styles.rowWithImage}>
-				  <Image source={require("../../../assets/icons/013-clock.png")} style={styles.logo} />
-				  <Text>14 janvier 2032</Text>
-			  </View>
-			  <View style={styles.rowWithImage}>
-				  <Image source={require("../../../assets/icons/009-location.png")} style={styles.logoBigger} />
-				  <Text>5 rue ambroise courtois Lyon</Text>
-			  </View>
-			  <View style={styles.rowWithImage}>
-				  <Image source={require("../../../assets/icons/014-check.png")} style={styles.logo} />
-				  <Text>Rendez-vous accepté</Text>
-			  </View>
+	  <View>
+		  <View className={"bg-orange-300 h-10 justify-start items-center flex-row rounded-t-lg"}>
+			  <Image source={require("../../../assets/icons/calendarorange.png")} style={styles.logo} />
+			  <Text>{new Intl.DateTimeFormat('fr-FR', opt_date_title).format(new Date(data.startTime))}</Text>
 		  </View>
-		  <View style={styles.btn}>
-			  <CustomButton text={t("common.details")} widthBtn={80} heightBtn={40} />
+
+		  <View style={styles.card}>
+			  <View>
+				  <View>
+					  <View style={styles.rowWithImage}>
+						  <Image source={require("../../../assets/icons/010-user.png")} style={styles.logo} />
+						  <Text>{data.firstName + " " + data.lastName}</Text>
+					  </View>
+					  <View style={styles.rowWithImage}>
+						  <Image source={require("../../../assets/icons/013-clock.png")} style={styles.logo} />
+						  <Text>{new Intl.DateTimeFormat('fr-FR', opt_date).format(new Date(data.startTime))}</Text>
+					  </View>
+					  <View style={styles.rowWithImage}>
+						  <Image source={require("../../../assets/icons/009-location.png")} style={styles.logoBigger} />
+						  <Text>{data.address}</Text>
+					  </View>
+					  {data.status === "ACCEPTED" ? (
+					    <View style={styles.rowWithImage}>
+						    <Image source={require("../../../assets/icons/014-check.png")} style={styles.logo} />
+						    <Text>Rendez-vous accepté</Text>
+					    </View>) : data.status === "PENDING" ? (
+					    <View style={styles.rowWithImage}>
+						    <Image source={require("../../../assets/icons/015-hourglass.png")} style={styles.logo} />
+						    <Text>En attente de validation</Text>
+					    </View>) : data.status === "REFUSED" ? (
+					    <View style={styles.rowWithImage}>
+						    <Image source={require("../../../assets/icons/021-refused.png")} style={styles.logo} />
+						    <Text>Rendez-vous refusé</Text>
+					    </View>) : data.status === "CANCELED" ? (
+					    <View style={styles.rowWithImage}>
+						    <Image source={require("../../../assets/icons/022-cancel.png")} style={styles.logo} />
+						    <Text>Rendez-vous annulé</Text>
+					    </View>) : data.status === "DONE" ? (
+					    <View style={styles.rowWithImage}>
+						    <Image source={require("../../../assets/icons/023-done.png")} style={styles.logo} />
+						    <Text>Rendez-vous effectué</Text>
+						</View>) : null}
+				  </View>
+			  </View>
+			  <View style={styles.btn}>
+				  <CustomButton text={t("common.details")} widthBtn={80} heightBtn={40} />
+			  </View>
 		  </View>
 	  </View>
 
@@ -37,15 +68,15 @@ const HomeVisitCard = () => {
 const styles = StyleSheet.create({
 	card: {
 		width: "100%",
-		backgroundColor: "rgba(0,0,0,0.05)",
-		borderRadius: 10,
+		backgroundColor: "#ecd7c0",
+		borderBottomLeftRadius: 10,
+		borderBottomRightRadius: 10,
 		marginBottom: 10,
 		display: "flex",
 		flexDirection: "row",
 		alignItems: "center",
 		paddingTop: 10,
 		paddingBottom: 10,
-		paddingLeft: 5,
 		justifyContent: "space-between",
 	},
 	rowWithImage: {
@@ -70,7 +101,7 @@ const styles = StyleSheet.create({
 		marginRight: 10,
 	},
 	btn: {
-		marginRight: 20,
+		marginRight: 10,
 	},
 })
 
