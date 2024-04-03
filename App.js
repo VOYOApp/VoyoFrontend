@@ -9,26 +9,37 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import "core-js/stable/atob";
 import LoadVoyo from "./src/screens/LoadVoyo"
 import { NavigationContainer } from "@react-navigation/native"
+import { jwtDecode } from "jwt-decode"
+import axios from "axios"
+import {BASE_URL} from '@env'
 
 const App = () => {
 	const [isLoggedIn, setLoggedIn] = useState(false);
-	const [isLoading, setLoading] = useState(true); // Ajoutez un état pour gérer le chargement initial
+	const [status, setStatus] = useState("");
+	const [role, setRole] = useState("");
+	const [isLoading, setLoading] = useState(true);
+
 
 	useEffect(() => {
 		const tokenChangeInterval = setInterval(async () => {
 			try {
 				const token = await AsyncStorage.getItem('token');
 				if (token && !isLoggedIn) {
-					setTimeout(() => {
-						setLoggedIn(true);
-						setLoading(false);
-					}, 1200);
-
+					setLoading(true);
+					setTimeout(async() => {
+						const decodedToken = jwtDecode(token);
+						await axios.get(`${BASE_URL}/api/user/status`, {
+							headers: { Authorization: `Bearer ${token}` },
+						}).then((response) => {
+							setStatus(response.data.status)
+							setRole(decodedToken.role)
+							setLoggedIn(true);
+							setLoading(false);
+						});
+					}, 1200)
 				} else if (!token && isLoggedIn) {
-					setTimeout(() => {
-						setLoggedIn(false);
-						setLoading(false);
-					}, 1200);
+					setLoggedIn(false);
+					setLoading(false);
 				} else {
 					setLoading(false);
 				}
@@ -40,19 +51,19 @@ const App = () => {
 		return () => {
 			clearInterval(tokenChangeInterval);
 		};
-	}, [isLoggedIn]);
-
-	if (isLoading) {
-		return (<NavigationContainer><LoadVoyo/></NavigationContainer>); // Rendre l'écran de chargement s'il est en cours de chargement
-	}
+	}, [isLoggedIn, status, role]);
 
 	return (
-		  <ApplicationProvider {...eva} theme={eva.light}>
-			  <SafeAreaView style={styles.root}>
-				  <Navigation isLoggedIn={isLoggedIn}/>
-				  <StatusBar style="auto" />
-			  </SafeAreaView>
-		  </ApplicationProvider>
+	  !isLoading ? (
+		<ApplicationProvider {...eva} theme={eva.light}>
+			<SafeAreaView style={styles.root}>
+				<Navigation isLoggedIn={isLoggedIn} status={status} role={role} />
+				<StatusBar style="auto" />
+			</SafeAreaView>
+		</ApplicationProvider>
+	  ) : (
+		<LoadVoyo />
+	  )
 	);
 };
 
