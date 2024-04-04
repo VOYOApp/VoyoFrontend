@@ -2,12 +2,14 @@ import React from "react"
 import { Image, StyleSheet, Text, View } from "react-native"
 import CustomButton from "../CustomButton"
 import { useTranslation } from "react-i18next"
+import { useNavigation } from "@react-navigation/native"
 
 const HomeVisitCard = ({ data }) => {
 	const { t } = useTranslation()
+	const navigation = useNavigation()
 
-	const opt_date_title = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-	const opt_date = { year: 'numeric', month: 'long', day: 'numeric' };
+	const opt_date_title = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
+	const opt_date = { year: "numeric", month: "long", day: "numeric" }
 
 	// console.log(data)
 
@@ -15,7 +17,7 @@ const HomeVisitCard = ({ data }) => {
 	  <View>
 		  <View className={"bg-orange-300 h-10 justify-start items-center flex-row rounded-t-lg"}>
 			  <Image source={require("../../../assets/icons/calendarorange.png")} style={styles.logo} />
-			  <Text>{new Intl.DateTimeFormat('fr-FR', opt_date_title).format(new Date(data.startTime))}</Text>
+			  <Text>{new Intl.DateTimeFormat("fr-FR", opt_date_title).format(new Date(data.startTime))}</Text>
 		  </View>
 
 		  <View style={styles.card}>
@@ -27,36 +29,46 @@ const HomeVisitCard = ({ data }) => {
 					  </View>
 					  <View style={styles.rowWithImage}>
 						  <Image source={require("../../../assets/icons/013-clock.png")} style={styles.logo} />
-						  <Text>{new Intl.DateTimeFormat('fr-FR', opt_date).format(new Date(data.startTime))}</Text>
+						  <Text>{new Intl.DateTimeFormat("fr-FR", opt_date).format(new Date(data.startTime))}</Text>
 					  </View>
 					  <View style={styles.rowWithImage}>
 						  <Image source={require("../../../assets/icons/009-location.png")} style={styles.logoBigger} />
 						  <Text>{data.address}</Text>
 					  </View>
 					  {data.status === "ACCEPTED" ? (
-					    <View style={styles.rowWithImage}>
-						    <Image source={require("../../../assets/icons/014-check.png")} style={styles.logo} />
-						    <Text>Rendez-vous accepté</Text>
-					    </View>) : data.status === "PENDING" ? (
-					    <View style={styles.rowWithImage}>
-						    <Image source={require("../../../assets/icons/015-hourglass.png")} style={styles.logo} />
-						    <Text>En attente de validation</Text>
-					    </View>) : data.status === "REFUSED" ? (
-					    <View style={styles.rowWithImage}>
-						    <Image source={require("../../../assets/icons/021-refused.png")} style={styles.logo} />
-						    <Text>Rendez-vous refusé</Text>
-					    </View>) : data.status === "CANCELED" ? (
-					    <View style={styles.rowWithImage}>
-						    <Image source={require("../../../assets/icons/022-cancel.png")} style={styles.logo} />
-						    <Text>Rendez-vous annulé</Text>
-					    </View>) : data.status === "DONE" ? (
-					    <View style={styles.rowWithImage}>
-						    <Image source={require("../../../assets/icons/023-done.png")} style={styles.logo} />
-						    <Text>Rendez-vous effectué</Text>
+						<View style={styles.rowWithImage}>
+							<Image source={require("../../../assets/icons/014-check.png")} style={styles.logo} />
+							<Text>Rendez-vous accepté</Text>
+						</View>) : data.status === "PENDING" ? (
+						<View style={styles.rowWithImage}>
+							<Image source={require("../../../assets/icons/015-hourglass.png")} style={styles.logo} />
+							<Text>En attente de validation</Text>
+						</View>) : data.status === "REFUSED" ? (
+						<View style={styles.rowWithImage}>
+							<Image source={require("../../../assets/icons/021-refused.png")} style={styles.logo} />
+							<Text>Rendez-vous refusé</Text>
+						</View>) : data.status === "CANCELED" ? (
+						<View style={styles.rowWithImage}>
+							<Image source={require("../../../assets/icons/022-cancel.png")} style={styles.logo} />
+							<Text>Rendez-vous annulé</Text>
+						</View>) : data.status === "DONE" ? (
+						<View style={styles.rowWithImage}>
+							<Image source={require("../../../assets/icons/023-done.png")} style={styles.logo} />
+							<Text>Rendez-vous effectué</Text>
 						</View>) : null}
 				  </View>
 			  </View>
-			  <View style={styles.btn}>
+			  <View style={styles.btn} onTouchEnd={
+				  () => {
+					  navigation.navigate("HomeProspect", {
+						  screen: "VisitDetails",
+						  params: {
+							  idVisit: data.idVisit,
+						  },
+					  })
+				  }
+
+			  }>
 				  <CustomButton text={t("common.details")} widthBtn={80} heightBtn={40} />
 			  </View>
 		  </View>

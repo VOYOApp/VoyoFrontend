@@ -30,6 +30,7 @@ import Chat from "../screens/Users/Common/Chat"
 import ChatChannel from "../screens/Users/Common/ChatChannel"
 import CriteriaScreen from "../screens/Users/Prospect/CriteresPage"
 import RecapRequest from "../screens/Users/Prospect/RecapRequest"
+import VisitDetails from "../screens/Users/Common/VisitDetail"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -66,6 +67,7 @@ function HomeProspect() {
 		<Stack.Screen name="ProspectHome" component={ProspectHome} />
 		<Stack.Screen name="UserPage" component={UserPage} />
 		<Stack.Screen name="DetailsVisitor" component={DetailsVisitor} />
+		<Stack.Screen name="VisitDetails" component={VisitDetails} />
 		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
 	</Stack.Navigator>)
 }
