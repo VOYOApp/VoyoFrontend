@@ -23,6 +23,8 @@ import ProspectHome from "../screens/Users/Prospect/ProspectHome"
 import UserPage from "../screens/Users/UserPage"
 import DetailsVisitor from "../screens/Users/Prospect/DetailsVisitor"
 import NoInternet from "../screens/NoInternet"
+import PendingVoyo from "../screens/Sessions/PendingVoyo"
+import BanVoyo from "../screens/Sessions/BanVoyo"
 import SearchMap from "../screens/Users/Common/SearchMap"
 import Chat from "../screens/Users/Common/Chat"
 import ChatChannel from "../screens/Users/Common/ChatChannel"
@@ -205,11 +207,15 @@ function Navigation({ isLoggedIn, status, role }) {
 		  </Stack.Navigator>
 		) : isLoggedIn && status === "BANNED" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-		    <Stack.Screen name="NoInternet" component={NoInternet} />
+		    <Stack.Screen name="BanVoyo" component={BanVoyo} />
 		  </Stack.Navigator>
 		) : isLoggedIn && status === "PENDING_VALIDATION" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-			  <Stack.Screen name="NoInternet" component={NoInternet} />
+			  <Stack.Screen name="PendingVoyo" component={PendingVoyo} />
+		  </Stack.Navigator>
+		) : isLoggedIn && role === "ADMIN" ? (
+		  <Stack.Navigator screenOptions={{ headerShown: false }}>
+			  <Stack.Screen name="PendingVoyo" component={PendingVoyo} />
 		  </Stack.Navigator>
 		) : (
 			<Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -217,6 +223,7 @@ function Navigation({ isLoggedIn, status, role }) {
 				<Stack.Screen name="HomeScreen" component={HomeScreen} />
 				<Stack.Screen name="SignUp" component={SignUp} />
 				<Stack.Screen name="SignIn" component={SignIn} />
+				<Stack.Screen name="PendingVoyo" component={PendingVoyo} />
 				<Stack.Screen name="NoInternet" component={NoInternet} />
 			</Stack.Navigator>
 		)}
