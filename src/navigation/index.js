@@ -195,17 +195,29 @@ function Admin() {
 // 	);
 // }
 
-function Navigation({ isLoggedIn }) {
+function Navigation({ isLoggedIn, status, role }) {
 
 	return (<NavigationContainer>
-		{isLoggedIn ? (
-		  <Stack.Navigator initialRouteName={"Prospect"} screenOptions={{ headerShown: false }}>
+		{ isLoggedIn && status === "VALIDATED" && role === "PROSPECT" ? (
+		  <Stack.Navigator screenOptions={{ headerShown: false }}>
+			  <Stack.Screen name="Prospect" component={Prospect} />
+		      <Stack.Screen name="Common" component={Common} />
+		  </Stack.Navigator>
+		) : isLoggedIn && status === "VALIDATED" && role === "VISITOR" ? (
+		  <Stack.Navigator screenOptions={{ headerShown: false }}>
 			  <Stack.Screen name="Prospect" component={Prospect} />
 			  <Stack.Screen name="Common" component={Common} />
+		  </Stack.Navigator>
+		) : isLoggedIn && status === "BANNED" ? (
+		  <Stack.Navigator screenOptions={{ headerShown: false }}>
+		    <Stack.Screen name="NoInternet" component={NoInternet} />
+		  </Stack.Navigator>
+		) : isLoggedIn && status === "PENDING_VALIDATION" ? (
+		  <Stack.Navigator screenOptions={{ headerShown: false }}>
 			  <Stack.Screen name="NoInternet" component={NoInternet} />
 		  </Stack.Navigator>
 		) : (
-			<Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
+			<Stack.Navigator screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="HomeScreen" component={HomeScreen} />
 				<Stack.Screen name="SignUp" component={SignUp} />
 				<Stack.Screen name="SignIn" component={SignIn} />

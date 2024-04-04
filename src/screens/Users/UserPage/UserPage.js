@@ -41,7 +41,6 @@ const UserPage = () => {
 		getGlobal("user_details").then(async (user) => {
 			await getToken().then((token) => {
 				const decodedToken = jwtDecode(token)
-
 				setLastName(user.last_name)
 				setFirstName(user.first_name)
 				setAvatar(user.profile_picture)
