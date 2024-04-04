@@ -80,8 +80,8 @@ const ProspectHome = () => {
 						backgroundColor: "#FE881B",
 					},
 				}}>
-					<Tab.Screen name={t("prospect.programmed_visits")} component={() => <CardListHomeProspect type={"PASSED"}/>} />
-					<Tab.Screen name={t("prospect.passed_visits")} component={() => <CardListHomeProspect/>} />
+					<Tab.Screen name={t("prospect.programmed_visits")} component={() => <CardListHomeProspect/>} />
+					<Tab.Screen name={t("prospect.passed_visits")} component={() => <CardListHomeProspect type={"PASSED"}/>} />
 				</Tab.Navigator>
 			{/*</ScrollView>*/}
 		</ScrollView>
