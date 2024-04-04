@@ -15,11 +15,42 @@ const ProspectHome = () => {
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
+	const onBtnPressed = () => {
+		// console.warn('Sign in pressed')
+		navigation.navigate("SignInScreen")
+	}
 
+	useEffect(() => {
+		function firebaseCnx(email, pswd) {
+			if (email) {
+				signInWithEmailAndPassword(auth, email, pswd)
+				.then((userCredential) => {
+					console.log("Connection firebase successful !")
+				})
+				.catch((error) => {
+					console.log(error.code)
+					console.log(error.message)
+				});
+			}
+		}
+	}, [])
+
+	useEffect(() => {
+		// setTimeout(() => {
+			getGlobal("user_details").then((data) => {
+				setFirstname(data?.first_name)
+				setIcon(data?.profile_picture)
+			})
+		// }, 500)
+	}, [firstname, icon])
+
+	if (firstname ==="") {
+		console.log("firstname is empty")
+	}
 
 	return (
 	<View style={styles.root}>
-		<HeaderHome />
+		<HeaderHome name={firstname} profilePicture={icon}/>
 		<ScrollView style={{ width: "100%" }}
 		            showsVerticalScrollIndicator={false}
 		            showsHorizontalScrollIndicator={false}

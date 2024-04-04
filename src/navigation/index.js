@@ -139,12 +139,7 @@ function HomeAdmin() {
 	</Stack.Navigator>)
 }
 
-function AdminListUsers() {
-	return (<Stack.Navigator screenOptions={{ headerShown: false }}>
-		<Stack.Screen name="AdminHome" component={AdminHome} />
-		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
-	</Stack.Navigator>)
-}
+
 
 function Admin() {
 	return (<Tab.Navigator screenOptions={{
@@ -218,6 +213,7 @@ function Navigation({ isLoggedIn, status, role }) {
 		  </Stack.Navigator>
 		) : (
 			<Stack.Navigator screenOptions={{ headerShown: false }}>
+				<Stack.Screen name="HomeAdmin" component={HomeAdmin} />
 				<Stack.Screen name="HomeScreen" component={HomeScreen} />
 				<Stack.Screen name="SignUp" component={SignUp} />
 				<Stack.Screen name="SignIn" component={SignIn} />
