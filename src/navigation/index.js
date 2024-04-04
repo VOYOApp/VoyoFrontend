@@ -198,7 +198,6 @@ function Admin() {
 function Navigation({ isLoggedIn }) {
 
 	return (<NavigationContainer>
-<<<<<<< Updated upstream
 		{isLoggedIn ? (
 		  <Stack.Navigator initialRouteName={"Prospect"} screenOptions={{ headerShown: false }}>
 			  <Stack.Screen name="Prospect" component={Prospect} />
@@ -207,26 +206,13 @@ function Navigation({ isLoggedIn }) {
 		  </Stack.Navigator>
 		) : (
 			<Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
-=======
-		<Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={{ headerShown: false }}>
-			{/*{isLoggedIn ? (*/}
-			{/*  // Screens for logged in users*/}
-			<Stack.Group>
-				<Stack.Screen name="Prospect" component={Prospect} />
-				<Stack.Screen name="Common" component={Common} />
-				<Stack.Screen name="Admin" component={Admin} />
-			</Stack.Group>
-			{/*) : (*/}
-			{/*// Auth screens*/}
-			<Stack.Group>
->>>>>>> Stashed changes
 				<Stack.Screen name="HomeScreen" component={HomeScreen} />
 				<Stack.Screen name="SignUp" component={SignUp} />
 				<Stack.Screen name="SignIn" component={SignIn} />
 				<Stack.Screen name="NoInternet" component={NoInternet} />
 			</Stack.Navigator>
 		)}
-		  < /NavigationContainer>)
+		  </NavigationContainer>)
 		}
 
 		export default Navigation
