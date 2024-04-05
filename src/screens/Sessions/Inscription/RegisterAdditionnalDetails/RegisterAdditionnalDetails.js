@@ -212,7 +212,6 @@ const RegisterAdditionnalDetails = () => {
 					role_id: 2,
 					biography: bio,
 					profile_picture: avatar,
-					pricing: null,
 				},
 			},
 		})

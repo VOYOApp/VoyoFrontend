@@ -18,6 +18,10 @@ const Images = {
 	platform_tarification: require('./icons/019-platform-costs.png'),
 	voyo_banner_full: require('./logos/banner-voyo-full.png'),
 	voyo_banner: require('./logos/banner-voyo.png'),
+	camera: require('./icons/024-camera.png'),
+	galery: require('./icons/025-gallery.png'),
+	trash_v2: require('./icons/026-trash.png'),
+	cancel: require('./icons/027-cancel.png')
 };
 
 export default Images

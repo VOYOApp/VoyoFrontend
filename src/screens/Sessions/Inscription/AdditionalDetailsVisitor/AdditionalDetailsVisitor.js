@@ -23,7 +23,6 @@ const AdditionalDetailsVisitor = () => {
 	const navigation = useNavigation()
 	const route = useRoute()
 	const user = route.params?.user
-	console.log("user", user)
 	const onNextPressed = () => {
 		navigation.navigate("SignUp", {
 			screen: "VisitorAvailability",

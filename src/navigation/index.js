@@ -30,6 +30,7 @@ import Chat from "../screens/Users/Common/Chat"
 import ChatChannel from "../screens/Users/Common/ChatChannel"
 import CriteriaScreen from "../screens/Users/Prospect/CriteresPage"
 import RecapRequest from "../screens/Users/Prospect/RecapRequest"
+import VisitorVerification from "../screens/Sessions/Inscription/VisitorVerification"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -37,7 +38,7 @@ const Tab = createBottomTabNavigator()
 // AUTH STACKS (Home, SignIn, SignUp)
 function SignUp() {
 	return (
-	  <Stack.Navigator initialRouteName="RegisterPhone" screenOptions={{ headerShown: false }}>
+	  <Stack.Navigator initialRouteName="VisitorVerification" screenOptions={{ headerShown: false }}>
 		  <Stack.Screen name="RegisterPhone" component={RegisterPhone} />
 		  <Stack.Screen name="PhoneConfirmation" component={PhoneConfirmation} />
 		  <Stack.Screen name="RegisterMail" component={RegisterMail} />
@@ -46,6 +47,7 @@ function SignUp() {
 		  <Stack.Screen name="AdditionalDetailsVisitor" component={AdditionalDetailsVisitor} />
 		  <Stack.Screen name="VisitorAvailability" component={VisitorAvailability} />
 		  <Stack.Screen name="TarificationVisitor" component={TarificationVisitor} />
+		  <Stack.Screen name="VisitorVerification" component={VisitorVerification} />
 	  </Stack.Navigator>
 	)
 }
