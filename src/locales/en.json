@@ -1,11 +1,13 @@
 {
   "common": {
+    "citation": "The future belongs to those who believe in the beauty of their dreams.",
+    "cancel_visit": "Cancel visit",
     "loading": "Loading",
     "login": "Login",
     "logout": "Logout",
     "register": "Register",
     "register_to_voyo": "Register to VOYO",
-    "connection_to_voyo": "Connection to VOYO",
+    "connection_to_voyo": "Login to VOYO",
     "enter_your_email": "Enter your email",
     "greetings": "Welcome to VOYO!",
     "greetings_name": "Welcome {{name}} !",

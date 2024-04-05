@@ -134,7 +134,7 @@ const GMap = ({ hasSearch = false, marker, onData }) => {
 		  nearbyPlacesAPI="GooglePlacesSearch"
 		  debounce={400}
 		  styles={styles.searchBar}
-		  currentLocation={true}
+		  currentLocation={false}
 		  currentLocationLabel="Current location"
 		  renderRightButton={() => (<TouchableOpacity
 			onPress={() => {

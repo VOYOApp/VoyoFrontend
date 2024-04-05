@@ -25,6 +25,7 @@ const Images = {
 	check: require('./icons/014-check.png'),
 	close: require('./icons/close.png'),
 	restricted: require('./icons/restricted.png'),
+	user: require('./icons/010-user.png'),
 };
 
 export default Images

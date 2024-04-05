@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { useRoute } from "@react-navigation/native"
 import { Icon } from "react-native-paper"
 import Images from "../../../../../assets"
@@ -10,6 +10,8 @@ import { BASE_URL } from "@env"
 import StarsNotation from "../../../../components/StarsNotation"
 import CriteriaCard from "../../../../components/CriteriaCard"
 import { padStart } from "lodash"
+import { jwtDecode } from "jwt-decode"
+import { t } from "i18next"
 
 
 const VisitDetails = () => {
@@ -17,11 +19,13 @@ const VisitDetails = () => {
 	const id = route.params?.idVisit
 
 	const [visitData, setVisitData] = useState(null)
+	const [decodedToken, setDecodedToken] = useState(null)
 
 	useEffect(() => {
 		const fetchVisitDetails = async () => {
 			try {
 				const token = await getToken()
+				setDecodedToken(jwtDecode(token))
 				const response = await axios.get(`${BASE_URL}/api/visit?id=${id}`, {
 					headers: { Authorization: `Bearer ${token}` },
 				})
@@ -36,12 +40,10 @@ const VisitDetails = () => {
 		fetchVisitDetails().then(r => r).catch(e => e)
 	}, [id])
 
+	return (
 
-	return (<ScrollView style={styles.root}>
-		{visitData ? (<View style={styles.container}>
-
-			  {console.log(id)}
-
+	  <ScrollView style={styles.root}>
+		  {visitData ? (<View style={styles.container}>
 			  <Text style={styles.title}>Visit Details</Text>
 			  {/*Basic date & time details*/}
 			  <View style={styles.innerContainer}>
@@ -63,10 +65,11 @@ const VisitDetails = () => {
 			  </View>
 
 			  {/*Notate the visit*/}
-			  <View style={styles.innerContainer}>
-				  <Text>Noter la prestation</Text>
-				  <StarsNotation visitID={id} />
-			  </View>
+			  {decodedToken.role === "PROSPECT" && visitData.visit.details.status === "DONE" ? (
+				<View style={styles.innerContainer}>
+					<Text>Noter la prestation</Text>
+					<StarsNotation visitID={id} />
+				</View>) : null}
 
 			  {/*Location map & details TODO: make the map corners rounded*/}
 			  <View style={styles.innerContainertest}>
@@ -75,7 +78,9 @@ const VisitDetails = () => {
 					  <Text style={styles.textdetails}>Adresse
 						  : {visitData.visit.address.results[0].formatted_address}</Text>
 				  </View>
-				  <GMap hasSearch={false} style={styles.map} marker={visitData.visit.address.idAddressGMap} />
+				  <View style={styles.roundedCorners}>
+					  <GMap hasSearch={false} style={styles.map} marker={visitData.visit.address.idAddressGMap} />
+				  </View>
 			  </View>
 
 			  {/*Criterias*/}
@@ -88,9 +93,9 @@ const VisitDetails = () => {
 			  </View>
 
 			  {/*Visitor details*/}
-			  <View style={styles.innerContainer}>
+			  {decodedToken.role === "PROSPECT" ? (<View style={styles.innerContainer}>
 				  <View style={styles.rowWithIcon}>
-					  <Icon size={23} source={Images.location} />
+					  <Icon size={23} source={Images.user} />
 					  <Text style={styles.textdetails}>Visiteur
 						  : {visitData.visitor.firstName + " " + visitData.visitor.lastName}</Text>
 				  </View>
@@ -112,44 +117,35 @@ const VisitDetails = () => {
 						  </View>
 						  <View style={styles.rowWithIcon}>
 							  <Icon size={23} source={Images.rocket} />
-							  <Text style={styles.textdetails}>{visitData.visitor.visitCount} visites effectuées </Text>
+							  <Text style={styles.textdetails}>{visitData.visitor.visitCount} visites
+								  effectuées </Text>
 						  </View>
 					  </View>
 				  </View>
-			  </View>
+			  </View>) : null}
 
 			  {/*Visit status*/}
 			  <View style={styles.innerContainer}>
-				  {visitData.visit.details.status === "CANCELED" ? (
-					  <View style={styles.rowWithIcon}>
-						  <Icon size={20} source={Images.close} />
-						  <Text style={styles.textdetails}>Rendez-vous refusé</Text>
-					  </View>)
-				    : null}
-				  {visitData.visit.details.status === "PENDING" ? (
-					  <View style={styles.rowWithIcon}>
-						  <Icon size={20} source={Images.sablierOrange} />
-						  <Text style={styles.textdetails}>Rendez-vous en attente d'acceptation</Text>
-					  </View>)
-					: null}
-				  {visitData.visit.details.status === "ACCEPTED" ? (
-					  <View style={styles.rowWithIcon}>
-						  <Icon size={20} source={Images.calendarOrange} />
-						  <Text style={styles.textdetails}>Rendez-vous accepté</Text>
-					  </View>)
-				    : null}
-				  {visitData.visit.details.status === "REFUSED" ? (
-					  <View style={styles.rowWithIcon}>
-						  <Icon size={20} source={Images.restricted} />
-						  <Text style={styles.textdetails}>Rendez-vous refusé</Text>
-					  </View>)
-				    : null}
-				  {visitData.visit.details.status === "DONE" ? (
-					  <View style={styles.rowWithIcon}>
-						  <Icon size={20} source={Images.check} />
-						  <Text style={styles.textdetails}>Rendez-vous effectué</Text>
-					  </View>)
-				    : null}
+				  {visitData.visit.details.status === "CANCELED" ? (<View style={styles.rowWithIcon}>
+					  <Icon size={20} source={Images.close} />
+					  <Text style={styles.textdetails}>Rendez-vous refusé</Text>
+				  </View>) : null}
+				  {visitData.visit.details.status === "PENDING" ? (<View style={styles.rowWithIcon}>
+					  <Icon size={20} source={Images.sablierOrange} />
+					  <Text style={styles.textdetails}>Rendez-vous en attente d'acceptation</Text>
+				  </View>) : null}
+				  {visitData.visit.details.status === "ACCEPTED" ? (<View style={styles.rowWithIcon}>
+					  <Icon size={20} source={Images.calendarOrange} />
+					  <Text style={styles.textdetails}>Rendez-vous accepté</Text>
+				  </View>) : null}
+				  {visitData.visit.details.status === "REFUSED" ? (<View style={styles.rowWithIcon}>
+					  <Icon size={20} source={Images.restricted} />
+					  <Text style={styles.textdetails}>Rendez-vous refusé</Text>
+				  </View>) : null}
+				  {visitData.visit.details.status === "DONE" ? (<View style={styles.rowWithIcon}>
+					  <Icon size={20} source={Images.check} />
+					  <Text style={styles.textdetails}>Rendez-vous effectué</Text>
+				  </View>) : null}
 
 				  <View style={styles.rowWithIcon}>
 					  <Icon size={20} source={Images.check} />
@@ -161,13 +157,23 @@ const VisitDetails = () => {
 				  </View>
 			  </View>
 
+			  {/*Cancel the visit*/}
+			  {(decodedToken.role === "PROSPECT" && visitData.visit.details.status === "PENDING") || (decodedToken.role === "VISITOR" && visitData.visit.details.status === "ACCEPTED") ? (
+				<View style={styles.bottomButtons}>
+					<TouchableOpacity style={styles.plusBtn} onPress={() => {
+						console.log("Annuler la visite")													    // cancelVisit()
+					}}>
+						<View style={styles.icon}>
+							<Icon source={Images.close} size={15} />
+						</View>
+						<Text>{t("common.cancel_visit")}</Text>
+					</TouchableOpacity>
+				</View>) : null}
 
 			  <View style={{ height: 100 }} />
 			  <View style={{ height: 100 }} />
-		  </View>) :
-		  null
-		}
-	</ScrollView>)
+		  </View>) : null}
+	  </ScrollView>)
 }
 
 const styles = StyleSheet.create({
@@ -191,13 +197,29 @@ const styles = StyleSheet.create({
 		borderRadius: 30,
 		marginBottom: 10,
 		height: 280,
-		paddingBottom: 84,
+		paddingBottom: 62,
 	}, rowWithIcontest: {
 		paddingLeft: 18, paddingTop: 18, paddingBottom: 8, display: "flex", flexDirection: "row", alignItems: "center",
 	}, visitorcontainer: {
 		display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 7,
 	}, visitordetails: {
 		marginLeft: 10,
+	}, plusBtn: {
+		height: 40,
+		backgroundColor: "rgba(26,0,0,0.18)",
+		borderRadius: 100,
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "row",
+		paddingLeft: 20,
+		paddingRight: 20,
+		shadowColor: "#000",
+	}, bottomButtons: {
+		width: "100%", alignItems: "center", backgroundColor: "rgba(0,0,0,0.00)",
+	}, icon: {
+		marginRight: 10,
+	}, roundedCorners: {
+		borderRadius: 20, overflow: "hidden",
 	},
 })
 
