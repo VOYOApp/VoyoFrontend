@@ -23,18 +23,14 @@ const SearchUser = () => {
 	<View style={styles.root}>
 		<BackButton />
         <Text style={[styles.title]}>{t("admin.search_user")}</Text>
-		<ScrollView style={{ width: "100%" }}
-		            showsVerticalScrollIndicator={false}
-		            showsHorizontalScrollIndicator={false}
-		>
 
 			<ScrollView style={{ width: "100%" }}
 			            showsVerticalScrollIndicator={false}
 			            showsHorizontalScrollIndicator={false}
 			>
-
+					
 				<Tab.Navigator style={{
-					height: 1000,
+					height: 2000
 				}} screenOptions={{
 					tabBarStyle: {
 						backgroundColor: "#f4f3f4",
@@ -42,11 +38,11 @@ const SearchUser = () => {
 						backgroundColor: "#FE881B",
 					},
 				}}>
-					<Tab.Screen name={t("admin.clients_and_visitors")} component={ListUsers} />
+					<Tab.Screen name={t("admin.clients_and_visitors")} component={() => <ListUsers/>} />
 				</Tab.Navigator>
 
 			</ScrollView>
-		</ScrollView>
+
 
 						
 

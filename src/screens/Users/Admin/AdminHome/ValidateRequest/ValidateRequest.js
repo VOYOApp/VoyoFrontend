@@ -3,10 +3,13 @@ import { StyleSheet, Text, useWindowDimensions, View, Image, TextInput, ScrollVi
 import CustomButton from "../../../../../components/CustomButton"
 import CustomInput from "../../../../../components/CustomInput"
 import BackButton from "../../../../../components/BackButton"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
+import { getGlobal, getToken, removeGlobal } from "../../../../../context/AuthContext"
+import axios from "axios"
+import {BASE_URL} from '@env'
 
-const ConnectPhone = () => {
+const ValidateRequest = () => {
 	const { t } = useTranslation()
 	const [btnDisabled, setBtnDisabled] = useState(true)
 	const [lastName, setLastName] = useState("")
@@ -17,12 +20,32 @@ const ConnectPhone = () => {
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
 
-	function acceptRequest(){
+	const route = useRoute()
+	const data = route.params?.data;
+	const StatusAccepted = "VALIDATED"
+	const StatusRefused = "REFUSED"
+	async function acceptRequest(){
+		try {
+			const token = await getToken()
+			const response = await axios.patch(
+				`${BASE_URL}/api/user/status`,
+				{ status: StatusAccepted }, // Change this value as per your needs
+				{ headers: { Authorization: `Bearer ${token}` } }
+			)
+	
+			if (response.status === 200) {
+				// Handle success
+				return
+			}
+		} catch (e) {
+			console.log(e)
+			// Handle errors
+		}
 		// TODO : Pass the user status to "validate"
 		navigation.goBack()
 	}
 
-	function rejectRequest(){
+	async function rejectRequest(){
 		// TODO : Pass the user status to "refused"
 		navigation.goBack()
 	}
@@ -35,20 +58,19 @@ const ConnectPhone = () => {
 				<ScrollView style={{ width: "100%" }}>
 					<View style={{ flexDirection: "row", width: "100%" }}>
 						<View style={{ justifyContent: "center", width: "30%" }}>
-							<Image source={require("../../../../../../assets/avatar.png")}
-									style={{ width: 100, height: 100, marginRight: 20 }} />
+							<Image src={data.profile_picture}
+									style={{ width: 100, height: 100, marginRight: 20, borderRadius:100 }} />
 						</View>
 						<View style={{ marginLeft: 10, width: "65%" }}>
 							<TextInput
-										value={firstName}
-										setValue={setFirstName}
-										placeholder={t("common.first_name")}
+										value={data.first_name}
 										editable={false}
 										style={{
 											backgroundColor: "#f0f0f0",
 											height: 60,
 											borderRadius: 18,
 											padding: 10,
+											color:"black"
 										}}
 							/>
 								<View style={{
@@ -60,15 +82,14 @@ const ConnectPhone = () => {
 									alignSelf: "center",
 								}} />
 								<TextInput 
-										value={lastName}
-										placeholder={t("common.last_name")}
-										setValue={setLastName}
+										value={data.last_name}
 										editable={false}
 										style={{
 											backgroundColor: "#f0f0f0",
 											height: 60,
 											borderRadius: 18,
 											padding: 10,
+											color:"black"
 										}}
 							/>
 						</View>
@@ -86,8 +107,7 @@ const ConnectPhone = () => {
 					<View>
 						<TextInput
 							multiline={true}
-							placeholder={t("common.bio")}
-							value={bio}
+							value={data.biography}
 							maxLength={200}
 							editable={false}
 							style={{
@@ -95,6 +115,7 @@ const ConnectPhone = () => {
 								height: 60,
 								borderRadius: 18,
 								padding: 10,
+								color:"black"
 							}}
 						/>
 
@@ -108,15 +129,14 @@ const ConnectPhone = () => {
 						}} />
 
 						<TextInput
-									value={phoneNumber}
-									placeholder={t("common.cell_phone_number")}
-									setValue={setPhoneNumber}
+									value={data.phone_number}
 									editable={false}
 									style={{
 										backgroundColor: "#f0f0f0",
 										height: 60,
 										borderRadius: 18,
 										padding: 10,
+										color: "black"
 									}}
 						/>
 										<View style={{
@@ -128,15 +148,14 @@ const ConnectPhone = () => {
 							alignSelf: "center",
 						}} />
 						<TextInput
-									value={email}
-									setValue={setEmail}
+									value={data.email}
 									editable={false}
-									placeholder={t("common.email")}
 									style={{
 										backgroundColor: "#f0f0f0",
 										height: 60,
 										borderRadius: 18,
 										padding: 10,
+										color:"black"
 									}}
 						/>
 
@@ -149,10 +168,10 @@ const ConnectPhone = () => {
 							alignSelf: "center",
 						}} />
 							<ScrollView horizontal={true} style={{ width: "100%" }}>
-								<Image source={require("../../../../../../assets/id_recto_template.png")}/>
+								<Image src={data.cni_front}/>
 							</ScrollView>
 							<ScrollView horizontal={true} style={{ width: "100%" }}>
-								<Image source={require("../../../../../../assets/id_verso_template.png")}/>
+							<Image src={data.cni_back}/>
 							</ScrollView>
 
 						<View style={{
@@ -208,4 +227,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default ConnectPhone
+export default ValidateRequest

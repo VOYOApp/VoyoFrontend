@@ -133,6 +133,8 @@
     "accept_request":"Valider l'inscription",
     "reject_request":"Refuser l'inscription",
     "search_user":"Rechercher un utilisateur",
-    "clients_and_visitors":"Utilisateurs (visiteurs et clients)"
+    "clients_and_visitors":"Utilisateurs (visiteurs et clients)",
+    "pending_request":"Demande en attente...",
+    "consult": "Consulter"
   }
 }

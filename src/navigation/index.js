@@ -134,7 +134,7 @@ function Prospect() {
 
 // PROSPECT STACKS (Home, Search, CustomListItem)
 function HomeAdmin() {
-	return (<Stack.Navigator screenOptions={{ headerShown: false }}>
+	return (<Stack.Navigator initialRouteName="AdminHome" screenOptions={{ headerShown: false }}>
 		<Stack.Screen name="AdminHome" component={AdminHome} />
 		<Stack.Screen name="ValidateRequest" component={ValidateRequest} />
 		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
@@ -213,13 +213,12 @@ function Navigation({ isLoggedIn, status, role }) {
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
 			  <Stack.Screen name="PendingVoyo" component={PendingVoyo} />
 		  </Stack.Navigator>
-		) : isLoggedIn && role === "ADMIN" ? (
+		) : isLoggedIn && role === "ADMIN" && status === "VALIDATED" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-			  <Stack.Screen name="PendingVoyo" component={PendingVoyo} />
+			  <Stack.Screen name="Admin" component={Admin} />
 		  </Stack.Navigator>
 		) : (
 			<Stack.Navigator screenOptions={{ headerShown: false }}>
-				<Stack.Screen name="HomeAdmin" component={HomeAdmin} />
 				<Stack.Screen name="HomeScreen" component={HomeScreen} />
 				<Stack.Screen name="SignUp" component={SignUp} />
 				<Stack.Screen name="SignIn" component={SignIn} />

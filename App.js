@@ -31,6 +31,7 @@ const App = () => {
 						await axios.get(`${BASE_URL}/api/user/status`, {
 							headers: { Authorization: `Bearer ${token}` },
 						}).then((response) => {
+							console.log(decodedToken.role);
 							setStatus(response.data.status)
 							setRole(decodedToken.role)
 							setLoggedIn(true);
