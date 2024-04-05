@@ -24,6 +24,7 @@ const Images = {
 	distance: require('./icons/long-distance.png'),
 	check: require('./icons/014-check.png'),
 	close: require('./icons/close.png'),
+	restricted: require('./icons/restricted.png'),
 };
 
 export default Images

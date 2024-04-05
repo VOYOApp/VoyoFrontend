@@ -36,104 +36,137 @@ const VisitDetails = () => {
 		fetchVisitDetails().then(r => r).catch(e => e)
 	}, [id])
 
+
 	return (<ScrollView style={styles.root}>
 		{visitData ? (<View style={styles.container}>
-			<Text style={styles.title}>Visit Details</Text>
-			{/*Basic date & time details*/}
-			<View style={styles.innerContainer}>
-				<View style={styles.rowWithIcon}>
-					<Icon size={20} source={Images.calendarOrange} />
-					<Text style={styles.textdetails}>Date
-						: {new Date(visitData.visit.details.date).toLocaleDateString()}</Text>
-				</View>
-				<View style={styles.rowWithIcon}>
-					<Icon size={20} source={Images.clock} />
-					<Text style={styles.textdetails}>Horaire :
-						de {visitData.visit.details.startTime} à {visitData.visit.details.endTime}</Text>
-				</View>
-				<View style={styles.rowWithIcon}>
-					<Icon size={23} source={Images.sablierOrange} />
-					<Text style={styles.textdetailsless}>Durée
-						: {new Date(visitData.visit.details.duration).getHours()-1}h{padStart((new Date(visitData.visit.details.duration).getMinutes()), 2, 0)} </Text>
-				</View>
-			</View>
 
-			{/*Notate the visit*/}
-			<View style={styles.innerContainer}>
-				<Text>Noter la prestation</Text>
-				<StarsNotation visitID={id} />
-			</View>
+			  {console.log(id)}
 
-			{/*Location map & details TODO: make the map corners rounded*/}
-			<View style={styles.innerContainertest}>
-				<View style={styles.rowWithIcontest}>
-					<Icon size={23} source={Images.location} />
-					<Text style={styles.textdetails}>Adresse
-						: {visitData.visit.address.results[0].formatted_address}</Text>
-				</View>
-				<GMap hasSearch={false} style={styles.map} marker={visitData.visit.address.idAddressGMap} />
-			</View>
+			  <Text style={styles.title}>Visit Details</Text>
+			  {/*Basic date & time details*/}
+			  <View style={styles.innerContainer}>
+				  <View style={styles.rowWithIcon}>
+					  <Icon size={20} source={Images.calendarOrange} />
+					  <Text style={styles.textdetails}>Date
+						  : {new Date(visitData.visit.details.date).toLocaleDateString()}</Text>
+				  </View>
+				  <View style={styles.rowWithIcon}>
+					  <Icon size={20} source={Images.clock} />
+					  <Text style={styles.textdetails}>Horaire :
+						  de {visitData.visit.details.startTime} à {visitData.visit.details.endTime}</Text>
+				  </View>
+				  <View style={styles.rowWithIcon}>
+					  <Icon size={23} source={Images.sablierOrange} />
+					  <Text style={styles.textdetailsless}>Durée
+						  : {new Date(visitData.visit.details.duration).getHours() - 1}h{padStart((new Date(visitData.visit.details.duration).getMinutes()), 2, 0)} </Text>
+				  </View>
+			  </View>
 
-			{/*Criterias*/}
-			<View style={styles.innerContainer}>
-				<Text style={{ paddingBottom: 10 }}>Criterias</Text>
+			  {/*Notate the visit*/}
+			  <View style={styles.innerContainer}>
+				  <Text>Noter la prestation</Text>
+				  <StarsNotation visitID={id} />
+			  </View>
 
-				{visitData.visit.criterias.map((criteria, index) => {
-					return <CriteriaCard key={index} showData={true} data={criteria} />
-				})}
-			</View>
+			  {/*Location map & details TODO: make the map corners rounded*/}
+			  <View style={styles.innerContainertest}>
+				  <View style={styles.rowWithIcontest}>
+					  <Icon size={23} source={Images.location} />
+					  <Text style={styles.textdetails}>Adresse
+						  : {visitData.visit.address.results[0].formatted_address}</Text>
+				  </View>
+				  <GMap hasSearch={false} style={styles.map} marker={visitData.visit.address.idAddressGMap} />
+			  </View>
 
-			{/*Visitor details*/}
-			<View style={styles.innerContainer}>
-				<View style={styles.rowWithIcon}>
-					<Icon size={23} source={Images.location} />
-					<Text style={styles.textdetails}>Visiteur
-						: {visitData.visitor.firstName + " " + visitData.visitor.lastName}</Text>
-				</View>
-				<View style={styles.visitorcontainer}>
-					<Image
-					  src={visitData.visitor.profilePicture}
-					  style={{ width: 80, height: 80, borderRadius: 20 }}
-					  resizeMode="cover"
-					/>
-					<View style={styles.visitordetails}>
-						<View style={styles.rowWithIcon}>
-							<Icon size={23} source={Images.etoile} />
-							<Text style={styles.textdetails}>{visitData.visitor.noteAVG}/5</Text>
-						</View>
-						{/*TOTO: RECUPERER LA DISTANCE AU BIEN EGALEMENT*/}
-						<View style={styles.rowWithIcon}>
-							<Icon size={23} source={Images.distance} />
-							<Text style={styles.textdetails}>m</Text>
-						</View>
-						<View style={styles.rowWithIcon}>
-							<Icon size={23} source={Images.rocket} />
-							<Text style={styles.textdetails}>{visitData.visitor.visitCount} visites effectuées </Text>
-						</View>
-					</View>
-				</View>
-			</View>
+			  {/*Criterias*/}
+			  <View style={styles.innerContainer}>
+				  <Text style={{ paddingBottom: 10 }}>Criterias</Text>
 
-			{/*Visit status*/}
-			<View style={styles.innerContainer}>
-				<View style={styles.rowWithIcon}>
-					<Icon size={20} source={Images.check} />
-					<Text style={styles.textdetails}>Rendez-vous accepté</Text>
-				</View>
-				<View style={styles.rowWithIcon}>
-					<Icon size={20} source={Images.check} />
-					<Text style={styles.textdetails}>Paiement de {} effectué</Text>
-				</View>
-				<View style={styles.rowWithIcon}>
-					<Icon size={20} source={Images.check} />
-					<Text style={styles.textdetails}>Critères envoyés</Text>
-				</View>
-			</View>
+				  {visitData.visit.criterias.map((criteria, index) => {
+					  return <CriteriaCard key={index} showData={true} data={criteria} />
+				  })}
+			  </View>
+
+			  {/*Visitor details*/}
+			  <View style={styles.innerContainer}>
+				  <View style={styles.rowWithIcon}>
+					  <Icon size={23} source={Images.location} />
+					  <Text style={styles.textdetails}>Visiteur
+						  : {visitData.visitor.firstName + " " + visitData.visitor.lastName}</Text>
+				  </View>
+				  <View style={styles.visitorcontainer}>
+					  <Image
+						src={visitData.visitor.profilePicture}
+						style={{ width: 80, height: 80, borderRadius: 20 }}
+						resizeMode="cover"
+					  />
+					  <View style={styles.visitordetails}>
+						  <View style={styles.rowWithIcon}>
+							  <Icon size={23} source={Images.etoile} />
+							  <Text style={styles.textdetails}>{visitData.visitor.noteAVG}/5</Text>
+						  </View>
+						  {/*TOTO: RECUPERER LA DISTANCE AU BIEN EGALEMENT*/}
+						  <View style={styles.rowWithIcon}>
+							  <Icon size={23} source={Images.distance} />
+							  <Text style={styles.textdetails}>m</Text>
+						  </View>
+						  <View style={styles.rowWithIcon}>
+							  <Icon size={23} source={Images.rocket} />
+							  <Text style={styles.textdetails}>{visitData.visitor.visitCount} visites effectuées </Text>
+						  </View>
+					  </View>
+				  </View>
+			  </View>
+
+			  {/*Visit status*/}
+			  <View style={styles.innerContainer}>
+				  {visitData.visit.details.status === "CANCELED" ? (
+					  <View style={styles.rowWithIcon}>
+						  <Icon size={20} source={Images.close} />
+						  <Text style={styles.textdetails}>Rendez-vous refusé</Text>
+					  </View>)
+				    : null}
+				  {visitData.visit.details.status === "PENDING" ? (
+					  <View style={styles.rowWithIcon}>
+						  <Icon size={20} source={Images.sablierOrange} />
+						  <Text style={styles.textdetails}>Rendez-vous en attente d'acceptation</Text>
+					  </View>)
+					: null}
+				  {visitData.visit.details.status === "ACCEPTED" ? (
+					  <View style={styles.rowWithIcon}>
+						  <Icon size={20} source={Images.calendarOrange} />
+						  <Text style={styles.textdetails}>Rendez-vous accepté</Text>
+					  </View>)
+				    : null}
+				  {visitData.visit.details.status === "REFUSED" ? (
+					  <View style={styles.rowWithIcon}>
+						  <Icon size={20} source={Images.restricted} />
+						  <Text style={styles.textdetails}>Rendez-vous refusé</Text>
+					  </View>)
+				    : null}
+				  {visitData.visit.details.status === "DONE" ? (
+					  <View style={styles.rowWithIcon}>
+						  <Icon size={20} source={Images.check} />
+						  <Text style={styles.textdetails}>Rendez-vous effectué</Text>
+					  </View>)
+				    : null}
+
+				  <View style={styles.rowWithIcon}>
+					  <Icon size={20} source={Images.check} />
+					  <Text style={styles.textdetails}>Paiement de {visitData.visit.details.price}€ effectué</Text>
+				  </View>
+				  <View style={styles.rowWithIcon}>
+					  <Icon size={20} source={Images.check} />
+					  <Text style={styles.textdetails}>Critères envoyés</Text>
+				  </View>
+			  </View>
 
 
-			<View style={{ height: 100 }} />
-			<View style={{ height: 100 }} />
-		</View>) : null}
+			  <View style={{ height: 100 }} />
+			  <View style={{ height: 100 }} />
+		  </View>) :
+		  null
+		}
 	</ScrollView>)
 }
 
