@@ -53,12 +53,13 @@ const CriteriaCard = ({ text, onDelete, showData, data }) => {
 			</View>)}
 
 			{showData && (<View>
-				<Text style={styles.answer}>{data.answer}</Text>
+				{data.criteria_answer ? (<Text style={styles.answer}>{data.criteria_answer}</Text>) :
+				  <Text style={styles.answer}>{t("prospect.noAnswer")}</Text>}
 
-				<View style={styles.containerImg}>
+				{data.photo ? (<View style={styles.containerImg}>
 					<TouchableOpacity onPress={toggleFullScreen}>
 						<Image
-						  source={{ uri: data.image}}
+						  source={{ uri: data.photo }}
 						  style={{ width: 80, height: 80, borderRadius: 20 }}
 						  resizeMode="cover"
 						/>
@@ -67,15 +68,15 @@ const CriteriaCard = ({ text, onDelete, showData, data }) => {
 					<Modal visible={isFullScreen} transparent={true}>
 						<View style={styles.modalContainer}>
 							<TouchableOpacity style={styles.closeButton} onPress={toggleFullScreen}>
-								<Text style={styles.closeButtonText}>Close</Text>
+								<Icon size={20} source={Images.close} />
 							</TouchableOpacity>
 							<Image
-							  source={{ uri: data.image}}
-							  style={{ flex: 1, resizeMode: "contain", width: "100%", height: "100%"}}
+							  source={{ uri: data.image }}
+							  style={{ flex: 1, width: "100%", height: "100%" }}
 							/>
 						</View>
 					</Modal>
-				</View>
+				</View>) : null}
 			</View>)}
 
 			{!showData && (<TouchableOpacity style={styles.icon} onPress={onDelete}>
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
 	}, answer: {
 		padding: 5, flex: 1,
 	}, containerImg: {
-		flex: 1, alignItems: "center", justifyContent: "center",
+		flex: 1, alignItems: "flex-start", justifyContent: "center",
 	}, modalContainer: {
 		flex: 1, backgroundColor: "black", justifyContent: "center", alignItems: "center",
 	}, closeButton: {

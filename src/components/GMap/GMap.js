@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 import { Icon } from "react-native-paper"
 import Images from "../../../assets"
 import Geolocation from "react-native-geolocation-service"
-import {GOOGLE_MAPS_KEY} from '@env'
+import { GOOGLE_MAPS_KEY } from "@env"
 
 navigator.geolocation = Geolocation
 
@@ -33,7 +33,9 @@ const GMap = ({ hasSearch = false, marker, onData }) => {
 
 		let placeId = data.place_id
 
-		sendDataToParent(data, details)
+		if (marker == undefined) {
+			sendDataToParent(data, details)
+		}
 
 		try {
 			fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${GOOGLE_MAPS_KEY}&place_id=${placeId}`)
@@ -49,14 +51,27 @@ const GMap = ({ hasSearch = false, marker, onData }) => {
 				const { height } = Dimensions.get("window")
 
 				// Calculate the offset based on screen height
-				const offsetFactor = 0.000001 // Adjust this factor based on your preference (the higher the upper)
+				let offsetFactor = 0.000001 // Adjust this factor based on your preference (the higher the upper)
+
+				if (marker != undefined) {
+					offsetFactor = -0.000001
+				}
+
+
 				const offset = offsetFactor * height
 
 				latitude -= offset
 
-				mapRef.current.animateToRegion({
-					latitude, longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0031,
-				}, 2000)
+				if (marker == undefined) {
+					mapRef.current.animateToRegion({
+						latitude, longitude, latitudeDelta: 0.0022, longitudeDelta: 0.0031,
+					}, 2000)
+				} else {
+					mapRef.current.animateToRegion({
+						latitude, longitude, latitudeDelta: 0.005, longitudeDelta: 0.006,
+					}, 2000)
+				}
+
 			})
 			.catch((error) => {
 				console.error(error)
@@ -130,7 +145,7 @@ const GMap = ({ hasSearch = false, marker, onData }) => {
 				position: "absolute", top: 7, right: 10, zIndex: 1000, padding: 5,
 			}}
 		  >
-			  <Icon name="close" size={20} source={Images.search} />
+			  <Icon size={19} source={Images.close}  />
 		  </TouchableOpacity>)}
 
 		/>) : null}

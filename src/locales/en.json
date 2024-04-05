@@ -76,6 +76,7 @@
     }
   },
   "prospect": {
+    "noAnswer": "The visitor hasn't answered your criteria yet.",
     "programmed_visite": {
       "one": "Programmed visit",
       "other": "Programmed visits"

@@ -23,6 +23,7 @@ const Images = {
 	rocket: require('./icons/017-rocket.png'),
 	distance: require('./icons/long-distance.png'),
 	check: require('./icons/014-check.png'),
+	close: require('./icons/close.png'),
 };
 
 export default Images

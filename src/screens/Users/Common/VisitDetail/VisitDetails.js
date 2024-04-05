@@ -9,6 +9,7 @@ import axios from "axios"
 import { BASE_URL } from "@env"
 import StarsNotation from "../../../../components/StarsNotation"
 import CriteriaCard from "../../../../components/CriteriaCard"
+import { padStart } from "lodash"
 
 
 const VisitDetails = () => {
@@ -25,7 +26,7 @@ const VisitDetails = () => {
 					headers: { Authorization: `Bearer ${token}` },
 				})
 				if (response.status === 200) {
-					setVisitData(response.data.visit)
+					setVisitData(response.data)
 				}
 			} catch (error) {
 				console.error("Error fetching visit details:", error)
@@ -35,24 +36,25 @@ const VisitDetails = () => {
 		fetchVisitDetails().then(r => r).catch(e => e)
 	}, [id])
 
-	console.log("vd2" + visitData)
 	return (<ScrollView style={styles.root}>
-		<View style={styles.container}>
+		{visitData ? (<View style={styles.container}>
 			<Text style={styles.title}>Visit Details</Text>
-
 			{/*Basic date & time details*/}
 			<View style={styles.innerContainer}>
 				<View style={styles.rowWithIcon}>
 					<Icon size={20} source={Images.calendarOrange} />
-					<Text style={styles.textdetails}>Date : </Text>
+					<Text style={styles.textdetails}>Date
+						: {new Date(visitData.visit.details.date).toLocaleDateString()}</Text>
 				</View>
 				<View style={styles.rowWithIcon}>
 					<Icon size={20} source={Images.clock} />
-					<Text style={styles.textdetails}>Horaire : </Text>
+					<Text style={styles.textdetails}>Horaire :
+						de {visitData.visit.details.startTime} à {visitData.visit.details.endTime}</Text>
 				</View>
 				<View style={styles.rowWithIcon}>
 					<Icon size={23} source={Images.sablierOrange} />
-					<Text style={styles.textdetailsless}>Durée : </Text>
+					<Text style={styles.textdetailsless}>Durée
+						: {new Date(visitData.visit.details.duration).getHours()-1}h{padStart((new Date(visitData.visit.details.duration).getMinutes()), 2, 0)} </Text>
 				</View>
 			</View>
 
@@ -66,63 +68,47 @@ const VisitDetails = () => {
 			<View style={styles.innerContainertest}>
 				<View style={styles.rowWithIcontest}>
 					<Icon size={23} source={Images.location} />
-					<Text style={styles.textdetails}>Emplacement : </Text>
+					<Text style={styles.textdetails}>Adresse
+						: {visitData.visit.address.results[0].formatted_address}</Text>
 				</View>
-				<GMap hasSearch={false} style={styles.map} />
+				<GMap hasSearch={false} style={styles.map} marker={visitData.visit.address.idAddressGMap} />
 			</View>
-
 
 			{/*Criterias*/}
 			<View style={styles.innerContainer}>
 				<Text style={{ paddingBottom: 10 }}>Criterias</Text>
 
-				<CriteriaCard showData={true} data={{
-					criteria: "test",
-					answer: "reponse",
-					image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwonderfulengineering.com%2Fwp-content%2Fuploads%2F2014%2F10%2Fimage-wallpaper-15-1024x768.jpg&f=1&nofb=1&ipt=e00fb9ea59027fcca414c881c506f7be2631988e1038b1a2c44aa8486fe42f94&ipo=images",
-				}}
-				/>
-				<CriteriaCard showData={true} data={{
-					criteria: "test",
-					answer: "reponse",
-					image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwonderfulengineering.com%2Fwp-content%2Fuploads%2F2014%2F10%2Fimage-wallpaper-15-1024x768.jpg&f=1&nofb=1&ipt=e00fb9ea59027fcca414c881c506f7be2631988e1038b1a2c44aa8486fe42f94&ipo=images",
-				}} />
-				<CriteriaCard showData={true} data={{
-					criteria: "test",
-					answer: "reponse",
-					image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwonderfulengineering.com%2Fwp-content%2Fuploads%2F2014%2F10%2Fimage-wallpaper-15-1024x768.jpg&f=1&nofb=1&ipt=e00fb9ea59027fcca414c881c506f7be2631988e1038b1a2c44aa8486fe42f94&ipo=images",
-				}} />
-				<CriteriaCard showData={true} data={{
-					criteria: "test",
-					answer: "reponse",
-					image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwonderfulengineering.com%2Fwp-content%2Fuploads%2F2014%2F10%2Fimage-wallpaper-15-1024x768.jpg&f=1&nofb=1&ipt=e00fb9ea59027fcca414c881c506f7be2631988e1038b1a2c44aa8486fe42f94&ipo=images",
-				}} />
+				{visitData.visit.criterias.map((criteria, index) => {
+					return <CriteriaCard key={index} showData={true} data={criteria} />
+				})}
 			</View>
 
 			{/*Visitor details*/}
 			<View style={styles.innerContainer}>
 				<View style={styles.rowWithIcon}>
 					<Icon size={23} source={Images.location} />
-					<Text style={styles.textdetails}>Visiteur : </Text>
+					<Text style={styles.textdetails}>Visiteur
+						: {visitData.visitor.firstName + " " + visitData.visitor.lastName}</Text>
 				</View>
 				<View style={styles.visitorcontainer}>
 					<Image
-					  src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fhole.tuziwo.info%2Fimages%2Fportrait.squared.png&f=1&nofb=1&ipt=b8fa905df83f3ca315e21077fdc7b5ef639b4b777b631b993f66d1c9a37053b3&ipo=images"}
+					  src={visitData.visitor.profilePicture}
 					  style={{ width: 80, height: 80, borderRadius: 20 }}
 					  resizeMode="cover"
 					/>
 					<View style={styles.visitordetails}>
 						<View style={styles.rowWithIcon}>
 							<Icon size={23} source={Images.etoile} />
-							<Text style={styles.textdetails}>/5</Text>
+							<Text style={styles.textdetails}>{visitData.visitor.noteAVG}/5</Text>
 						</View>
+						{/*TOTO: RECUPERER LA DISTANCE AU BIEN EGALEMENT*/}
 						<View style={styles.rowWithIcon}>
 							<Icon size={23} source={Images.distance} />
 							<Text style={styles.textdetails}>m</Text>
 						</View>
 						<View style={styles.rowWithIcon}>
 							<Icon size={23} source={Images.rocket} />
-							<Text style={styles.textdetails}>visites effectuées </Text>
+							<Text style={styles.textdetails}>{visitData.visitor.visitCount} visites effectuées </Text>
 						</View>
 					</View>
 				</View>
@@ -147,7 +133,7 @@ const VisitDetails = () => {
 
 			<View style={{ height: 100 }} />
 			<View style={{ height: 100 }} />
-		</View>
+		</View>) : null}
 	</ScrollView>)
 }
 
@@ -171,8 +157,8 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgba(164,164,164,0.27)",
 		borderRadius: 30,
 		marginBottom: 10,
-		height: 270,
-		paddingBottom: 76,
+		height: 280,
+		paddingBottom: 84,
 	}, rowWithIcontest: {
 		paddingLeft: 18, paddingTop: 18, paddingBottom: 8, display: "flex", flexDirection: "row", alignItems: "center",
 	}, visitorcontainer: {
