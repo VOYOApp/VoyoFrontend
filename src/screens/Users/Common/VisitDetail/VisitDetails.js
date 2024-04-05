@@ -8,6 +8,7 @@ import { getToken } from "../../../../context/AuthContext"
 import axios from "axios"
 import { BASE_URL } from "@env"
 import StarsNotation from "../../../../components/StarsNotation"
+import CriteriaCard from "../../../../components/CriteriaCard"
 
 
 const VisitDetails = () => {
@@ -57,6 +58,7 @@ const VisitDetails = () => {
 
 			{/*Notate the visit*/}
 			<View style={styles.innerContainer}>
+				<Text>Noter la prestation</Text>
 				<StarsNotation visitID={id} />
 			</View>
 
@@ -69,6 +71,34 @@ const VisitDetails = () => {
 				<GMap hasSearch={false} style={styles.map} />
 			</View>
 
+
+			{/*Criterias*/}
+			<View style={styles.innerContainer}>
+				<Text style={{ paddingBottom: 10 }}>Criterias</Text>
+
+				<CriteriaCard showData={true} data={{
+					criteria: "test",
+					answer: "reponse",
+					image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwonderfulengineering.com%2Fwp-content%2Fuploads%2F2014%2F10%2Fimage-wallpaper-15-1024x768.jpg&f=1&nofb=1&ipt=e00fb9ea59027fcca414c881c506f7be2631988e1038b1a2c44aa8486fe42f94&ipo=images",
+				}}
+				/>
+				<CriteriaCard showData={true} data={{
+					criteria: "test",
+					answer: "reponse",
+					image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwonderfulengineering.com%2Fwp-content%2Fuploads%2F2014%2F10%2Fimage-wallpaper-15-1024x768.jpg&f=1&nofb=1&ipt=e00fb9ea59027fcca414c881c506f7be2631988e1038b1a2c44aa8486fe42f94&ipo=images",
+				}} />
+				<CriteriaCard showData={true} data={{
+					criteria: "test",
+					answer: "reponse",
+					image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwonderfulengineering.com%2Fwp-content%2Fuploads%2F2014%2F10%2Fimage-wallpaper-15-1024x768.jpg&f=1&nofb=1&ipt=e00fb9ea59027fcca414c881c506f7be2631988e1038b1a2c44aa8486fe42f94&ipo=images",
+				}} />
+				<CriteriaCard showData={true} data={{
+					criteria: "test",
+					answer: "reponse",
+					image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwonderfulengineering.com%2Fwp-content%2Fuploads%2F2014%2F10%2Fimage-wallpaper-15-1024x768.jpg&f=1&nofb=1&ipt=e00fb9ea59027fcca414c881c506f7be2631988e1038b1a2c44aa8486fe42f94&ipo=images",
+				}} />
+			</View>
+
 			{/*Visitor details*/}
 			<View style={styles.innerContainer}>
 				<View style={styles.rowWithIcon}>
@@ -77,9 +107,10 @@ const VisitDetails = () => {
 				</View>
 				<View style={styles.visitorcontainer}>
 					<Image
-					  src={"https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.leawo.com%2Fblog%2Fwp-content%2Fuploads%2F2009%2F12%2Favatar10.jpg&f=1&nofb=1&ipt=cef93da117e39f2b91cc9a535db7e6c3712d2b24e87b1c00afe1551b5f0aafac&ipo=images"}
-					  style={{ width: 80, height: 80, borderRadius: 20, resizeMode: "cover" }}
-					  resizeMode="contain" />
+					  src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fhole.tuziwo.info%2Fimages%2Fportrait.squared.png&f=1&nofb=1&ipt=b8fa905df83f3ca315e21077fdc7b5ef639b4b777b631b993f66d1c9a37053b3&ipo=images"}
+					  style={{ width: 80, height: 80, borderRadius: 20 }}
+					  resizeMode="cover"
+					/>
 					<View style={styles.visitordetails}>
 						<View style={styles.rowWithIcon}>
 							<Icon size={23} source={Images.etoile} />
@@ -97,23 +128,25 @@ const VisitDetails = () => {
 				</View>
 			</View>
 
-
+			{/*Visit status*/}
 			<View style={styles.innerContainer}>
 				<View style={styles.rowWithIcon}>
-					<Icon size={20} source={Images.search} />
-					<Text style={styles.textdetails}>Date : </Text>
+					<Icon size={20} source={Images.check} />
+					<Text style={styles.textdetails}>Rendez-vous accepté</Text>
 				</View>
 				<View style={styles.rowWithIcon}>
-
-					<Text style={styles.textdetails}>Horaire : </Text>
+					<Icon size={20} source={Images.check} />
+					<Text style={styles.textdetails}>Paiement de {} effectué</Text>
 				</View>
 				<View style={styles.rowWithIcon}>
-
-					<Text style={styles.textdetails}>Durée : </Text>
+					<Icon size={20} source={Images.check} />
+					<Text style={styles.textdetails}>Critères envoyés</Text>
 				</View>
-
 			</View>
 
+
+			<View style={{ height: 100 }} />
+			<View style={{ height: 100 }} />
 		</View>
 	</ScrollView>)
 }

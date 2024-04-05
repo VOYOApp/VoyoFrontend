@@ -22,6 +22,7 @@ const Images = {
 	etoile: require('./icons/star.png'),
 	rocket: require('./icons/017-rocket.png'),
 	distance: require('./icons/long-distance.png'),
+	check: require('./icons/014-check.png'),
 };
 
 export default Images
