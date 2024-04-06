@@ -9,13 +9,10 @@ import { MediaTypeOptions, UIImagePickerPresentationStyle } from "expo-image-pic
 
 const MAX_FILE_NAME_LENGTH = 10;
 
-const UploadButton = ({asCamera, asGallery, asRemove}) => {
+const UploadButton = ({asCamera, asGallery, asRemove, setImages}) => {
 	const [modalVisible, setModalVisible] = useState(false);
-
 	const [image, setImage] = useState(null);
-	const [file, setFile] = useState(null);
-	const [imageName, setImageName] = useState('');
-	const [fileName, setFileName] = useState('');
+	const [imageName, setImageName] = useState("");
 	const [error, setError] = useState(null);
 
 	const openCamera = async () => {
@@ -44,6 +41,8 @@ const UploadButton = ({asCamera, asGallery, asRemove}) => {
 
 			setImage(result.assets[0].base64);
 			setImageName(displayedImageName + '...' + imageExtension);
+
+			setImages(result.assets[0].base64);
 			setModalVisible(false)
 		}
 		} catch (error) {
@@ -74,18 +73,19 @@ const UploadButton = ({asCamera, asGallery, asRemove}) => {
 				  presentationStyle: UIImagePickerPresentationStyle.POPOVER
 			  });
 
-			console.log(result)
 			if (!result.canceled) {
 				const uriParts = result.assets[0].uri.split('/');
-				const fileName = uriParts[uriParts.length - 1];
-				const croppedFileName = fileName.split('.')[0];
-				const fileExtension = fileName.split('.').pop();
-				const displayedFileName = croppedFileName.length > MAX_FILE_NAME_LENGTH ?
+				const galleryName = uriParts[uriParts.length - 1];
+				const croppedFileName = galleryName.split('.')[0];
+				const imageExtension = galleryName.split('.').pop();
+				const displayedImageName = croppedFileName.length > MAX_FILE_NAME_LENGTH ?
 				  croppedFileName.substring(0, MAX_FILE_NAME_LENGTH) + '...' : croppedFileName;
 
-				setFile(result.assets[0].base64)
-				setFileName(displayedFileName + '...' + fileExtension);
-				setModalVisible(false)
+				setImage(result.assets[0].base64);
+				setImageName(displayedImageName + '...' + imageExtension);
+				setImages(result.assets[0].base64);
+
+				setModalVisible(false);
 				setError(null);
 			}
 		}
@@ -97,11 +97,9 @@ const UploadButton = ({asCamera, asGallery, asRemove}) => {
 
 	const deleteImage = async () => {
 		setImage(null);
-		setImageName('');
-		setFile(null);
-		setFileName('');
+		setImageName("");
 		setModalVisible(false);
-	}
+	};
 
 	return (
 	  <View className={'h-16 w-[90%]'}>
@@ -113,18 +111,6 @@ const UploadButton = ({asCamera, asGallery, asRemove}) => {
 				  </Text>
 			  </TouchableOpacity>
 			  <View>
-				  {file && (
-				    <View className={'flex-row items-center w-36'}>
-					    {/*<Image*/}
-					    {/*  source={{ uri: "data:image/jpeg;base64," + file}}*/}
-					    {/*  style={{ width: 40, height: 40 }}*/}
-					    {/*/>*/}
-					    <Icon source={Images.rocket} size={25}></Icon>
-					    <Text className={'text-sm ml-2'}>
-						    {fileName}
-					    </Text>
-				    </View>
-				  )}
 				  {image && (
 				    <View className={'flex-row items-center w-36'}>
 					    {/*<Image*/}
@@ -154,7 +140,7 @@ const UploadButton = ({asCamera, asGallery, asRemove}) => {
 						  <TouchableOpacity
 						    onPress={() => setModalVisible(!modalVisible)}>
 							  <View className={'flex-row'}>
-								  <Text style={styles.header} className={'mr-2'}>Upload file</Text>
+								  <Text style={styles.header} className={'mr-2'}>Upload gallery</Text>
 								  <Icon size={25} source={Images.cancel}></Icon>
 							  </View>
 						  </TouchableOpacity>
@@ -176,7 +162,7 @@ const UploadButton = ({asCamera, asGallery, asRemove}) => {
 								    <TouchableOpacity
 									  onPress={pickImage}>
 									    <View className={'items-center justify-center'}>
-										    <Icon source={Images.galery} size={40} />
+										    <Icon source={Images.gallery} size={40} />
 										    <Text style={styles.buttonText}>Gallery</Text>
 									    </View>
 								    </TouchableOpacity>

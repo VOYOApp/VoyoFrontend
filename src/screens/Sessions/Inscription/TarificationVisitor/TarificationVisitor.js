@@ -26,6 +26,7 @@ const TarificationVisitor = () => {
 	const navigation = useNavigation()
 	const route = useRoute()
 	const user = route.params?.user
+	const criteriaList = route.params?.criteriaList
 
 	const onNextPressed = () => {
 		setBtnDisabled(true);
@@ -37,6 +38,7 @@ const TarificationVisitor = () => {
 						...user,
 						pricing: pricing,
 					},
+					criteriaList
 				},
 			})
 		} catch (error) {
