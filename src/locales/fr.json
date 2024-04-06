@@ -33,6 +33,9 @@
     "address_description": "Cette adresse sera le point central de votre zone de visites. Elle ne sera jamais divulguée aux autre utilisateurs. Vous n’êtes pas obligés de mettre votre adresse personelle.",
     "availability_description": "Pour pouvoir apparaitre dans les résultats de recherche, merci de renseigner vos disponnibilités pour visiter des biens immobiliers. Vous pourrez, via les paramètres, en ajouter, supprimer ou modifier  à tout moment les disponnibilités que vous définissez.",
     "pricing_description": "Grâce à VOYO, vous allez pouvoir gagner de l’argent. En effet, toute visite que vous effectuez avec VOYO sera rémunérée. Et le mieux dans tout ça ? C’est vous qui définissez votre taux horaire !",
+    "identity_card_description": "Afin de garantir la sécurité de tous les utilisateurs, nous vous demandons de nous envoyer une photo de votre carte d’identité. Cette photo ne sera jamais divulguée aux autres utilisateurs.",
+    "identity_card_front": "Veuillez enregistrer le recto de votre carte d'identité",
+    "identity_card_back": "Veuillez enregistrer le verso de votre carte d'identité",
     "details": "Détails",
     "my_account": "Mon compte",
     "first_name": "Prénom",
@@ -61,6 +64,7 @@
       "one": "Résultat",
       "other": "Résultats"
     },
+    "identity_card": "Carte d'identité",
     "pricing": "Tarification",
     "price": "Prix",
     "star": {

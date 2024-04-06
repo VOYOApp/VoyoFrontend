@@ -14,13 +14,8 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import CustomButton from "../../../../components/CustomButton"
 import Images from "../../../../../assets"
-import GMapInscription from "../../../../components/GMapInscription"
 import { Icon } from "react-native-paper"
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
-import AvailabilityCard from "../../../../components/AvailabilityCard"
-import CriteriaCard from "../../../../components/CriteriaCard"
-import DateTimePickerModal from "react-native-modal-datetime-picker"
-import CustomInput from "../../../../components/CustomInput"
+
 
 const TarificationVisitor = () => {
 	const { t } = useTranslation()
@@ -31,11 +26,21 @@ const TarificationVisitor = () => {
 	const navigation = useNavigation()
 	const route = useRoute()
 	const user = route.params?.user
+	const criteriaList = route.params?.criteriaList
 
-	const onRegisterPressed = async () => {
+	const onNextPressed = () => {
 		setBtnDisabled(true);
 		try {
-
+			navigation.navigate("SignUp", {
+				screen: "VisitorVerification",
+				params: {
+					user: {
+						...user,
+						pricing: pricing,
+					},
+					criteriaList
+				},
+			})
 		} catch (error) {
 			setBtnDisabled(false);
 			alert("An error has occurred: "+error);
@@ -84,7 +89,7 @@ const TarificationVisitor = () => {
 					  </View>
 
 					  <View className={"h-full w-[80%] mt-4"}>
-						  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"orange"}
+						  <CustomButton text={t("common.next")} onPress={onNextPressed} bgColor={"orange"}
 						                deactivated={btnDisabled} />
 					  </View>
 				  </View>

@@ -209,10 +209,9 @@ const RegisterAdditionnalDetails = () => {
 					last_name: lastName,
 					email: email,
 					password: password,
-					role_id: 2,
+					role_id: 1,
 					biography: bio,
 					profile_picture: avatar,
-					pricing: null,
 				},
 			},
 		})

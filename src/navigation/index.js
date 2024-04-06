@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Image } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { BASE_URL } from "@env"
 
 import HomeScreen from "../screens/Sessions/HomeScreen"
 import ConnectPhone from "../screens/Sessions/Connection/ConnectPhone"
@@ -31,24 +30,24 @@ import ChatChannel from "../screens/Users/Common/ChatChannel"
 import CriteriaScreen from "../screens/Users/Prospect/CriteresPage"
 import RecapRequest from "../screens/Users/Prospect/RecapRequest"
 import VisitDetails from "../screens/Users/Common/VisitDetail"
+import VisitorVerification from "../screens/Sessions/Inscription/VisitorVerification"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
 // AUTH STACKS (Home, SignIn, SignUp)
 function SignUp() {
-	return (
-	  <Stack.Navigator initialRouteName="RegisterPhone" screenOptions={{ headerShown: false }}>
-		  <Stack.Screen name="RegisterPhone" component={RegisterPhone} />
-		  <Stack.Screen name="PhoneConfirmation" component={PhoneConfirmation} />
-		  <Stack.Screen name="RegisterMail" component={RegisterMail} />
-		  <Stack.Screen name="MailConfirmation" component={MailConfirmation} />
-		  <Stack.Screen name="RegisterAdditionnalDetails" component={RegisterAdditionnalDetails} />
-		  <Stack.Screen name="AdditionalDetailsVisitor" component={AdditionalDetailsVisitor} />
-		  <Stack.Screen name="VisitorAvailability" component={VisitorAvailability} />
-		  <Stack.Screen name="TarificationVisitor" component={TarificationVisitor} />
-	  </Stack.Navigator>
-	)
+	return (<Stack.Navigator initialRouteName="RegisterPhone" screenOptions={{ headerShown: false }}>
+		<Stack.Screen name="RegisterPhone" component={RegisterPhone} />
+		<Stack.Screen name="PhoneConfirmation" component={PhoneConfirmation} />
+		<Stack.Screen name="RegisterMail" component={RegisterMail} />
+		<Stack.Screen name="MailConfirmation" component={MailConfirmation} />
+		<Stack.Screen name="RegisterAdditionnalDetails" component={RegisterAdditionnalDetails} />
+		<Stack.Screen name="AdditionalDetailsVisitor" component={AdditionalDetailsVisitor} />
+		<Stack.Screen name="VisitorAvailability" component={VisitorAvailability} />
+		<Stack.Screen name="TarificationVisitor" component={TarificationVisitor} />
+		<Stack.Screen name="VisitorVerification" component={VisitorVerification} />
+	</Stack.Navigator>)
 }
 
 function SignIn() {
@@ -160,38 +159,31 @@ function Prospect() {
 function Navigation({ isLoggedIn, status, role }) {
 
 	return (<NavigationContainer>
-		{ isLoggedIn && status === "VALIDATED" && role === "PROSPECT" ? (
-		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-			  <Stack.Screen name="Prospect" component={Prospect} />
-		      <Stack.Screen name="Common" component={Common} />
-		  </Stack.Navigator>
-		) : isLoggedIn && status === "VALIDATED" && role === "VISITOR" ? (
+		{isLoggedIn && status === "VALIDATED" && role === "PROSPECT" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
 			  <Stack.Screen name="Prospect" component={Prospect} />
 			  <Stack.Screen name="Common" component={Common} />
-		  </Stack.Navigator>
-		) : isLoggedIn && status === "BANNED" ? (
+		  </Stack.Navigator>) : isLoggedIn && status === "VALIDATED" && role === "VISITOR" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-		    <Stack.Screen name="BanVoyo" component={BanVoyo} />
-		  </Stack.Navigator>
-		) : isLoggedIn && status === "PENDING_VALIDATION" ? (
+			  <Stack.Screen name="Prospect" component={Prospect} />
+			  <Stack.Screen name="Common" component={Common} />
+		  </Stack.Navigator>) : isLoggedIn && status === "BANNED" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-			  <Stack.Screen name="PendingVoyo" component={PendingVoyo} />
-		  </Stack.Navigator>
-		) : isLoggedIn && role === "ADMIN" ? (
+			  <Stack.Screen name="BanVoyo" component={BanVoyo} />
+		  </Stack.Navigator>) : isLoggedIn && status === "PENDING_VALIDATION" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
 			  <Stack.Screen name="PendingVoyo" component={PendingVoyo} />
-		  </Stack.Navigator>
-		) : (
-			<Stack.Navigator screenOptions={{ headerShown: false }}>
-				<Stack.Screen name="HomeScreen" component={HomeScreen} />
-				<Stack.Screen name="SignUp" component={SignUp} />
-				<Stack.Screen name="SignIn" component={SignIn} />
-				<Stack.Screen name="PendingVoyo" component={PendingVoyo} />
-				<Stack.Screen name="NoInternet" component={NoInternet} />
-			</Stack.Navigator>
-		)}
-		  < /NavigationContainer>)
-		}
+		  </Stack.Navigator>) : isLoggedIn && role === "ADMIN" ? (
+		  <Stack.Navigator screenOptions={{ headerShown: false }}>
+			  <Stack.Screen name="PendingVoyo" component={PendingVoyo} />
+		  </Stack.Navigator>) : (<Stack.Navigator screenOptions={{ headerShown: false }}>
+			<Stack.Screen name="HomeScreen" component={HomeScreen} />
+			<Stack.Screen name="SignUp" component={SignUp} />
+			<Stack.Screen name="SignIn" component={SignIn} />
+			<Stack.Screen name="PendingVoyo" component={PendingVoyo} />
+			<Stack.Screen name="NoInternet" component={NoInternet} />
+		</Stack.Navigator>)}
+	< /NavigationContainer>)
+}
 
-		export default Navigation
+export default Navigation

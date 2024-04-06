@@ -12,6 +12,7 @@ import { NavigationContainer } from "@react-navigation/native"
 import { jwtDecode } from "jwt-decode"
 import axios from "axios"
 import {BASE_URL} from '@env'
+import * as ImagePicker from "expo-image-picker";
 
 const App = () => {
 	const [isLoggedIn, setLoggedIn] = useState(false);

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import RadioForm from 'react-native-simple-radio-button';
 
-const AvailabilityCard = ({ text, onDelete }) => {
+const AvailabilityCard = ({ setAvailability, setDuration, setRepeat, onDelete }) => {
 	const { t } = useTranslation()
 
 	const [date, setDate] = useState()
@@ -46,6 +46,7 @@ const AvailabilityCard = ({ text, onDelete }) => {
 	const handleConfirm = (date) => {
 		setDate(date)
 		setDateIsSet(false)
+		setAvailability(date)
 		hideDatePicker()
 	}
 
@@ -59,7 +60,8 @@ const AvailabilityCard = ({ text, onDelete }) => {
 	const handleTimeChange = (date) => {
 		const formattedTime = `${String(date.getHours()).padStart(2, '0')}h : ${String(date.getMinutes()).padStart(2, '0')}m : ${String(date.getSeconds()).padStart(2, '0')}s`;
 		setTime(formattedTime);
-		hideTimePicker()
+		setDuration(`${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`);
+		hideTimePicker();
 	}
 
 	return (
@@ -103,6 +105,7 @@ const AvailabilityCard = ({ text, onDelete }) => {
 					    selectedButtonColor={'orange'}
 					    onPress={(value) => {
 						    setChosenOption(value);
+						    setRepeat(value)
 							value === 'REPEAT' ? setCheckedRepeat(true) : setCheckedRepeat(false)
 					    }}
 					  />
@@ -116,6 +119,7 @@ const AvailabilityCard = ({ text, onDelete }) => {
 					    selectedButtonColor={'orange'}
 					    onPress={(value) => {
 						    setChosenOption(value);
+							setRepeat(value)
 					    }}
 					  />
 				  </View> : ''}

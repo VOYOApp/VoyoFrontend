@@ -33,6 +33,9 @@
     "address_description": "This address will be the central point of your visiting area. It will never be disclosed to other users. You don't have to enter your personal address.",
     "availability_description": "To appear in the search results, please enter your availability to visit properties. You can add, delete or modify your availability at any time via the parameters.",
     "pricing_description": "With VOYO, you can earn money. In fact, you'll be paid for every visit you make with VOYO. And the best part? You set your own hourly rate!",
+    "identity_card_description": "To ensure the security of our users, we ask you to provide us with a copy of your identity card. This document will be used to verify your identity.",
+    "identity_card_front": "Please register the front of your identity card",
+    "identity_card_back": "Please save the back of your identity card",
     "details": "Details",
     "my_account": "My account",
     "first_name": "First name",
@@ -61,6 +64,7 @@
       "one": "Result",
       "other": "Results"
     },
+    "identity_card": "Identity card",
     "pricing": "Pricing",
     "price": "Price",
     "star": {

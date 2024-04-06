@@ -1,12 +1,12 @@
 const Images = {
-    home: require('./home.png'),
-    search: require('./search.png'),
-    chat: require('./chat.png'),
-    home_locked: require('./home_locked.png'),
-    search_locked: require('./search_locked.png'),
-    chat_locked: require('./chat_locked.png'),
-    target: require('./icons/018-target.png'),
-    location: require('./icons/009-location.png'),
+	home: require('./home.png'),
+	search: require('./search.png'),
+	chat: require('./chat.png'),
+	home_locked: require('./home_locked.png'),
+	search_locked: require('./search_locked.png'),
+	chat_locked: require('./chat_locked.png'),
+	target: require('./icons/018-target.png'),
+	location: require('./icons/009-location.png'),
 	trash: require("./icons/recycle-bin.png"),
 	add: require("./icons/plusbtngradient.png"),
 	list: require("./icons/006-task-list.png"),
@@ -26,6 +26,11 @@ const Images = {
 	close: require('./icons/close.png'),
 	restricted: require('./icons/restricted.png'),
 	user: require('./icons/010-user.png'),
+	camera: require('./icons/024-camera.png'),
+	gallery: require('./icons/025-gallery.png'),
+	trash_v2: require('./icons/026-trash.png'),
+	cancel: require('./icons/027-cancel.png'),
+	rocket: require('./icons/017-rocket.png'),
 };
 
 export default Images

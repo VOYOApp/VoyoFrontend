@@ -23,11 +23,7 @@ import CriteriaCard from "../../../../components/CriteriaCard"
 const VisitorAvailability = () => {
 	const { t } = useTranslation()
 	const [btnDisabled, setBtnDisabled] = useState(false)
-	const [criteriaList, setCriteriaList] = useState([{
-		id: 1, text: "Criteria 1",
-	}, {
-		id: 2, text: "Criteria 2",
-	}])
+	const [criteriaList, setCriteriaList] = useState([])
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
@@ -41,12 +37,18 @@ const VisitorAvailability = () => {
 				user: {
 					...user,
 				},
+				criteriaList,
 			},
 		})
 	}
 
 	const addCriteriaCard = () => {
-		const newCriteriaList = [...criteriaList, { id: Date.now(), text: "New Criteria" }]
+		const newCriteriaList = [...criteriaList, {
+			id: user?.phone_number ?? Date.now(),
+			"availability": '',
+			"duration": '',
+			"repeat": '',
+		}]
 		setCriteriaList(newCriteriaList)
 	}
 
@@ -58,6 +60,7 @@ const VisitorAvailability = () => {
 
 	const scrollViewRef = useRef(null)
 
+	console.log(criteriaList)
 	return (
 	  <View style={styles.root}>
 		  <BackButton />
@@ -82,9 +85,26 @@ const VisitorAvailability = () => {
 								scrollViewRef.current?.scrollToEnd()
 							}}
 						  >
-							  {criteriaList.map((criteria) => (<AvailabilityCard key={criteria.id}
-							                                                     text={criteria.text}
-							                                                     onDelete={() => removeCriteriaCard(criteria.id)} />))}
+							  {criteriaList.map((criteria) => (<AvailabilityCard
+								  key={criteria.id}
+								  setAvailability={(availability) => {
+									  // Update availability in the criteria list
+									  criteria.availability = availability;
+									  setCriteriaList([...criteriaList]);
+								  }}
+								  setDuration={(duration) => {
+									  // Update duration in the criteria list
+									  criteria.duration = duration;
+									  setCriteriaList([...criteriaList]);
+								  }}
+								  setRepeat={(repeat) => {
+									  // Update repeat in the criteria list
+									  criteria.repeat = repeat;
+									  setCriteriaList([...criteriaList]);
+								  }}
+								  onDelete={() => removeCriteriaCard(criteria.id)}
+							    />
+							  ))}
 
 							  <View style={styles.iAmABlankSpace} />
 						  </ScrollView>
