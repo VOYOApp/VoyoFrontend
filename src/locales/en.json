@@ -79,7 +79,8 @@
     "video": {
       "one": "Video",
       "other": "Videos"
-    }
+    },
+    "reusable": "Reusable"
   },
   "prospect": {
     "noAnswer": "The visitor hasn't answered your criteria yet.",

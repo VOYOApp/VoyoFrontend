@@ -1,11 +1,14 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { Icon } from "react-native-paper"
 import Images from "../../../../../assets"
 import { useTranslation } from "react-i18next"
 import CustomButton from "../../../../components/CustomButton"
+import axios from "axios"
+import {BASE_URL} from '@env'
+import { getToken } from "../../../../context/AuthContext"
 
 const RecapRequest = () => {
 	const { t } = useTranslation()
@@ -13,7 +16,62 @@ const RecapRequest = () => {
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
+	const route = useRoute()
+	const visit = route.params
+	const [labelRealEstate, setLabelRealEstate] = useState("")
+	const [durationRealEstate, setDurationRealEstate] = useState("")
+	const [platformCost, setPlatformCost] = useState(0.50)
 
+	function formatDateTime(date) {
+		const options = {
+			weekday: "long", // Nom complet du jour de la semaine
+			year: "numeric", // Année au format numérique
+			month: "long", // Nom complet du mois
+			day: "numeric", // Jour du mois au format numérique
+			hour: "numeric", // Heure au format numérique
+			minute: "numeric", // Minutes au format numérique
+		};
+		let formattedDate = new Intl.DateTimeFormat("fr-FR", options).format(date);
+		formattedDate.replace(":", "h");
+		return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
+	}
+	console.log(visit)
+
+	const formatDuration = (date) => {
+		return `${String(date.getHours()).padStart(2, '0')}h : ${String(date.getMinutes()).padStart(2, '0')}m : ${String(date.getSeconds()).padStart(2, '0')}s`;
+	}
+
+	const createVisit = async () => {
+		const token = await getToken()
+		axios.post(`${BASE_URL}/api/visit`, {
+			params: {
+				visit
+			}
+		}, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}).then((response) => {
+			console.log(response.data)
+			navigation.navigate("ProspectHome")
+		}).catch((error) => {
+			console.error(error)
+		})
+	}
+
+	useEffect(() => {
+		// console.log(visit)
+		axios.get(`${BASE_URL}/api/typerealestate`, {
+			params: {
+				id: visit.type_real_estate_id,
+			}
+		}).then((response) => {
+			setLabelRealEstate(response.data.label)
+			setDurationRealEstate(formatDuration(new Date(response.data.duration)))
+		}).catch((error) => {
+			console.error(error)
+		})
+	})
 
 	return (<View style={styles.root}>
 		<View style={styles.headTitles}>
@@ -31,7 +89,7 @@ const RecapRequest = () => {
 			</View>
 
 			<View style={styles.textDescription}>
-				<Text>Mardi 21 novembre 2023 à 15h30</Text>
+				<Text>{formatDateTime(visit.startTime)}</Text>
 			</View>
 		</View>
 
@@ -43,7 +101,7 @@ const RecapRequest = () => {
 			</View>
 
 			<View style={styles.textDescription}>
-				<Text>Studio, T1 - 30 minutes de visite</Text>
+				<Text>{labelRealEstate} - {durationRealEstate} de visite</Text>
 			</View>
 		</View>
 
@@ -54,16 +112,16 @@ const RecapRequest = () => {
 			</View>
 
 			<View style={styles.textDescription}>
-				<Text>Par heure : 7.5€</Text>
-				<Text>Durée de la visite : 30 minutes</Text>
-				<Text>Frais de plateforme : 0.50€</Text>
-				<Text>Total à payer : 4.25€</Text>
+				<Text>Par heure : {visit.price}€</Text>
+				<Text>Durée de la visite : {durationRealEstate}</Text>
+				<Text>Frais de plateforme : {platformCost}€</Text>
+				<Text>Total à payer : {visit.price + platformCost}€</Text>
 			</View>
 		</View>
 
 		<View style={styles.bottomButtons}>
-			<CustomButton text={"Payer 4.50€"}
-			              onPress={() => navigation.navigate("ProspectHome")}
+			<CustomButton text={"Payer "+visit.price + platformCost +"€"}
+			              onPress={createVisit}
 			              bgColor={"#FE881B"}
 			              widthBtn={"90%"}
 			              heightBtn={43} />
@@ -104,7 +162,7 @@ const styles = StyleSheet.create({
 	}, icon: {
 		marginRight: 10,
 	}, bottomButtons: {
-		width: "100%", alignItems: "center", backgroundColor: "rgba(0,0,0,0.00)", position: "absolute", bottom: 10,
+		width: "100%", alignItems: "center", backgroundColor: "rgba(0,0,0,0.00)", marginTop: 100
 	}, subTitle: {
 		alignItems: "center", flexDirection: "row", marginTop: 15, marginBottom: 0, padding: 0,
 	}, subTitleText: {
