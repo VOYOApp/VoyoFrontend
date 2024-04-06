@@ -22,7 +22,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 android {
     ndkVersion "23.1.7779620"
     namespace "com.voyoapp"
-    compileSdkVersion 30 // Set your desired compileSdkVersion
+    compileSdkVersion 'android-31' // Set your desired compileSdkVersion
     buildToolsVersion '30.0.3' // Use the correct build tools version
 
 

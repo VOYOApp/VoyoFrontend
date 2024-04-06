@@ -21,10 +21,8 @@ const CriteriaScreen = () => {
 
 	const addCriteriaCard = () => {
 		const newCriteriaList = [...criteriaList, {
-			criteria: "",
-			photo_required: false,
-			video_required: false,
-			reusable: false }]
+			criteria: "", photo_required: false, video_required: false, reusable: false,
+		}]
 		setCriteriaList(newCriteriaList)
 	}
 
@@ -36,8 +34,7 @@ const CriteriaScreen = () => {
 
 	const onNextPressed = () => {
 		navigation.navigate("SearchProspect", {
-			screen: "Recap",
-			params: {
+			screen: "Recap", params: {
 				phone_number_visitor: data.phoneNumber,
 				x: data.x,
 				y: data.y,
@@ -73,28 +70,26 @@ const CriteriaScreen = () => {
 			  scrollViewRef.current?.scrollToEnd()
 		  }}
 		>
-			{criteriaList.map((criteria, index) => (
-			  <CriteriaCard
+			{criteriaList.map((criteria, index) => (<CriteriaCard
 				key={index}
 				setCriteria={(value) => {
-					criteria.criteria = value;
-					setCriteriaList([...criteriaList]);
+					criteria.criteria = value
+					setCriteriaList([...criteriaList])
 				}}
 				setIsPhotoRequired={(value) => {
-					criteria.photo_required = value;
-					setCriteriaList([...criteriaList]);
+					criteria.photo_required = value
+					setCriteriaList([...criteriaList])
 				}}
 				setIsVideoRequired={(value) => {
-					criteria.video_required = value;
-					setCriteriaList([...criteriaList]);
+					criteria.video_required = value
+					setCriteriaList([...criteriaList])
 				}}
 				setIsReusable={(value) => {
-					criteria.reusable = value;
-					setCriteriaList([...criteriaList]);
+					criteria.reusable = value
+					setCriteriaList([...criteriaList])
 				}}
 				onDelete={() => removeCriteriaCard(criteria.id)}
-			  />
-			))}
+			  />))}
 			<View style={styles.iAmABlankSpace} />
 		</ScrollView>
 
@@ -148,21 +143,13 @@ const styles = StyleSheet.create({
 	}, icon: {
 		marginRight: 10,
 	}, bottomButtons: {
-		width: "100%", alignItems: "center", backgroundColor: "rgba(0,0,0,0.00)", bottom: 10
-	},
-	iAmABlankSpace: {
+		width: "100%", alignItems: "center", backgroundColor: "rgba(0,0,0,0.00)", bottom: 10,
+	}, iAmABlankSpace: {
 		height: 140,
-	},
-	subTitle: {
-		alignItems: "center",
-		flexDirection: "row",
-		marginTop: 15,
-		marginBottom: 0,
-		padding: 0,
-	},
-	subTitleText: {
-		fontSize: 20,
-		marginLeft: 10,
+	}, subTitle: {
+		alignItems: "center", flexDirection: "row", marginTop: 15, marginBottom: 0, padding: 0,
+	}, subTitleText: {
+		fontSize: 20, marginLeft: 10,
 	},
 })
 

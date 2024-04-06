@@ -35,7 +35,7 @@ const RecapRequest = () => {
 		formattedDate.replace(":", "h");
 		return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
 	}
-	console.log(visit)
+	// console.log(visit)
 
 	const formatDuration = (date) => {
 		return `${String(date.getHours()).padStart(2, '0')}h : ${String(date.getMinutes()).padStart(2, '0')}m : ${String(date.getSeconds()).padStart(2, '0')}s`;
@@ -43,20 +43,30 @@ const RecapRequest = () => {
 
 	const createVisit = async () => {
 		const token = await getToken()
-		axios.post(`${BASE_URL}/api/visit`, {
-			params: {
-				visit
-			}
-		}, {
+		let data = JSON.stringify(visit);
+
+		let config = {
+			method: 'post',
+			maxBodyLength: Infinity,
+			url: `${BASE_URL}/api/visit`,
 			headers: {
-				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${token}`
 			},
-		}).then((response) => {
-			console.log(response.data)
-			navigation.navigate("ProspectHome")
-		}).catch((error) => {
-			console.error(error)
+			data : data
+		};
+
+		console.log(config)
+
+		axios.request(config)
+		.then((response) => {
+			console.log(JSON.stringify(response.data));
+
 		})
+		.catch((error) => {
+			console.log(error);
+		});
+
 	}
 
 	useEffect(() => {

@@ -117,7 +117,7 @@ const SearchMap = () => {
 	}, [])
 
 	const getPersonWithSearch = async (x,y,date,id_type_real_estate) => {
-		const dateFormatee = options_search.format(date);
+		let dateFormatee = date.toISOString().slice(0, 19).replace('T', ' ')
 		try {
 			const token = await getToken()
 			const listUsers = await axios.get(`${BASE_URL}/api/search`, {

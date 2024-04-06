@@ -4,18 +4,14 @@
     "slug": "voyofrontend",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logos/logo.png",
+    "icon": "./assets/logos/banner-voyo-full.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/logos/logo.png",
+      "image": "./assets/logos/banner-voyo-full.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "platforms": ["ios", "android"],
-    "permissions": [
-      "CAMERA",
-      "CAMERA_ROLL"
-    ],
     "plugins": [
       [
         "expo-image-picker",
