@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert, Modal, Pressable } from "react-native"
 import * as ImagePicker from "expo-image-picker";
 import { useTranslation } from "react-i18next"
@@ -7,57 +7,55 @@ import { Icon } from "react-native-paper"
 import Images from "../../../assets"
 import { MediaTypeOptions, UIImagePickerPresentationStyle } from "expo-image-picker"
 
-const UploadButton = () => {
+const MAX_FILE_NAME_LENGTH = 10;
+
+const UploadButton = ({asCamera, asGallery, asRemove}) => {
 	const [modalVisible, setModalVisible] = useState(false);
 
 	const [image, setImage] = useState(null);
-
-	// Stores the selected image URI
 	const [file, setFile] = useState(null);
-
-	// Stores any error message
+	const [imageName, setImageName] = useState('');
+	const [fileName, setFileName] = useState('');
 	const [error, setError] = useState(null);
 
-
-	const uploadImage = async () => {
+	const openCamera = async () => {
 		try {
-			// await ImagePicker.requestCameraPermissionsAsync()
-			// console.log(await ImagePicker.requestCameraPermissionsAsync())
-			let result = await ImagePicker.launchImageLibraryAsync({
-				mediaTypes: MediaTypeOptions.Images,
-				selectionLimit: 1,
-				allowsEditing: true,
-				quality: 0.8,
-				base64: true,
-				aspect: [1, 1],
-				presentationStyle: UIImagePickerPresentationStyle.POPOVER
-			})
-			if (!result.canceled){
-				await saveImage(result.assets[0].uri)
-			}
+		const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+		if (permissionResult.granted === false) {
+			alert("You've refused to allow this appp to access your camera!");
+			return;
+		}
+		const result = await ImagePicker.launchCameraAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
+			allowsEditing: true,
+			quality: 0.8,
+			base64: true,
+			aspect: [1, 1],
+			presentationStyle: UIImagePickerPresentationStyle.POPOVER
+		});
+
+		if (!result.canceled) {
+			const uriParts = result.assets[0].uri.split('/');
+			const imageName = uriParts[uriParts.length - 1];
+			const croppedImageName = imageName.split('.')[0];
+			const imageExtension = imageName.split('.').pop();
+			const displayedImageName = croppedImageName.length > MAX_FILE_NAME_LENGTH ?
+			  croppedImageName.substring(0, MAX_FILE_NAME_LENGTH) + '...' : croppedImageName;
+
+			setImage(result.assets[0].base64);
+			setImageName(displayedImageName + '...' + imageExtension);
+			setModalVisible(false)
+		}
 		} catch (error) {
 			console.log(error)
 			setModalVisible(false)
 		}
 	}
 
-	const saveImage = async (image) => {
-		try {
-			setImage(image);
-			setModalVisible(false)
-		}catch (error){
-			console.log(error)
-		}
-	}
-
-	// Function to pick an image from
-	//the device's media library
 	const pickImage = async () => {
-		const { status } = await ImagePicker.
-		requestMediaLibraryPermissionsAsync();
+		const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
 		if (status !== "granted") {
-
 			// If permission is denied, show an alert
 			Alert.alert(
 			  "Permission Denied",
@@ -65,33 +63,82 @@ const UploadButton = () => {
                  roll permission to upload images.`
 			);
 		} else {
-
-			// Launch the image library and get
-			// the selected image
+			// Launch the image library and get the selected image
 			const result =
-			  await ImagePicker.launchImageLibraryAsync();
+			  await ImagePicker.launchImageLibraryAsync({
+				  mediaTypes: ImagePicker.MediaTypeOptions.All,
+				  allowsEditing: true,
+				  quality: 0.8,
+				  base64: true,
+				  aspect: [1, 1],
+				  presentationStyle: UIImagePickerPresentationStyle.POPOVER
+			  });
 
-			if (!result.cancelled) {
+			console.log(result)
+			if (!result.canceled) {
+				const uriParts = result.assets[0].uri.split('/');
+				const fileName = uriParts[uriParts.length - 1];
+				const croppedFileName = fileName.split('.')[0];
+				const fileExtension = fileName.split('.').pop();
+				const displayedFileName = croppedFileName.length > MAX_FILE_NAME_LENGTH ?
+				  croppedFileName.substring(0, MAX_FILE_NAME_LENGTH) + '...' : croppedFileName;
 
-				// If an image is selected (not cancelled),
-				// update the file state variable
-				setFile(result.uri);
-				console.log(result);
-
-				// Clear any previous errors
+				setFile(result.assets[0].base64)
+				setFileName(displayedFileName + '...' + fileExtension);
+				setModalVisible(false)
 				setError(null);
 			}
 		}
 	};
 
+	const uploadImage = async () => {
+
+	}
+
+	const deleteImage = async () => {
+		setImage(null);
+		setImageName('');
+		setFile(null);
+		setFileName('');
+		setModalVisible(false);
+	}
+
 	return (
-	  <View style={styles.container}>
-		  <TouchableOpacity style={styles.button}
-		                    onPress={() => setModalVisible(true)}>
-			  <Text style={styles.buttonText2}>
-				  Choose Image
-			  </Text>
-		  </TouchableOpacity>
+	  <View className={'h-16 w-[90%]'}>
+		  <View className={'w-full h-full flex-row items-center'}>
+			  <TouchableOpacity className={'w-32 h-12 bg-blue-500 rounded-xl items-center justify-center mr-4'}
+			                    onPress={() => setModalVisible(true)}>
+				  <Text style={styles.buttonText2}>
+					  Upload image
+				  </Text>
+			  </TouchableOpacity>
+			  <View>
+				  {file && (
+				    <View className={'flex-row items-center w-36'}>
+					    {/*<Image*/}
+					    {/*  source={{ uri: "data:image/jpeg;base64," + file}}*/}
+					    {/*  style={{ width: 40, height: 40 }}*/}
+					    {/*/>*/}
+					    <Icon source={Images.rocket} size={25}></Icon>
+					    <Text className={'text-sm ml-2'}>
+						    {fileName}
+					    </Text>
+				    </View>
+				  )}
+				  {image && (
+				    <View className={'flex-row items-center w-36'}>
+					    {/*<Image*/}
+					    {/*  source={{ uri: "data:image/jpeg;base64," + image}}*/}
+					    {/*  style={{ width: 40, height: 40 }}*/}
+					    {/*/>*/}
+					    <Icon source={Images.rocket} size={25}></Icon>
+					    <Text className={'text-sm ml-2'}>
+						    {imageName}
+					    </Text>
+				    </View>
+				  )}
+			  </View>
+		  </View>
 
 		  <View style={styles.centeredView}>
 			  <Modal
@@ -104,42 +151,48 @@ const UploadButton = () => {
 				}}>
 				  <View style={styles.centeredView}>
 					  <View style={styles.modalView}>
-						  <Text style={styles.header}>Upload file</Text>
 						  <TouchableOpacity
 						    onPress={() => setModalVisible(!modalVisible)}>
-							  <View className={'absolute left-32 bottom-7'}>
+							  <View className={'flex-row'}>
+								  <Text style={styles.header} className={'mr-2'}>Upload file</Text>
 								  <Icon size={25} source={Images.cancel}></Icon>
 							  </View>
 						  </TouchableOpacity>
 
 						  <View className={'flex-row items-center justify-center'}>
-							  <View className={'bg-gray-100 p-3 rounded-2xl items-center mr-2 h-24 w-24'}>
-								  <Pressable
-								    onPress={uploadImage}>
-									  <View className={'items-center justify-center'}>
-										  <Icon source={Images.camera} size={40} />
-										  <Text style={styles.buttonText}>Camera</Text>
-									  </View>
-								  </Pressable>
-							  </View>
-							  <View className={'bg-gray-100 p-3 rounded-2xl items-center mr-2 h-24 w-24'}>
-								  <TouchableOpacity
-								    onPress={pickImage}>
-									  <View className={'items-center justify-center'}>
-										  <Icon source={Images.galery} size={40} />
-										  <Text style={styles.buttonText}>Gallery</Text>
-									  </View>
-								  </TouchableOpacity>
-							  </View>
-							  <View className={'bg-gray-100 p-3 rounded-2xl items-center mr-2 h-24 w-24'}>
-								  <TouchableOpacity
-								    onPress={() => setModalVisible(!modalVisible)}>
-									  <View className={'items-center justify-center'}>
-										  <Icon source={Images.trash_v2} color={'grey'} size={40} />
-										  <Text style={styles.buttonText}>Remove</Text>
-									  </View>
-								  </TouchableOpacity>
-							  </View>
+							  {asCamera ? (
+							    <View className={'bg-gray-100 p-3 rounded-2xl items-center mr-2 h-24 w-24'}>
+								    <Pressable
+									  onPress={openCamera}>
+									    <View className={'items-center justify-center'}>
+										    <Icon source={Images.camera} size={40} />
+										    <Text style={styles.buttonText}>Camera</Text>
+									    </View>
+								    </Pressable>
+							    </View>
+							  ) : (<View></View>)}
+							  { asGallery ? (
+							    <View className={'bg-gray-100 p-3 rounded-2xl items-center mr-2 h-24 w-24'}>
+								    <TouchableOpacity
+									  onPress={pickImage}>
+									    <View className={'items-center justify-center'}>
+										    <Icon source={Images.galery} size={40} />
+										    <Text style={styles.buttonText}>Gallery</Text>
+									    </View>
+								    </TouchableOpacity>
+							    </View>
+							  ): (<View></View>)}
+							  { asRemove ? (
+							    <View className={'bg-gray-100 p-3 rounded-2xl items-center mr-2 h-24 w-24'}>
+								    <TouchableOpacity
+									  onPress={deleteImage}>
+									    <View className={'items-center justify-center'}>
+										    <Icon source={Images.trash_v2} color={'grey'} size={40} />
+										    <Text style={styles.buttonText}>Remove</Text>
+									    </View>
+								    </TouchableOpacity>
+							    </View>
+							  ): (<View></View>)}
 						  </View>
 					  </View>
 				  </View>
@@ -154,7 +207,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		padding: 16,
+		padding: 5,
+		width: "90%",
+		height: 10,
 	},
 	header: {
 		fontSize: 20,
@@ -164,12 +219,15 @@ const styles = StyleSheet.create({
 		backgroundColor: "#007AFF",
 		padding: 10,
 		borderRadius: 8,
-		marginBottom: 16,
 		shadowColor: "#000000",
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.4,
 		shadowRadius: 4,
 		elevation: 5,
+		width: 140,
+		height: 40,
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	buttonText: {
 		color: "grey",
@@ -180,6 +238,7 @@ const styles = StyleSheet.create({
 		color: "#fff",
 		fontSize: 16,
 		fontWeight: "bold",
+		textAlign: "center",
 	},
 	imageContainer: {
 		borderRadius: 8,

@@ -11,6 +11,11 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "platforms": ["ios", "android"],
+    "permissions": [
+      "CAMERA",
+      "CAMERA_ROLL"
+    ],
     "plugins": [
       [
         "expo-image-picker",

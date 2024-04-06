@@ -21,7 +21,8 @@ const Images = {
 	camera: require('./icons/024-camera.png'),
 	galery: require('./icons/025-gallery.png'),
 	trash_v2: require('./icons/026-trash.png'),
-	cancel: require('./icons/027-cancel.png')
+	cancel: require('./icons/027-cancel.png'),
+	rocket: require('./icons/017-rocket.png'),
 };
 
 export default Images

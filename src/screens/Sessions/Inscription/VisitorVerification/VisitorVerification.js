@@ -58,40 +58,21 @@ const VisitorVerification = () => {
 
 			  <View className={"h-full w-full"}>
 				  <View className={"h-full w-full items-center"}>
-					  <View className={"w-full h-1/2 items-center"}>
-						  <UploadButton></UploadButton>
+					  <View className={"w-full rounded-3xl bg-gray-200 items-center"}>
+						  <Text style={styles.subtitle}>{t("common.pricing")} PIECE ID</Text>
+						  <Text
+							className={"text-justify text-xs p-3 leading-4"}>DESC PIECE ID {t("common.pricing_description")}</Text>
+
+						  <UploadButton asGallery={true} asCamera={true} asRemove={true}></UploadButton>
+
+						  <View className={"w-full h-1/4 items-center"}/>
+
 					  </View>
-					  {/*<View className={"w-full rounded-3xl bg-gray-200 items-center"}>*/}
-						{/*  <Text style={styles.subtitle}>{t("common.pricing")} PIECE ID</Text>*/}
-						{/*  <Text*/}
-						{/*	className={"text-justify text-xs p-3 leading-4"}>DESC PIECE ID {t("common.pricing_description")}</Text>*/}
 
-						{/*  <View className={"w-[95%] h-1/4 items-center"}>*/}
-
-						{/*	  /!*<View className={"bg-green-700 p-3 my-3 rounded-md flex-row items-center w-[95%]"}>*!/*/}
-						{/*		/!*  <Icon source={Images.dollar} size={25} />*!/*/}
-						{/*		/!*  <TextInput onChangeText={(value) => {*!/*/}
-						{/*		/!*	  setPricing(value)*!/*/}
-						{/*		/!*	  value ? setBtnDisabled(false) : setBtnDisabled(true)*!/*/}
-						{/*		/!*  }}*!/*/}
-						{/*		/!*             value={pricing}*!/*/}
-						{/*		/!*             keyboardType={"number-pad"} className={"ml-2 text-white"} placeholderTextColor={"white"}*!/*/}
-						{/*		/!*             placeholder={t("common.pricing") + " : " + t("common.select_pricing")}></TextInput>*!/*/}
-						{/*	  /!*</View>*!/*/}
-
-						{/*	  /!*<View className={'bg-orange-400 p-3 rounded-md flex-row items-center w-[95%]'}>*!/*/}
-						{/*		/!*  <Icon source={Images.platform_tarification} size={25} />*!/*/}
-						{/*		/!*  <TextInput editable={false} className={"ml-2"} placeholderTextColor={"white"}*!/*/}
-						{/*		/!*             placeholder={t("common.platform_costs", { price: "0.50 €" })}></TextInput>*!/*/}
-						{/*	  /!*</View>*!/*/}
-						{/*  </View>*/}
-
-					  {/*</View>*/}
-
-					  {/*<View className={"h-full w-[80%] mt-4"}>*/}
-						{/*  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"orange"}*/}
-						{/*                deactivated={btnDisabled} />*/}
-					  {/*</View>*/}
+					  <View className={"h-full w-[80%] mt-4"}>
+						  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"orange"}
+						                deactivated={btnDisabled} />
+					  </View>
 				  </View>
 			  </View>
 		  </View>
