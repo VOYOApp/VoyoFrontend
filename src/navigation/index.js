@@ -38,7 +38,7 @@ const Tab = createBottomTabNavigator()
 // AUTH STACKS (Home, SignIn, SignUp)
 function SignUp() {
 	return (
-	  <Stack.Navigator initialRouteName="VisitorVerification" screenOptions={{ headerShown: false }}>
+	  <Stack.Navigator initialRouteName="RegisterPhone" screenOptions={{ headerShown: false }}>
 		  <Stack.Screen name="RegisterPhone" component={RegisterPhone} />
 		  <Stack.Screen name="PhoneConfirmation" component={PhoneConfirmation} />
 		  <Stack.Screen name="RegisterMail" component={RegisterMail} />
