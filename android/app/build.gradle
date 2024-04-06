@@ -21,7 +21,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 
 android {
     ndkVersion "23.1.7779620"
-    namespace "com.voyoapp"
+    namespace "com.yohann69.voyoapp"
     compileSdkVersion 'android-33' // Set your desired compileSdkVersion
     buildToolsVersion '33.0.0' // Use the correct build tools version
 
@@ -33,7 +33,10 @@ android {
         versionCode 1
         versionName "1.0.0"
 
-        buildConfigField("boolean", "REACT_NATIVE_UNSTABLE_USE_RUNTIME_SCHEDULER_ALWAYS", (findProperty("reactNative.unstable_useRuntimeSchedulerAlways") ?: true).toString())
+        buildConfigField "boolean", "REACT_NATIVE_UNSTABLE_USE_RUNTIME_SCHEDULER_ALWAYS", (findProperty("reactNative.unstable_useRuntimeSchedulerAlways") ?: true).toString()
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", "true"
+        buildConfigField "boolean", "IS_HERMES_ENABLED", "true"
+        buildConfigField "boolean", "DEBUG", "true"
     }
     signingConfigs {
         debug {
