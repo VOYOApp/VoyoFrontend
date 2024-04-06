@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react"
 import { ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import CriteriaCard from "../../../../components/CriteriaCard"
 import { Icon } from "react-native-paper"
@@ -14,14 +14,17 @@ const CriteriaScreen = () => {
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
-	const [criteriaList, setCriteriaList] = useState([{
-		id: 1, text: "Criteria 1",
-	}, {
-		id: 2, text: "Criteria 2",
-	}])
+	const route = useRoute()
+	const data = route.params?.data
+
+	const [criteriaList, setCriteriaList] = useState([])
 
 	const addCriteriaCard = () => {
-		const newCriteriaList = [...criteriaList, { id: Date.now(), text: "New Criteria" }]
+		const newCriteriaList = [...criteriaList, {
+			criteria: "",
+			photo_required: false,
+			video_required: false,
+			reusable: false }]
 		setCriteriaList(newCriteriaList)
 	}
 
@@ -29,6 +32,22 @@ const CriteriaScreen = () => {
 		if (criteriaList.length === 1) return
 		const updatedCriteriaList = criteriaList.filter((criteria) => criteria.id !== id)
 		setCriteriaList(updatedCriteriaList)
+	}
+
+	const onNextPressed = () => {
+		navigation.navigate("SearchProspect", {
+			screen: "Recap",
+			params: {
+				phone_number_visitor: data.phoneNumber,
+				x: data.x,
+				y: data.y,
+				address_id: data.address_id,
+				start_time: data.start_time,
+				price: data.pricing,
+				type_real_estate_id: data.type_real_estate_id,
+				criterias: criteriaList,
+			},
+		})
 	}
 
 	const scrollViewRef = useRef(null)
@@ -54,10 +73,28 @@ const CriteriaScreen = () => {
 			  scrollViewRef.current?.scrollToEnd()
 		  }}
 		>
-			{criteriaList.map((criteria) => (<CriteriaCard key={criteria.id}
-			                                               text={criteria.text}
-			                                               onDelete={() => removeCriteriaCard(criteria.id)} />))}
-
+			{criteriaList.map((criteria, index) => (
+			  <CriteriaCard
+				key={index}
+				setCriteria={(value) => {
+					criteria.criteria = value;
+					setCriteriaList([...criteriaList]);
+				}}
+				setIsPhotoRequired={(value) => {
+					criteria.photo_required = value;
+					setCriteriaList([...criteriaList]);
+				}}
+				setIsVideoRequired={(value) => {
+					criteria.video_required = value;
+					setCriteriaList([...criteriaList]);
+				}}
+				setIsReusable={(value) => {
+					criteria.reusable = value;
+					setCriteriaList([...criteriaList]);
+				}}
+				onDelete={() => removeCriteriaCard(criteria.id)}
+			  />
+			))}
 			<View style={styles.iAmABlankSpace} />
 		</ScrollView>
 
@@ -70,7 +107,7 @@ const CriteriaScreen = () => {
 			</TouchableOpacity>
 
 			<CustomButton text={t("common.next")}
-			              onPress={() => navigation.navigate("Recap")}
+			              onPress={onNextPressed}
 			              bgColor={"#FE881B"}
 			              widthBtn={"90%"}
 			              heightBtn={43} />
@@ -111,7 +148,7 @@ const styles = StyleSheet.create({
 	}, icon: {
 		marginRight: 10,
 	}, bottomButtons: {
-		width: "100%", alignItems: "center", backgroundColor: "rgba(0,0,0,0.00)", position: "absolute", bottom: 10,
+		width: "100%", alignItems: "center", backgroundColor: "rgba(0,0,0,0.00)", bottom: 10
 	},
 	iAmABlankSpace: {
 		height: 140,

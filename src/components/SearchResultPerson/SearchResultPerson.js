@@ -17,8 +17,10 @@ const SearchResultPerson = ({data, allPersons}) => {
 	}
 
 	const goToRDV = () => {
-		navigation.navigate("SearchProspect", { screen: "Criteria" })
+		navigation.navigate("SearchProspect", { params: { data }, screen: "Criteria" })
 	}
+
+	// console.log(data)
 
 	return (<View style={styles.card}>
 

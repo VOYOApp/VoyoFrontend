@@ -4,12 +4,12 @@ import { Checkbox, Icon } from "react-native-paper"
 import Images from "../../../assets"
 import { useTranslation } from "react-i18next"
 
-const CriteriaCard = ({ text, onDelete }) => {
+const CriteriaCard = ({ setCriteria, setIsPhotoRequired, setIsVideoRequired, setIsReusable, onDelete }) => {
 	const { t } = useTranslation()
-
 
 	const [checkedPhoto, setCheckedPhoto] = React.useState(false)
 	const [checkedVideo, setCheckedVideo] = React.useState(false)
+	const [checkedReusable, setCheckedReusable] = React.useState(false)
 
 	return (
 	  <View style={styles.container}>
@@ -19,6 +19,7 @@ const CriteriaCard = ({ text, onDelete }) => {
 			multiline={true}
 			numberOfLines={2}
 			maxLength={1000}
+			onChangeText={(text) => setCriteria(text)}
 		  />
 
 		  <View style={styles.underTheTextArea}>
@@ -28,6 +29,7 @@ const CriteriaCard = ({ text, onDelete }) => {
 						status={checkedPhoto ? "checked" : "unchecked"}
 						onPress={() => {
 							setCheckedPhoto(!checkedPhoto)
+							setIsPhotoRequired(!checkedPhoto)
 						}}
 					  />
 					  <Text>{t("common.photo.one")}</Text>
@@ -37,9 +39,20 @@ const CriteriaCard = ({ text, onDelete }) => {
 						status={checkedVideo ? "checked" : "unchecked"}
 						onPress={() => {
 							setCheckedVideo(!checkedVideo)
+							setIsVideoRequired(!checkedVideo)
 						}}
 					  />
 					  <Text>{t("common.video.one")}</Text>
+				  </View>
+				  <View style={styles.checkbox}>
+					  <Checkbox
+					    status={checkedReusable ? "checked" : "unchecked"}
+					    onPress={() => {
+						    setCheckedReusable(!checkedReusable)
+						    setIsReusable(!checkedReusable)
+					    }}
+					  />
+					  <Text>{t("common.reusable")}</Text>
 				  </View>
 			  </View>
 

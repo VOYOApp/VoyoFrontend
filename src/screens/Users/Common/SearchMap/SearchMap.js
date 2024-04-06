@@ -35,6 +35,7 @@ const SearchMap = () => {
 	const [showResults, setShowResults] = useState(false)
 	const [showDuration, setShowDuration] = useState(false)
 	const [showDate, setShowDate] = useState(false)
+	const [address, setAddress] = useState('')
 	const [x, setX] = useState(0.0)
 	const [y, setY] = useState(0.0)
 
@@ -105,6 +106,7 @@ const SearchMap = () => {
 	const handleDataFromChild = useCallback((data, details) => {
 		setDataFromChild(data)
 
+		setAddress(data.place_id)
 		setX(details["geometry"]["location"]["lat"])
 		setY(details["geometry"]["location"]["lng"])
 
@@ -124,11 +126,20 @@ const SearchMap = () => {
 					x:x,
 					y:y,
 					date: dateFormatee,
-					idTypeRealEstate: id_type_real_estate
+					idTypeRealEstate: id_type_real_estate,
+					address_id: 1,
 				}
 			})
 			if (listUsers.status === 200){
-				setSearchResults(listUsers.data)
+				const updatedResults = listUsers.data.map(user => {
+					return {
+						...user,
+						start_time: date,
+						type_real_estate_id: id_type_real_estate,
+						address_id: address,
+					};
+				});
+				setSearchResults(updatedResults)
 			}
 		}catch (e) {
 			console.log(e)

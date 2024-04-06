@@ -77,7 +77,8 @@
     "video": {
       "one": "Vidéo",
       "other": "Vidéos"
-    }
+    },
+    "reusable": "Réutilisable"
   },
   "prospect": {
     "programmed_visite": {
