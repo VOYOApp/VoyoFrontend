@@ -49,9 +49,6 @@ const ProspectHome = () => {
 		// }, 500)
 	}, [firstname, icon])
 
-	if (firstname === "") {
-		console.log("firstname is empty")
-	}
 
 	// const scrollViewRef = useRef(null)
 
@@ -72,7 +69,7 @@ const ProspectHome = () => {
 			{/*            showsHorizontalScrollIndicator={false}*/}
 			{/*>*/}
 			<Tab.Navigator
-			  style={{ height: 2000 }}
+			  style={{ height: 20000 }}
 			  screenOptions={{
 				  tabBarStyle: {
 					  backgroundColor: "#f4f3f4",
@@ -87,7 +84,8 @@ const ProspectHome = () => {
 				<Tab.Screen name={t("prospect.passed_visits")}>
 					{() => <CardListHomeProspect type={"PASSED"} />}
 				</Tab.Screen>
-			</Tab.Navigator>
+			</Tab.Navigator
+>
 			{/*</ScrollView>*/}
 		</ScrollView>
 
