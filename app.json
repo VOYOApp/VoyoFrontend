@@ -4,7 +4,7 @@
     "slug": "voyofrontend",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logos/banner-voyo-full.png",
+    "icon": "./assets/logos/obird.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/logos/banner-voyo-full.png",

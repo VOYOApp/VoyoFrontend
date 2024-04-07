@@ -114,7 +114,6 @@ const RegisterAdditionnalDetails = () => {
 			if (response.status === 201) {
 				console.log(`Your account has been created: ${JSON.stringify(response.data)}`)
 				await storeToken(response.data.token).then(setTimeout(async () => {
-					console.log("Token stored successfully")
 
 					try {
 						const decodedToken = jwtDecode(response.data.token)
@@ -140,8 +139,6 @@ const RegisterAdditionnalDetails = () => {
 								"password": password
 							}
 							await storeGlobal('user_details', JSON.stringify(result)).then(() => {
-								console.log('User details stored successfully');
-								console.log(result.email)
 								try {
 									createUserWithEmailAndPassword(auth, result.email, result.password)
 									.then((userCredential) => {

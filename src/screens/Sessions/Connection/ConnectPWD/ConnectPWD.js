@@ -37,7 +37,6 @@ const ConnectPWD = () => {
 			if (response.status === 200) {
 				// Save the token in the context
 				await storeToken(response.data.token).then(setTimeout(async () => {
-					console.log('Token stored successfully');
 					try {
 						const decodedToken = jwtDecode(response.data.token);
 						const user_info = await axios.get(`${process.env.BASE_URL}/api/user`, {
@@ -60,7 +59,6 @@ const ConnectPWD = () => {
 								"password":password
 							}
 							await storeGlobal('user_details', JSON.stringify(result)).then(() => {
-								console.log('User details stored successfully');
 								// navigation.navigate('Prospect', { screen: 'HomeScreen' })
 							})
 						}

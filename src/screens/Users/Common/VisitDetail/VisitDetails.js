@@ -88,6 +88,7 @@ const VisitDetails = () => {
 				  <Text style={{ paddingBottom: 10 }}>Criterias</Text>
 
 				  {visitData.visit.criterias.map((criteria, index) => {
+					  console.log("criteria", criteria)
 					  return <CriteriaCard key={index} showData={true} data={criteria} />
 				  })}
 			  </View>
@@ -161,7 +162,7 @@ const VisitDetails = () => {
 			  {(decodedToken.role === "PROSPECT" && visitData.visit.details.status === "PENDING") || (decodedToken.role === "VISITOR" && visitData.visit.details.status === "ACCEPTED") ? (
 				<View style={styles.bottomButtons}>
 					<TouchableOpacity style={styles.plusBtn} onPress={() => {
-						console.log("Annuler la visite")													    // cancelVisit()
+						console.log("Annuler la visite") // cancelVisit()
 					}}>
 						<View style={styles.icon}>
 							<Icon source={Images.close} size={15} />
