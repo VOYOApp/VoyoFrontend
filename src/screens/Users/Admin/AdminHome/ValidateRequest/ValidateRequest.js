@@ -22,32 +22,43 @@ const ValidateRequest = () => {
 
 	const route = useRoute()
 	const data = route.params?.data;
-	const StatusAccepted = "VALIDATED"
 	const StatusRefused = "REFUSED"
 	async function acceptRequest(){
 		try {
 			const token = await getToken()
+			console.log(`${BASE_URL}/api/user/update?id=${data.phone_number}`);
 			const response = await axios.patch(
-				`${BASE_URL}/api/user/status`,
-				{ status: StatusAccepted }, // Change this value as per your needs
+				`${BASE_URL}/api/user/update?id=${data.phone_number}`,
+				{ "status": "VALIDATED"},
 				{ headers: { Authorization: `Bearer ${token}` } }
 			)
-	
+			console.log(response.status);
 			if (response.status === 200) {
-				// Handle success
-				return
+				navigation.goBack()
 			}
 		} catch (e) {
 			console.log(e)
-			// Handle errors
 		}
-		// TODO : Pass the user status to "validate"
-		navigation.goBack()
+		
 	}
 
 	async function rejectRequest(){
-		// TODO : Pass the user status to "refused"
-		navigation.goBack()
+		try {
+			const token = await getToken()
+			console.log(`${BASE_URL}/api/user/update?id=${data.phone_number}`);
+			const response = await axios.patch(
+				`${BASE_URL}/api/user/update?id=${data.phone_number}`,
+				{ "status": "BANNED" },
+				{ headers: { Authorization: `Bearer ${token}` } }
+			)
+			console.log(response.status);
+			if (response.status === 200) {
+				navigation.goBack()
+			}
+		} catch (e) {
+			console.log(e)
+		}
+		
 	}
 
 	return (
