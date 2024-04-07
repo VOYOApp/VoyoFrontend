@@ -44,7 +44,7 @@ const VisitorVerification = () => {
 		try {
 			setBtnDisabled(true)
 
-			const response = await axios.post(`${BASE_URL}/api/user`, {
+			const response = await axios.post(`${process.env.BASE_URL}/api/user`, {
 				"phone_number": user.phone_number,
 				"first_name": user.first_name,
 				"last_name": user.last_name,
@@ -68,7 +68,7 @@ const VisitorVerification = () => {
 						const decodedToken = jwtDecode(response.data.token)
 						// console.log(decodedToken?.phone_number)
 
-						const user_info = await axios.get(`${BASE_URL}/api/user`, {
+						const user_info = await axios.get(`${process.env.BASE_URL}/api/user`, {
 							headers: { Authorization: `Bearer ${response.data.token}` },
 							// params: {
 							// 	id: decodedToken?.phone_number,

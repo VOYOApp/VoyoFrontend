@@ -33,7 +33,7 @@ const StarsNotation = ({ visitID }) => {
 		const token = await getToken()
 
 		let config = {
-			method: "patch", maxBodyLength: Infinity, url: `${BASE_URL}/api/visit?id=${visitID}`, headers: {
+			method: "patch", maxBodyLength: Infinity, url: `${process.env.BASE_URL}/api/visit?id=${visitID}`, headers: {
 				"Content-Type": "application/json", "Authorization": `Bearer ${token}`,
 			}, data: data,
 		}

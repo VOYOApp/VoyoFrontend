@@ -31,7 +31,7 @@ const HomeStats = () => {
 				const token = await AsyncStorage.getItem('token');
 				StatsType = jwtDecode(token).role.toLowerCase();
 
-				return await axios.get(`${BASE_URL}/api/user/homeStats`, {
+				return await axios.get(`${process.env.BASE_URL}/api/user/homeStats`, {
 					headers: { Authorization: `Bearer ${await getToken()}` },
 				})
 			} catch (error) {

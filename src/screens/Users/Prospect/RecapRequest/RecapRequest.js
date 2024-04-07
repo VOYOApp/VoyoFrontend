@@ -70,7 +70,7 @@ const RecapRequest = () => {
 
 	useEffect(() => {
 		// console.log(visit)
-		axios.get(`${BASE_URL}/api/typerealestate`, {
+		axios.get(`${process.env.BASE_URL}/api/typerealestate`, {
 			params: {
 				id: visit.type_real_estate_id,
 			}

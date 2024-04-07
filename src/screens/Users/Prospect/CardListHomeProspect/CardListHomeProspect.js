@@ -27,7 +27,7 @@ const CardListHomeProspect = ({type}) => {
 		async function getListVisits () {
 			try {
 				const token = await getToken()
-				const listVisits = await axios.get(`${BASE_URL}/api/visit/homeList`, {
+				const listVisits = await axios.get(`${process.env.BASE_URL}/api/visit/homeList`, {
 					headers: { Authorization: `Bearer ${token}` },
 					params: {
 						type : type ?? ""
