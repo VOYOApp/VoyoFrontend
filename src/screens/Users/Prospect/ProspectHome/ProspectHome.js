@@ -55,16 +55,9 @@ const ProspectHome = () => {
 		<ScrollView style={{ width: "100%" }}
 		            showsVerticalScrollIndicator={false}
 		            showsHorizontalScrollIndicator={false}
-		  // ref={scrollViewRef}
-		  // onContentSizeChange={() => {
-		  //     scrollViewRef.current?.scrollToEnd()
-		  // }}
 		>
 			<HomeStats />
-			{/*<ScrollView style={{ width: "100%" }}*/}
-			{/*            showsVerticalScrollIndicator={false}*/}
-			{/*            showsHorizontalScrollIndicator={false}*/}
-			{/*>*/}
+
 			<Tab.Navigator
 			  style={{ height: 20000 }}
 			  screenOptions={{
@@ -81,9 +74,7 @@ const ProspectHome = () => {
 				<Tab.Screen name={t("prospect.passed_visits")}>
 					{() => <CardListHomeProspect type={"PASSED"} />}
 				</Tab.Screen>
-			</Tab.Navigator
->
-			{/*</ScrollView>*/}
+			</Tab.Navigator>
 		</ScrollView>
 
 
