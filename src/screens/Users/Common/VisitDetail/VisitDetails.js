@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { useRoute } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { Icon } from "react-native-paper"
 import Images from "../../../../../assets"
 import GMap from "../../../../components/GMap"
@@ -16,6 +16,8 @@ import { t } from "i18next"
 const VisitDetails = () => {
 	const route = useRoute()
 	const id = route.params?.idVisit
+
+	const navigation = useNavigation();
 
 	const [visitData, setVisitData] = useState(null)
 	const [decodedToken, setDecodedToken] = useState(null)
@@ -48,7 +50,7 @@ const VisitDetails = () => {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			if (response.status === 204) {
-				alert("Status changed to" + stats)
+				navigation.replace('VisitDetails', { idVisit: id });
 			}
 		} catch (error) {
 			console.error("Error fetching visit details:", error)
