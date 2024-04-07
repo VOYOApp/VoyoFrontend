@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect } from "react"
 import { ScrollView, StyleSheet, useWindowDimensions, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
@@ -35,54 +35,59 @@ const ProspectHome = () => {
 				.catch((error) => {
 					console.log(error.code)
 					console.log(error.message)
-				});
+				})
 			}
 		}
 	}, [])
 
 	useEffect(() => {
 		// setTimeout(() => {
-			getGlobal("user_details").then((data) => {
-				setFirstname(data?.first_name)
-				setIcon(data?.profile_picture)
-			})
+		getGlobal("user_details").then((data) => {
+			setFirstname(data?.first_name)
+			setIcon(data?.profile_picture)
+		})
 		// }, 500)
 	}, [firstname, icon])
 
-	if (firstname ==="") {
+	if (firstname === "") {
 		console.log("firstname is empty")
 	}
 
 	// const scrollViewRef = useRef(null)
 
 	return (<View style={styles.root}>
-		<HeaderHome name={firstname} profilePicture={icon}/>
+		<HeaderHome name={firstname} profilePicture={icon} />
 
-		<ScrollView style={{ width: "100%"}}
+		<ScrollView style={{ width: "100%" }}
 		            showsVerticalScrollIndicator={false}
 		            showsHorizontalScrollIndicator={false}
-		            // ref={scrollViewRef}
-		            // onContentSizeChange={() => {
-			        //     scrollViewRef.current?.scrollToEnd()
-		            // }}
+		  // ref={scrollViewRef}
+		  // onContentSizeChange={() => {
+		  //     scrollViewRef.current?.scrollToEnd()
+		  // }}
 		>
-			<HomeStats StatsType={"prospect"} />
+			<HomeStats/>
 			{/*<ScrollView style={{ width: "100%" }}*/}
 			{/*            showsVerticalScrollIndicator={false}*/}
 			{/*            showsHorizontalScrollIndicator={false}*/}
 			{/*>*/}
-				<Tab.Navigator style={{
-					height: 2000
-				}} screenOptions={{
-					tabBarStyle: {
-						backgroundColor: "#f4f3f4",
-					}, tabBarIndicatorStyle: {
-						backgroundColor: "#FE881B",
-					},
-				}}>
-					<Tab.Screen name={t("prospect.programmed_visits")} component={() => <CardListHomeProspect/>} />
-					<Tab.Screen name={t("prospect.passed_visits")} component={() => <CardListHomeProspect type={"PASSED"}/>} />
-				</Tab.Navigator>
+			<Tab.Navigator
+			  style={{ height: 2000 }}
+			  screenOptions={{
+				  tabBarStyle: {
+					  backgroundColor: "#f4f3f4",
+				  }, tabBarIndicatorStyle: {
+					  backgroundColor: "#FE881B",
+				  },
+			  }}
+			>
+				<Tab.Screen name={t("prospect.programmed_visits")}>
+					{() => <CardListHomeProspect />}
+				</Tab.Screen>
+				<Tab.Screen name={t("prospect.passed_visits")}>
+					{() => <CardListHomeProspect type={"PASSED"} />}
+				</Tab.Screen>
+			</Tab.Navigator>
 			{/*</ScrollView>*/}
 		</ScrollView>
 

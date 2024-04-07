@@ -5,8 +5,10 @@ import CustomStatCard from "../CustomStatCard"
 import axios from "axios"
 import { BASE_URL } from "@env"
 import { getGlobal, getToken, removeGlobal } from "../../context/AuthContext"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { jwtDecode } from "jwt-decode"
 
-const HomeStats = ({ StatsType }) => {
+const HomeStats = () => {
 	const { t } = useTranslation()
 
 	const [indicator1, setIndicator1] = useState(0)
@@ -18,18 +20,28 @@ const HomeStats = ({ StatsType }) => {
 	const [indicator3TranslationKey, setIndicator3TranslationKey] = useState("")
 	const [indicator4TranslationKey, setIndicator4TranslationKey] = useState("")
 
-	useEffect(() => {
+	let StatsType = "prospect"
+
+	useEffect( () => {
+
+
+
 		async function getStats() {
 			try {
+				const token = await AsyncStorage.getItem('token');
+				StatsType = jwtDecode(token).role.toLowerCase();
+
 				return await axios.get(`${BASE_URL}/api/user/homeStats`, {
 					headers: { Authorization: `Bearer ${await getToken()}` },
 				})
-			}catch (error) {
+			} catch (error) {
 				console.log('An error has occurred: ' + error);
 			}
 		}
 
-		getStats().then(r => {
+		getStats().then(async r => {
+
+
 			if (StatsType === "prospect") {
 				setIndicator1(r.data["programmed_visits"])
 				setIndicator1TranslationKey(indicator1 === 1

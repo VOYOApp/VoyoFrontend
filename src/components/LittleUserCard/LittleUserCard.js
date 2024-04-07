@@ -1,7 +1,6 @@
 import React from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { useTranslation } from "react-i18next"
-import navigation from "../../navigation"
 import { useNavigation, useRoute } from "@react-navigation/native"
 
 const LittleUserCard = ({data, allPersons}) => {
