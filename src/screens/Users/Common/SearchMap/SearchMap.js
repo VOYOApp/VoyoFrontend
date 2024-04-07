@@ -9,7 +9,6 @@ import SearchResultPerson from "../../../../components/SearchResultPerson"
 import { IndexPath, Select, SelectItem } from "@ui-kitten/components"
 import GMap from "../../../../components/GMap"
 import axios from "axios"
-import {BASE_URL} from '@env'
 import { getToken } from "../../../../context/AuthContext"
 
 const SearchMap = () => {
@@ -120,7 +119,7 @@ const SearchMap = () => {
 		let dateFormatee = date.toISOString().slice(0, 19).replace('T', ' ')
 		try {
 			const token = await getToken()
-			const listUsers = await axios.get(`${BASE_URL}/api/search`, {
+			const listUsers = await axios.get(`${process.env.BASE_URL}/api/search`, {
 				headers: { Authorization: `Bearer ${token}` },
 				params: {
 					x:x,

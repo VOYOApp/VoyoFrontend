@@ -11,7 +11,6 @@ import LoadVoyo from "./src/screens/LoadVoyo"
 import { NavigationContainer } from "@react-navigation/native"
 import { jwtDecode } from "jwt-decode"
 import axios from "axios"
-import {BASE_URL} from '@env'
 import * as ImagePicker from "expo-image-picker";
 
 const App = () => {
@@ -29,7 +28,7 @@ const App = () => {
 					setLoading(true);
 					setTimeout(async() => {
 						const decodedToken = jwtDecode(token);
-						await axios.get(`${BASE_URL}/api/user/status`, {
+						await axios.get(`${process.env.BASE_URL}/api/user/status`, {
 							headers: { Authorization: `Bearer ${token}` },
 						}).then((response) => {
 							setStatus(response.data.status)

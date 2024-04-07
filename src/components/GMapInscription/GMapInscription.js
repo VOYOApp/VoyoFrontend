@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next"
 import { Icon } from "react-native-paper"
 import Images from "../../../assets"
 import Geolocation from "react-native-geolocation-service"
-import {GOOGLE_MAPS_KEY} from '@env'
 
 navigator.geolocation = Geolocation
 
@@ -39,7 +38,7 @@ const GMapInscription = React.forwardRef(({ hasSearch = false, marker, isSearch 
 		// sendDataToParent(data)
 
 		try {
-			fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${GOOGLE_MAPS_KEY}&place_id=${placeId}`)
+			fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.GOOGLE_MAPS_KEY}&place_id=${placeId}`)
 			.then((response) => response.json())
 			.then((json) => {
 				setLatitude(json.results[0].geometry.location.lat)

@@ -7,7 +7,6 @@ import Images from "../../../../../assets"
 import { useTranslation } from "react-i18next"
 import CustomButton from "../../../../components/CustomButton"
 import axios from "axios"
-import {BASE_URL} from '@env'
 import { getToken } from "../../../../context/AuthContext"
 
 const RecapRequest = () => {
@@ -48,7 +47,7 @@ const RecapRequest = () => {
 		let config = {
 			method: 'post',
 			maxBodyLength: Infinity,
-			url: `${BASE_URL}/api/visit`,
+			url: `${process.env.BASE_URL}/api/visit`,
 			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': `Bearer ${token}`

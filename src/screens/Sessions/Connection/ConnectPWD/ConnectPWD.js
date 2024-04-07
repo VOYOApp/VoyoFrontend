@@ -9,7 +9,6 @@ import { jwtDecode } from "jwt-decode";
 import { auth } from '../../../../../firebaseConfig';
 import { signInWithEmailAndPassword, signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 import axios from 'axios';
-import {BASE_URL, JWT_KEY} from '@env'
 import { storeGlobal, storeToken } from "../../../../context/AuthContext"
 
 const ConnectPWD = () => {
@@ -27,7 +26,7 @@ const ConnectPWD = () => {
 			setBtnDisabled(true)
 			if (phoneNumber.includes("undefined")) setPhoneNumber("")
 
-			const response = await axios.get(`${BASE_URL}/api/user/login`, {
+			const response = await axios.get(`${process.env.BASE_URL}/api/user/login`, {
 				params: {
 					"phone_number": phoneNumber.replaceAll(" ", "") || "",
 					"email": email || "",
@@ -41,7 +40,7 @@ const ConnectPWD = () => {
 					console.log('Token stored successfully');
 					try {
 						const decodedToken = jwtDecode(response.data.token);
-						const user_info = await axios.get(`${BASE_URL}/api/user`, {
+						const user_info = await axios.get(`${process.env.BASE_URL}/api/user`, {
 							headers: { Authorization: `Bearer ${response.data.token}` },
 							// params: {
 							// 	id: decodedToken?.phone_number
