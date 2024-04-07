@@ -1,5 +1,7 @@
 {
   "common": {
+    "refuse_visit": "Refuser la visite",
+    "accept_visit": "Accepter la visite",
     "citation": "Voyo, c'est l'application qu'il vous faut pour trouvez votre futur chez vous",
     "cancel_visit": "Annuler la visite",
     "loading": "Chargement",
