@@ -49,9 +49,6 @@ const ProspectHome = () => {
 		// }, 500)
 	}, [firstname, icon])
 
-
-	// const scrollViewRef = useRef(null)
-
 	return (<View style={styles.root}>
 		<HeaderHome name={firstname} profilePicture={icon} />
 
@@ -63,7 +60,7 @@ const ProspectHome = () => {
 		  //     scrollViewRef.current?.scrollToEnd()
 		  // }}
 		>
-			<HomeStats/>
+			<HomeStats />
 			{/*<ScrollView style={{ width: "100%" }}*/}
 			{/*            showsVerticalScrollIndicator={false}*/}
 			{/*            showsHorizontalScrollIndicator={false}*/}
