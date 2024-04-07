@@ -47,10 +47,6 @@ const ProspectHome = () => {
 		// }, 500)
 	}, [firstname, icon])
 
-	if (firstname ==="") {
-		console.log("firstname is empty")
-	}
-
 	return (
 	<View style={styles.root}>
 		<HeaderHome name={firstname} profilePicture={icon}/>

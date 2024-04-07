@@ -26,9 +26,11 @@ const ValidateRequest = () => {
 	async function acceptRequest(){
 		try {
 			const token = await getToken()
-			console.log(`${BASE_URL}/api/user/update?id=${data.phone_number}`);
+			let phoneNum = data.phone_number
+			phoneNum = phoneNum.slice(1);
+			phoneNum = "%2B"+phoneNum;
 			const response = await axios.patch(
-				`${BASE_URL}/api/user/update?id=${data.phone_number}`,
+				`${BASE_URL}/api/user/update?id=${phoneNum}`,
 				{ "status": "VALIDATED"},
 				{ headers: { Authorization: `Bearer ${token}` } }
 			)
@@ -45,10 +47,12 @@ const ValidateRequest = () => {
 	async function rejectRequest(){
 		try {
 			const token = await getToken()
-			console.log(`${BASE_URL}/api/user/update?id=${data.phone_number}`);
+			let phoneNum = data.phone_number
+			phoneNum = phoneNum.slice(1);
+			phoneNum = "%2B"+phoneNum;
 			const response = await axios.patch(
-				`${BASE_URL}/api/user/update?id=${data.phone_number}`,
-				{ "status": "BANNED" },
+				`${BASE_URL}/api/user/update?id=${phoneNum}`,
+				{ "status": "BANNED"},
 				{ headers: { Authorization: `Bearer ${token}` } }
 			)
 			console.log(response.status);
