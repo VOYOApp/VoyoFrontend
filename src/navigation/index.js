@@ -141,7 +141,14 @@ function HomeAdmin() {
 	</Stack.Navigator>)
 }
 
-
+// PROSPECT STACKS (Home, Search, CustomListItem)
+function AdminSearch() {
+	return (<Stack.Navigator initialRouteName="SearchUser" screenOptions={{ headerShown: false }}>
+		<Stack.Screen name="SearchUser" component={SearchUser} />
+		<Stack.Screen name="ValidateRequest" component={ValidateRequest} />
+		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+	</Stack.Navigator>)
+}
 
 function Admin() {
 	return (<Tab.Navigator screenOptions={{
@@ -152,7 +159,7 @@ function Admin() {
 			  <Image source={require("../../assets/home_locked.png")} color={color}
 			         style={{ tintColor: focused ? "#F99342" : color, width: 22, height: 22 }} />),
 		}} />
-		<Tab.Screen name="SearchUser" component={SearchUser} options={{
+		<Tab.Screen name="AdminSearch" component={AdminSearch} options={{
 			headerShown: false, tabBarLabel: "Search", tabBarIcon: ({ color, focused }) => (// <MaterialCommunityIcons name="home" color={color} size={26} />
 			<Image source={require("../../assets/search_locked.png")} color={color}
 			style={{

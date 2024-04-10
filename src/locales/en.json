@@ -33,6 +33,7 @@
     "pricing_description": "With VOYO, you can earn money. In fact, you'll be paid for every visit you make with VOYO. And the best part? You set your own hourly rate!",
     "details": "Details",
     "my_account": "My account",
+    "card_id": "ID card",
     "first_name": "First name",
     "last_name": "Last name",
     "bio": "Bio",
@@ -128,6 +129,14 @@
     "reported_users" : "Reported users",
     "reported_by" : "Reported by",
     "motive":"Motive :",
-    "validation_request":"Validation request:"
+    "validation_request":"Validation request:",
+    "accept_request":"Validate inscription",
+    "reject_request":"Reject inscription",
+    "search_user":"Search an user",
+    "clients_and_visitors":"Clients and visitors",
+    "pending_request":"Waiting for confirmation...",
+    "consult":"Consulter",
+    "research":"Type the name of the searched user",
+    "ban_user":"Ban this user"
   }
 }

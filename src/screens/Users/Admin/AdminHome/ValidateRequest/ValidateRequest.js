@@ -22,6 +22,11 @@ const ValidateRequest = () => {
 
 	const route = useRoute()
 	const data = route.params?.data;
+	const isValidation = route.params?.isValidation
+	let canBan = true;
+	if (isValidation){
+		canBan = false;
+	}
 	const StatusRefused = "REFUSED"
 	async function acceptRequest(){
 		try {
@@ -69,7 +74,7 @@ const ValidateRequest = () => {
 	  <View style={styles.root}>
 
 		  <BackButton />
-				<Text style={[styles.title]}>{t("admin.validation_request")}</Text>
+		  		{ isValidation &&<Text style={[styles.title]}>{t("admin.validation_request")}</Text>}
 				<ScrollView style={{ width: "100%" }}>
 					<View style={{ flexDirection: "row", width: "100%" }}>
 						<View style={{ justifyContent: "center", width: "30%" }}>
@@ -189,18 +194,19 @@ const ValidateRequest = () => {
 							<Image src={data.cni_back}/>
 							</ScrollView>
 
-						<View style={{
+							{ isValidation &&<View style={{
 							borderBottomColor: "black",
 							borderBottomWidth: 1,
 							width: 40,
 							marginBottom: 5,
 							marginTop: 5,
 							alignSelf: "center",
-						}} />
+						}} />}
 					</View>
 
-					<CustomButton text={t('admin.accept_request')} onPress={() => acceptRequest()} bgColor={"#FE881B"}/>
-					<CustomButton text={t('admin.reject_request')} onPress={() => rejectRequest()}/>
+					{ isValidation &&<CustomButton text={t('admin.accept_request')} onPress={() => acceptRequest()} bgColor={"#FE881B"}/>}
+					{ isValidation &&<CustomButton text={t('admin.reject_request')} onPress={() => rejectRequest()}/>}
+					{ canBan &&<CustomButton text={t('admin.ban_user')} onPress={() => rejectRequest()}/>}
 			  </ScrollView>
 		  </View>
 	)

@@ -12,9 +12,9 @@ const AdminHomeListUsers = ({data}) => {
 	const navigation = useNavigation()
 	
 	const onBtnPressed = () => {
-		console.log(data);
 		// Open user details
-		navigation.navigate("HomeAdmin", { screen: "ValidateRequest", params: {data} })
+		let isValidation = false
+		navigation.navigate("AdminSearch", { screen: "ValidateRequest", params: {data, isValidation} })
 	}
 
 	return (

@@ -136,6 +136,7 @@
     "clients_and_visitors":"Utilisateurs (visiteurs et clients)",
     "pending_request":"Demande en attente...",
     "consult": "Consulter",
-    "research": "Saisissez le nom de l'utilisateur à chercher"
+    "research": "Saisissez le nom de l'utilisateur à chercher",
+    "ban_user": "Bannir cet utilisateur"
   }
 }
