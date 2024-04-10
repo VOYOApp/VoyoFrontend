@@ -40,6 +40,7 @@
     "identity_card_back": "Veuillez enregistrer le verso de votre carte d'identité",
     "details": "Détails",
     "my_account": "Mon compte",
+    "card_id": "Papiers d'identité",
     "first_name": "Prénom",
     "last_name": "Nom",
     "bio": "Bio",
@@ -133,5 +134,20 @@
       "other": "Revues en attente"
     }
   },
-  "admin": {}
+  "admin": {
+    "account_validation_request": "Demandes de validation",
+    "report_request":"Demande de suivi de l'utilisateur :",
+    "reported_users" : "Signalements",
+    "reported_by" : "Signalé par",
+    "motive":"Motif :",
+    "validation_request":"Demande de validation :",
+    "accept_request":"Valider l'inscription",
+    "reject_request":"Refuser l'inscription",
+    "search_user":"Rechercher un utilisateur",
+    "clients_and_visitors":"Utilisateurs (visiteurs et clients)",
+    "pending_request":"Demande en attente...",
+    "consult": "Consulter",
+    "research": "Saisissez le nom de l'utilisateur à chercher",
+    "ban_user": "Bannir cet utilisateur"
+  }
 }
