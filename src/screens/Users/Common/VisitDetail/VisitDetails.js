@@ -24,6 +24,7 @@ const VisitDetails = () => {
 	const [decodedToken, setDecodedToken] = useState(null)
 	const [value, setValue] = useState("")
 	const [criteriaList, setCriteriaList] = useState(null)
+	const [bgColor, setBgColor] = useState("rgba(164,164,164,0.22)")
 
 	useEffect(() => {
 		const fetchVisitDetails = async () => {
@@ -45,6 +46,20 @@ const VisitDetails = () => {
 		fetchVisitDetails().then(r => r).catch(e => e)
 	}, [id])
 
+	useEffect(() => {
+		// Update criteria data when value state changes
+		if (value >= 100000) {
+			for (let i = 0; i < criteriaList.length; i++) {
+				console.log(criteriaList[i])
+				if (criteriaList[i].criteria_answer === null || ((criteriaList[i].photo === null || criteriaList[i].photo === "") && criteriaList[i].photo_required)) {
+					alert("Veuillez remplir tous les critères avant de valider la visite.")
+
+					return
+				}
+			}
+			updateCriterias()
+		}
+	}, [value])
 
 	async function changeVisitStatus(stats) {
 		try {
@@ -62,22 +77,37 @@ const VisitDetails = () => {
 	}
 
 	async function updateCriterias() {
-		criteriaList.map(async (criteria) => {
-			try {
-				const token = await getToken()
-				const response = await axios.patch(`${process.env.BASE_URL}/api/criteria?id=${criteria.id}`, {
-					criteria_answer: value, photo: pic,
-				}, {
-					headers: { Authorization: `Bearer ${token}` },
+		const token = await getToken()
+
+		try {
+			const res = await axios.post(`${process.env.BASE_URL}/api/visit/code?idVisit=${id}&code=${value}`, {}, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+
+			if (res.status === 204) {
+				criteriaList.map(async (criteria) => {
+					try {
+						const response = await axios.patch(`${process.env.BASE_URL}/api/criteria?id=${criteria.id}`, {
+							criteria_answer: criteria.criteria_answer, photo: criteria.photo,
+						}, {
+							headers: { Authorization: `Bearer ${token}` },
+						})
+						if (response.status === 204) {
+							console.log("Criteria updated")
+							// navigation.replace('VisitDetails', { idVisit: id });
+						}
+					} catch (error) {
+						console.error("Error fetching visit details:", error)
+						alert("Une erreur est survenue. Veuillez réessayer.")
+					}
 				})
-				if (response.status === 204) {
-					console.log("Criteria updated")
-					// navigation.replace('VisitDetails', { idVisit: id });
-				}
-			} catch (error) {
-				console.error("Error fetching visit details:", error)
+				setBgColor("rgba(76,175,80,0.51)")
 			}
-		})
+
+		} catch (e) {
+			console.error("Error fetching visit details:", e)
+			setBgColor("rgba(242,44,61,0.59)")
+		}
 	}
 
 	return (<ScrollView style={styles.root}>
@@ -254,11 +284,10 @@ const VisitDetails = () => {
 			  </View>) : null}
 
 			{/*Validate the visit*/}
-			{(decodedToken.role === "VISITOR" && visitData.visit.details.status === "ACCEPTED") && new Date(visitData.visit.details.date) < new Date() ? (
-			  <View style={styles.innerContainer}>
+			{(decodedToken.role === "VISITOR" && visitData.visit.details.status === "ACCEPTED") ? (
+			  <View style={[styles.innerContainer, { backgroundColor: bgColor }]}>
 				  <View style={styles.rowWithIcon}>
 					  <CodeConfirmation value={value} setValue={setValue} redirect={false} widthInp={40} />
-					  {value >= 100000 ? updateCriterias() : null}
 				  </View>
 			  </View>) : null}
 
