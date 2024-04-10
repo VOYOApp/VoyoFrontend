@@ -31,6 +31,9 @@ import RecapRequest from "../screens/Users/Prospect/RecapRequest"
 import VisitDetails from "../screens/Users/Common/VisitDetail"
 import VisitorVerification from "../screens/Sessions/Inscription/VisitorVerification"
 import ResetPWD from "../screens/ResetPWD"
+import AdminHome from "../screens/Users/Admin/AdminHome"
+import SearchUser from "../screens/Users/Admin/AdminHome/SearchUser"
+import ValidateRequest from "../screens/Users/Admin/AdminHome/ValidateRequest"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -70,7 +73,6 @@ function HomeProspect() {
 		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
 	</Stack.Navigator>)
 }
-
 
 function SearchProspect() {
 	return (<Stack.Navigator initialRouteName="SearchMap" screenOptions={{ headerShown: false }}>
@@ -130,6 +132,49 @@ function Prospect() {
 	</Tab.Navigator>)
 }
 
+
+// PROSPECT STACKS (Home, Search, CustomListItem)
+function HomeAdmin() {
+	return (<Stack.Navigator initialRouteName="AdminHome" screenOptions={{ headerShown: false }}>
+		<Stack.Screen name="AdminHome" component={AdminHome} />
+		<Stack.Screen name="ValidateRequest" component={ValidateRequest} />
+		<Stack.Screen name="UserPage" component={UserPage} />
+		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+	</Stack.Navigator>)
+}
+
+// PROSPECT STACKS (Home, Search, CustomListItem)
+function AdminSearch() {
+	return (<Stack.Navigator initialRouteName="SearchUser" screenOptions={{ headerShown: false }}>
+		<Stack.Screen name="SearchUser" component={SearchUser} />
+		<Stack.Screen name="ValidateRequest" component={ValidateRequest} />
+		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
+	</Stack.Navigator>)
+}
+
+function Admin() {
+	return (<Tab.Navigator screenOptions={{
+		tabBarShowLabel: false, tabBarStyle: { marginBottom: 0 },
+	}}>
+		<Tab.Screen name="HomeAdmin" component={HomeAdmin} options={{
+			headerShown: false, tabBarLabel: "Home", tabBarIcon: ({ color, focused }) => (// <MaterialCommunityIcons name="home" color={color} size={26} />
+			  <Image source={require("../../assets/home_locked.png")} color={color}
+			         style={{ tintColor: focused ? "#F99342" : color, width: 22, height: 22 }} />),
+		}} />
+		<Tab.Screen name="AdminSearch" component={AdminSearch} options={{
+			headerShown: false, tabBarLabel: "Search", tabBarIcon: ({ color, focused }) => (// <MaterialCommunityIcons name="home" color={color} size={26} />
+			<Image source={require("../../assets/search_locked.png")} color={color}
+			style={{
+				tintColor: focused ? "#FC4F45" : color,
+				width: 22,
+				height: 22,
+			}} />),
+		}} />
+		{/*Ajoutez d'autres onglets si nécessaire*/}
+	</Tab.Navigator>)
+}
+
+
 // function Visitor() {
 // 	return (
 // 	  <Tab.Navigator initialRouteName="HomeVisitor" screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
@@ -173,9 +218,9 @@ function Navigation({ isLoggedIn, status, role }) {
 		  </Stack.Navigator>) : isLoggedIn && status === "PENDING_VALIDATION" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
 			  <Stack.Screen name="PendingVoyo" component={PendingVoyo} />
-		  </Stack.Navigator>) : isLoggedIn && role === "ADMIN" ? (
+		  </Stack.Navigator>) : isLoggedIn && role === "ADMIN" && status === "VALIDATED" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-			  <Stack.Screen name="PendingVoyo" component={PendingVoyo} />
+			  <Stack.Screen name="Admin" component={Admin} />
 		  </Stack.Navigator>) : (<Stack.Navigator screenOptions={{ headerShown: false }}>
 			<Stack.Screen name="HomeScreen" component={HomeScreen} />
 			<Stack.Screen name="SignUp" component={SignUp} />
@@ -183,7 +228,7 @@ function Navigation({ isLoggedIn, status, role }) {
 			<Stack.Screen name="PendingVoyo" component={PendingVoyo} />
 			<Stack.Screen name="NoInternet" component={NoInternet} />
 		</Stack.Navigator>)}
-	< /NavigationContainer>)
+	</NavigationContainer>)
 }
 
 export default Navigation

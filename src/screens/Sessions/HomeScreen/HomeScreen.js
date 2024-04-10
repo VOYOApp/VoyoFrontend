@@ -3,7 +3,6 @@ import { Image, StyleSheet, Text, useWindowDimensions, View } from "react-native
 import CustomButton from "../../../components/CustomButton"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
-import { BackgroundImage } from "react-native-elements/dist/config"
 
 const HomeScreen = () => {
 	const { t } = useTranslation()
@@ -19,6 +18,15 @@ const HomeScreen = () => {
 	const onRegisterPressed = () => {
 		// console.warn('Forgot password pressed')
 		navigation.navigate("SignUp")
+	}
+
+	const onHomeProspectPressed = () => {
+		// console.warn('Forgot password pressed')
+		navigation.navigate("Prospect", { screen: "ProspectHome" })
+	}
+
+	const onHomeAdminPressed = () => {
+		navigation.navigate("Admin", { screen: "HomeAdmin" })
 	}
 
 	return (<View style={styles.root}>

@@ -40,6 +40,7 @@
     "identity_card_back": "Please save the back of your identity card",
     "details": "Details",
     "my_account": "My account",
+    "card_id": "ID card",
     "first_name": "First name",
     "last_name": "Last name",
     "bio": "Bio",
@@ -133,5 +134,20 @@
       "other": "Reviews pending"
     }
   },
-  "admin": {}
+  "admin": {
+    "account_validation_request": "Validation requests",
+    "report_request":"Report request of user:",
+    "reported_users" : "Reported users",
+    "reported_by" : "Reported by",
+    "motive":"Motive :",
+    "validation_request":"Validation request:",
+    "accept_request":"Validate inscription",
+    "reject_request":"Reject inscription",
+    "search_user":"Search an user",
+    "clients_and_visitors":"Clients and visitors",
+    "pending_request":"Waiting for confirmation...",
+    "consult":"Consulter",
+    "research":"Type the name of the searched user",
+    "ban_user":"Ban this user"
+  }
 }
