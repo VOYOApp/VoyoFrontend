@@ -1,28 +1,16 @@
 import React, { useEffect, useRef, useState } from "react"
-import {
-	Image,
-	ScrollView,
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	useWindowDimensions,
-	View,
-} from "react-native"
+import { ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import BackButton from "../../../../components/BackButton"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import CustomButton from "../../../../components/CustomButton"
 import Images from "../../../../../assets"
-import GMapInscription from "../../../../components/GMapInscription"
 import { Icon } from "react-native-paper"
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
 import AvailabilityCard from "../../../../components/AvailabilityCard"
-import CriteriaCard from "../../../../components/CriteriaCard"
 
 const VisitorAvailability = () => {
 	const { t } = useTranslation()
-	const [btnDisabled, setBtnDisabled] = useState(false)
+	const [btnDisabled, setBtnDisabled] = useState(true)
 	const [criteriaList, setCriteriaList] = useState([{
 		id: Math.random(),
 		"availability": '',
@@ -36,13 +24,18 @@ const VisitorAvailability = () => {
 	const user = route.params?.user
 
 	const onNextPressed = () => {
+		const criteriaListWithoutId = criteriaList.map(criteria => {
+			const { id, ...rest } = criteria;
+			return rest;
+		});
+
 		navigation.navigate("SignUp", {
 			screen: "TarificationVisitor",
 			params: {
 				user: {
 					...user,
 				},
-				availability: criteriaList,
+				availability: criteriaListWithoutId,
 			},
 		})
 	}
@@ -65,13 +58,10 @@ const VisitorAvailability = () => {
 
 	useEffect(() => {
 		function checkAsAvailability() {
-			const isAnyAvailabilityEmpty = criteriaList.some(criteria => criteria.availability === "" || criteria.duration === '');
-			setBtnDisabled(isAnyAvailabilityEmpty);
+			return criteriaList.some(criteria => criteria.duration === "")
 		}
-
-		checkAsAvailability();
+		checkAsAvailability() ? setBtnDisabled(true) : setBtnDisabled(false)
 	}, [criteriaList]);
-
 	const scrollViewRef = useRef(null)
 	return (
 	  <View style={styles.root}>

@@ -44,9 +44,10 @@ const AvailabilityCard = ({ setAvailability, setDuration, setRepeat, onDelete })
 	}
 
 	const handleConfirm = (date) => {
+		let dateFormatee = date.toISOString()
 		setDate(date)
 		setDateIsSet(false)
-		setAvailability(date)
+		setAvailability(dateFormatee)
 		hideDatePicker()
 	}
 
@@ -105,7 +106,7 @@ const AvailabilityCard = ({ setAvailability, setDuration, setRepeat, onDelete })
 					    selectedButtonColor={'orange'}
 					    onPress={(value) => {
 						    setChosenOption(value);
-						    setRepeat(value)
+						    value !== 'REPEAT' ? setRepeat("") : setRepeat("DAILY")
 							value === 'REPEAT' ? setCheckedRepeat(true) : setCheckedRepeat(false)
 					    }}
 					  />

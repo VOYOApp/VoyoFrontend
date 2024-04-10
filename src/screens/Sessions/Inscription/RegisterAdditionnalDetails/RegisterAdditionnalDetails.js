@@ -109,7 +109,7 @@ const RegisterAdditionnalDetails = () => {
 								"last_name": user_info.data?.last_name,
 								"email": user_info.data?.email,
 								"biography": user_info.data?.biography,
-								"profil_picture": user_info.data?.profile_picture,
+								"profile_picture": user_info.data?.profile_picture,
 								"pricing": user_info.data?.pricing,
 								"radius": user_info.data?.radius,
 								"x": user_info.data?.x,
@@ -126,7 +126,7 @@ const RegisterAdditionnalDetails = () => {
 										// Mettez à jour le profil de l'utilisateur avec le nom et l'avatar
 										updateProfile(user, {
 											displayName: result.first_name + " " + result.last_name,
-											photoURL: result.profil_picture ? result.profil_picture : "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
+											photoURL: result.profile_picture ? result.profile_picture : "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
 										})
 										.then(() => {
 											// Enregistrement réussi, mettez à jour le numéro de téléphone
