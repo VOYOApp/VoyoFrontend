@@ -54,17 +54,7 @@ const ProspectHome = () => {
 			            showsVerticalScrollIndicator={false}
 			            showsHorizontalScrollIndicator={false}
 			>
-				<Tab.Navigator style={{
-					height: 2000
-				}} screenOptions={{
-					tabBarStyle: {
-						backgroundColor: "#f4f3f4",
-					}, tabBarIndicatorStyle: {
-						backgroundColor: "#FE881B",
-					},
-				}}>
-					<Tab.Screen name={t("admin.account_validation_request")} component={() => <ValidationListAdmin/>} />
-				</Tab.Navigator>
+			<ValidationListAdmin/>
 
 			</ScrollView>
 						
