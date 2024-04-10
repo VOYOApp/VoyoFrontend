@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import {
 	Image,
 	ScrollView,
@@ -23,7 +23,12 @@ import CriteriaCard from "../../../../components/CriteriaCard"
 const VisitorAvailability = () => {
 	const { t } = useTranslation()
 	const [btnDisabled, setBtnDisabled] = useState(false)
-	const [criteriaList, setCriteriaList] = useState([])
+	const [criteriaList, setCriteriaList] = useState([{
+		id: Math.random(),
+		"availability": '',
+		"duration": '',
+		"repeat": '',
+	}])
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
@@ -37,7 +42,7 @@ const VisitorAvailability = () => {
 				user: {
 					...user,
 				},
-				criteriaList,
+				availability: criteriaList,
 			},
 		})
 	}
@@ -57,6 +62,15 @@ const VisitorAvailability = () => {
 		const updatedCriteriaList = criteriaList.filter((criteria) => criteria.id !== id)
 		setCriteriaList(updatedCriteriaList)
 	}
+
+	useEffect(() => {
+		function checkAsAvailability() {
+			const isAnyAvailabilityEmpty = criteriaList.some(criteria => criteria.availability === "" || criteria.duration === '');
+			setBtnDisabled(isAnyAvailabilityEmpty);
+		}
+
+		checkAsAvailability();
+	}, [criteriaList]);
 
 	const scrollViewRef = useRef(null)
 	return (
