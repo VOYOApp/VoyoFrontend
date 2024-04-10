@@ -1,19 +1,21 @@
 import React, { useState } from "react"
 import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
-import CustomInput from "../../../../components/CustomInput"
-import CustomButton from "../../../../components/CustomButton"
-import BackButton from "../../../../components/BackButton"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
+import BackButton from "../../components/BackButton"
+import CustomInput from "../../components/CustomInput"
+import CustomButton from "../../components/CustomButton"
+import Password from "../../components/Password/Password"
 
-const ForgotPassword = () => {
+const ResetPWD = () => {
 	const { t } = useTranslation()
 	const [password, setPassword] = useState("")
+	const [btnDisabled, setBtnDisabled] = useState(true)
 	const navigation = useNavigation()
 	const { height } = useWindowDimensions()
 
 	const onSignInPressed = () => {
-		navigation.navigate('Prospect', { screen: "UserPage" })
+
 	}
 
 	const onForgotPasswordPressed = () => {
@@ -24,20 +26,11 @@ const ForgotPassword = () => {
 	  <View style={styles.root}>
 		  <BackButton />
 		  <View style={{ width: "100%" }}>
-			  <Text style={[styles.title, { marginTop: 20 }]}>Connexion à VOYO</Text>
+			  <Text style={[styles.title, { marginTop: 20 }]}>Reinitialisation MDP</Text>
 
-			  <CustomInput placeHolder="Mot de passe"
-			               value={password}
-			               setValue={setPassword}
-			               secureTextEntry
-			  />
+			  <Password></Password>
 
-			  <View className={'flex-row justify-between w-full mb-2'}>
-				  <Text style={styles.error}>{t("common.incorrect_password")}</Text>
-				  <Text onPress={onForgotPasswordPressed} style={styles.link}>{t("common.forgot_password")}</Text>
-			  </View>
-
-			  <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"} />
+			  <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"} deactivated={btnDisabled}/>
 		  </View>
 	  </View>
 	)
@@ -67,4 +60,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default ForgotPassword
+export default ResetPWD

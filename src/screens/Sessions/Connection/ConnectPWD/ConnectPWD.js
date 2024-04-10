@@ -108,7 +108,7 @@ const ConnectPWD = () => {
 	// }
 
 	const onForgotPasswordPressed = () => {
-		navigation.navigate('SignIn', { screen: "PasswordMailConfirmation" })
+		navigation.navigate('SignIn', { screen: "ResetPWD" })
 	}
 
 	return (
