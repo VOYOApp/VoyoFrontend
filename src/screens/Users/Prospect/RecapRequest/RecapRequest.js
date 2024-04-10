@@ -55,7 +55,7 @@ const RecapRequest = () => {
 			data : data
 		};
 
-		console.log(config)
+		// console.log(config)
 
 		axios.request(config)
 		.then((response) => {
@@ -82,6 +82,7 @@ const RecapRequest = () => {
 		})
 	})
 
+	// console.log(visit)
 	return (<View style={styles.root}>
 		<View style={styles.headTitles}>
 			<Text style={styles.title}>{t("prospect.send_request")}</Text>
@@ -117,7 +118,7 @@ const RecapRequest = () => {
 		<View style={styles.headTitles}>
 			<View style={styles.subTitle}>
 				<Icon source={Images.dollar} size={27} />
-				<Text style={styles.subTitleText}>Tarification horaire de Germaine T.</Text>
+				<Text style={styles.subTitleText}>Tarification horaire de {visit?.first_name+" "+visit?.last_name}</Text>
 			</View>
 
 			<View style={styles.textDescription}>

@@ -59,8 +59,6 @@ const VisitorAvailability = () => {
 	}
 
 	const scrollViewRef = useRef(null)
-
-	console.log(criteriaList)
 	return (
 	  <View style={styles.root}>
 		  <BackButton />

@@ -20,6 +20,7 @@ const CriteriaCard = ({
 	const [checkedVideo, setCheckedVideo] = React.useState(false)
 	const [checkedReusable, setCheckedReusable] = React.useState(false)
 
+	// console.log(visitdetails)
 	return (<View style={styles.container}>
 		{visitdetails ? (<>
 			<TextInput

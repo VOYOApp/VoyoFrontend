@@ -39,9 +39,10 @@ const DetailsVisitor = () => {
 	const filteredPersons = allPersons.filter((person) => person.phoneNumber !== dataVisitor.phoneNumber) ?? []
 
 	const goToRDV = () => {
-		navigation.navigate("SearchProspect", { screen: "Criteria" })
+		navigation.navigate("SearchProspect", { params: { data: dataVisitor }, screen: "Criteria" })
 	}
 
+	// console.log(dataVisitor)
 	return (
 	  <View style={styles.root}>
 		  <View className={"w-full h-full pl-4 pr-4"}>

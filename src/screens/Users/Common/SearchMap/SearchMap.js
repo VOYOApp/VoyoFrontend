@@ -139,6 +139,7 @@ const SearchMap = () => {
 					};
 				});
 				setSearchResults(updatedResults)
+				console.log(searchResults)
 			}
 		}catch (e) {
 			console.log(e)

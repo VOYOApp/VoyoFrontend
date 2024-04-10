@@ -29,7 +29,7 @@ const ChatChannel = ({navigation}) => {
 
 	useLayoutEffect(async () => {
 		let user_details = await getGlobal("user_details");
-		console.log(user_details)
+		// console.log(user_details)
 
 		navigation.setOptions({
 			title: (auth?.currentUser?.displayName || user_details?.first_name) ?? "Chat",

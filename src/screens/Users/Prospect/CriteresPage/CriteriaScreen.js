@@ -17,7 +17,9 @@ const CriteriaScreen = () => {
 	const route = useRoute()
 	const data = route.params?.data
 
-	const [criteriaList, setCriteriaList] = useState([])
+	const [criteriaList, setCriteriaList] = useState([
+	  {criteria: "", photo_required: false, video_required: false, reusable: false}
+	])
 
 	const addCriteriaCard = () => {
 		const newCriteriaList = [...criteriaList, {
@@ -32,6 +34,8 @@ const CriteriaScreen = () => {
 		setCriteriaList(updatedCriteriaList)
 	}
 
+	// console.log(data)
+
 	const onNextPressed = () => {
 		navigation.navigate("SearchProspect", {
 			screen: "Recap", params: {
@@ -43,6 +47,8 @@ const CriteriaScreen = () => {
 				price: data.pricing,
 				type_real_estate_id: data.type_real_estate_id,
 				criterias: criteriaList,
+				first_name: data.firstName,
+				last_name: data.lastName
 			},
 		})
 	}
