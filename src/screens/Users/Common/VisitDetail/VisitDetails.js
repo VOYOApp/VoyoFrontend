@@ -11,16 +11,18 @@ import CriteriaCard from "../../../../components/CriteriaCard"
 import { padStart } from "lodash"
 import { jwtDecode } from "jwt-decode"
 import { t } from "i18next"
+import CodeConfirmation from "../../../../components/CodeConfirmation"
 
 
 const VisitDetails = () => {
 	const route = useRoute()
 	const id = route.params?.idVisit
 
-	const navigation = useNavigation();
+	const navigation = useNavigation()
 
 	const [visitData, setVisitData] = useState(null)
 	const [decodedToken, setDecodedToken] = useState(null)
+	const [value, setValue] = useState("")
 
 	useEffect(() => {
 		const fetchVisitDetails = async () => {
@@ -50,11 +52,28 @@ const VisitDetails = () => {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			if (response.status === 204) {
-				navigation.replace('VisitDetails', { idVisit: id });
+				navigation.replace("VisitDetails", { idVisit: id })
 			}
 		} catch (error) {
 			console.error("Error fetching visit details:", error)
 		}
+	}
+
+	async function updateCriterias() {
+		// try {
+		// 	const token = await getToken()
+		// 	const response = await axios.patch(`${process.env.BASE_URL}/api/criteria?id=${data.id}`, {
+		// 		criteria_answer: value, photo: pic,
+		// 	}, {
+		// 		headers: { Authorization: `Bearer ${token}` },
+		// 	})
+		// 	if (response.status === 204) {
+		// 		console.log("Criteria updated")
+		// 		// navigation.replace('VisitDetails', { idVisit: id });
+		// 	}
+		// } catch (error) {
+		// 	console.error("Error fetching visit details:", error)
+		// }
 	}
 
 	return (<ScrollView style={styles.root}>
@@ -112,7 +131,8 @@ const VisitDetails = () => {
 			<View style={styles.innerContainer}>
 				<Text style={{ paddingBottom: 10 }}>Criterias</Text>
 				{visitData.visit.criterias.map((criteria, index) => {
-					return <CriteriaCard key={index} showData={true} data={criteria} visitdetails={true} decodedToken={decodedToken} visitStatus={visitData.visit.details.status}/>
+					return <CriteriaCard key={index} showData={true} data={criteria} visitdetails={true}
+					                     decodedToken={decodedToken} visitStatus={visitData.visit.details.status} />
 				})}
 			</View>
 
@@ -204,7 +224,7 @@ const VisitDetails = () => {
 			  </View>) : null}
 
 			{/*Cancel the visit*/}
-			{(decodedToken.role === "PROSPECT" && visitData.visit.details.status === "PENDING") || (decodedToken.role === "VISITOR" && visitData.visit.details.status === "ACCEPTED") ? (
+			{(decodedToken.role === "PROSPECT" && visitData.visit.details.status === "PENDING") ? (
 			  <View style={styles.bottomButtons}>
 				  <TouchableOpacity style={styles.plusBtn} onPress={() => {
 					  changeVisitStatus("CANCELED")
@@ -214,6 +234,17 @@ const VisitDetails = () => {
 					  </View>
 					  <Text>{t("common.cancel_visit")}</Text>
 				  </TouchableOpacity>
+			  </View>) : null}
+
+			{/*Validate the visit*/}
+			{(decodedToken.role === "VISITOR" && visitData.visit.details.status === "ACCEPTED") && new Date(visitData.visit.details.date) < new Date() ? (
+			  <View style={styles.innerContainer}>
+				  <View style={styles.rowWithIcon}>
+					  <CodeConfirmation value={value} setValue={setValue} redirect={false} widthInp={40} />
+					  {value >= 100000 ? (<>
+						  {updateCriterias()}
+						</>) : null}
+				  </View>
 			  </View>) : null}
 
 			<View style={{ height: 100 }} />

@@ -1,9 +1,10 @@
 import React from "react"
-import { Dimensions, Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { Checkbox, Icon } from "react-native-paper"
 import Images from "../../../assets"
 import { useTranslation } from "react-i18next"
 import UploadButton from "../UploadButton"
+import FullScreenImg from "../FullScreenImg"
 
 const CriteriaCard = ({
 	                      setCriteria,
@@ -24,13 +25,7 @@ const CriteriaCard = ({
 	const [checkedReusable, setCheckedReusable] = React.useState(false)
 	const [value, setValue] = React.useState("")
 	const [pic, setImage] = React.useState(null)
-	const [isFullScreen, setIsFullScreen] = React.useState(false)
 
-	function toggleFullScreen() {
-		setIsFullScreen(!isFullScreen)
-	}
-
-	const screenWidth = Dimensions.get("window").width
 
 	// console.log(visitdetails)
 	return (<View style={styles.container}>
@@ -69,67 +64,33 @@ const CriteriaCard = ({
 				</View>)}
 
 				{showData && (<View>
-
-
 					{decodedToken.role === "VISITOR" && visitStatus === "ACCEPTED" ? (<View>
 						<TextInput
-						  onChangeText={setValue}
+						  onChangeText={(t) => {
+							  setValue(t)
+						  }}
 						  placeholder={t("visitor.criteria_answer")}
 						  style={styles.input}
 						  multiline={true}
+						  value={data.criteria_answer}
+						  editable={!data.criteria_answer ? true : false}
 						/>
-						<UploadButton asCamera={true} asGallery={true} asRemove={true} displayImgWithModal={true} setImages={(img) => {
-							setImage(img)
-						}} />
 
+						{!data.photo ? (
+						  <View style={styles.backgroundImgUpload}>
+							  {data.photo_required ? (<Text>Vous devez ajouter une photo</Text>) : null}
 
-						{/*{pic ? (*/}
-						{/*  <View style={styles.containerImg}>*/}
-						{/*	  <TouchableOpacity onPress={toggleFullScreen}>*/}
-						{/*		  <Image*/}
-						{/*		    source={{ uri: "data:image/jpeg;base64," + pic }}*/}
-						{/*		    style={{ width: 50, height:50, borderRadius: 10}}*/}
-						{/*		    resizeMode="cover"*/}
-						{/*		  />*/}
-						{/*	  </TouchableOpacity>*/}
-
-						{/*	  <Modal visible={isFullScreen} transparent={true}>*/}
-						{/*		  <View style={styles.modalContainer}>*/}
-						{/*			  <TouchableOpacity style={styles.closeButton} onPress={toggleFullScreen}>*/}
-						{/*				  <Icon size={20} source={Images.close} />*/}
-						{/*			  </TouchableOpacity>*/}
-						{/*			  <Image*/}
-						{/*			    source={{ uri: "data:image/jpeg;base64," + pic }}*/}
-						{/*				style={{ flex: 1, width: screenWidth - 20, height: "100%"}}*/}
-						{/*			  />*/}
-						{/*		  </View>*/}
-						{/*	  </Modal>*/}
-						{/*  </View>*/}
-						{/*) : null}*/}
+							  <UploadButton asCamera={true} asGallery={true} asRemove={true} displayImgWithModal={true}
+							                setImages={(img) => {
+								                setImage(img)
+							                }} />
+						  </View>) : null}
 					</View>) : (<View>
 						{data.criteria_answer ? (<Text style={styles.answer}>{data.criteria_answer}</Text>) :
 						  <Text style={styles.answer}>{t("prospect.noAnswer")}</Text>}</View>)}
 
 					{data.photo ? (<View style={styles.containerImg}>
-						<TouchableOpacity onPress={toggleFullScreen}>
-							<Image
-							  source={{ uri: data.photo }}
-							  style={{ width: 80, height: 80, borderRadius: 20 }}
-							  resizeMode="cover"
-							/>
-						</TouchableOpacity>
-
-						<Modal visible={isFullScreen} transparent={true}>
-							<View style={styles.modalContainer}>
-								<TouchableOpacity style={styles.closeButton} onPress={toggleFullScreen}>
-									<Icon size={20} source={Images.close} />
-								</TouchableOpacity>
-								<Image
-								  source={{ uri: data.image }}
-								  style={{ flex: 1, width: "100%", height: "100%" }}
-								/>
-							</View>
-						</Modal>
+						<FullScreenImg preivewWH={80} img={data.photo} />
 					</View>) : null}
 				</View>)}
 
@@ -217,16 +178,16 @@ const styles = StyleSheet.create({
 		margin: 5,
 	}, input: {
 		height: "auto", paddingHorizontal: 5, fontSize: 15, paddingVertical: 7,
-	}, modalContainer: {
-		flex: 1, backgroundColor: "black", justifyContent: "center", alignItems: "center",
-	}, closeButton: {
-		position: "absolute", top: 10, right: 10,
-		zIndex: 1000,
-	}, answer: {
-		fontSize: 15, padding: 5,
-	}, containerImg: {
-		flexDirection: "row", alignItems: "center", justifyContent: "center",
-	}
+	}, backgroundImgUpload: {
+		backgroundColor: "rgba(0,0,0,0.1)",
+		borderRadius: 18,
+		fontSize: 15,
+		padding: 5,
+		justifyContent: "center",
+		alignItems: "center",
+		flex: 1,
+		flexDirection: "column",
+	},
 })
 
 export default CriteriaCard

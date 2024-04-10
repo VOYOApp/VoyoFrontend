@@ -20,7 +20,6 @@ const Images = {
 	voyo_banner: require('./logos/banner-voyo.png'),
 	sablierOrange: require('./icons/016-hourglass-1.png'),
 	etoile: require('./icons/star.png'),
-	rocket: require('./icons/017-rocket.png'),
 	distance: require('./icons/long-distance.png'),
 	check: require('./icons/014-check.png'),
 	close: require('./icons/close.png'),
