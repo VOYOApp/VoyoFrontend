@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useLayoutEffect } from "react"
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions } from "react-native"
 import { Avatar } from "react-native-elements"
 import { auth, db } from '../../../../../firebaseConfig';
 import { signOut } from "firebase/auth"
@@ -9,8 +9,9 @@ import BackButton from "../../../../components/BackButton"
 import { removeGlobal, removeToken } from "../../../../context/AuthContext"
 
 const Chat = ({ navigation, route }) => {
+	const { height } = useWindowDimensions()
 	const [messages, setMessages] = useState([])
-	const { chatName, id } = route.params
+	const { chatName, id, chatAvatar } = route.params
 	const signOutNow = async () => {
 		await removeGlobal("user_details")
 		await removeToken();
@@ -27,7 +28,7 @@ const Chat = ({ navigation, route }) => {
 					  <Avatar
 					    rounded
 					    source={{
-						    uri: auth?.currentUser?.photoURL || require("../../../../../assets/avatar.png"),
+						    uri: chatAvatar || require("../../../../../assets/avatar.png"),
 					    }}
 					  />
 				  </View>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { Icon } from "react-native-paper"
@@ -7,7 +7,9 @@ import Images from "../../../../../assets"
 import { useTranslation } from "react-i18next"
 import CustomButton from "../../../../components/CustomButton"
 import axios from "axios"
-import { getToken } from "../../../../context/AuthContext"
+import { getGlobal, getToken } from "../../../../context/AuthContext"
+import { addDoc, collection, onSnapshot, query, serverTimestamp } from "firebase/firestore"
+import { db } from "../../../../../firebaseConfig"
 
 const RecapRequest = () => {
 	const { t } = useTranslation()
@@ -20,6 +22,10 @@ const RecapRequest = () => {
 	const [labelRealEstate, setLabelRealEstate] = useState("")
 	const [durationRealEstate, setDurationRealEstate] = useState("")
 	const [platformCost, setPlatformCost] = useState(0.50)
+
+	const [chatName, setChatName] = useState("TEST");
+	const [members, setMembers] = useState([]);
+	const [firstEmail, setFirstEmail] = useState('');
 
 	function formatDateTime(date) {
 		const options = {
@@ -34,7 +40,6 @@ const RecapRequest = () => {
 		formattedDate.replace(":", "h");
 		return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
 	}
-	// console.log(visit)
 
 	const formatDuration = (date) => {
 		return `${String(date.getHours()).padStart(2, '0')}h : ${String(date.getMinutes()).padStart(2, '0')}m : ${String(date.getSeconds()).padStart(2, '0')}s`;
@@ -81,6 +86,45 @@ const RecapRequest = () => {
 			console.error(error)
 		})
 	})
+
+	useEffect(() => {
+		getGlobal("user_details").then((data) => {
+			setFirstEmail(data?.email)
+			setMembers([{
+				email:data?.email,
+				avatar:data?.profile_picture,
+				name: data?.first_name + " " +data?.last_name
+			},{
+				email:"",
+				avatar:visit?.profile_picture,
+				name: visit?.first_name + " " + visit?.last_name
+			}
+			])
+		})
+	}, []);
+
+	const createChat = async () => {
+		const chatData = {
+			members: members.map((user) => ({
+				email:user.email,
+				avatar: user.avatar,
+				name: user.name,
+			})),
+			admin: "admin@example.com",
+			firstMemberEmail: firstEmail,
+			lastActivity: serverTimestamp(),
+		};
+
+		// Ajouter le document chat à Firestore
+		const chatRef = await addDoc(collection(db, "chats"), chatData);
+
+		// Récupérer l'ID du document créé
+		const chatId = chatRef.id;
+
+		// Rediriger vers l'écran de chat avec le nouvel ID de chat
+		navigation.navigate("Common", { params: { id: chatId, chatName }, screen: "Chat" });
+	};
+
 
 	// console.log(visit)
 	return (<View style={styles.root}>
@@ -131,12 +175,11 @@ const RecapRequest = () => {
 
 		<View style={styles.bottomButtons}>
 			<CustomButton text={"Payer "+ (visit.price + platformCost) +"€"}
-			              onPress={createVisit}
+			              onPress={createChat}
 			              bgColor={"#FE881B"}
 			              widthBtn={"90%"}
 			              heightBtn={43} />
 		</View>
-
 	</View>)
 }
 
@@ -186,6 +229,39 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		marginTop: 10,
 	},
+
+
+  members: {
+	maxHeight: 200,
+	  borderColor: "#ccc",
+	  borderWidth: 1,
+	  borderRadius: 5,
+	  marginTop: 10,
+},
+member: {
+	padding: 10,
+	  borderColor: "#ccc",
+	  borderBottomWidth: 1,
+	  flexDirection: "row",
+	  alignItems: "center",
+},
+avatar: {
+	width: 30,
+	  height: 30,
+	  borderRadius: 15,
+	  marginRight: 10,
+},
+memberText: {
+	fontSize: 16,
+},
+selected: {
+	fontSize: 12,
+	  color: "#000",
+	  backgroundColor: "#ddd",
+	  padding: 5,
+	  borderRadius: 5,
+	  marginLeft: "auto",
+}
 })
 
 export default RecapRequest

@@ -10,26 +10,42 @@ const ChatChannel = ({navigation}) => {
 	const [chats, setChats] = useState([])
 
 	useEffect(() => {
+		const fetchChats = async () => {
+			try {
+				const q = query(
+				  collection(db, "chats"),
+				  where("firstMemberEmail", "==", auth.currentUser.email),
+				  orderBy("lastActivity", "desc")
+				);
+				const unsubscribe = onSnapshot(q, (snapshot) => {
+					const chatData = snapshot.docs.map((doc) => {
+						const chat = doc.data();
+						const firstMember = chat.members[0];
+						const secondMember = chat.members[1];
 
-		const q = query(collection(db, "chats"), where("members", "array-contains", auth.currentUser.email), orderBy("lastActivity", "desc"));
-		const unsubscribe = onSnapshot(q, (snapshot) =>
-		  setChats(
-			snapshot.docs.map((doc) => ({
-				id: doc.id,
-				data: doc.data(),
-			}))
-		  )
-		);
+						// Utilisez le nom du second membre s'il a un email vide, sinon utilisez celui du premier membre
+						const chatName = secondMember.email === "" ? secondMember.name : firstMember.name;
+						const chatAvatar = secondMember.email === "" ? secondMember.avatar : firstMember.avatar;
 
-		return () => {
-			unsubscribe();
+						return {
+							id: doc.id,
+							data: { ...chat, chatName, chatAvatar}, // Ajoutez le chatName à la donnée du chat
+						};
+					});
+					setChats(chatData);
+				});
+
+				return unsubscribe;
+			} catch (error) {
+				console.error("Error fetching chats:", error);
+			}
 		};
-	}, []);
 
+		fetchChats();
+	}, []);
 
 	useLayoutEffect(async () => {
 		let user_details = await getGlobal("user_details");
-		// console.log(user_details)
 
 		navigation.setOptions({
 			title: (auth?.currentUser?.displayName || user_details?.first_name) ?? "Chat",
@@ -50,15 +66,15 @@ const ChatChannel = ({navigation}) => {
 		})
 	}, [navigation]);
 
-	const enterChat = (id, chatName) => {
-		navigation.navigate("Common", { params: {id, chatName}, screen: "Chat" })
+	const enterChat = (id, chatName, chatAvatar) => {
+		navigation.navigate("Common", { params: {id, chatName, chatAvatar}, screen: "Chat" })
 	}
 
 	return (
 	  <SafeAreaView>
 		  <ScrollView>
-			  {chats.map(({ id, data: { chatName } }) => (
-				<CustomListItem key={id} id={id} chatName={chatName} enterChat={enterChat}/>
+			  {chats.map(({ id, data: { chatName, chatAvatar } }) => (
+				<CustomListItem key={id} id={id} chatName={chatName} chatAvatar={chatAvatar} enterChat={enterChat}/>
 			  ))}
 		  </ScrollView>
 	  </SafeAreaView>

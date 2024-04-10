@@ -34,8 +34,6 @@ const CriteriaScreen = () => {
 		setCriteriaList(updatedCriteriaList)
 	}
 
-	// console.log(data)
-
 	const onNextPressed = () => {
 		navigation.navigate("SearchProspect", {
 			screen: "Recap", params: {
@@ -48,7 +46,8 @@ const CriteriaScreen = () => {
 				type_real_estate_id: data.type_real_estate_id,
 				criterias: criteriaList,
 				first_name: data.firstName,
-				last_name: data.lastName
+				last_name: data.lastName,
+				profile_picture: data.profilePicture
 			},
 		})
 	}

@@ -11,7 +11,7 @@ const HeaderHome = ({ name, profilePicture }) => {
 
 	return (
 	  <View style={styles.header}>
-		  <TouchableOpacity style={styles.img_container} onPress={() => navigation.navigate("HomeAdmin", { screen: "UserPage" })} >
+		  <TouchableOpacity style={styles.img_container} onPress={() => navigation.navigate("HomeProspect", { screen: "UserPage" })} >
 			  <Image
 			    src={profilePicture}
 			    style={[styles.profilePic, { height: height }]}
