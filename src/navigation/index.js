@@ -138,6 +138,7 @@ function HomeAdmin() {
 	return (<Stack.Navigator initialRouteName="AdminHome" screenOptions={{ headerShown: false }}>
 		<Stack.Screen name="AdminHome" component={AdminHome} />
 		<Stack.Screen name="ValidateRequest" component={ValidateRequest} />
+		<Stack.Screen name="UserPage" component={UserPage} />
 		{/* Ajoutez d'autres écrans liés à cet onglet si nécessaire */}
 	</Stack.Navigator>)
 }
