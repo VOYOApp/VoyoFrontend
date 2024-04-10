@@ -26,8 +26,6 @@ const Password = ({ setPasswordConfirmation, setPassword, setIsValidPwd}) => {
 		setHasUpperCase(hasUpperCase)
 
 		setIsValidPwd(isPasswordValid)
-
-		console.log(pswd, confirm_pswd)
 	}
 
 	const handlePasswordChange = (text) => {

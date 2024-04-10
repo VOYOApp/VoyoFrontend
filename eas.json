@@ -5,7 +5,7 @@
         "buildType": "apk"
       },
       "env": {
-        "BASE_URL": "https://sunbird-legible-equally.ngrok-free.app",
+        "BASE_URL": "https://decent-tarpon-manually.ngrok-free.app",
         "API_KEY": "AIzaSyBG4rbsxL8hjkZpHDgHQC7Z3uvxvakIoQQ",
         "AUTH_DOMAIN": "voyo-chat.firebaseapp.com",
         "PROJECT_ID": "voyo-chat",
@@ -20,7 +20,7 @@
         "gradleCommand": ":app:assembleRelease"
       },
       "env": {
-        "BASE_URL": "https://sunbird-legible-equally.ngrok-free.app",
+        "BASE_URL": "https://decent-tarpon-manually.ngrok-free.app",
         "API_KEY": "AIzaSyBG4rbsxL8hjkZpHDgHQC7Z3uvxvakIoQQ",
         "AUTH_DOMAIN": "voyo-chat.firebaseapp.com",
         "PROJECT_ID": "voyo-chat",
@@ -33,7 +33,7 @@
     "preview3": {
       "developmentClient": true,
       "env": {
-        "BASE_URL": "https://sunbird-legible-equally.ngrok-free.app",
+        "BASE_URL": "https://decent-tarpon-manually.ngrok-free.app",
         "API_KEY": "AIzaSyBG4rbsxL8hjkZpHDgHQC7Z3uvxvakIoQQ",
         "AUTH_DOMAIN": "voyo-chat.firebaseapp.com",
         "PROJECT_ID": "voyo-chat",
@@ -46,7 +46,7 @@
     "preview4": {
       "distribution": "internal",
       "env": {
-        "BASE_URL": "https://sunbird-legible-equally.ngrok-free.app",
+        "BASE_URL": "https://decent-tarpon-manually.ngrok-free.app",
         "API_KEY": "AIzaSyBG4rbsxL8hjkZpHDgHQC7Z3uvxvakIoQQ",
         "AUTH_DOMAIN": "voyo-chat.firebaseapp.com",
         "PROJECT_ID": "voyo-chat",
@@ -61,7 +61,7 @@
         "buildType": "apk"
       },
       "env": {
-        "BASE_URL": "https://sunbird-legible-equally.ngrok-free.app",
+        "BASE_URL": "https://decent-tarpon-manually.ngrok-free.app",
         "API_KEY": "AIzaSyBG4rbsxL8hjkZpHDgHQC7Z3uvxvakIoQQ",
         "AUTH_DOMAIN": "voyo-chat.firebaseapp.com",
         "PROJECT_ID": "voyo-chat",
