@@ -39,6 +39,7 @@ const VisitorVerification = () => {
 	const navigation = useNavigation()
 	const route = useRoute()
 	const user = route.params?.user
+	const availability = route.params?.availability
 
 	const onRegisterPressed = async () => {
 		try {
