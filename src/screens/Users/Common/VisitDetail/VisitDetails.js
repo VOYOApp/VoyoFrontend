@@ -157,7 +157,24 @@ const VisitDetails = () => {
 			  <View style={styles.innerContainer}>
 				  <View style={styles.rowWithIcon}>
 					  <Icon size={23} source={Images.code} />
-					  <Text style={styles.textdetails}>Code de vérification : {visitData.visit.details.code}</Text>
+					  <Text style={styles.textdetails}>Code de vérification :</Text>
+
+				  </View>
+				  <View style={{
+					  flexDirection: "row",
+				  }}>
+					  {visitData.visit.details.code
+					  .toString() // Convert number to string
+					  .split("") // Split the string into individual digits
+					  .map((digit, index) => (
+					    <React.Fragment key={index}>
+						    <Text style={styles.cell}>{digit}</Text>
+						    {/* Add separator after every two digits, except for the last pair */}
+						    {(index + 1) % 2 === 0 && index !== visitData.visit.details.code.toString().length - 1 && (
+							  <Text style={styles.separator}>-</Text>
+						    )}
+					    </React.Fragment>
+					  ))}
 				  </View>
 			  </View>) : null}
 
@@ -287,8 +304,10 @@ const VisitDetails = () => {
 			{(decodedToken.role === "VISITOR" && visitData.visit.details.status === "ACCEPTED") ? (
 			  <View style={[styles.innerContainer, { backgroundColor: bgColor }]}>
 				  <View style={styles.rowWithIcon}>
-					  <CodeConfirmation value={value} setValue={setValue} redirect={false} widthInp={40} />
+					  <Text style={{ paddingBottom: 10 }}>Pour valider la visite, veuillez saisir le code de validation
+						  communiqué par la personne qui vous a fait visiter le bien immobilier</Text>
 				  </View>
+				  <CodeConfirmation value={value} setValue={setValue} redirect={false} widthInp={40} />
 			  </View>) : null}
 
 			<View style={{ height: 100 }} />
@@ -345,6 +364,19 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgba(76,175,80,0.51)",
 	}, bgRed: {
 		backgroundColor: "rgba(208,113,113,0.38)",
+	}, cell: {
+		width: 40,
+		height: 50,
+		lineHeight: 48,
+		fontSize: 24,
+		borderWidth: 2,
+		borderColor: "#00000030",
+		backgroundColor: "#00000010",
+		textAlign: "center",
+		borderRadius: 18,
+		marginLeft: 5,
+	},separator: {
+		height: 2, width: 10, backgroundColor: "#00000030", alignSelf: "center", marginLeft: 5,
 	},
 })
 

@@ -39,7 +39,7 @@ const ProspectHome = () => {
 			}
 		}
 		getGlobal("user_details").then((data) => {
-			firebaseCnx(data?.email,data?.password)
+			firebaseCnx(data?.email, data?.password)
 		})
 	}, [])
 
