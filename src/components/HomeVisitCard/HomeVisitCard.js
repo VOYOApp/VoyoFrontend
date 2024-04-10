@@ -53,7 +53,7 @@ const HomeVisitCard = ({ data }) => {
 							<Text>Rendez-vous annulé</Text>
 						</View>) : data.status === "DONE" ? (
 						<View style={styles.rowWithImage}>
-							<Image source={require("../../../assets/icons/023-done.png")} style={styles.logo} />
+							<Image source={require("../../../assets/icons/014-check.png")} style={styles.logo} />
 							<Text>Rendez-vous effectué</Text>
 						</View>) : null}
 				  </View>

@@ -50,7 +50,6 @@ const VisitDetails = () => {
 		// Update criteria data when value state changes
 		if (value >= 100000) {
 			for (let i = 0; i < criteriaList.length; i++) {
-				console.log(criteriaList[i])
 				if (criteriaList[i].criteria_answer === null || ((criteriaList[i].photo === null || criteriaList[i].photo === "") && criteriaList[i].photo_required)) {
 					alert("Veuillez remplir tous les critères avant de valider la visite.")
 
@@ -93,15 +92,26 @@ const VisitDetails = () => {
 							headers: { Authorization: `Bearer ${token}` },
 						})
 						if (response.status === 204) {
-							console.log("Criteria updated")
-							// navigation.replace('VisitDetails', { idVisit: id });
+							try {
+								const response = await axios.patch(`${process.env.BASE_URL}/api/visit?id=${id}`, { status: "DONE" }, {
+									headers: { Authorization: `Bearer ${token}` },
+								})
+								if (response.status === 204) {
+									setBgColor("rgba(76,175,80,0.51)")
+									navigation.replace("VisitDetails", { idVisit: id })
+								}
+							} catch (error) {
+								console.error("Error fetching visit details:", error)
+								alert("Une erreur est survenue. Veuillez réessayer.")
+								setBgColor("rgba(242,44,61,0.59)")
+							}
+
 						}
 					} catch (error) {
 						console.error("Error fetching visit details:", error)
 						alert("Une erreur est survenue. Veuillez réessayer.")
 					}
 				})
-				setBgColor("rgba(76,175,80,0.51)")
 			}
 
 		} catch (e) {
@@ -109,6 +119,7 @@ const VisitDetails = () => {
 			setBgColor("rgba(242,44,61,0.59)")
 		}
 	}
+
 
 	return (<ScrollView style={styles.root}>
 		{visitData ? (<View style={styles.container}>
