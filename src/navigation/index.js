@@ -8,7 +8,6 @@ import HomeScreen from "../screens/Sessions/HomeScreen"
 import ConnectPhone from "../screens/Sessions/Connection/ConnectPhone"
 import ConnectEmail from "../screens/Sessions/Connection/ConnectEmail"
 import ConnectPWD from "../screens/Sessions/Connection/ConnectPWD"
-import ForgotPassword from "../screens/Sessions/Connection/ForgotPassword"
 import PasswordMailConfirmation from "../screens/Sessions/Connection/PasswordMailConfirmation"
 import RegisterAdditionnalDetails from "../screens/Sessions/Inscription/RegisterAdditionnalDetails"
 import AdditionalDetailsVisitor from "../screens/Sessions/Inscription/AdditionalDetailsVisitor"
@@ -31,6 +30,7 @@ import CriteriaScreen from "../screens/Users/Prospect/CriteresPage"
 import RecapRequest from "../screens/Users/Prospect/RecapRequest"
 import VisitDetails from "../screens/Users/Common/VisitDetail"
 import VisitorVerification from "../screens/Sessions/Inscription/VisitorVerification"
+import ResetPWD from "../screens/ResetPWD"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -56,7 +56,7 @@ function SignIn() {
 		<Stack.Screen name="ConnectEmail" component={ConnectEmail} />
 		<Stack.Screen name="ConnectPWD" component={ConnectPWD} />
 		<Stack.Screen name="PasswordMailConfirmation" component={PasswordMailConfirmation} />
-		<Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+		<Stack.Screen name="ResetPWD" component={ResetPWD} />
 	</Stack.Navigator>)
 }
 

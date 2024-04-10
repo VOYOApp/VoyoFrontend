@@ -19,11 +19,13 @@ const ConnectPWD = () => {
 	const [email, setEmail] = useState(route.params?.email || "")
 	const [password, setPassword] = useState("")
 	const [btnDisabled, setBtnDisabled] = useState(false)
+	const [wrongPassword, setWrongPassword] = useState(false)
 	const { height } = useWindowDimensions()
 
 	const onSignInPressed = async () => {
 		try {
 			setBtnDisabled(true)
+			setWrongPassword(false)
 			if (phoneNumber.includes("undefined")) setPhoneNumber("")
 
 			const response = await axios.get(`${process.env.BASE_URL}/api/user/login`, {
@@ -70,6 +72,7 @@ const ConnectPWD = () => {
 			}
 		} catch (error) {
 			console.log('An error has occurred: ' + error);
+			setWrongPassword(true)
 			setBtnDisabled(false)
 		}
 	};
@@ -108,7 +111,7 @@ const ConnectPWD = () => {
 	// }
 
 	const onForgotPasswordPressed = () => {
-		navigation.navigate('SignIn', { screen: "PasswordMailConfirmation" })
+		navigation.navigate('SignIn', { screen: "ResetPWD" })
 	}
 
 	return (
@@ -124,8 +127,10 @@ const ConnectPWD = () => {
 			  />
 
 			  <View className={'flex-row justify-between w-full mb-2'}>
-				  <Text style={styles.error}>{t("common.incorrect_password")}</Text>
 				  <Text onPress={onForgotPasswordPressed} style={styles.link}>{t("common.forgot_password")}</Text>
+				  {wrongPassword ? (
+				    <Text style={styles.error}>{t("common.incorrect_password")}</Text>
+				  ): null}
 			  </View>
 
 			  <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"} deactivated={btnDisabled}/>
