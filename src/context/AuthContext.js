@@ -38,7 +38,6 @@ const removeToken = async () => {
 const storeGlobal = async (key, value) => {
 	try {
 		await AsyncStorage.setItem(key, value);
-		console.log('Global stored successfully');
 	} catch (error) {
 		console.error('Error storing global:', error);
 	}

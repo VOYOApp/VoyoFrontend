@@ -119,6 +119,7 @@
     "criteria": "Criteria"
   },
   "visitor": {
+    "criteria_answer": "Write your answer to the criteria here",
     "upcoming_visits": {
       "one": "Upcoming visit",
       "other": "Upcoming visits"

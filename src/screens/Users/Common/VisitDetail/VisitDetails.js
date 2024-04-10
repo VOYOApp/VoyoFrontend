@@ -108,12 +108,11 @@ const VisitDetails = () => {
 				  </View>
 			  </View>) : null}
 
-
 			{/*Criterias*/}
 			<View style={styles.innerContainer}>
 				<Text style={{ paddingBottom: 10 }}>Criterias</Text>
 				{visitData.visit.criterias.map((criteria, index) => {
-					return <CriteriaCard key={index} showData={true} data={criteria} visitdetails={true} />
+					return <CriteriaCard key={index} showData={true} data={criteria} visitdetails={true} decodedToken={decodedToken} visitStatus={visitData.visit.details.status}/>
 				})}
 			</View>
 
