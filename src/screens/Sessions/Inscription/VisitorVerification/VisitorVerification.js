@@ -40,6 +40,7 @@ const VisitorVerification = () => {
 	const route = useRoute()
 	const user = route.params?.user
 	const availability = route.params?.availability
+	const json_availability = JSON.parse(JSON.stringify(availability));
 
 	const onRegisterPressed = async () => {
 		try {
@@ -64,7 +65,6 @@ const VisitorVerification = () => {
 			if (response.status === 201) {
 				console.log(`Your account has been created: ${JSON.stringify(response.data)}`)
 				await storeToken(response.data.token).then(setTimeout(async () => {
-
 					try {
 						const decodedToken = jwtDecode(response.data.token)
 						// console.log(decodedToken?.phone_number)
@@ -81,13 +81,29 @@ const VisitorVerification = () => {
 								"last_name": user_info.data?.last_name,
 								"email": user_info.data?.email,
 								"biography": user_info.data?.biography,
-								"profil_picture": user_info.data?.profile_picture,
+								"profile_picture": user_info.data?.profile_picture,
 								"pricing": user_info.data?.pricing,
 								"radius": user_info.data?.radius,
 								"x": user_info.data?.x,
 								"y": user_info.data?.y,
-								"password": password
+								"password": user.password
 							}
+
+							const create_availability = await axios.post(`${process.env.BASE_URL}/api/availability`,
+								json_availability, {
+								headers: {
+									Authorization: `Bearer ${response.data.token}`
+								}
+							});
+
+							if (create_availability.status === 201) {
+								console.log("Availability created successfully !");
+							} else if (create_availability.status === 401) {
+								console.log("Unauthorized: Token invalid or expired.");
+							} else {
+								console.log("An error occurred while creating availability.");
+							}
+
 							await storeGlobal('user_details', JSON.stringify(result)).then(() => {
 								try {
 									createUserWithEmailAndPassword(auth, result.email, result.password)
@@ -98,7 +114,7 @@ const VisitorVerification = () => {
 										// Mettez à jour le profil de l'utilisateur avec le nom et l'avatar
 										updateProfile(user, {
 											displayName: result.first_name + " " + result.last_name,
-											photoURL: result.profil_picture ? result.profil_picture : "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
+											photoURL: result.profile_picture ? result.profile_picture : "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
 										})
 										.then(() => {
 											// Enregistrement réussi, mettez à jour le numéro de téléphone
@@ -129,20 +145,20 @@ const VisitorVerification = () => {
 										console.log(errorMessage)
 									})
 								}catch (e){
-									console.log("An error has occurred: " + e)
+									console.log("An error has occurred 1: " + e)
 								}
 							})
 						}
 					} catch (error) {
-						console.log("An error has occurred: " + error)
+						console.log("An error has occurred 2: " + error)
 						setBtnDisabled(false)
 					}
 				}, 1000))
 			}
 		} catch (error) {
 			setBtnDisabled(false)
-			alert("An error has occurred: " + error)
-			console.log("An error has occurred: " + error)
+			alert("An error has occurred 3: " + error)
+			console.log("An error has occurred 3: " + error)
 		}
 	}
 

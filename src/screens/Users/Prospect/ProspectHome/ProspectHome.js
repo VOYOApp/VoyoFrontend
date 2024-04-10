@@ -38,15 +38,17 @@ const ProspectHome = () => {
 				})
 			}
 		}
+		getGlobal("user_details").then((data) => {
+			firebaseCnx(data?.email,data?.password)
+		})
 	}, [])
 
 	useEffect(() => {
-		// setTimeout(() => {
 		getGlobal("user_details").then((data) => {
 			setFirstname(data?.first_name)
 			setIcon(data?.profile_picture)
+			console.log(data)
 		})
-		// }, 500)
 	}, [firstname, icon])
 
 	return (<View style={styles.root}>
