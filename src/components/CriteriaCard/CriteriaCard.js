@@ -11,6 +11,8 @@ const CriteriaCard = ({
 	                      setIsPhotoRequired,
 	                      setIsVideoRequired,
 	                      setIsReusable,
+	                      setCriteriaAnswer,
+	                      setPhoto,
 	                      onDelete,
 	                      showData,
 	                      data,
@@ -26,8 +28,6 @@ const CriteriaCard = ({
 	const [value, setValue] = React.useState("")
 	const [pic, setImage] = React.useState(null)
 
-
-	// console.log(visitdetails)
 	return (<View style={styles.container}>
 		{visitdetails ? (<>
 			<TextInput
@@ -68,12 +68,13 @@ const CriteriaCard = ({
 						<TextInput
 						  onChangeText={(t) => {
 							  setValue(t)
+							  setCriteriaAnswer(t)
 						  }}
 						  placeholder={t("visitor.criteria_answer")}
 						  style={styles.input}
 						  multiline={true}
-						  value={data.criteria_answer}
-						  editable={!data.criteria_answer ? true : false}
+						  value={data.criteria_answer ? data.criteria_answer : value}
+						  // editable={!data.criteria_answer ? true : false}
 						/>
 
 						{!data.photo ? (
@@ -83,6 +84,7 @@ const CriteriaCard = ({
 							  <UploadButton asCamera={true} asGallery={true} asRemove={true} displayImgWithModal={true}
 							                setImages={(img) => {
 								                setImage(img)
+								                setPhoto(img)
 							                }} />
 						  </View>) : null}
 					</View>) : (<View>

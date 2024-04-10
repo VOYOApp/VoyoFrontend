@@ -23,6 +23,7 @@ const VisitDetails = () => {
 	const [visitData, setVisitData] = useState(null)
 	const [decodedToken, setDecodedToken] = useState(null)
 	const [value, setValue] = useState("")
+	const [criteriaList, setCriteriaList] = useState(null)
 
 	useEffect(() => {
 		const fetchVisitDetails = async () => {
@@ -34,6 +35,7 @@ const VisitDetails = () => {
 				})
 				if (response.status === 200) {
 					setVisitData(response.data)
+					setCriteriaList(response.data.visit.criterias)
 				}
 			} catch (error) {
 				console.error("Error fetching visit details:", error)
@@ -60,20 +62,22 @@ const VisitDetails = () => {
 	}
 
 	async function updateCriterias() {
-		// try {
-		// 	const token = await getToken()
-		// 	const response = await axios.patch(`${process.env.BASE_URL}/api/criteria?id=${data.id}`, {
-		// 		criteria_answer: value, photo: pic,
-		// 	}, {
-		// 		headers: { Authorization: `Bearer ${token}` },
-		// 	})
-		// 	if (response.status === 204) {
-		// 		console.log("Criteria updated")
-		// 		// navigation.replace('VisitDetails', { idVisit: id });
-		// 	}
-		// } catch (error) {
-		// 	console.error("Error fetching visit details:", error)
-		// }
+		criteriaList.map(async (criteria) => {
+			try {
+				const token = await getToken()
+				const response = await axios.patch(`${process.env.BASE_URL}/api/criteria?id=${criteria.id}`, {
+					criteria_answer: value, photo: pic,
+				}, {
+					headers: { Authorization: `Bearer ${token}` },
+				})
+				if (response.status === 204) {
+					console.log("Criteria updated")
+					// navigation.replace('VisitDetails', { idVisit: id });
+				}
+			} catch (error) {
+				console.error("Error fetching visit details:", error)
+			}
+		})
 	}
 
 	return (<ScrollView style={styles.root}>
@@ -131,8 +135,21 @@ const VisitDetails = () => {
 			<View style={styles.innerContainer}>
 				<Text style={{ paddingBottom: 10 }}>Criterias</Text>
 				{visitData.visit.criterias.map((criteria, index) => {
-					return <CriteriaCard key={index} showData={true} data={criteria} visitdetails={true}
-					                     decodedToken={decodedToken} visitStatus={visitData.visit.details.status} />
+					return <CriteriaCard key={index}
+					                     showData={true}
+					                     data={criteria}
+					                     visitdetails={true}
+					                     decodedToken={decodedToken}
+					                     visitStatus={visitData.visit.details.status}
+					                     setCriteriaAnswer={(value) => {
+						                     criteria.criteria_answer = value
+						                     setCriteriaList([...criteriaList])
+					                     }}
+					                     setPhoto={(value) => {
+						                     criteria.photo = value
+						                     setCriteriaList([...criteriaList])
+					                     }}
+					/>
 				})}
 			</View>
 
@@ -241,9 +258,7 @@ const VisitDetails = () => {
 			  <View style={styles.innerContainer}>
 				  <View style={styles.rowWithIcon}>
 					  <CodeConfirmation value={value} setValue={setValue} redirect={false} widthInp={40} />
-					  {value >= 100000 ? (<>
-						  {updateCriterias()}
-						</>) : null}
+					  {value >= 100000 ? updateCriterias() : null}
 				  </View>
 			  </View>) : null}
 
