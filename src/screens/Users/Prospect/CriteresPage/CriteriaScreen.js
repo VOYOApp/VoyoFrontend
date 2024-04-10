@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
@@ -11,7 +11,7 @@ import CustomButton from "../../../../components/CustomButton"
 const CriteriaScreen = () => {
 	const { t } = useTranslation()
 	const Tab = createMaterialTopTabNavigator()
-
+	const [btnDisabled, setBtnDisabled] = useState(true)
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
 	const route = useRoute()
@@ -23,7 +23,7 @@ const CriteriaScreen = () => {
 
 	const addCriteriaCard = () => {
 		const newCriteriaList = [...criteriaList, {
-			criteria: "", photo_required: false, video_required: false, reusable: false,
+			id: Math.random(), criteria: "", photo_required: false, video_required: false, reusable: false,
 		}]
 		setCriteriaList(newCriteriaList)
 	}
@@ -52,6 +52,16 @@ const CriteriaScreen = () => {
 			},
 		})
 	}
+
+
+	useEffect(() => {
+		function checkAsCriteria() {
+			const isAnyCriteriaEmpty = criteriaList.some(criteria => criteria.criteria === "");
+			setBtnDisabled(isAnyCriteriaEmpty);
+		}
+
+		checkAsCriteria();
+	}, [criteriaList]);
 
 	const scrollViewRef = useRef(null)
 
@@ -111,6 +121,7 @@ const CriteriaScreen = () => {
 			              onPress={onNextPressed}
 			              bgColor={"#FE881B"}
 			              widthBtn={"90%"}
+			              deactivated={btnDisabled}
 			              heightBtn={43} />
 		</View>
 

@@ -39,6 +39,7 @@ const CriteriaCard = ({
 						  onPress={() => {
 							  setCheckedPhoto(!checkedPhoto)
 						  }}
+						  color="orange"
 						/>
 						<Text>{t("common.photo.one")}</Text>
 					</View>
@@ -46,8 +47,9 @@ const CriteriaCard = ({
 						<Checkbox
 						  status={checkedVideo ? "checked" : "unchecked"}
 						  onPress={() => {
-							  // setCheckedVideo(!checkedVideo)
+							  setCheckedVideo(!checkedVideo)
 						  }}
+						  color="orange"
 						  disabled={true}
 						/>
 						<Text>{t("common.video.one")}</Text>
@@ -104,6 +106,7 @@ const CriteriaCard = ({
 							  setCheckedPhoto(!checkedPhoto)
 							  setIsPhotoRequired(!checkedPhoto)
 						  }}
+						  color="orange"
 						/>
 						<Text>{t("common.photo.one")}</Text>
 					</View>
@@ -114,8 +117,10 @@ const CriteriaCard = ({
 							  setCheckedVideo(!checkedVideo)
 							  setIsVideoRequired(!checkedVideo)
 						  }}
+						  color="orange"
+						  disabled={true}
 						/>
-						<Text>{t("common.video.one")}</Text>
+						<Text className={'text-gray-500'}>{t("common.video.one")}</Text>
 					</View>
 					<View style={styles.checkbox}>
 						<Checkbox
@@ -124,6 +129,7 @@ const CriteriaCard = ({
 							  setCheckedReusable(!checkedReusable)
 							  setIsReusable(!checkedReusable)
 						  }}
+						  color="orange"
 						/>
 						<Text>{t("common.reusable")}</Text>
 					</View>
@@ -154,7 +160,7 @@ const styles = StyleSheet.create({
 	}, checkboxes: {
 		flexDirection: "column", justifyContent: "space-between",
 	}, checkbox: {
-		flexDirection: "row", alignItems: "center",
+		flexDirection: "row", alignItems: "center"
 	}, underTheTextArea: {
 		padding: 5, flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end",
 	}, icon: {

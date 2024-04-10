@@ -44,7 +44,7 @@ const VisitorAvailability = () => {
 
 	const addCriteriaCard = () => {
 		const newCriteriaList = [...criteriaList, {
-			id: user?.phone_number ?? Date.now(),
+			id: Math.random(),
 			"availability": '',
 			"duration": '',
 			"repeat": '',

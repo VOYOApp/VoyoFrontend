@@ -130,7 +130,7 @@ const RecapRequest = () => {
 		</View>
 
 		<View style={styles.bottomButtons}>
-			<CustomButton text={"Payer "+visit.price + platformCost +"€"}
+			<CustomButton text={"Payer "+ (visit.price + platformCost) +"€"}
 			              onPress={createVisit}
 			              bgColor={"#FE881B"}
 			              widthBtn={"90%"}
