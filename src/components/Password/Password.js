@@ -2,27 +2,50 @@ import { Image, StyleSheet, Text, View } from "react-native"
 import CustomInput from "../CustomInput"
 import React, { useState } from "react"
 
-const Password = () => {
-	const [password, setPassword] = useState("")
-	const [passwordConfirmation, setPasswordConfirmation] = useState("")
+const Password = ({ setPasswordConfirmation, setPassword, setIsValidPwd}) => {
+	const [pwd, setPwd] = useState("")
+	const [pwdConfirmation, setPwdConfirmation] = useState("")
 
 	const [isLengthValid, setIsLengthValid] = useState(false)
 	const [hasSpecialChar, setHasSpecialChar] = useState(false)
 	const [hasNumber, setHasNumber] = useState(false)
 	const [hasUpperCase, setHasUpperCase] = useState(false)
 
+	const checkPswIsValid = (pswd, confirm_pswd) => {
+		let passwordMatch = pswd === confirm_pswd
+		let passwordIsNotEmpty = pswd !== ""
+		let isLengthValid = pswd.length >= 8
+		let hasSpecialChar = /[!@#$%^&*()_+={}\[\]:;<>,.?/~`"'\-|\\]/.test(pswd)
+		let hasNumber = /\d/.test(pswd)
+		let hasUpperCase = /[A-Z]/.test(pswd)
+		let isPasswordValid = passwordMatch && passwordIsNotEmpty && isLengthValid && hasSpecialChar && hasNumber && hasUpperCase
+
+		setIsLengthValid(isLengthValid)
+		setHasSpecialChar(hasSpecialChar)
+		setHasNumber(hasNumber)
+		setHasUpperCase(hasUpperCase)
+
+		setIsValidPwd(isPasswordValid)
+
+		console.log(pswd, confirm_pswd)
+	}
+
 	const handlePasswordChange = (text) => {
 		setPassword(text)
+		setPwd(text)
+		checkPswIsValid(text, pwdConfirmation)
 	}
 
 	const handlePasswordConfirmationChange = (text) => {
 		setPasswordConfirmation(text)
+		setPwdConfirmation(text)
+		checkPswIsValid(pwd, text)
 	}
 
 	return(<View>
 	  <View>
 		<CustomInput placeHolder="Mot de passe"
-		             value={password}
+		             value={pwd}
 		             setValue={handlePasswordChange}
 		             secureTextEntry={true}
 		             inputype="password"
@@ -72,7 +95,7 @@ const Password = () => {
 		</View>
 
 		<CustomInput placeHolder="Confirmer le mot de passe"
-		             value={passwordConfirmation}
+		             value={pwdConfirmation}
 		             setValue={handlePasswordConfirmationChange}
 		             secureTextEntry
 		/>

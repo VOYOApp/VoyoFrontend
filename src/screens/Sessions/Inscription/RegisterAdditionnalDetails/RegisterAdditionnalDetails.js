@@ -23,6 +23,7 @@ import { BASE_URL } from "@env"
 import { useTranslation } from "react-i18next"
 import { storeGlobal, storeToken } from "../../../../context/AuthContext"
 import { jwtDecode } from "jwt-decode"
+import Password from "../../../../components/Password"
 
 const RegisterAdditionnalDetails = () => {
 	const { t } = useTranslation()
@@ -37,6 +38,7 @@ const RegisterAdditionnalDetails = () => {
 	const [email, setEmail] = useState(user.email || "")
 	const [password, setPassword] = useState("")
 	const [passwordConfirmation, setPasswordConfirmation] = useState("")
+	const [isValidPwd, setIsValidPwd] = useState(false)
 
 	const [isEnabled, setIsEnabled] = useState(false)
 	const [btnDisabled, setBtnDisabled] = useState(true)
@@ -49,46 +51,22 @@ const RegisterAdditionnalDetails = () => {
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
 
-	const allCriteriaIsValid = (fn, ls, pswd, confirm_pswd, description) => {
-		let passwordMatch = pswd === confirm_pswd
-		let passwordIsNotEmpty = pswd !== ""
-		let isLengthValid = pswd.length >= 8
-		let hasSpecialChar = /[!@#$%^&*()_+={}\[\]:;<>,.?/~`"'\-|\\]/.test(pswd)
-		let hasNumber = /\d/.test(pswd)
-		let hasUpperCase = /[A-Z]/.test(pswd)
-		let isPasswordValid = passwordMatch && passwordIsNotEmpty && isLengthValid && hasSpecialChar && hasNumber && hasUpperCase
-
-		setIsLengthValid(isLengthValid)
-		setHasSpecialChar(hasSpecialChar)
-		setHasNumber(hasNumber)
-		setHasUpperCase(hasUpperCase)
-
-		let isValid = isPasswordValid && ls !== "" && fn !== "" && description !== ""
-
+	const allCriteriaIsValid = (fn, ls, description, vpsw) => {
+		let isValid = vpsw && ls !== "" && fn !== "" && description !== ""
 		setBtnDisabled(!isValid)
 	}
 	const handleLastNameChange = (text) => {
 		setLastName(text)
-		allCriteriaIsValid(firstName, text, password, passwordConfirmation, bio)
+		allCriteriaIsValid(firstName, text, bio, isValidPwd)
 	}
 	const handleFirstNameChange = (text) => {
 		setFirstName(text)
-		allCriteriaIsValid(text, lastName, password, passwordConfirmation, bio)
+		allCriteriaIsValid(text, lastName, bio, isValidPwd)
 	}
 
 	const handleBioChange = (text) => {
 		setBio(text)
-		allCriteriaIsValid(firstName, lastName, password, passwordConfirmation, text)
-	}
-
-	const handlePasswordChange = (text) => {
-		setPassword(text)
-		allCriteriaIsValid(firstName, lastName, text, passwordConfirmation, bio)
-	}
-
-	const handlePasswordConfirmationChange = (text) => {
-		setPasswordConfirmation(text)
-		allCriteriaIsValid(firstName, lastName, password, text, bio)
+		allCriteriaIsValid(firstName, lastName, text, isValidPwd)
 	}
 
 	const toggleSwitch = () => setIsEnabled(previousState => !previousState)
@@ -310,63 +288,14 @@ const RegisterAdditionnalDetails = () => {
 					  alignSelf: "center",
 				  }} />
 
-				  <View>
-					  <CustomInput placeHolder="Mot de passe"
-					               value={password}
-					               setValue={handlePasswordChange}
-					               secureTextEntry={true}
-					               inputype="password"
-					  />
-					  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-						  <Image
-							source={require("../../../../../assets/check-mark-validate.png")}
-							style={{
-								width: 12,
-								height: 12,
-								marginRight: 5,
-								tintColor: isLengthValid ? "green" : "grey",
-							}}
-						  />
-						  <Text style={{ color: isLengthValid ? "green" : "grey" }}>8 caractères ou plus</Text>
-					  </View>
-					  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-						  <Image
-							source={require("../../../../../assets/check-mark-validate.png")}
-							style={{
-								width: 12,
-								height: 12,
-								marginRight: 5,
-								tintColor: hasSpecialChar ? "green" : "grey",
-							}}
-						  />
-						  <Text style={{ color: hasSpecialChar ? "green" : "grey" }}>Charactères spéciaux</Text>
-					  </View>
-					  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-						  <Image
-							source={require("../../../../../assets/check-mark-validate.png")}
-							style={{ width: 12, height: 12, marginRight: 5, tintColor: hasNumber ? "green" : "grey" }}
-						  />
-						  <Text style={{ color: hasNumber ? "green" : "grey" }}>Chiffres</Text>
-					  </View>
-					  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-						  <Image
-							source={require("../../../../../assets/check-mark-validate.png")}
-							style={{
-								width: 12,
-								height: 12,
-								marginRight: 5,
-								tintColor: hasUpperCase ? "green" : "grey",
-							}}
-						  />
-						  <Text style={{ color: hasUpperCase ? "green" : "grey" }}>Majuscules</Text>
-					  </View>
-
-					  <CustomInput placeHolder="Confirmer le mot de passe"
-					               value={passwordConfirmation}
-					               setValue={handlePasswordConfirmationChange}
-					               secureTextEntry
-					  />
-				  </View>
+				  <Password setIsValidPwd={(isValidPwd) => {
+					  setIsValidPwd(isValidPwd)
+					  allCriteriaIsValid(firstName, lastName, bio, isValidPwd)
+				  }} setPassword={(password) => {
+					  setPassword(password)
+				  }} setPasswordConfirmation={(passwordConfirmation) => {
+					  setPasswordConfirmation(passwordConfirmation)
+				  }}></Password>
 			  </View>
 
 			  <View style={{

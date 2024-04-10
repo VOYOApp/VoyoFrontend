@@ -9,17 +9,16 @@ import Password from "../../components/Password/Password"
 
 const ResetPWD = () => {
 	const { t } = useTranslation()
-	const [password, setPassword] = useState("")
-	const [btnDisabled, setBtnDisabled] = useState(true)
 	const navigation = useNavigation()
 	const { height } = useWindowDimensions()
 
-	const onSignInPressed = () => {
+	const [password, setPassword] = useState("")
+	const [passwordConfirmation, setPasswordConfirmation] = useState("")
+	const [isValidPwd, setIsValidPwd] = useState(false)
+	const [btnDisabled, setBtnDisabled] = useState(true)
 
-	}
-
-	const onForgotPasswordPressed = () => {
-		console.warn("Forgot password pressed")
+	const onResetPwd = async () => {
+		console.log(password, passwordConfirmation)
 	}
 
 	return (
@@ -28,9 +27,15 @@ const ResetPWD = () => {
 		  <View style={{ width: "100%" }}>
 			  <Text style={[styles.title, { marginTop: 20 }]}>Reinitialisation MDP</Text>
 
-			  <Password></Password>
+			  <Password setIsValidPwd={(isValidPwd) => {
+				  setIsValidPwd(isValidPwd)
+			  }} setPassword={(password) => {
+				  setPassword(password)
+			  }} setPasswordConfirmation={(passwordConfirmation) => {
+				  setPasswordConfirmation(passwordConfirmation)
+			  }}></Password>
 
-			  <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"} deactivated={btnDisabled}/>
+			  <CustomButton text="Se connecter" onPress={onResetPwd} bgColor={"black"} deactivated={btnDisabled && !isValidPwd} />
 		  </View>
 	  </View>
 	)
@@ -51,13 +56,13 @@ const styles = StyleSheet.create({
 	},
 	link: {
 		color: "#FE881B",
-		marginBottom: 10
+		marginBottom: 10,
 	},
 	error: {
 		color: "red",
 		fontWeight: "bold",
-		marginBottom: 10
-	}
+		marginBottom: 10,
+	},
 })
 
 export default ResetPWD
