@@ -151,10 +151,8 @@ const RegisterAdditionnalDetails = () => {
 									})
 									.catch((error) => {
 										// Gérez les erreurs liées à la création de l'utilisateur avec e-mail et mot de passe
-										const errorCode = error.code
-										const errorMessage = error.message
-										console.log(errorCode)
-										console.log(errorMessage)
+										console.log(error.code)
+										console.log(error.message)
 									})
 								}catch (e){
 									console.log("An error has occurred: " + e)

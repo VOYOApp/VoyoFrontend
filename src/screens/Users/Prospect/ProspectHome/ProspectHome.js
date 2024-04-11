@@ -7,9 +7,10 @@ import HeaderHome from "../../../../components/HeaderHome"
 import CustomFooter from "../../../../components/CustomFooter"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import CardListHomeProspect from "../CardListHomeProspect"
-import { getGlobal } from "../../../../context/AuthContext"
-import { signInWithEmailAndPassword } from "firebase/auth"
+import { getGlobal, getToken } from "../../../../context/AuthContext"
+import { signInWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { auth } from "../../../../../firebaseConfig"
+import { jwtDecode } from "jwt-decode"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -40,20 +41,58 @@ const ProspectHome = () => {
 	}
 
 	useEffect(() => {
-		function firebaseCnx(email, pswd) {
-			if (email) {
-				signInWithEmailAndPassword(auth, email, pswd)
-				.then((userCredential) => {
-					console.log("Connection firebase successful !")
-				})
-				.catch((error) => {
-					console.log(error.code, " ", error.message)
-				})
-			}
+		function firebaseCnx(user_data, token) {
+				const decodedToken = jwtDecode(token)
+					if (user_data?.email) {
+						signInWithEmailAndPassword(auth, user_data?.email, user_data?.password)
+						.then((userCredential) => {
+							console.log("Firebase sign in success")
+							const user = userCredential.user
+							if (user.photoURL === null) {
+								updateProfile(user,{
+									photoURL: user_data?.profile_picture ? user_data?.profile_picture : "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
+								})
+								.then(() => {
+									console.log("Avatar updated !")
+								})
+								.catch((error) => {
+									console.error("Error update avatar : " + error.message)
+								})
+							}
+							if (user.displayName === null) {
+								updateProfile(user,{
+									displayName: user_data.first_name + " " + user_data.last_name[0] + '.',
+								})
+								.then(() => {
+									console.log("Display name updated !")
+								})
+								.catch((error) => {
+									console.error("Error update display name : " + error.message)
+								})
+							}
+							if (user.phoneNumber === null) {
+								user.phoneNumber = decodedToken?.phone_number
+								auth.updateCurrentUser(user)
+								.then(() => {
+									console.log("Phone number updated !");
+								})
+								.catch((error) => {
+									console.error("Error phone number updated : " + error.message)
+								})
+							}
+						})
+					}
 		}
 
-		getGlobal("user_details").then((data) => {
-			firebaseCnx(data?.email, data?.password)
+		getToken().then((token) => {
+			getGlobal("user_details").then((user) => {
+				firebaseCnx(user, token)
+				console.log(auth?.currentUser)
+			}).catch((error) => {
+				console.error('Error getGlobal data : '+error)
+			})
+		}).catch((error) => {
+			console.error('Error get token : '+error)
 		})
 	}, [])
 
