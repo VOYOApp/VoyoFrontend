@@ -4,19 +4,17 @@ import { Avatar, ListItem } from "react-native-elements"
 import React from "react"
 
 const CustomListItem = ({id, chatName, chatAvatar, enterChat}) => {
-	//TODO AFFICHER L'IMAGE DE L'UTILISATEUR SI ELLE EXISTE
 	const navigation = useNavigation()
 	const { height } = useWindowDimensions()
 	return (
 	  <ListItem onPress={() => enterChat(id, chatName, chatAvatar)} key={id} bottomDivider>
-		  {/*<Avatar*/}
-		  {/*  rounded*/}
-		  {/*  source={require("../../../assets/avatar.png")}*/}
-		  {/*/>*/}
-		  <Image
-		    style={[styles.profilePic, { height: height }]}
-		    src={chatAvatar}
-		    resizeMode="contain" />
+		  <Avatar
+		    rounded
+		    size="medium"
+		    source={{
+			    uri: chatAvatar || require("../../../assets/avatar.png"),
+		    }}
+		  />
 		  <ListItem.Content>
 			  <ListItem.Title className={'font-bold'}>
 				  {chatName}
@@ -29,14 +27,5 @@ const CustomListItem = ({id, chatName, chatAvatar, enterChat}) => {
 	  </ListItem>
 	)
 }
-
-const styles = StyleSheet.create({
-  profilePic: {
-	width: "100%",
-	  maxWidth: 45,
-	  maxHeight: 45,
-	  borderRadius: 100,
-}
-})
 
 export default CustomListItem

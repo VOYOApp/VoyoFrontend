@@ -63,9 +63,9 @@ const RecapRequest = () => {
 		// console.log(config)
 
 		axios.request(config)
-		.then((response) => {
+		.then(async (response) => {
 			console.log(JSON.stringify(response.data));
-
+			await createChat()
 		})
 		.catch((error) => {
 			console.log(error);
@@ -87,6 +87,23 @@ const RecapRequest = () => {
 		})
 	})
 
+	const createChat = async () => {
+		const chatData = {
+			members: members,
+			users: users.map((user)=>({
+				avatar: user.avatar,
+				name: user.name,
+			})),
+			admin: "admin@example.com",
+			lastActivity: serverTimestamp(),
+		};
+		await addDoc(collection(db, "chats"), chatData);
+		// const chatRef = await addDoc(collection(db, "chats"), chatData);
+		// const chatId = chatRef.id;
+		// navigation.navigate("Common", { params: { id: chatId, chatName }, screen: "chat" });
+		navigation.navigate("Prospect", { screen: "ChatChannel" });
+	};
+
 	useEffect(() => {
 		getGlobal("user_details").then(async (data) => {
 			const token = await getToken()
@@ -94,62 +111,20 @@ const RecapRequest = () => {
 			  {
 				  headers: { Authorization: `Bearer ${token}` },
 			  }).then((result)=>{
-				// setFirstEmail(data?.email)
-
-				// setMembers([{
-				// 	email:data?.email,
-				// 	avatar:data?.profile_picture,
-				// 	name: data?.first_name + " " +data?.last_name
-				// },{
-				// 	email:result?.data.email,
-				// 	avatar:visit?.profile_picture,
-				// 	name: visit?.first_name + " " + visit?.last_name
-				// }
-				// ])
 				setMembers([
 					data?.email,
 					result?.data.email,
-					[{
-						avatar:data?.profile_picture,
-						name: data?.first_name + " " +data?.last_name
-					},{
-						avatar:visit?.profile_picture,
-						name: visit?.first_name + " " + visit?.last_name
-					}],
 				])
-				// setUser([{
-				// 	avatar:data?.profile_picture,
-				// 	name: data?.first_name + " " +data?.last_name
-				// },{
-				// 	avatar:visit?.profile_picture,
-				// 	name: visit?.first_name + " " + visit?.last_name
-				// }])
+				setUser([{
+					avatar:data?.profile_picture,
+					name: data?.first_name + " " +data?.last_name
+				},{
+					avatar:visit?.profile_picture,
+					name: visit?.first_name + " " + visit?.last_name
+				}])
 			})
 		})
 	}, []);
-
-	const createChat = async () => {
-		// console.log(members)
-		// console.log(users)
-		const chatData = {
-			members: members,
-			// users: users.map((user)=>({
-			// 	avatar: user.avatar,
-			// 	name: user.name,
-			// })),
-			admin: "admin@example.com",
-			lastActivity: serverTimestamp(),
-		};
-
-		const chatRef = await addDoc(collection(db, "chats"), chatData);
-
-		const chatId = chatRef.id;
-
-		navigation.navigate("Common", { params: { id: chatId, chatName }, screen: "Chat" });
-	};
-
-
-	// console.log(visit)
 	return (<View style={styles.root}>
 		<View style={styles.headTitles}>
 			<Text style={styles.title}>{t("prospect.send_request")}</Text>
@@ -198,7 +173,7 @@ const RecapRequest = () => {
 
 		<View style={styles.bottomButtons}>
 			<CustomButton text={"Payer "+ (visit.price + platformCost) +"€"}
-			              onPress={createChat}
+			              onPress={createVisit}
 			              bgColor={"#FE881B"}
 			              widthBtn={"90%"}
 			              heightBtn={43} />

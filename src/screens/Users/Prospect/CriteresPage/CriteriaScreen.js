@@ -18,7 +18,7 @@ const CriteriaScreen = () => {
 	const data = route.params?.data
 
 	const [criteriaList, setCriteriaList] = useState([
-	  {criteria: "", photo_required: false, video_required: false, reusable: false}
+	  {id: Math.random(), criteria: "", photo_required: false, video_required: false, reusable: false}
 	])
 
 	const addCriteriaCard = () => {
@@ -35,6 +35,14 @@ const CriteriaScreen = () => {
 	}
 
 	const onNextPressed = () => {
+		const criteriaListWithoutId =criteriaList.map((criteria) => {
+			return ({
+				criteria: criteria.criteria,
+				photo_required: criteria.photo_required,
+				video_required: criteria.video_required,
+				reusable: criteria.reusable,
+		})})
+
 		navigation.navigate("SearchProspect", {
 			screen: "Recap", params: {
 				phone_number_visitor: data.phoneNumber,
@@ -44,7 +52,7 @@ const CriteriaScreen = () => {
 				start_time: data.start_time,
 				price: data.pricing,
 				type_real_estate_id: data.type_real_estate_id,
-				criterias: criteriaList,
+				criterias: criteriaListWithoutId,
 				first_name: data.firstName,
 				last_name: data.lastName,
 				profile_picture: data.profilePicture

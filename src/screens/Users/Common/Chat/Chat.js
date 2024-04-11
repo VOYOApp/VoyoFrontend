@@ -67,7 +67,6 @@ const Chat = ({ navigation, route }) => {
 		updateDoc(doc(db, `chats/${chatId}`), { lastActivity: serverTimestamp() });
 	}, [id]);
 
-
 	return (
 	  <GiftedChat
 		messages={messages}

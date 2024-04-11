@@ -7,6 +7,7 @@ import CustomListItem from "../../../../components/CustomListItem"
 import BackButton from "../../../../components/BackButton"
 import { getGlobal } from "../../../../context/AuthContext"
 const ChatChannel = ({navigation}) => {
+	const [userDetails, setUserDetails] = useState(null);
 	const [chats, setChats] = useState([])
 
 	useEffect(() => {
@@ -20,17 +21,22 @@ const ChatChannel = ({navigation}) => {
 				const unsubscribe = onSnapshot(q, (snapshot) => {
 					const chatData = snapshot.docs.map((doc) => {
 						const chat = doc.data();
-						console.log(chat.members)
-						console.log(chat.members[0])
-						const firstMembers =  chat.members[0]
+						let chatName = "";
+						let chatAvatar = "";
 
-						// Utilisez le nom du second membre s'il a un email vide, sinon utilisez celui du premier membre
-						const chatName = chat.members[0].name;
-						const chatAvatar = chat.members[0].avatar;
+						// Trouver l'utilisateur actuel dans les membres du chat
+						const currentUserIndex = chat.members.findIndex(member => member === auth.currentUser.email);
+
+						if (currentUserIndex !== -1) {
+							// Utilisateur actuel trouvé, utiliser l'autre membre du chat comme nom du chat
+							const otherMemberIndex = currentUserIndex === 0 ? 1 : 0;
+							chatName = chat.users[otherMemberIndex].name;
+							chatAvatar = chat.users[otherMemberIndex].avatar;
+						}
 
 						return {
 							id: doc.id,
-							data: { ...chat, chatName, chatAvatar}, // Ajoutez le chatName à la donnée du chat
+							data: { ...chat, chatName, chatAvatar }, // Ajoutez le chatName à la donnée du chat
 						};
 					});
 					setChats(chatData);
@@ -45,27 +51,42 @@ const ChatChannel = ({navigation}) => {
 		fetchChats();
 	}, []);
 
-	useLayoutEffect(async () => {
-		let user_details = await getGlobal("user_details");
+	useEffect(() => {
+		const fetchUserDetails = async () => {
+			try {
+				const userDetails = await getGlobal("user_details");
+				setUserDetails(userDetails);
+			} catch (error) {
+				// Handle error
+				console.error("Error fetching user details:", error);
+			}
+		};
+
+		fetchUserDetails();
+	}, []);
+
+	useEffect(() => {
+		if (!userDetails) return;
 
 		navigation.setOptions({
-			title: (auth?.currentUser?.displayName || user_details?.first_name) ?? "Chat",
+			title: (auth?.currentUser?.displayName || userDetails.first_name) ?? "Chat",
 			headerTitleStyle: { fontSize: 18 },
 			headerLeft: () => (
 			  <View className={'flex-row items-center ml-4'}>
 				  <BackButton navigation={navigation}/>
 				  <TouchableOpacity className={'ml-4'} onPress={() => navigation.navigate("HomeProspect", { screen: "UserPage" })}>
 					  <Avatar
-					    rounded
-					    source={{
-						    uri: (auth?.currentUser?.photoURL || user_details?.profile_picture) ?? "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
-					    }}
+						rounded
+						source={{
+							uri: (auth?.currentUser?.photoURL || userDetails.profile_picture) ?? "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
+						}}
+						size={"small"}
 					  />
 				  </TouchableOpacity>
 			  </View>
 			),
-		})
-	}, [navigation]);
+		});
+	}, [navigation, userDetails]);
 
 	const enterChat = (id, chatName, chatAvatar) => {
 		navigation.navigate("Common", { params: {id, chatName, chatAvatar}, screen: "Chat" })
