@@ -25,7 +25,7 @@ const RecapRequest = () => {
 
 	const [chatName, setChatName] = useState("TEST");
 	const [members, setMembers] = useState([]);
-	const [firstEmail, setFirstEmail] = useState('');
+	const [users, setUser] = useState('');
 
 	function formatDateTime(date) {
 		const options = {
@@ -88,40 +88,63 @@ const RecapRequest = () => {
 	})
 
 	useEffect(() => {
-		getGlobal("user_details").then((data) => {
-			setFirstEmail(data?.email)
-			setMembers([{
-				email:data?.email,
-				avatar:data?.profile_picture,
-				name: data?.first_name + " " +data?.last_name
-			},{
-				email:"",
-				avatar:visit?.profile_picture,
-				name: visit?.first_name + " " + visit?.last_name
-			}
-			])
+		getGlobal("user_details").then(async (data) => {
+			const token = await getToken()
+			axios.get(`${process.env.BASE_URL}/api/user/email?phoneNumber=${visit?.phone_number_visitor.replace("+","%2B")}`,
+			  {
+				  headers: { Authorization: `Bearer ${token}` },
+			  }).then((result)=>{
+				// setFirstEmail(data?.email)
+
+				// setMembers([{
+				// 	email:data?.email,
+				// 	avatar:data?.profile_picture,
+				// 	name: data?.first_name + " " +data?.last_name
+				// },{
+				// 	email:result?.data.email,
+				// 	avatar:visit?.profile_picture,
+				// 	name: visit?.first_name + " " + visit?.last_name
+				// }
+				// ])
+				setMembers([
+					data?.email,
+					result?.data.email,
+					[{
+						avatar:data?.profile_picture,
+						name: data?.first_name + " " +data?.last_name
+					},{
+						avatar:visit?.profile_picture,
+						name: visit?.first_name + " " + visit?.last_name
+					}],
+				])
+				// setUser([{
+				// 	avatar:data?.profile_picture,
+				// 	name: data?.first_name + " " +data?.last_name
+				// },{
+				// 	avatar:visit?.profile_picture,
+				// 	name: visit?.first_name + " " + visit?.last_name
+				// }])
+			})
 		})
 	}, []);
 
 	const createChat = async () => {
+		// console.log(members)
+		// console.log(users)
 		const chatData = {
-			members: members.map((user) => ({
-				email:user.email,
-				avatar: user.avatar,
-				name: user.name,
-			})),
+			members: members,
+			// users: users.map((user)=>({
+			// 	avatar: user.avatar,
+			// 	name: user.name,
+			// })),
 			admin: "admin@example.com",
-			firstMemberEmail: firstEmail,
 			lastActivity: serverTimestamp(),
 		};
 
-		// Ajouter le document chat à Firestore
 		const chatRef = await addDoc(collection(db, "chats"), chatData);
 
-		// Récupérer l'ID du document créé
 		const chatId = chatRef.id;
 
-		// Rediriger vers l'écran de chat avec le nouvel ID de chat
 		navigation.navigate("Common", { params: { id: chatId, chatName }, screen: "Chat" });
 	};
 

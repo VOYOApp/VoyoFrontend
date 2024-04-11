@@ -14,18 +14,19 @@ const ChatChannel = ({navigation}) => {
 			try {
 				const q = query(
 				  collection(db, "chats"),
-				  where("firstMemberEmail", "==", auth.currentUser.email),
+				  where("members", "array-contains", auth.currentUser.email),
 				  orderBy("lastActivity", "desc")
 				);
 				const unsubscribe = onSnapshot(q, (snapshot) => {
 					const chatData = snapshot.docs.map((doc) => {
 						const chat = doc.data();
-						const firstMember = chat.members[0];
-						const secondMember = chat.members[1];
+						console.log(chat.members)
+						console.log(chat.members[0])
+						const firstMembers =  chat.members[0]
 
 						// Utilisez le nom du second membre s'il a un email vide, sinon utilisez celui du premier membre
-						const chatName = secondMember.email === "" ? secondMember.name : firstMember.name;
-						const chatAvatar = secondMember.email === "" ? secondMember.avatar : firstMember.avatar;
+						const chatName = chat.members[0].name;
+						const chatAvatar = chat.members[0].avatar;
 
 						return {
 							id: doc.id,

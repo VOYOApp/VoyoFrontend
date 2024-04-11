@@ -232,11 +232,6 @@ const styles = StyleSheet.create({
 	body: {
 		padding: 20,
 	},
-	title: {
-		fontSize: 28,
-		// fontWeight: 'bold',
-		marginBottom: 10,
-	},
 	passwordValidation: {
 		display: "flex",
 		flexDirection: "row",
