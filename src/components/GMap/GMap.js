@@ -74,10 +74,10 @@ const GMap = ({ hasSearch = false, marker, onData }) => {
 
 			})
 			.catch((error) => {
-				console.error(error)
+				console.log(error)
 			})
 		} catch (e) {
-			console.error("Error: ", e)
+			console.log("Error: ", e)
 		}
 	}
 

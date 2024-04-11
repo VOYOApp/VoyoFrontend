@@ -141,12 +141,12 @@ const RegisterAdditionnalDetails = () => {
 											})
 											.catch((error) => {
 												// Gérez les erreurs liées à la mise à jour du numéro de téléphone
-												console.error(error.message)
+												console.log(error.message)
 											})
 										})
 										.catch((error) => {
 											// Gérez les erreurs liées à la mise à jour du profil
-											console.error(error.message)
+											console.log(error.message)
 										})
 									})
 									.catch((error) => {

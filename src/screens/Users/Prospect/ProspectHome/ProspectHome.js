@@ -8,7 +8,7 @@ import CustomFooter from "../../../../components/CustomFooter"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import CardListHomeProspect from "../CardListHomeProspect"
 import { getGlobal, getToken } from "../../../../context/AuthContext"
-import { signInWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { auth } from "../../../../../firebaseConfig"
 import { jwtDecode } from "jwt-decode"
 
@@ -56,7 +56,7 @@ const ProspectHome = () => {
 									console.log("Avatar updated !")
 								})
 								.catch((error) => {
-									console.error("Error update avatar : " + error.message)
+									console.log("Error update avatar : " + error.message)
 								})
 							}
 							if (user.displayName === null) {
@@ -67,7 +67,7 @@ const ProspectHome = () => {
 									console.log("Display name updated !")
 								})
 								.catch((error) => {
-									console.error("Error update display name : " + error.message)
+									console.log("Error update display name : " + error.message)
 								})
 							}
 							if (user.phoneNumber === null) {
@@ -77,29 +77,67 @@ const ProspectHome = () => {
 									console.log("Phone number updated !");
 								})
 								.catch((error) => {
-									console.error("Error phone number updated : " + error.message)
+									console.log("Error phone number updated : " + error.message)
 								})
 							}
+						}).catch((error) => {
+							console.log("Error sign in : " + error.message)
+
+							createUserWithEmailAndPassword(auth, user_data?.email, user_data?.password)
+							.then((userCredential) => {
+								console.log("Firebase create user success")
+								const user = userCredential.user
+								if (user.photoURL === null) {
+									updateProfile(user,{
+										photoURL: user_data?.profile_picture ? user_data?.profile_picture : "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
+									})
+									.then(() => {
+										console.log("Avatar updated !")
+									})
+									.catch((error) => {
+										console.log("Error update avatar : " + error.message)
+									})
+								}
+								if (user.displayName === null) {
+									updateProfile(user,{
+										displayName: user_data.first_name + " " + user_data.last_name[0] + '.',
+									})
+									.then(() => {
+										console.log("Display name updated !")
+									})
+									.catch((error) => {
+										console.log("Error update display name : " + error.message)
+									})
+								}
+								if (user.phoneNumber === null) {
+									user.phoneNumber = decodedToken?.phone_number
+									auth.updateCurrentUser(user)
+									.then(() => {
+										console.log("Phone number updated !");
+									})
+									.catch((error) => {
+										console.log("Error phone number updated : " + error.message)
+									})
+								}
+							}).catch((error) => {
+								console.log("Error create user : " + error.message)
+							})
 						})
 					}
 		}
 
 		getToken().then((token) => {
 			getGlobal("user_details").then((user) => {
+				setFirstname(user?.first_name)
+				setIcon(user?.profile_picture)
+
 				firebaseCnx(user, token)
 				console.log(auth?.currentUser)
 			}).catch((error) => {
-				console.error('Error getGlobal data : '+error)
+				console.log('Error getGlobal data : '+error)
 			})
 		}).catch((error) => {
-			console.error('Error get token : '+error)
-		})
-	}, [])
-
-	useEffect(() => {
-		getGlobal("user_details").then((data) => {
-			setFirstname(data?.first_name)
-			setIcon(data?.profile_picture)
+			console.log('Error get token : '+error)
 		})
 	}, [firstname, icon])
 

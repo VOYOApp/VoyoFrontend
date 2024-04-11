@@ -44,7 +44,7 @@ const ChatChannel = ({navigation}) => {
 
 				return unsubscribe;
 			} catch (error) {
-				console.error("Error fetching chats:", error);
+				console.log("Error fetching chats:", error);
 			}
 		};
 
@@ -58,7 +58,7 @@ const ChatChannel = ({navigation}) => {
 				setUserDetails(userDetails);
 			} catch (error) {
 				// Handle error
-				console.error("Error fetching user details:", error);
+				console.log("Error fetching user details:", error);
 			}
 		};
 

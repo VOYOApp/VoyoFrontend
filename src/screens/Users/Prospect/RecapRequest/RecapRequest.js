@@ -83,7 +83,7 @@ const RecapRequest = () => {
 			setLabelRealEstate(response.data.label)
 			setDurationRealEstate(formatDuration(new Date(response.data.duration)))
 		}).catch((error) => {
-			console.error(error)
+			console.log(error)
 		})
 	})
 

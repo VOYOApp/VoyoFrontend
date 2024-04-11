@@ -44,7 +44,7 @@ const App = () => {
 					setLoading(false);
 				}
 			} catch (error) {
-				console.error('Erreur lors de la récupération du token :', error);
+				console.log('Erreur lors de la récupération du token :', error);
 			}
 		}, 1000);
 
