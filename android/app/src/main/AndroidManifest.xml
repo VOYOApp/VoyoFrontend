@@ -1,24 +1,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="com.yohann69.voyoapp">
+          package="com.yohann69.voyoapp">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <queries>
         <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="https" />
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:scheme="https"/>
         </intent>
     </queries>
     <application
@@ -31,22 +31,22 @@
             android:supportsRtl="true">
         <meta-data
                 android:name="expo.modules.updates.ENABLED"
-                android:value="true" />
+                android:value="true"/>
         <meta-data
                 android:name="expo.modules.updates.EXPO_SDK_VERSION"
-                android:value="49.0.0" />
+                android:value="49.0.0"/>
         <meta-data
                 android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH"
-                android:value="ALWAYS" />
+                android:value="ALWAYS"/>
         <meta-data
                 android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS"
-                android:value="0" />
+                android:value="0"/>
         <meta-data
                 android:name="expo.modules.updates.EXPO_UPDATE_URL"
-                android:value="https://exp.host/@voyo/voyofrontend" />
+                android:value="https://exp.host/@voyo/voyofrontend"/>
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyBznSC8S1mPU-GPjsxuagQqnNK3a8xVOl4" />
+                android:value="AIzaSyBznSC8S1mPU-GPjsxuagQqnNK3a8xVOl4"/>
 
         <activity
                 android:name=".MainActivity"
@@ -58,20 +58,20 @@
                 android:exported="true"
                 android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="com.yohann69.voyoapp" />
+                <data android:scheme="com.yohann69.voyoapp"/>
             </intent-filter>
         </activity>
         <activity
                 android:name="com.facebook.react.devsupport.DevSettingsActivity"
-                android:exported="false" />
+                android:exported="false"/>
     </application>
 </manifest>
