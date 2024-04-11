@@ -24,6 +24,7 @@ const VisitDetails = () => {
 	const [decodedToken, setDecodedToken] = useState(null)
 	const [value, setValue] = useState("")
 	const [criteriaList, setCriteriaList] = useState(null)
+	const [bgColor, setBgColor] = useState("rgba(164,164,164,0.22)")
 
 	useEffect(() => {
 		const fetchVisitDetails = async () => {
@@ -45,6 +46,19 @@ const VisitDetails = () => {
 		fetchVisitDetails().then(r => r).catch(e => e)
 	}, [id])
 
+	useEffect(() => {
+		// Update criteria data when value state changes
+		if (value >= 100000) {
+			for (let i = 0; i < criteriaList.length; i++) {
+				if (criteriaList[i].criteria_answer === null || ((criteriaList[i].photo === null || criteriaList[i].photo === "") && criteriaList[i].photo_required)) {
+					alert("Veuillez remplir tous les critères avant de valider la visite.")
+
+					return
+				}
+			}
+			updateCriterias()
+		}
+	}, [value])
 
 	async function changeVisitStatus(stats) {
 		try {
@@ -62,23 +76,50 @@ const VisitDetails = () => {
 	}
 
 	async function updateCriterias() {
-		criteriaList.map(async (criteria) => {
-			try {
-				const token = await getToken()
-				const response = await axios.patch(`${process.env.BASE_URL}/api/criteria?id=${criteria.id}`, {
-					criteria_answer: value, photo: pic,
-				}, {
-					headers: { Authorization: `Bearer ${token}` },
+		const token = await getToken()
+
+		try {
+			const res = await axios.post(`${process.env.BASE_URL}/api/visit/code?idVisit=${id}&code=${value}`, {}, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+
+			if (res.status === 204) {
+				criteriaList.map(async (criteria) => {
+					try {
+						const response = await axios.patch(`${process.env.BASE_URL}/api/criteria?id=${criteria.id}`, {
+							criteria_answer: criteria.criteria_answer, photo: criteria.photo,
+						}, {
+							headers: { Authorization: `Bearer ${token}` },
+						})
+						if (response.status === 204) {
+							try {
+								const response = await axios.patch(`${process.env.BASE_URL}/api/visit?id=${id}`, { status: "DONE" }, {
+									headers: { Authorization: `Bearer ${token}` },
+								})
+								if (response.status === 204) {
+									setBgColor("rgba(76,175,80,0.51)")
+									navigation.replace("VisitDetails", { idVisit: id })
+								}
+							} catch (error) {
+								console.error("Error fetching visit details:", error)
+								alert("Une erreur est survenue. Veuillez réessayer.")
+								setBgColor("rgba(242,44,61,0.59)")
+							}
+
+						}
+					} catch (error) {
+						console.error("Error fetching visit details:", error)
+						alert("Une erreur est survenue. Veuillez réessayer.")
+					}
 				})
-				if (response.status === 204) {
-					console.log("Criteria updated")
-					// navigation.replace('VisitDetails', { idVisit: id });
-				}
-			} catch (error) {
-				console.error("Error fetching visit details:", error)
 			}
-		})
+
+		} catch (e) {
+			console.error("Error fetching visit details:", e)
+			setBgColor("rgba(242,44,61,0.59)")
+		}
 	}
+
 
 	return (<ScrollView style={styles.root}>
 		{visitData ? (<View style={styles.container}>
@@ -127,7 +168,21 @@ const VisitDetails = () => {
 			  <View style={styles.innerContainer}>
 				  <View style={styles.rowWithIcon}>
 					  <Icon size={23} source={Images.code} />
-					  <Text style={styles.textdetails}>Code de vérification : {visitData.visit.details.code}</Text>
+					  <Text style={styles.textdetails}>Code de vérification :</Text>
+
+				  </View>
+				  <View style={{
+					  flexDirection: "row",
+				  }}>
+					  {visitData.visit.details.code
+					  .toString() // Convert number to string
+					  .split("") // Split the string into individual digits
+					  .map((digit, index) => (<React.Fragment key={index}>
+							<Text style={styles.cell}>{digit}</Text>
+							{/* Add separator after every two digits, except for the last pair */}
+							{(index + 1) % 2 === 0 && index !== visitData.visit.details.code.toString().length - 1 && (
+							  <Text style={styles.separator}>-</Text>)}
+						</React.Fragment>))}
 				  </View>
 			  </View>) : null}
 
@@ -254,12 +309,13 @@ const VisitDetails = () => {
 			  </View>) : null}
 
 			{/*Validate the visit*/}
-			{(decodedToken.role === "VISITOR" && visitData.visit.details.status === "ACCEPTED") && new Date(visitData.visit.details.date) < new Date() ? (
-			  <View style={styles.innerContainer}>
+			{(decodedToken.role === "VISITOR" && visitData.visit.details.status === "ACCEPTED") ? (
+			  <View style={[styles.innerContainer, { backgroundColor: bgColor }]}>
 				  <View style={styles.rowWithIcon}>
-					  <CodeConfirmation value={value} setValue={setValue} redirect={false} widthInp={40} />
-					  {value >= 100000 ? updateCriterias() : null}
+					  <Text style={{ paddingBottom: 10 }}>Pour valider la visite, veuillez saisir le code de validation
+						  communiqué par la personne qui vous a fait visiter le bien immobilier</Text>
 				  </View>
+				  <CodeConfirmation value={value} setValue={setValue} redirect={false} widthInp={40} />
 			  </View>) : null}
 
 			<View style={{ height: 100 }} />
@@ -316,6 +372,19 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgba(76,175,80,0.51)",
 	}, bgRed: {
 		backgroundColor: "rgba(208,113,113,0.38)",
+	}, cell: {
+		width: 40,
+		height: 50,
+		lineHeight: 48,
+		fontSize: 24,
+		borderWidth: 2,
+		borderColor: "#00000030",
+		backgroundColor: "#00000010",
+		textAlign: "center",
+		borderRadius: 18,
+		marginLeft: 5,
+	}, separator: {
+		height: 2, width: 10, backgroundColor: "#00000030", alignSelf: "center", marginLeft: 5,
 	},
 })
 

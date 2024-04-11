@@ -175,31 +175,29 @@ function Admin() {
 }
 
 
-// function Visitor() {
-// 	return (
-// 	  <Tab.Navigator initialRouteName="HomeVisitor" screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
-// 		  <Tab.Screen name="HomeVisitor" component={HomeVisitor} options={{
-// 			  tabBarLabel: 'Home',
-// 			  tabBarIcon: ({ color }) => (
-// 				<MaterialCommunityIcons name="home" color={color} size={26} />
-// 			  ),
-// 		  }}/>
-// 		  <Tab.Screen name="SearchVisitor" component={SearchVisitor} options={{
-// 		    tabBarLabel: 'Search',
-// 		    tabBarIcon: ({ color }) => (
-// 		      <MaterialCommunityIcons name="magnify" color={color} size={26} />
-// 		    ),
-// 		  }}/>
-// 		  <Tab.Screen name="ChatVisitor" component={ChatVisitor} options={{
-// 		    tabBarLabel: 'CustomListItem',
-// 		    tabBarIcon: ({ color }) => (
-// 		      <MaterialCommunityIcons name="chat" color={color} size={26} />
-// 		    ),
-// 		  }}/>
-// 		  {/* Ajoutez d'autres onglets si nécessaire */}
-// 	  </Tab.Navigator>
-// 	);
-// }
+function Visitor() {
+	return (<Tab.Navigator screenOptions={{
+		tabBarShowLabel: false, tabBarStyle: { marginBottom: 0 },
+	}}>
+		<Tab.Screen name="HomeProspect" component={HomeProspect} options={{
+			headerShown: false, tabBarLabel: "Home", tabBarIcon: ({ color, focused }) => (// <MaterialCommunityIcons name="home" color={color} size={26} />
+			  <Image source={require("../../assets/home_locked.png")} color={color}
+			         style={{ tintColor: focused ? "#F99342" : color, width: 22, height: 22 }} />),
+		}} />
+
+		<Tab.Screen name="ChatChannel" component={ChatChannel} options={{
+			tabBarLabel: "Chat",
+			tabBarIcon: ({ color, focused }) => (<Image source={require("../../assets/chat_locked.png")}
+			                                            style={{
+				                                            tintColor: focused ? "#B34BFF" : color,
+				                                            width: 22,
+				                                            height: 22,
+			                                            }} />),
+		}} />
+		{/*Ajoutez d'autres onglets si nécessaire*/}
+	</Tab.Navigator>)
+}
+
 
 function Navigation({ isLoggedIn, status, role }) {
 
@@ -210,7 +208,7 @@ function Navigation({ isLoggedIn, status, role }) {
 			  <Stack.Screen name="Common" component={Common} />
 		  </Stack.Navigator>) : isLoggedIn && status === "VALIDATED" && role === "VISITOR" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-			  <Stack.Screen name="Prospect" component={Prospect} />
+			  <Stack.Screen name="Prospect" component={Visitor} />
 			  <Stack.Screen name="Common" component={Common} />
 		  </Stack.Navigator>) : isLoggedIn && status === "BANNED" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>

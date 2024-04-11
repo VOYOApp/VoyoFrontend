@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Dimensions, Image, Modal, StyleSheet, TextInput, TouchableOpacity, View } from "react-native"
 import { Icon } from "react-native-paper"
 import Images from "../../../assets"
@@ -11,7 +11,19 @@ const FullScreenImg = ({ preivewWH, img  }) => {
 		setIsFullScreen(!isFullScreen)
 	}
 
-	const screenWidth = Math.round(Dimensions.get("window").width)
+	const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+
+	useEffect(() => {
+		// Get screen width
+		const screenWidth = Math.round(Dimensions.get("window").width);
+
+		// Get image dimensions
+		Image.getSize(img, (width, height) => {
+			// Calculate new height while maintaining aspect ratio
+			const newHeight = (screenWidth / width) * height;
+			setImageSize({ width: screenWidth, height: newHeight });
+		});
+	}, [img]);
 
 	return (
 	  <>
@@ -30,7 +42,7 @@ const FullScreenImg = ({ preivewWH, img  }) => {
 				  </TouchableOpacity>
 				  <Image
 				    source={{ uri: img }}
-				    style={{ width: screenWidth, height: screenWidth}}
+				    style={{ width: imageSize.width, height: imageSize.height}}
 				  />
 			  </View>
 		  </Modal>
