@@ -38,23 +38,23 @@ const HomeVisitCard = ({ data }) => {
 					  {data.status === "ACCEPTED" ? (
 						<View style={styles.rowWithImage}>
 							<Image source={require("../../../assets/icons/014-check.png")} style={styles.logo} />
-							<Text>Rendez-vous accepté</Text>
+							<Text>{t("common.accepted_visit")}</Text>
 						</View>) : data.status === "PENDING" ? (
 						<View style={styles.rowWithImage}>
 							<Image source={require("../../../assets/icons/015-hourglass.png")} style={styles.logo} />
-							<Text>En attente de validation</Text>
+							<Text>{t("common.waiting_validation")}</Text>
 						</View>) : data.status === "REFUSED" ? (
 						<View style={styles.rowWithImage}>
 							<Image source={require("../../../assets/icons/021-refused.png")} style={styles.logo} />
-							<Text>Rendez-vous refusé</Text>
+							<Text>{t("common.refused_visit")}</Text>
 						</View>) : data.status === "CANCELED" ? (
 						<View style={styles.rowWithImage}>
 							<Image source={require("../../../assets/icons/022-cancel.png")} style={styles.logo} />
-							<Text>Rendez-vous annulé</Text>
+							<Text>{t("common.cancelled_visit")}</Text>
 						</View>) : data.status === "DONE" ? (
 						<View style={styles.rowWithImage}>
 							<Image source={require("../../../assets/icons/014-check.png")} style={styles.logo} />
-							<Text>Rendez-vous effectué</Text>
+							<Text>{t("common.visit_done")}</Text>
 						</View>) : null}
 				  </View>
 			  </View>

@@ -55,7 +55,7 @@ const RegisterPhone = () => {
 			        style={[styles.link, { marginBottom: 10 }]}>{t("common.already_have_an_account")}</Text>
 		  </View>
 
-		  <CustomButton text="Suivant" onPress={() => goToOtpVerification(phoneNumber)} bgColor={"black"}
+		  <CustomButton text={t("common.next")} onPress={() => goToOtpVerification(phoneNumber)} bgColor={"black"}
 		                deactivated={btnDisabled} />
 	  </View>
 	)

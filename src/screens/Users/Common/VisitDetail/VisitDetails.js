@@ -10,13 +10,14 @@ import StarsNotation from "../../../../components/StarsNotation"
 import CriteriaCard from "../../../../components/CriteriaCard"
 import { padStart } from "lodash"
 import { jwtDecode } from "jwt-decode"
-import { t } from "i18next"
 import CodeConfirmation from "../../../../components/CodeConfirmation"
+import { useTranslation } from "react-i18next"
 
 
 const VisitDetails = () => {
 	const route = useRoute()
 	const id = route.params?.idVisit
+	const { t } = useTranslation()
 
 	const navigation = useNavigation()
 
@@ -123,22 +124,22 @@ const VisitDetails = () => {
 
 	return (<ScrollView style={styles.root}>
 		{visitData ? (<View style={styles.container}>
-			<Text style={styles.title}>Visit Details</Text>
+			<Text style={styles.title}>{t("common.visit_details")}</Text>
 			{/*Basic date & time details*/}
 			<View style={styles.innerContainer}>
 				<View style={styles.rowWithIcon}>
 					<Icon size={20} source={Images.calendarOrange} />
-					<Text style={styles.textdetails}>Date
+					<Text style={styles.textdetails}>{t("common.date")}
 						: {new Date(visitData.visit.details.date).toLocaleDateString()}</Text>
 				</View>
 				<View style={styles.rowWithIcon}>
 					<Icon size={20} source={Images.clock} />
-					<Text style={styles.textdetails}>Horaire :
-						de {visitData.visit.details.startTime} à {visitData.visit.details.endTime}</Text>
+					<Text style={styles.textdetails}>{t("common.starttime")} :
+						{t("common.from")} {visitData.visit.details.startTime} {t("common.to")} {visitData.visit.details.endTime}</Text>
 				</View>
 				<View style={styles.rowWithIcon}>
 					<Icon size={23} source={Images.sablierOrange} />
-					<Text style={styles.textdetailsless}>Durée
+					<Text style={styles.textdetailsless}>{t("common.duration")}
 						: {new Date(visitData.visit.details.duration).getHours() - 1}h{padStart((new Date(visitData.visit.details.duration).getMinutes()), 2, 0)} </Text>
 				</View>
 			</View>
@@ -146,7 +147,7 @@ const VisitDetails = () => {
 			{/*Notate the visit*/}
 			{decodedToken.role === "PROSPECT" && visitData.visit.details.status === "DONE" ? (
 			  <View style={styles.innerContainer}>
-				  <Text>Noter la prestation</Text>
+				  <Text>{t("common.note_visit")}</Text>
 				  <StarsNotation visitID={id} />
 			  </View>) : null}
 
@@ -154,7 +155,7 @@ const VisitDetails = () => {
 			<View style={styles.innerContainertest}>
 				<View style={styles.rowWithIcontest}>
 					<Icon size={23} source={Images.location} />
-					<Text style={styles.textdetails}>Adresse
+					<Text style={styles.textdetails}>{t("common.address")}
 						: {visitData.visit.address.results[0].formatted_address}</Text>
 				</View>
 				<View style={styles.roundedCorners}>
@@ -168,7 +169,7 @@ const VisitDetails = () => {
 			  <View style={styles.innerContainer}>
 				  <View style={styles.rowWithIcon}>
 					  <Icon size={23} source={Images.code} />
-					  <Text style={styles.textdetails}>Code de vérification :</Text>
+					  <Text style={styles.textdetails}>{t("common.verification_code")} :</Text>
 
 				  </View>
 				  <View style={{
@@ -188,7 +189,7 @@ const VisitDetails = () => {
 
 			{/*Criterias*/}
 			<View style={styles.innerContainer}>
-				<Text style={{ paddingBottom: 10 }}>Criterias</Text>
+				<Text style={{ paddingBottom: 10 }}>{t("common.criterias")}</Text>
 				{visitData.visit.criterias.map((criteria, index) => {
 					return <CriteriaCard key={index}
 					                     showData={true}
@@ -212,7 +213,7 @@ const VisitDetails = () => {
 			{decodedToken.role === "PROSPECT" ? (<View style={styles.innerContainer}>
 				<View style={styles.rowWithIcon}>
 					<Icon size={23} source={Images.user} />
-					<Text style={styles.textdetails}>Visiteur
+					<Text style={styles.textdetails}>{t("common.visitor")}
 						: {visitData.visitor.firstName + " " + visitData.visitor.lastName}</Text>
 				</View>
 				<View style={styles.visitorcontainer}>
@@ -233,8 +234,8 @@ const VisitDetails = () => {
 						</View>
 						<View style={styles.rowWithIcon}>
 							<Icon size={23} source={Images.rocket} />
-							<Text style={styles.textdetails}>{visitData.visitor.visitCount} visites
-								effectuées </Text>
+							<Text
+							  style={styles.textdetails}>{visitData.visitor.visitCount} {t("common.visits_dones")}  </Text>
 						</View>
 					</View>
 				</View>
@@ -244,32 +245,33 @@ const VisitDetails = () => {
 			{decodedToken.role === "PROSPECT" ? (<View style={styles.innerContainer}>
 				{visitData.visit.details.status === "CANCELED" ? (<View style={styles.rowWithIcon}>
 					<Icon size={20} source={Images.close} />
-					<Text style={styles.textdetails}>Rendez-vous refusé</Text>
+					<Text style={styles.textdetails}>{t("common.refused_visit")}</Text>
 				</View>) : null}
 				{visitData.visit.details.status === "PENDING" ? (<View style={styles.rowWithIcon}>
 					<Icon size={20} source={Images.sablierOrange} />
-					<Text style={styles.textdetails}>Rendez-vous en attente d'acceptation</Text>
+					<Text style={styles.textdetails}>{t("common.waiting_validation")}</Text>
 				</View>) : null}
 				{visitData.visit.details.status === "ACCEPTED" ? (<View style={styles.rowWithIcon}>
 					<Icon size={20} source={Images.calendarOrange} />
-					<Text style={styles.textdetails}>Rendez-vous accepté</Text>
+					<Text style={styles.textdetails}>{t("common.accepted_visit")}</Text>
 				</View>) : null}
 				{visitData.visit.details.status === "REFUSED" ? (<View style={styles.rowWithIcon}>
 					<Icon size={20} source={Images.restricted} />
-					<Text style={styles.textdetails}>Rendez-vous refusé</Text>
+					<Text style={styles.textdetails}>{t("common.refused_visit")}</Text>
 				</View>) : null}
 				{visitData.visit.details.status === "DONE" ? (<View style={styles.rowWithIcon}>
 					<Icon size={20} source={Images.check} />
-					<Text style={styles.textdetails}>Rendez-vous effectué</Text>
+					<Text style={styles.textdetails}>{t("common.visit_done")}</Text>
 				</View>) : null}
 
 				<View style={styles.rowWithIcon}>
 					<Icon size={20} source={Images.check} />
-					<Text style={styles.textdetails}>Paiement de {visitData.visit.details.price}€ effectué</Text>
+					<Text
+					  style={styles.textdetails}>{t("common.checkoutof")} {visitData.visit.details.price}€ {t("common.done")}</Text>
 				</View>
 				<View style={styles.rowWithIcon}>
 					<Icon size={20} source={Images.check} />
-					<Text style={styles.textdetails}>Critères envoyés</Text>
+					<Text style={styles.textdetails}>{t("common.criterias_sent")}</Text>
 				</View>
 			</View>) : null}
 
@@ -278,7 +280,6 @@ const VisitDetails = () => {
 			  <View style={styles.bottomButtons}>
 				  <TouchableOpacity style={[styles.plusBtn, styles.bgGreen]} onPress={() => {
 					  changeVisitStatus("ACCEPTED")
-
 				  }}>
 					  <View style={styles.icon}>
 						  <Icon source={Images.check} size={15} />
@@ -312,8 +313,7 @@ const VisitDetails = () => {
 			{(decodedToken.role === "VISITOR" && visitData.visit.details.status === "ACCEPTED") ? (
 			  <View style={[styles.innerContainer, { backgroundColor: bgColor }]}>
 				  <View style={styles.rowWithIcon}>
-					  <Text style={{ paddingBottom: 10 }}>Pour valider la visite, veuillez saisir le code de validation
-						  communiqué par la personne qui vous a fait visiter le bien immobilier</Text>
+					  <Text style={{ paddingBottom: 10 }}>{t("common.enter_validation_code")}</Text>
 				  </View>
 				  <CodeConfirmation value={value} setValue={setValue} redirect={false} widthInp={40} />
 			  </View>) : null}

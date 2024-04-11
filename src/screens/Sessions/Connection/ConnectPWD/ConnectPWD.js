@@ -116,9 +116,9 @@ const ConnectPWD = () => {
 	  <View style={styles.root}>
 		  <BackButton />
 		  <View style={{ width: "100%" }}>
-			  <Text style={[styles.title, { marginTop: 20 }]}>Connexion à VOYO</Text>
+			  <Text style={[styles.title, { marginTop: 20 }]}>{t("common.connection_to_voyo")}</Text>
 
-			  <CustomInput placeHolder="Mot de passe"
+			  <CustomInput placeHolder={t("common.password")}
 			               value={password}
 			               setValue={setPassword}
 			               secureTextEntry
@@ -131,7 +131,8 @@ const ConnectPWD = () => {
 				  ) : null}
 			  </View>
 
-			  <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"} deactivated={btnDisabled} />
+			  <CustomButton text={t("common.login")} onPress={onSignInPressed} bgColor={"black"}
+			                deactivated={btnDisabled} />
 		  </View>
 	  </View>
 	)

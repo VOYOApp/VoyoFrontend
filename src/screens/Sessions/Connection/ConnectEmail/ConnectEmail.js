@@ -44,12 +44,12 @@ const ConnectEmail = () => {
 			  />
 		  </View>
 
-		  <CustomButton text="Suivant" onPress={() => goToPwdVerification(email)} bgColor={"black"}
+		  <CustomButton text={t("common.next")} onPress={() => goToPwdVerification(email)} bgColor={"black"}
 		                deactivated={btnDisabled} />
 
 		  <View className={"w-full flex-row items-center justify-around mt-4"}>
 			  <View className="border-b-black border-b-[1px] w-1/3" />
-			  <Text>ou</Text>
+			  <Text>{t("common.or")}</Text>
 			  <View className="border-b-black border-b-[1px] w-1/3" />
 		  </View>
 

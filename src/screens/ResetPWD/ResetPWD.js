@@ -34,7 +34,7 @@ const ResetPWD = () => {
 				  setPasswordConfirmation(passwordConfirmation)
 			  }}></Password>
 
-			  <CustomButton text="Se connecter" onPress={onResetPwd} bgColor={"black"}
+			  <CustomButton text={t("common.login")} onPress={onResetPwd} bgColor={"black"}
 			                deactivated={btnDisabled && !isValidPwd} />
 		  </View>
 	  </View>

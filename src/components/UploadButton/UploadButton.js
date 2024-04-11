@@ -5,6 +5,7 @@ import { UIImagePickerPresentationStyle } from "expo-image-picker"
 import Images from "../../../assets"
 import { Icon } from "react-native-paper"
 import FullScreenImg from "../FullScreenImg"
+import { useTranslation } from "react-i18next"
 
 const MAX_FILE_NAME_LENGTH = 10
 
@@ -13,7 +14,7 @@ const UploadButton = ({ asCamera, asGallery, asRemove, setImages, displayImgWith
 	const [image, setImage] = useState(null)
 	const [imageName, setImageName] = useState("")
 	const [error, setError] = useState(null)
-
+	const { t } = useTranslation()
 	const openCamera = async () => {
 		try {
 			const permissionResult = await ImagePicker.requestCameraPermissionsAsync()
@@ -115,7 +116,7 @@ const UploadButton = ({ asCamera, asGallery, asRemove, setImages, displayImgWith
 			  <TouchableOpacity className={"w-32 h-12 bg-blue-500 rounded-xl items-center justify-center mr-4"}
 			                    onPress={() => setModalVisible(true)}>
 				  <Text style={styles.buttonText2}>
-					  Upload image
+					  {t("common.uploadimg")}
 				  </Text>
 			  </TouchableOpacity>
 			  {displayImgWithModal && image ? (<View style={styles.containerImg}>
@@ -147,7 +148,7 @@ const UploadButton = ({ asCamera, asGallery, asRemove, setImages, displayImgWith
 						  <TouchableOpacity
 							onPress={() => setModalVisible(!modalVisible)}>
 							  <View className={"flex-row"}>
-								  <Text style={styles.header} className={"mr-2"}>Upload gallery</Text>
+								  <Text style={styles.header} className={"mr-2"}>{t("common.uploadimg")}</Text>
 								  <Icon size={25} source={Images.cancel}></Icon>
 							  </View>
 						  </TouchableOpacity>
@@ -159,7 +160,7 @@ const UploadButton = ({ asCamera, asGallery, asRemove, setImages, displayImgWith
 									  onPress={openCamera}>
 										<View className={"items-center justify-center"}>
 											<Icon source={Images.camera} size={40} />
-											<Text style={styles.buttonText}>Camera</Text>
+											<Text style={styles.buttonText}>{t("common.camera")}</Text>
 										</View>
 									</Pressable>
 								</View>
@@ -170,7 +171,7 @@ const UploadButton = ({ asCamera, asGallery, asRemove, setImages, displayImgWith
 									  onPress={pickImage}>
 										<View className={"items-center justify-center"}>
 											<Icon source={Images.gallery} size={40} />
-											<Text style={styles.buttonText}>Gallery</Text>
+											<Text style={styles.buttonText}>{t("common.gallery")}</Text>
 										</View>
 									</TouchableOpacity>
 								</View>
@@ -181,7 +182,7 @@ const UploadButton = ({ asCamera, asGallery, asRemove, setImages, displayImgWith
 									  onPress={deleteImage}>
 										<View className={"items-center justify-center"}>
 											<Icon source={Images.trash_v2} color={"grey"} size={40} />
-											<Text style={styles.buttonText}>Remove</Text>
+											<Text style={styles.buttonText}>{t("common.delete")}</Text>
 										</View>
 									</TouchableOpacity>
 								</View>

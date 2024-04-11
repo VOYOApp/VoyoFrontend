@@ -1,10 +1,12 @@
 import { Image, StyleSheet, Text, View } from "react-native"
 import CustomInput from "../CustomInput"
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 
 const Password = ({ setPasswordConfirmation, setPassword, setIsValidPwd }) => {
 	const [pwd, setPwd] = useState("")
 	const [pwdConfirmation, setPwdConfirmation] = useState("")
+	const { t } = useTranslation()
 
 	const [isLengthValid, setIsLengthValid] = useState(false)
 	const [hasSpecialChar, setHasSpecialChar] = useState(false)
@@ -42,7 +44,7 @@ const Password = ({ setPasswordConfirmation, setPassword, setIsValidPwd }) => {
 
 	return (<View>
 		<View>
-			<CustomInput placeHolder="Mot de passe"
+			<CustomInput placeHolder={t("common.password")}
 			             value={pwd}
 			             setValue={handlePasswordChange}
 			             secureTextEntry={true}
@@ -92,7 +94,7 @@ const Password = ({ setPasswordConfirmation, setPassword, setIsValidPwd }) => {
 				<Text style={{ color: hasUpperCase ? "green" : "grey" }}>Majuscules</Text>
 			</View>
 
-			<CustomInput placeHolder="Confirmer le mot de passe"
+			<CustomInput placeHolder={t("common.confirm_password")}
 			             value={pwdConfirmation}
 			             setValue={handlePasswordConfirmationChange}
 			             secureTextEntry

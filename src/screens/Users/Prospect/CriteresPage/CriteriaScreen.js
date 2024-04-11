@@ -81,7 +81,7 @@ const CriteriaScreen = () => {
 			</Text>
 			<View style={styles.subTitle}>
 				<Icon source={Images.list} size={33} />
-				<Text style={styles.subTitleText}>Liste des critères</Text>
+				<Text style={styles.subTitleText}>{t("common.criterias_list")}</Text>
 			</View>
 		</View>
 

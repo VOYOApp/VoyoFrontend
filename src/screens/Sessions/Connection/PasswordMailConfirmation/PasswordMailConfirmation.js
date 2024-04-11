@@ -24,9 +24,9 @@ const PasswordMailConfirmation = () => {
 	  <View style={styles.root}>
 		  <BackButton />
 		  <View style={{ width: "100%" }}>
-			  <Text style={[styles.title, { marginTop: 20 }]}>Connexion à VOYO</Text>
+			  <Text style={[styles.title, { marginTop: 20 }]}>{t("common.connection_to_voyo")}</Text>
 
-			  <CustomInput placeHolder="Mot de passe"
+			  <CustomInput placeHolder={t("common.password")}
 			               value={password}
 			               setValue={setPassword}
 			               secureTextEntry
@@ -37,7 +37,7 @@ const PasswordMailConfirmation = () => {
 				  <Text onPress={onForgotPasswordPressed} style={styles.link}>{t("common.forgot_password")}</Text>
 			  </View>
 
-			  <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"} />
+			  <CustomButton text={t("common.login")} onPress={onSignInPressed} bgColor={"black"} />
 		  </View>
 	  </View>
 	)

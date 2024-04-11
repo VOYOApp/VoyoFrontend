@@ -137,7 +137,7 @@ const RecapRequest = () => {
 		<View style={styles.headTitles}>
 			<View style={styles.subTitle}>
 				<Icon source={Images.calendarOrange} size={27} />
-				<Text style={styles.subTitleText}>Créneau de visite</Text>
+				<Text style={styles.subTitleText}>{t("common.starttime")}</Text>
 			</View>
 
 			<View style={styles.textDescription}>
@@ -149,7 +149,7 @@ const RecapRequest = () => {
 		<View style={styles.headTitles}>
 			<View style={styles.subTitle}>
 				<Icon source={Images.homeSmall} size={25} />
-				<Text style={styles.subTitleText}>Type de bien</Text>
+				<Text style={styles.subTitleText}>{t("prospect.type_of_property")}</Text>
 			</View>
 
 			<View style={styles.textDescription}>
@@ -160,8 +160,8 @@ const RecapRequest = () => {
 		<View style={styles.headTitles}>
 			<View style={styles.subTitle}>
 				<Icon source={Images.dollar} size={27} />
-				<Text style={styles.subTitleText}>Tarification horaire
-					de {visit?.first_name + " " + visit?.last_name}</Text>
+				<Text
+				  style={styles.subTitleText}>{t("common.visitor_fees")} {visit?.first_name + " " + visit?.last_name}</Text>
 			</View>
 
 			<View style={styles.textDescription}>
@@ -173,7 +173,7 @@ const RecapRequest = () => {
 		</View>
 
 		<View style={styles.bottomButtons}>
-			<CustomButton text={"Payer " + (visit.price + platformCost) + "€"}
+			<CustomButton text={t("common.starttime") + " " + (visit.price + platformCost) + "€"}
 			              onPress={createVisit}
 			              bgColor={"#FE881B"}
 			              widthBtn={"90%"}

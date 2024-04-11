@@ -46,7 +46,7 @@ const RegisterMail = () => {
 			  />
 		  </View>
 
-		  <CustomButton text="Suivant" onPress={() => goToOtpVerification(email)} bgColor={"black"}
+		  <CustomButton text={t("common.next")} onPress={() => goToOtpVerification(email)} bgColor={"black"}
 		                deactivated={btnDisabled} />
 	  </View>
 	)
