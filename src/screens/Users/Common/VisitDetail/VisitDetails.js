@@ -177,15 +177,12 @@ const VisitDetails = () => {
 					  {visitData.visit.details.code
 					  .toString() // Convert number to string
 					  .split("") // Split the string into individual digits
-					  .map((digit, index) => (
-					    <React.Fragment key={index}>
-						    <Text style={styles.cell}>{digit}</Text>
-						    {/* Add separator after every two digits, except for the last pair */}
-						    {(index + 1) % 2 === 0 && index !== visitData.visit.details.code.toString().length - 1 && (
-							  <Text style={styles.separator}>-</Text>
-						    )}
-					    </React.Fragment>
-					  ))}
+					  .map((digit, index) => (<React.Fragment key={index}>
+							<Text style={styles.cell}>{digit}</Text>
+							{/* Add separator after every two digits, except for the last pair */}
+							{(index + 1) % 2 === 0 && index !== visitData.visit.details.code.toString().length - 1 && (
+							  <Text style={styles.separator}>-</Text>)}
+						</React.Fragment>))}
 				  </View>
 			  </View>) : null}
 
@@ -386,7 +383,7 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		borderRadius: 18,
 		marginLeft: 5,
-	},separator: {
+	}, separator: {
 		height: 2, width: 10, backgroundColor: "#00000030", alignSelf: "center", marginLeft: 5,
 	},
 })
