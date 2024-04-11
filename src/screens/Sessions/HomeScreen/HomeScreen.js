@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 	}, logo: {
 		width: "400%", maxWidth: 400, maxHeight: 400, position: "absolute", top: 0,
 	}, title: {
-		fontSize: 40, marginBottom: 10, color:"orange", textAlign:"center"
+		fontSize: 40, marginBottom: 10, color: "orange", textAlign: "center",
 	}, btns: {
 		width: "100%",
 		display: "flex",
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 		bottom: 20,
 	}, bgImg: {
 		flex: 1, justifyContent: "center", padding: 20, alignItems: "center",
-	},  citationCard: {
+	}, citationCard: {
 		backgroundColor: "rgba(0,0,0,0.3)", borderRadius: 10, padding: 20, margin: 15,
 	}, citationText: {
 		color: "white", fontSize: 18, textAlign: "center",

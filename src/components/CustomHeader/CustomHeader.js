@@ -15,7 +15,7 @@ const CustomHeader = () => {
 
 	const Logout = async () => {
 		await removeGlobal("user_details")
-		await removeToken();
+		await removeToken()
 		await signOut(auth)
 	}
 	return (

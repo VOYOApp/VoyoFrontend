@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import React, { useCallback, useMemo, useRef, useState } from "react"
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import { useTranslation } from "react-i18next"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
@@ -34,7 +34,7 @@ const SearchMap = () => {
 	const [showResults, setShowResults] = useState(false)
 	const [showDuration, setShowDuration] = useState(false)
 	const [showDate, setShowDate] = useState(false)
-	const [address, setAddress] = useState('')
+	const [address, setAddress] = useState("")
 	const [x, setX] = useState(0.0)
 	const [y, setY] = useState(0.0)
 
@@ -44,15 +44,15 @@ const SearchMap = () => {
 		weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric",
 	}
 
-	const options_search = new Intl.DateTimeFormat('en-US', {
-		year: 'numeric',
-		month: '2-digit',
-		day: '2-digit',
-		hour: '2-digit',
-		minute: '2-digit',
-		second: '2-digit',
+	const options_search = new Intl.DateTimeFormat("en-US", {
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+		hour: "2-digit",
+		minute: "2-digit",
+		second: "2-digit",
 		fractionalSecondDigits: 6,
-	});
+	})
 
 
 	const showDatePicker = () => {
@@ -115,33 +115,33 @@ const SearchMap = () => {
 		handlePresentModalPress()
 	}, [])
 
-	const getPersonWithSearch = async (x,y,date,id_type_real_estate) => {
-		let dateFormatee = date.toISOString().slice(0, 19).replace('T', ' ')
+	const getPersonWithSearch = async (x, y, date, id_type_real_estate) => {
+		let dateFormatee = date.toISOString().slice(0, 19).replace("T", " ")
 		try {
 			const token = await getToken()
 			const listUsers = await axios.get(`${process.env.BASE_URL}/api/search`, {
 				headers: { Authorization: `Bearer ${token}` },
 				params: {
-					x:x,
-					y:y,
+					x: x,
+					y: y,
 					date: dateFormatee,
 					idTypeRealEstate: id_type_real_estate,
 					address_id: 1,
-				}
+				},
 			})
-			if (listUsers.status === 200){
+			if (listUsers.status === 200) {
 				const updatedResults = listUsers.data.map(user => {
 					return {
 						...user,
 						start_time: date,
 						type_real_estate_id: id_type_real_estate,
 						address_id: address,
-					};
-				});
+					}
+				})
 				setSearchResults(updatedResults)
 				console.log(searchResults)
 			}
-		}catch (e) {
+		} catch (e) {
 			console.log(e)
 		}
 	}
@@ -242,7 +242,7 @@ const SearchMap = () => {
 								  if (selectedValue === "") {
 									  alert("Please select a value")
 								  } else {
-									  getPersonWithSearch(x,y,date, selectedValue)
+									  getPersonWithSearch(x, y, date, selectedValue)
 									  setShowDate(false)
 									  setShowDuration(false)
 									  setShowResults(true)
@@ -254,39 +254,39 @@ const SearchMap = () => {
 
 						{showResults ? (
 						  <View style={styles.detailsBox}>
-							<View>
-								<View style={styles.titleAndFilter}>
-									<View style={styles.titleWithImageContainer}>
-										<Image source={require("../../../../../assets/icons/005-invoice.png")}
-										       style={styles.titleWithImageIcon} />
-										<Text style={styles.titleWithImageText}>{t("common.result.other")}</Text>
-									</View>
+							  <View>
+								  <View style={styles.titleAndFilter}>
+									  <View style={styles.titleWithImageContainer}>
+										  <Image source={require("../../../../../assets/icons/005-invoice.png")}
+										         style={styles.titleWithImageIcon} />
+										  <Text style={styles.titleWithImageText}>{t("common.result.other")}</Text>
+									  </View>
 
-									<Select
-									  selectedIndex={selectedIndex}
-									  onSelect={(index) => {
-										  setSelectedIndex(index)
-										  sortResults(index)
-									  }}
-									  value={displayValue}
-									  style={{
-										  width: "100%", borderRadius: 20, maxWidth: 130, alignSelf: "center",
-									  }}
-									>
-										<SelectItem title={t("common.star.other")} />
-										<SelectItem title={t("common.price")} />
-										<SelectItem title={t("common.distance")} />
-									</Select>
-								</View>
+									  <Select
+										selectedIndex={selectedIndex}
+										onSelect={(index) => {
+											setSelectedIndex(index)
+											sortResults(index)
+										}}
+										value={displayValue}
+										style={{
+											width: "100%", borderRadius: 20, maxWidth: 130, alignSelf: "center",
+										}}
+									  >
+										  <SelectItem title={t("common.star.other")} />
+										  <SelectItem title={t("common.price")} />
+										  <SelectItem title={t("common.distance")} />
+									  </Select>
+								  </View>
 
 
-							</View>
-							<ScrollView style={styles.searchResults} contentContainerStyle={{ flexGrow: 1 }}>
-								{searchResults.map((person, index) => (<View key={index}>
-									<SearchResultPerson data={person} allPersons={searchResults}/>
-								</View>))}
-							</ScrollView>
-						</View>) : null}
+							  </View>
+							  <ScrollView style={styles.searchResults} contentContainerStyle={{ flexGrow: 1 }}>
+								  {searchResults.map((person, index) => (<View key={index}>
+									  <SearchResultPerson data={person} allPersons={searchResults} />
+								  </View>))}
+							  </ScrollView>
+						  </View>) : null}
 					</View>
 				</BottomSheetModal>
 			</View>

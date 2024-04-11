@@ -5,10 +5,8 @@ import CustomButton from "../../../../components/CustomButton"
 import BackButton from "../../../../components/BackButton"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
-import { jwtDecode } from "jwt-decode";
-import { auth } from '../../../../../firebaseConfig';
-import { signInWithEmailAndPassword, signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
-import axios from 'axios';
+import { jwtDecode } from "jwt-decode"
+import axios from "axios"
 import { storeGlobal, storeToken } from "../../../../context/AuthContext"
 
 const ConnectPWD = () => {
@@ -34,13 +32,13 @@ const ConnectPWD = () => {
 					"email": email || "",
 					"password": password || "",
 				},
-			});
+			})
 
 			if (response.status === 200) {
 				// Save the token in the context
 				await storeToken(response.data.token).then(setTimeout(async () => {
 					try {
-						const decodedToken = jwtDecode(response.data.token);
+						const decodedToken = jwtDecode(response.data.token)
 						const user_info = await axios.get(`${process.env.BASE_URL}/api/user`, {
 							headers: { Authorization: `Bearer ${response.data.token}` },
 							// params: {
@@ -58,60 +56,60 @@ const ConnectPWD = () => {
 								"radius": user_info.data?.radius,
 								"x": user_info.data?.x,
 								"y": user_info.data?.y,
-								"password":password
+								"password": password,
 							}
-							await storeGlobal('user_details', JSON.stringify(result)).then(() => {
+							await storeGlobal("user_details", JSON.stringify(result)).then(() => {
 								// navigation.navigate('Prospect', { screen: 'HomeScreen' })
 							})
 						}
-					}catch (error) {
-						console.log('An error has occurred: ' + error);
+					} catch (error) {
+						console.log("An error has occurred: " + error)
 						setBtnDisabled(false)
 					}
-				}, 1000));
+				}, 1000))
 			}
 		} catch (error) {
-			console.log('An error has occurred: ' + error);
+			console.log("An error has occurred: " + error)
 			setWrongPassword(true)
 			setBtnDisabled(false)
 		}
-	};
+	}
 
-		// if (email) {
-		// 	signInWithEmailAndPassword(auth, email, password)
-		// 	.then((userCredential) => {
-		// 		navigation.navigate('Prospect', {screen: 'HomeScreen'})
-		// 	})
-		// 	.catch((error) => {
-		// 		const errorCode = error.code;
-		// 		const errorMessage = error.message;
-		// 		alert(errorMessage);
-		// 	});
-		// }
-		// else if (phoneNumber) {
-		// 	const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-		// 		'size': 'invisible',
-		// 		'callback': (response) => {
-		// 			// This callback will be called after reCAPTCHA verification
-		// 		},
-		// 	});
-		//
-		// 	signInWithPhoneNumber(auth, numberPhone, recaptchaVerifier)
-		// 	.then((userCredential) => {
-		// 		navigation.navigate('Prospect', {screen: 'HomeScreen'})
-		// 		console.warn(userCredential)
-		// 	})
-		// 	.catch((error) => {
-		// 		const errorCode = error.code;
-		// 		const errorMessage = error.message;
-		// 		console.log(errorMessage)
-		// 		alert(errorMessage);
-		// 	});
-		// }
+	// if (email) {
+	// 	signInWithEmailAndPassword(auth, email, password)
+	// 	.then((userCredential) => {
+	// 		navigation.navigate('Prospect', {screen: 'HomeScreen'})
+	// 	})
+	// 	.catch((error) => {
+	// 		const errorCode = error.code;
+	// 		const errorMessage = error.message;
+	// 		alert(errorMessage);
+	// 	});
+	// }
+	// else if (phoneNumber) {
+	// 	const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+	// 		'size': 'invisible',
+	// 		'callback': (response) => {
+	// 			// This callback will be called after reCAPTCHA verification
+	// 		},
+	// 	});
+	//
+	// 	signInWithPhoneNumber(auth, numberPhone, recaptchaVerifier)
+	// 	.then((userCredential) => {
+	// 		navigation.navigate('Prospect', {screen: 'HomeScreen'})
+	// 		console.warn(userCredential)
+	// 	})
+	// 	.catch((error) => {
+	// 		const errorCode = error.code;
+	// 		const errorMessage = error.message;
+	// 		console.log(errorMessage)
+	// 		alert(errorMessage);
+	// 	});
+	// }
 	// }
 
 	const onForgotPasswordPressed = () => {
-		navigation.navigate('SignIn', { screen: "ResetPWD" })
+		navigation.navigate("SignIn", { screen: "ResetPWD" })
 	}
 
 	return (
@@ -126,14 +124,14 @@ const ConnectPWD = () => {
 			               secureTextEntry
 			  />
 
-			  <View className={'flex-row justify-between w-full mb-2'}>
+			  <View className={"flex-row justify-between w-full mb-2"}>
 				  <Text onPress={onForgotPasswordPressed} style={styles.link}>{t("common.forgot_password")}</Text>
 				  {wrongPassword ? (
-				    <Text style={styles.error}>{t("common.incorrect_password")}</Text>
-				  ): null}
+					<Text style={styles.error}>{t("common.incorrect_password")}</Text>
+				  ) : null}
 			  </View>
 
-			  <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"} deactivated={btnDisabled}/>
+			  <CustomButton text="Se connecter" onPress={onSignInPressed} bgColor={"black"} deactivated={btnDisabled} />
 		  </View>
 	  </View>
 	)
@@ -154,13 +152,13 @@ const styles = StyleSheet.create({
 	},
 	link: {
 		color: "#FE881B",
-		marginBottom: 10
+		marginBottom: 10,
 	},
 	error: {
 		color: "red",
 		fontWeight: "bold",
-		marginBottom: 10
-	}
+		marginBottom: 10,
+	},
 })
 
 export default ConnectPWD

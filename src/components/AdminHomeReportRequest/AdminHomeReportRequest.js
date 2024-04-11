@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import CustomButton from "../CustomButton"
 import { useTranslation } from "react-i18next"
 
@@ -10,20 +10,20 @@ const AdminHomeReportRequest = () => {
 	  <View style={styles.card}>
 		  <View>
 			  <View style={styles.rowWithImage}>
-                  <Text>{t("admin.report_request")} </Text>
+				  <Text>{t("admin.report_request")} </Text>
 			  </View>
-              <View style={styles.rowWithImage}>
-                    <Text>Gertrude</Text>
+			  <View style={styles.rowWithImage}>
+				  <Text>Gertrude</Text>
 			  </View>
 			  <View style={styles.rowWithImage}>
 				  <Text>{t("admin.reported_by")} </Text>
 				  <Text>Roberto Carlos</Text>
 			  </View>
 			  <View style={styles.rowWithImage}>
-                    <Text>{t("admin.motive")}</Text>
+				  <Text>{t("admin.motive")}</Text>
 			  </View>
-              <View style={styles.rowWithImage}>
-                    <Text>"Profil suspect"</Text>
+			  <View style={styles.rowWithImage}>
+				  <Text>"Profil suspect"</Text>
 			  </View>
 		  </View>
 		  <View style={styles.btn}>

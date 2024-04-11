@@ -4,7 +4,7 @@ import CustomButton from "../CustomButton"
 import { useTranslation } from "react-i18next"
 import { useNavigation } from "@react-navigation/native"
 
-const SearchResultPerson = ({data, allPersons}) => {
+const SearchResultPerson = ({ data, allPersons }) => {
 	const { t } = useTranslation()
 	const navigation = useNavigation()
 
@@ -36,7 +36,7 @@ const SearchResultPerson = ({data, allPersons}) => {
 		  <View>
 			  <View style={styles.rowWithImage}>
 				  <Image source={require("../../../assets/icons/010-user.png")} style={styles.logo} />
-				  <Text>{data.firstName +" " + data.lastName}</Text>
+				  <Text>{data.firstName + " " + data.lastName}</Text>
 			  </View>
 			  <View style={styles.rowWithImage}>
 				  <Image source={require("../../../assets/icons/star.png")} style={styles.logoBigger} />

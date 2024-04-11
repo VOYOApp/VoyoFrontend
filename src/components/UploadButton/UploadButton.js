@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Alert, Dimensions, Image, Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Alert, Dimensions, Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import * as ImagePicker from "expo-image-picker"
 import { UIImagePickerPresentationStyle } from "expo-image-picker"
 import Images from "../../../assets"
@@ -119,7 +119,7 @@ const UploadButton = ({ asCamera, asGallery, asRemove, setImages, displayImgWith
 				  </Text>
 			  </TouchableOpacity>
 			  {displayImgWithModal && image ? (<View style={styles.containerImg}>
-				  <FullScreenImg preivewWH={50} img={image}/>
+				  <FullScreenImg preivewWH={50} img={image} />
 			  </View>) : (
 				<View>
 					{image ? (

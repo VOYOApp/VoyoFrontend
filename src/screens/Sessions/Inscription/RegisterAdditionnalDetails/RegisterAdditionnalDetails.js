@@ -3,8 +3,6 @@ import {
 	Image,
 	KeyboardAvoidingView,
 	Platform,
-	TouchableWithoutFeedback,
-	Keyboard,
 	StyleSheet,
 	Switch,
 	Text,
@@ -17,9 +15,8 @@ import CustomInput from "../../../../components/CustomInput"
 import CustomButton from "../../../../components/CustomButton"
 import BackButton from "../../../../components/BackButton"
 import { auth } from "../../../../../firebaseConfig"
-import { createUserWithEmailAndPassword, updateProfile, linkWithCredential, PhoneAuthProvider } from "firebase/auth"
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import axios from "axios"
-import { BASE_URL } from "@env"
 import { useTranslation } from "react-i18next"
 import { storeGlobal, storeToken } from "../../../../context/AuthContext"
 import { jwtDecode } from "jwt-decode"
@@ -114,9 +111,9 @@ const RegisterAdditionnalDetails = () => {
 								"radius": user_info.data?.radius,
 								"x": user_info.data?.x,
 								"y": user_info.data?.y,
-								"password": password
+								"password": password,
 							}
-							await storeGlobal('user_details', JSON.stringify(result)).then(() => {
+							await storeGlobal("user_details", JSON.stringify(result)).then(() => {
 								try {
 									createUserWithEmailAndPassword(auth, result.email, result.password)
 									.then((userCredential) => {
@@ -154,7 +151,7 @@ const RegisterAdditionnalDetails = () => {
 										console.log(error.code)
 										console.log(error.message)
 									})
-								}catch (e){
+								} catch (e) {
 									console.log("An error has occurred: " + e)
 								}
 							})

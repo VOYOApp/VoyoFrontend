@@ -1,16 +1,11 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect } from "react"
 import { ScrollView, StyleSheet, useWindowDimensions, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import HeaderHome from "../../../../components/HeaderHome"
-import CustomFooter from "../../../../components/CustomFooter"
-import HomeStats from "../../../../components/HomeStats"
 import ValidationListAdmin from "../ValidationListAdmin/ValidationListAdmin"
-import ReportListAdmin from "../ReportListAdmin/ReportListAdmin"
 import { getGlobal } from "../../../../context/AuthContext"
-import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth } from "../../../../../firebaseConfig"
 
 const ProspectHome = () => {
 	const { t } = useTranslation()
@@ -40,30 +35,30 @@ const ProspectHome = () => {
 
 	useEffect(() => {
 		// setTimeout(() => {
-			getGlobal("user_details").then((data) => {
-				setFirstname(data?.first_name)
-				setIcon(data?.profile_picture)
-			})
+		getGlobal("user_details").then((data) => {
+			setFirstname(data?.first_name)
+			setIcon(data?.profile_picture)
+		})
 		// }, 500)
 	}, [firstname, icon])
 
 	return (
-	<View style={styles.root}>
-		<HeaderHome name={firstname} profilePicture={icon} isAdmin={true}/>
-			<ScrollView style={{ width: "100%" }}
-			            showsVerticalScrollIndicator={false}
-			            showsHorizontalScrollIndicator={false}
-			>
-			<ValidationListAdmin/>
+	  <View style={styles.root}>
+		  <HeaderHome name={firstname} profilePicture={icon} isAdmin={true} />
+		  <ScrollView style={{ width: "100%" }}
+		              showsVerticalScrollIndicator={false}
+		              showsHorizontalScrollIndicator={false}
+		  >
+			  <ValidationListAdmin />
 
-			</ScrollView>
-						
-	</View>)
+		  </ScrollView>
+
+	  </View>)
 }
 
 
 const styles = StyleSheet.create({
-    root: {
+	root: {
 		backgroundColor: "white",
 		padding: 20,
 		width: "100%",

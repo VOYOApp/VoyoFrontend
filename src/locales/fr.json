@@ -120,7 +120,7 @@
     "criteria": "Critères"
   },
   "visitor": {
-    "criteria_answer" : "Rédigez votre réponse",
+    "criteria_answer": "Rédigez votre réponse",
     "upcoming_visits": {
       "one": "Visite à venir",
       "other": "Visites à venir"
@@ -136,16 +136,16 @@
   },
   "admin": {
     "account_validation_request": "Demandes de validation",
-    "report_request":"Demande de suivi de l'utilisateur :",
-    "reported_users" : "Signalements",
-    "reported_by" : "Signalé par",
-    "motive":"Motif :",
-    "validation_request":"Demande de validation :",
-    "accept_request":"Valider l'inscription",
-    "reject_request":"Refuser l'inscription",
-    "search_user":"Rechercher un utilisateur",
-    "clients_and_visitors":"Utilisateurs (visiteurs et clients)",
-    "pending_request":"Demande en attente...",
+    "report_request": "Demande de suivi de l'utilisateur :",
+    "reported_users": "Signalements",
+    "reported_by": "Signalé par",
+    "motive": "Motif :",
+    "validation_request": "Demande de validation :",
+    "accept_request": "Valider l'inscription",
+    "reject_request": "Refuser l'inscription",
+    "search_user": "Rechercher un utilisateur",
+    "clients_and_visitors": "Utilisateurs (visiteurs et clients)",
+    "pending_request": "Demande en attente...",
     "consult": "Consulter",
     "research": "Saisissez le nom de l'utilisateur à chercher",
     "ban_user": "Bannir cet utilisateur"

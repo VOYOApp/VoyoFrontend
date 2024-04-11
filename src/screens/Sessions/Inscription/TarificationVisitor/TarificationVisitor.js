@@ -1,14 +1,5 @@
-import React, { useRef, useState } from "react"
-import {
-	Image,
-	ScrollView,
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	useWindowDimensions,
-	View,
-} from "react-native"
+import React, { useState } from "react"
+import { StyleSheet, Text, TextInput, useWindowDimensions, View } from "react-native"
 import BackButton from "../../../../components/BackButton"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
@@ -20,7 +11,7 @@ import { Icon } from "react-native-paper"
 const TarificationVisitor = () => {
 	const { t } = useTranslation()
 	const [btnDisabled, setBtnDisabled] = useState(true)
-	const [pricing, setPricing] = useState('')
+	const [pricing, setPricing] = useState("")
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
@@ -29,7 +20,7 @@ const TarificationVisitor = () => {
 	const availability = route.params?.availability
 
 	const onNextPressed = () => {
-		setBtnDisabled(true);
+		setBtnDisabled(true)
 		try {
 			navigation.navigate("SignUp", {
 				screen: "VisitorVerification",
@@ -38,13 +29,13 @@ const TarificationVisitor = () => {
 						...user,
 						pricing: pricing,
 					},
-					availability
+					availability,
 				},
 			})
 		} catch (error) {
-			setBtnDisabled(false);
-			alert("An error has occurred: "+error);
-			console.log("An error has occurred: "+error);
+			setBtnDisabled(false)
+			alert("An error has occurred: " + error)
+			console.log("An error has occurred: " + error)
 		}
 	}
 
@@ -66,25 +57,26 @@ const TarificationVisitor = () => {
 						  <Text
 							className={"text-justify text-xs p-3 leading-4"}>{t("common.pricing_description")}</Text>
 
-							  <View className={"w-[95%] h-1/4 items-center"}>
+						  <View className={"w-[95%] h-1/4 items-center"}>
 
-								  <View className={"bg-green-700 p-3 my-3 rounded-md flex-row items-center w-[95%]"}>
-									  <Icon source={Images.dollar} size={25} />
-									  <TextInput onChangeText={(value) => {
-										  setPricing(value)
-										  value ? setBtnDisabled(false) : setBtnDisabled(true)
-									  }}
-									             value={pricing}
-									             keyboardType={"number-pad"} className={"ml-2 text-white"} placeholderTextColor={"white"}
-									             placeholder={t("common.pricing") + " : " + t("common.select_pricing")}></TextInput>
-								  </View>
-
-								  <View className={'bg-orange-400 p-3 rounded-md flex-row items-center w-[95%]'}>
-									  <Icon source={Images.platform_tarification} size={25} />
-									  <TextInput editable={false} className={"ml-2"} placeholderTextColor={"white"}
-									             placeholder={t("common.platform_costs", { price: "0.50 €" })}></TextInput>
-								  </View>
+							  <View className={"bg-green-700 p-3 my-3 rounded-md flex-row items-center w-[95%]"}>
+								  <Icon source={Images.dollar} size={25} />
+								  <TextInput onChangeText={(value) => {
+									  setPricing(value)
+									  value ? setBtnDisabled(false) : setBtnDisabled(true)
+								  }}
+								             value={pricing}
+								             keyboardType={"number-pad"} className={"ml-2 text-white"}
+								             placeholderTextColor={"white"}
+								             placeholder={t("common.pricing") + " : " + t("common.select_pricing")}></TextInput>
 							  </View>
+
+							  <View className={"bg-orange-400 p-3 rounded-md flex-row items-center w-[95%]"}>
+								  <Icon source={Images.platform_tarification} size={25} />
+								  <TextInput editable={false} className={"ml-2"} placeholderTextColor={"white"}
+								             placeholder={t("common.platform_costs", { price: "0.50 €" })}></TextInput>
+							  </View>
+						  </View>
 
 					  </View>
 

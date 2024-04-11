@@ -3,8 +3,7 @@ import { StyleSheet, View } from "react-native"
 import { useTranslation } from "react-i18next"
 import CustomStatCard from "../CustomStatCard"
 import axios from "axios"
-import { BASE_URL } from "@env"
-import { getGlobal, getToken, removeGlobal } from "../../context/AuthContext"
+import { getToken } from "../../context/AuthContext"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { jwtDecode } from "jwt-decode"
 
@@ -22,20 +21,19 @@ const HomeStats = () => {
 
 	let StatsType = "prospect"
 
-	useEffect( () => {
-
+	useEffect(() => {
 
 
 		async function getStats() {
 			try {
-				const token = await AsyncStorage.getItem('token');
-				StatsType = jwtDecode(token).role.toLowerCase();
+				const token = await AsyncStorage.getItem("token")
+				StatsType = jwtDecode(token).role.toLowerCase()
 
 				return await axios.get(`${process.env.BASE_URL}/api/user/homeStats`, {
 					headers: { Authorization: `Bearer ${await getToken()}` },
 				})
 			} catch (error) {
-				console.log('An error has occurred: ' + error);
+				console.log("An error has occurred: " + error)
 			}
 		}
 
@@ -84,8 +82,8 @@ const HomeStats = () => {
 				  ? "visitor.review_pending.one"
 				  : "visitor.review_pending.other")
 			}
-		});
-	}, []);
+		})
+	}, [])
 
 	return (
 	  <View style={styles.stats}>

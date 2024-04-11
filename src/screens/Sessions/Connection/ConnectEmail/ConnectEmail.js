@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
-import CustomPhoneNumber from "../../../../components/CustomPhoneNumber"
 import CustomButton from "../../../../components/CustomButton"
 import BackButton from "../../../../components/BackButton"
 import { useNavigation } from "@react-navigation/native"
@@ -26,7 +25,7 @@ const ConnectEmail = () => {
 	}
 
 	const goToPwdVerification = (mail) => {
-		navigation.navigate("SignIn", { screen: "ConnectPWD", params: { email: mail } });
+		navigation.navigate("SignIn", { screen: "ConnectPWD", params: { email: mail } })
 	}
 
 	return (
@@ -34,30 +33,31 @@ const ConnectEmail = () => {
 
 		  <BackButton />
 
-		  <View className={'w-full mb-3'}>
+		  <View className={"w-full mb-3"}>
 			  <Text style={[styles.title]}>{t("common.connection_to_voyo")}</Text>
 
-				  <CustomInput placeHolder={t("common.enter_your_email")}
-				               value={email}
-				               setValue={handleMailChange}
-				               editabled={false}
-				               inputype={"emailAddress"}
-				  />
+			  <CustomInput placeHolder={t("common.enter_your_email")}
+			               value={email}
+			               setValue={handleMailChange}
+			               editabled={false}
+			               inputype={"emailAddress"}
+			  />
 		  </View>
 
 		  <CustomButton text="Suivant" onPress={() => goToPwdVerification(email)} bgColor={"black"}
 		                deactivated={btnDisabled} />
 
-		  <View className={'w-full flex-row items-center justify-around mt-4'}>
+		  <View className={"w-full flex-row items-center justify-around mt-4"}>
 			  <View className="border-b-black border-b-[1px] w-1/3" />
 			  <Text>ou</Text>
 			  <View className="border-b-black border-b-[1px] w-1/3" />
 		  </View>
 
-		  <View className={'w-full flex-row items-center justify-center mt-4'}>
+		  <View className={"w-full flex-row items-center justify-center mt-4"}>
 
 		  </View>
-		  <CustomButton text={t('common.continue_with_phone')} onPress={() => gotToConnectPhone()} bgColor={"#FE881B"}/>
+		  <CustomButton text={t("common.continue_with_phone")} onPress={() => gotToConnectPhone()}
+		                bgColor={"#FE881B"} />
 	  </View>
 	)
 }

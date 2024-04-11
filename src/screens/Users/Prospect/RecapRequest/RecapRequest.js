@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native"
+import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { Icon } from "react-native-paper"
@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next"
 import CustomButton from "../../../../components/CustomButton"
 import axios from "axios"
 import { getGlobal, getToken } from "../../../../context/AuthContext"
-import { addDoc, collection, onSnapshot, query, serverTimestamp } from "firebase/firestore"
+import { addDoc, collection, serverTimestamp } from "firebase/firestore"
 import { db } from "../../../../../firebaseConfig"
 
 const RecapRequest = () => {
@@ -23,9 +23,9 @@ const RecapRequest = () => {
 	const [durationRealEstate, setDurationRealEstate] = useState("")
 	const [platformCost, setPlatformCost] = useState(0.50)
 
-	const [chatName, setChatName] = useState("TEST");
-	const [members, setMembers] = useState([]);
-	const [users, setUser] = useState('');
+	const [chatName, setChatName] = useState("TEST")
+	const [members, setMembers] = useState([])
+	const [users, setUser] = useState("")
 
 	function formatDateTime(date) {
 		const options = {
@@ -35,41 +35,41 @@ const RecapRequest = () => {
 			day: "numeric", // Jour du mois au format numérique
 			hour: "numeric", // Heure au format numérique
 			minute: "numeric", // Minutes au format numérique
-		};
-		let formattedDate = new Intl.DateTimeFormat("fr-FR", options).format(date);
-		formattedDate.replace(":", "h");
+		}
+		let formattedDate = new Intl.DateTimeFormat("fr-FR", options).format(date)
+		formattedDate.replace(":", "h")
 		return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
 	}
 
 	const formatDuration = (date) => {
-		return `${String(date.getHours()).padStart(2, '0')}h : ${String(date.getMinutes()).padStart(2, '0')}m : ${String(date.getSeconds()).padStart(2, '0')}s`;
+		return `${String(date.getHours()).padStart(2, "0")}h : ${String(date.getMinutes()).padStart(2, "0")}m : ${String(date.getSeconds()).padStart(2, "0")}s`
 	}
 
 	const createVisit = async () => {
 		const token = await getToken()
-		let data = JSON.stringify(visit);
+		let data = JSON.stringify(visit)
 
 		let config = {
-			method: 'post',
+			method: "post",
 			maxBodyLength: Infinity,
 			url: `${process.env.BASE_URL}/api/visit`,
 			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${token}`
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${token}`,
 			},
-			data : data
-		};
+			data: data,
+		}
 
 		// console.log(config)
 
 		axios.request(config)
 		.then(async (response) => {
-			console.log(JSON.stringify(response.data));
+			console.log(JSON.stringify(response.data))
 			await createChat()
 		})
 		.catch((error) => {
-			console.log(error);
-		});
+			console.log(error)
+		})
 
 	}
 
@@ -78,7 +78,7 @@ const RecapRequest = () => {
 		axios.get(`${process.env.BASE_URL}/api/typerealestate`, {
 			params: {
 				id: visit.type_real_estate_id,
-			}
+			},
 		}).then((response) => {
 			setLabelRealEstate(response.data.label)
 			setDurationRealEstate(formatDuration(new Date(response.data.duration)))
@@ -90,41 +90,41 @@ const RecapRequest = () => {
 	const createChat = async () => {
 		const chatData = {
 			members: members,
-			users: users.map((user)=>({
+			users: users.map((user) => ({
 				avatar: user.avatar,
 				name: user.name,
 			})),
 			admin: "admin@example.com",
 			lastActivity: serverTimestamp(),
-		};
-		await addDoc(collection(db, "chats"), chatData);
+		}
+		await addDoc(collection(db, "chats"), chatData)
 		// const chatRef = await addDoc(collection(db, "chats"), chatData);
 		// const chatId = chatRef.id;
 		// navigation.navigate("Common", { params: { id: chatId, chatName }, screen: "chat" });
-		navigation.navigate("Prospect", { screen: "ChatChannel" });
-	};
+		navigation.navigate("Prospect", { screen: "ChatChannel" })
+	}
 
 	useEffect(() => {
 		getGlobal("user_details").then(async (data) => {
 			const token = await getToken()
-			axios.get(`${process.env.BASE_URL}/api/user/email?phoneNumber=${visit?.phone_number_visitor.replace("+","%2B")}`,
+			axios.get(`${process.env.BASE_URL}/api/user/email?phoneNumber=${visit?.phone_number_visitor.replace("+", "%2B")}`,
 			  {
 				  headers: { Authorization: `Bearer ${token}` },
-			  }).then((result)=>{
+			  }).then((result) => {
 				setMembers([
 					data?.email,
 					result?.data.email,
 				])
 				setUser([{
-					avatar:data?.profile_picture,
-					name: data?.first_name + " " +data?.last_name
-				},{
-					avatar:visit?.profile_picture,
-					name: visit?.first_name + " " + visit?.last_name
+					avatar: data?.profile_picture,
+					name: data?.first_name + " " + data?.last_name,
+				}, {
+					avatar: visit?.profile_picture,
+					name: visit?.first_name + " " + visit?.last_name,
 				}])
 			})
 		})
-	}, []);
+	}, [])
 	return (<View style={styles.root}>
 		<View style={styles.headTitles}>
 			<Text style={styles.title}>{t("prospect.send_request")}</Text>
@@ -160,7 +160,8 @@ const RecapRequest = () => {
 		<View style={styles.headTitles}>
 			<View style={styles.subTitle}>
 				<Icon source={Images.dollar} size={27} />
-				<Text style={styles.subTitleText}>Tarification horaire de {visit?.first_name+" "+visit?.last_name}</Text>
+				<Text style={styles.subTitleText}>Tarification horaire
+					de {visit?.first_name + " " + visit?.last_name}</Text>
 			</View>
 
 			<View style={styles.textDescription}>
@@ -172,7 +173,7 @@ const RecapRequest = () => {
 		</View>
 
 		<View style={styles.bottomButtons}>
-			<CustomButton text={"Payer "+ (visit.price + platformCost) +"€"}
+			<CustomButton text={"Payer " + (visit.price + platformCost) + "€"}
 			              onPress={createVisit}
 			              bgColor={"#FE881B"}
 			              widthBtn={"90%"}
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
 	}, icon: {
 		marginRight: 10,
 	}, bottomButtons: {
-		width: "100%", alignItems: "center", backgroundColor: "rgba(0,0,0,0.00)", marginTop: 100
+		width: "100%", alignItems: "center", backgroundColor: "rgba(0,0,0,0.00)", marginTop: 100,
 	}, subTitle: {
 		alignItems: "center", flexDirection: "row", marginTop: 15, marginBottom: 0, padding: 0,
 	}, subTitleText: {
@@ -229,37 +230,37 @@ const styles = StyleSheet.create({
 	},
 
 
-  members: {
-	maxHeight: 200,
-	  borderColor: "#ccc",
-	  borderWidth: 1,
-	  borderRadius: 5,
-	  marginTop: 10,
-},
-member: {
-	padding: 10,
-	  borderColor: "#ccc",
-	  borderBottomWidth: 1,
-	  flexDirection: "row",
-	  alignItems: "center",
-},
-avatar: {
-	width: 30,
-	  height: 30,
-	  borderRadius: 15,
-	  marginRight: 10,
-},
-memberText: {
-	fontSize: 16,
-},
-selected: {
-	fontSize: 12,
-	  color: "#000",
-	  backgroundColor: "#ddd",
-	  padding: 5,
-	  borderRadius: 5,
-	  marginLeft: "auto",
-}
+	members: {
+		maxHeight: 200,
+		borderColor: "#ccc",
+		borderWidth: 1,
+		borderRadius: 5,
+		marginTop: 10,
+	},
+	member: {
+		padding: 10,
+		borderColor: "#ccc",
+		borderBottomWidth: 1,
+		flexDirection: "row",
+		alignItems: "center",
+	},
+	avatar: {
+		width: 30,
+		height: 30,
+		borderRadius: 15,
+		marginRight: 10,
+	},
+	memberText: {
+		fontSize: 16,
+	},
+	selected: {
+		fontSize: 12,
+		color: "#000",
+		backgroundColor: "#ddd",
+		padding: 5,
+		borderRadius: 5,
+		marginLeft: "auto",
+	},
 })
 
 export default RecapRequest

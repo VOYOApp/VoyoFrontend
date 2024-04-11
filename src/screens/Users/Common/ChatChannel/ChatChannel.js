@@ -1,13 +1,14 @@
-import React, { useCallback, useState, useLayoutEffect, useEffect } from "react"
-import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView, ScrollView } from "react-native"
+import React, { useEffect, useState } from "react"
+import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native"
 import { Avatar } from "react-native-elements"
-import { auth, db } from '../../../../../firebaseConfig';
-import { collection, addDoc, getDocs, query, orderBy, onSnapshot, where } from "firebase/firestore"
+import { auth, db } from "../../../../../firebaseConfig"
+import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore"
 import CustomListItem from "../../../../components/CustomListItem"
 import BackButton from "../../../../components/BackButton"
 import { getGlobal } from "../../../../context/AuthContext"
-const ChatChannel = ({navigation}) => {
-	const [userDetails, setUserDetails] = useState(null);
+
+const ChatChannel = ({ navigation }) => {
+	const [userDetails, setUserDetails] = useState(null)
 	const [chats, setChats] = useState([])
 
 	useEffect(() => {
@@ -16,65 +17,66 @@ const ChatChannel = ({navigation}) => {
 				const q = query(
 				  collection(db, "chats"),
 				  where("members", "array-contains", auth.currentUser.email),
-				  orderBy("lastActivity", "desc")
-				);
+				  orderBy("lastActivity", "desc"),
+				)
 				const unsubscribe = onSnapshot(q, (snapshot) => {
 					const chatData = snapshot.docs.map((doc) => {
-						const chat = doc.data();
-						let chatName = "";
-						let chatAvatar = "";
+						const chat = doc.data()
+						let chatName = ""
+						let chatAvatar = ""
 
 						// Trouver l'utilisateur actuel dans les membres du chat
-						const currentUserIndex = chat.members.findIndex(member => member === auth.currentUser.email);
+						const currentUserIndex = chat.members.findIndex(member => member === auth.currentUser.email)
 
 						if (currentUserIndex !== -1) {
 							// Utilisateur actuel trouvé, utiliser l'autre membre du chat comme nom du chat
-							const otherMemberIndex = currentUserIndex === 0 ? 1 : 0;
-							chatName = chat.users[otherMemberIndex].name;
-							chatAvatar = chat.users[otherMemberIndex].avatar;
+							const otherMemberIndex = currentUserIndex === 0 ? 1 : 0
+							chatName = chat.users[otherMemberIndex].name
+							chatAvatar = chat.users[otherMemberIndex].avatar
 						}
 
 						return {
 							id: doc.id,
 							data: { ...chat, chatName, chatAvatar }, // Ajoutez le chatName à la donnée du chat
-						};
-					});
-					setChats(chatData);
-				});
+						}
+					})
+					setChats(chatData)
+				})
 
-				return unsubscribe;
+				return unsubscribe
 			} catch (error) {
-				console.log("Error fetching chats:", error);
+				console.log("Error fetching chats:", error)
 			}
-		};
+		}
 
-		fetchChats();
-	}, []);
+		fetchChats()
+	}, [])
 
 	useEffect(() => {
 		const fetchUserDetails = async () => {
 			try {
-				const userDetails = await getGlobal("user_details");
-				setUserDetails(userDetails);
+				const userDetails = await getGlobal("user_details")
+				setUserDetails(userDetails)
 			} catch (error) {
 				// Handle error
-				console.log("Error fetching user details:", error);
+				console.log("Error fetching user details:", error)
 			}
-		};
+		}
 
-		fetchUserDetails();
-	}, []);
+		fetchUserDetails()
+	}, [])
 
 	useEffect(() => {
-		if (!userDetails) return;
+		if (!userDetails) return
 
 		navigation.setOptions({
 			title: (auth?.currentUser?.displayName || userDetails.first_name) ?? "Chat",
 			headerTitleStyle: { fontSize: 18 },
 			headerLeft: () => (
-			  <View className={'flex-row items-center ml-4'}>
-				  <BackButton navigation={navigation}/>
-				  <TouchableOpacity className={'ml-4'} onPress={() => navigation.navigate("HomeProspect", { screen: "UserPage" })}>
+			  <View className={"flex-row items-center ml-4"}>
+				  <BackButton navigation={navigation} />
+				  <TouchableOpacity className={"ml-4"}
+				                    onPress={() => navigation.navigate("HomeProspect", { screen: "UserPage" })}>
 					  <Avatar
 						rounded
 						source={{
@@ -85,18 +87,18 @@ const ChatChannel = ({navigation}) => {
 				  </TouchableOpacity>
 			  </View>
 			),
-		});
-	}, [navigation, userDetails]);
+		})
+	}, [navigation, userDetails])
 
 	const enterChat = (id, chatName, chatAvatar) => {
-		navigation.navigate("Common", { params: {id, chatName, chatAvatar}, screen: "Chat" })
+		navigation.navigate("Common", { params: { id, chatName, chatAvatar }, screen: "Chat" })
 	}
 
 	return (
 	  <SafeAreaView>
 		  <ScrollView>
 			  {chats.map(({ id, data: { chatName, chatAvatar } }) => (
-				<CustomListItem key={id} id={id} chatName={chatName} chatAvatar={chatAvatar} enterChat={enterChat}/>
+				<CustomListItem key={id} id={id} chatName={chatName} chatAvatar={chatAvatar} enterChat={enterChat} />
 			  ))}
 		  </ScrollView>
 	  </SafeAreaView>

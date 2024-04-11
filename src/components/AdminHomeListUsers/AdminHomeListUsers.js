@@ -4,37 +4,37 @@ import CustomButton from "../CustomButton"
 import { useTranslation } from "react-i18next"
 import { useNavigation } from "@react-navigation/native"
 
-const AdminHomeListUsers = ({data}) => {
+const AdminHomeListUsers = ({ data }) => {
 	const { t } = useTranslation()
 
-	const opt_date_title = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-	const opt_date = { year: 'numeric', month: 'long', day: 'numeric' };
+	const opt_date_title = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
+	const opt_date = { year: "numeric", month: "long", day: "numeric" }
 	const navigation = useNavigation()
-	
+
 	const onBtnPressed = () => {
 		// Open user details
 		let isValidation = false
-		navigation.navigate("AdminSearch", { screen: "ValidateRequest", params: {data, isValidation} })
+		navigation.navigate("AdminSearch", { screen: "ValidateRequest", params: { data, isValidation } })
 	}
 
 	return (
-		<View>
+	  <View>
 
-		<View style={styles.card}>
-			<View>
-				<View>
-					<View style={styles.rowWithImage}>
-					<Image src={data.profile_picture}
-									style={{ width: 40, height: 40, marginRight: 20, borderRadius:100 }} />
-						<Text>{data.first_name + " " + data.last_name}</Text>
-					</View>
-				</View>
-			</View>
-			<View style={styles.btn}>
-				<CustomButton text={t("admin.consult")} widthBtn={80} heightBtn={40} onPress={onBtnPressed}/>
-			</View>
-		</View>
-	</View>
+		  <View style={styles.card}>
+			  <View>
+				  <View>
+					  <View style={styles.rowWithImage}>
+						  <Image src={data.profile_picture}
+						         style={{ width: 40, height: 40, marginRight: 20, borderRadius: 100 }} />
+						  <Text>{data.first_name + " " + data.last_name}</Text>
+					  </View>
+				  </View>
+			  </View>
+			  <View style={styles.btn}>
+				  <CustomButton text={t("admin.consult")} widthBtn={80} heightBtn={40} onPress={onBtnPressed} />
+			  </View>
+		  </View>
+	  </View>
 
 	)
 }

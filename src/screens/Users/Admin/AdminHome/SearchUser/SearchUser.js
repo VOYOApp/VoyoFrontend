@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react"
-import { ScrollView, StyleSheet, useWindowDimensions, View, Text, TextInput } from "react-native"
+import React, { useState } from "react"
+import { ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import HeaderHome from "../../../../../components/HeaderHome"
-import HomeStats from "../../../../../components/HomeStats"
 import BackButton from "../../../../../components/BackButton"
-import ValidationListAdmin from "../../ValidationListAdmin/ValidationListAdmin"
 import ListUsers from "../../ListUsers"
-import ReportListAdmin from "../../ReportListAdmin/ReportListAdmin"
 
 const SearchUser = () => {
 	const { t } = useTranslation()
@@ -17,35 +13,35 @@ const SearchUser = () => {
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
-	const [searchValue, setSearchValue] = useState("");
+	const [searchValue, setSearchValue] = useState("")
 
 	const handleSearch = (text) => {
-	  setSearchValue(text);
-	};
+		setSearchValue(text)
+	}
 
 	return (
-		<View style={styles.root}>
-			<BackButton />
-			<Text style={[styles.title]}>{t("admin.search_user")}</Text>
-			<TextInput
-			style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 10}}
+	  <View style={styles.root}>
+		  <BackButton />
+		  <Text style={[styles.title]}>{t("admin.search_user")}</Text>
+		  <TextInput
+			style={{ height: 40, borderColor: "gray", borderWidth: 1, marginBottom: 10, padding: 10 }}
 			placeholder={t("admin.research")}
 			onChangeText={handleSearch}
 			value={searchValue}
 		  />
-				<ScrollView style={{ width: "100%" }}
-							showsVerticalScrollIndicator={false}
-							showsHorizontalScrollIndicator={false}
-				>
-				<ListUsers searchValue={searchValue}/>
-	
-				</ScrollView>
-		</View>)
+		  <ScrollView style={{ width: "100%" }}
+		              showsVerticalScrollIndicator={false}
+		              showsHorizontalScrollIndicator={false}
+		  >
+			  <ListUsers searchValue={searchValue} />
+
+		  </ScrollView>
+	  </View>)
 }
 
 
 const styles = StyleSheet.create({
-    root: {
+	root: {
 		backgroundColor: "white",
 		padding: 20,
 		width: "100%",

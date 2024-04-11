@@ -145,7 +145,7 @@ const GMap = ({ hasSearch = false, marker, onData }) => {
 				position: "absolute", top: 7, right: 10, zIndex: 1000, padding: 5,
 			}}
 		  >
-			  <Icon size={19} source={Images.close}  />
+			  <Icon size={19} source={Images.close} />
 		  </TouchableOpacity>)}
 
 		/>) : null}

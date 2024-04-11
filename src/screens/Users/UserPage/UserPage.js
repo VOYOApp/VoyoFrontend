@@ -60,7 +60,7 @@ const UserPage = () => {
 			  <View style={{ flexDirection: "row", width: "100%" }}>
 				  <View style={{ justifyContent: "center", width: "30%" }}>
 					  <Image src={avatar}
-					         style={{ width: 100, height: 100, marginRight: 20, borderRadius:100 }} />
+					         style={{ width: 100, height: 100, marginRight: 20, borderRadius: 100 }} />
 				  </View>
 				  <View style={{ marginLeft: 10, width: "65%" }}>
 					  <CustomInput placeHolder={t("common.first_name")}
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "row",
 		alignItems: "center",
-	}
+	},
 })
 
 export default UserPage

@@ -178,11 +178,11 @@ const VisitDetails = () => {
 					  .toString() // Convert number to string
 					  .split("") // Split the string into individual digits
 					  .map((digit, index) => (<React.Fragment key={index}>
-							<Text style={styles.cell}>{digit}</Text>
-							{/* Add separator after every two digits, except for the last pair */}
-							{(index + 1) % 2 === 0 && index !== visitData.visit.details.code.toString().length - 1 && (
-							  <Text style={styles.separator}>-</Text>)}
-						</React.Fragment>))}
+						  <Text style={styles.cell}>{digit}</Text>
+						  {/* Add separator after every two digits, except for the last pair */}
+						  {(index + 1) % 2 === 0 && index !== visitData.visit.details.code.toString().length - 1 && (
+							<Text style={styles.separator}>-</Text>)}
+					  </React.Fragment>))}
 				  </View>
 			  </View>) : null}
 

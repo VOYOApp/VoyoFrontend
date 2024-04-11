@@ -163,12 +163,12 @@ function Admin() {
 		}} />
 		<Tab.Screen name="AdminSearch" component={AdminSearch} options={{
 			headerShown: false, tabBarLabel: "Search", tabBarIcon: ({ color, focused }) => (// <MaterialCommunityIcons name="home" color={color} size={26} />
-			<Image source={require("../../assets/search_locked.png")} color={color}
-			style={{
-				tintColor: focused ? "#FC4F45" : color,
-				width: 22,
-				height: 22,
-			}} />),
+			  <Image source={require("../../assets/search_locked.png")} color={color}
+			         style={{
+				         tintColor: focused ? "#FC4F45" : color,
+				         width: 22,
+				         height: 22,
+			         }} />),
 		}} />
 		{/*Ajoutez d'autres onglets si nécessaire*/}
 	</Tab.Navigator>)

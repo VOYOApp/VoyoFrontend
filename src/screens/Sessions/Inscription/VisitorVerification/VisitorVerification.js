@@ -1,46 +1,28 @@
-import React, { useEffect, useRef, useState } from "react"
-import {
-	Image,
-	ScrollView,
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	useWindowDimensions,
-	View,
-} from "react-native"
+import React, { useEffect, useState } from "react"
+import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
 import BackButton from "../../../../components/BackButton"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import CustomButton from "../../../../components/CustomButton"
-import Images from "../../../../../assets"
-import GMapInscription from "../../../../components/GMapInscription"
-import { Icon } from "react-native-paper"
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
-import AvailabilityCard from "../../../../components/AvailabilityCard"
-import CriteriaCard from "../../../../components/CriteriaCard"
-import DateTimePickerModal from "react-native-modal-datetime-picker"
-import CustomInput from "../../../../components/CustomInput"
 import UploadButton from "../../../../components/UploadButton"
 import axios from "axios"
 import { storeGlobal, storeToken } from "../../../../context/AuthContext"
 import { jwtDecode } from "jwt-decode"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { auth } from "../../../../../firebaseConfig"
-import { BASE_URL } from "@env"
 
 const VisitorVerification = () => {
 	const { t } = useTranslation()
 	const [btnDisabled, setBtnDisabled] = useState(true)
-	const [frontImage, setFrontImage] = useState(null);
-	const [backImage, setBackImage] = useState(null);
+	const [frontImage, setFrontImage] = useState(null)
+	const [backImage, setBackImage] = useState(null)
 
 	const { height } = useWindowDimensions()
 	const navigation = useNavigation()
 	const route = useRoute()
 	const user = route.params?.user
 	const availability = route.params?.availability
-	const json_availability = JSON.parse(JSON.stringify(availability));
+	const json_availability = JSON.parse(JSON.stringify(availability))
 
 	const onRegisterPressed = async () => {
 		try {
@@ -86,25 +68,25 @@ const VisitorVerification = () => {
 								"radius": user_info.data?.radius,
 								"x": user_info.data?.x,
 								"y": user_info.data?.y,
-								"password": user.password
+								"password": user.password,
 							}
 
 							const create_availability = await axios.post(`${process.env.BASE_URL}/api/availability`,
-								json_availability, {
-								headers: {
-									Authorization: `Bearer ${response.data.token}`
-								}
-							});
+							  json_availability, {
+								  headers: {
+									  Authorization: `Bearer ${response.data.token}`,
+								  },
+							  })
 
 							if (create_availability.status === 201) {
-								console.log("Availability created successfully !");
+								console.log("Availability created successfully !")
 							} else if (create_availability.status === 401) {
-								console.log("Unauthorized: Token invalid or expired.");
+								console.log("Unauthorized: Token invalid or expired.")
 							} else {
-								console.log("An error occurred while creating availability.");
+								console.log("An error occurred while creating availability.")
 							}
 
-							await storeGlobal('user_details', JSON.stringify(result)).then(() => {
+							await storeGlobal("user_details", JSON.stringify(result)).then(() => {
 								try {
 									createUserWithEmailAndPassword(auth, result.email, result.password)
 									.then((userCredential) => {
@@ -144,7 +126,7 @@ const VisitorVerification = () => {
 										console.log(errorCode)
 										console.log(errorMessage)
 									})
-								}catch (e){
+								} catch (e) {
 									console.log("An error has occurred 1: " + e)
 								}
 							})
@@ -163,18 +145,18 @@ const VisitorVerification = () => {
 	}
 
 	const updateFrontImage = (image) => {
-		setFrontImage(image);
+		setFrontImage(image)
 	}
 
 	const updateBackImage = (image) => {
-		setBackImage(image);
+		setBackImage(image)
 	}
 
 	useEffect(() => {
 		if (frontImage !== null && backImage !== null) {
-			setBtnDisabled(false);
-		}else {
-			setBtnDisabled(true);
+			setBtnDisabled(false)
+		} else {
+			setBtnDisabled(true)
 		}
 	}, [frontImage, backImage])
 
@@ -189,21 +171,26 @@ const VisitorVerification = () => {
 				  <View className={"h-full w-full"}>
 					  <View className={"w-full h-1/2 rounded-3xl bg-gray-200"}>
 						  <Text style={styles.subtitle}>{t("common.identity_card")}</Text>
-						  <Text className={"text-justify text-xs p-3 leading-4"}>{t("common.identity_card_description")}</Text>
+						  <Text
+							className={"text-justify text-xs p-3 leading-4"}>{t("common.identity_card_description")}</Text>
 
-						  <View className={'p-3'}>
-							  <Text className={"text-md font-semibold w-3/4 items-start"}>{t("common.identity_card_front")}</Text>
-							  <UploadButton asGallery={true} asCamera={true} asRemove={true} setImages={updateFrontImage}></UploadButton>
+						  <View className={"p-3"}>
+							  <Text
+								className={"text-md font-semibold w-3/4 items-start"}>{t("common.identity_card_front")}</Text>
+							  <UploadButton asGallery={true} asCamera={true} asRemove={true}
+							                setImages={updateFrontImage}></UploadButton>
 
-							  <Text className={"text-md font-semibold w-3/4 items-start mt-6"}>{t("common.identity_card_back")}</Text>
-							  <UploadButton asGallery={true} asCamera={true} asRemove={true} setImages={updateBackImage}></UploadButton>
+							  <Text
+								className={"text-md font-semibold w-3/4 items-start mt-6"}>{t("common.identity_card_back")}</Text>
+							  <UploadButton asGallery={true} asCamera={true} asRemove={true}
+							                setImages={updateBackImage}></UploadButton>
 						  </View>
 					  </View>
 
 					  <View className={"h-full w-full mt-4 items-center"}>
 						  <View className={"w-2/3"}>
-						    <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"orange"}
-						                deactivated={btnDisabled} />
+							  <CustomButton text={t("common.register")} onPress={onRegisterPressed} bgColor={"orange"}
+							                deactivated={btnDisabled} />
 						  </View>
 					  </View>
 				  </View>

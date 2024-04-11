@@ -1,16 +1,18 @@
-import React, { useCallback, useRef, useState } from "react"
-import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native"
+import React, { useRef, useState } from "react"
+import { StyleSheet, View } from "react-native"
 import MapView, { Circle, Marker, PROVIDER_GOOGLE } from "react-native-maps"
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
 import { useTranslation } from "react-i18next"
-import { Icon } from "react-native-paper"
-import Images from "../../../assets"
 import Geolocation from "react-native-geolocation-service"
 
 navigator.geolocation = Geolocation
 
 
-const GMapInscription = React.forwardRef(({ hasSearch = false, marker, isSearch = false, radius_visitor = 200 }, ref) => {
+const GMapInscription = React.forwardRef(({
+	                                          hasSearch = false,
+	                                          marker,
+	                                          isSearch = false,
+	                                          radius_visitor = 200,
+                                          }, ref) => {
 
 	const { t } = useTranslation()
 
@@ -50,7 +52,10 @@ const GMapInscription = React.forwardRef(({ hasSearch = false, marker, isSearch 
 				})
 
 				mapRef.current.animateToRegion({
-					latitude, longitude, latitudeDelta: 0.0022*(radius_visitor/100), longitudeDelta: 0.0031*(radius_visitor/100),
+					latitude,
+					longitude,
+					latitudeDelta: 0.0022 * (radius_visitor / 100),
+					longitudeDelta: 0.0031 * (radius_visitor / 100),
 				}, 2000)
 			})
 			.catch((error) => {
@@ -63,8 +68,7 @@ const GMapInscription = React.forwardRef(({ hasSearch = false, marker, isSearch 
 
 	React.useImperativeHandle(ref, () => ({
 		handlePlaceSelected: handlePlaceSelected,
-	}));
-
+	}))
 
 
 	if (marker != undefined && !hasBeenCalled) {
@@ -135,7 +139,7 @@ const styles = StyleSheet.create({
 	}, mapContainer: {
 		height: "100%", width: "100%", justifyContent: "flex-end", alignItems: "center",
 	}, map: {
-		width: "100%", height: "100%", top: 0, left: 0, right: 0, bottom: 0, position: "absolute"
+		width: "100%", height: "100%", top: 0, left: 0, right: 0, bottom: 0, position: "absolute",
 	}, searchBar: {
 		container: {
 			position: "absolute",

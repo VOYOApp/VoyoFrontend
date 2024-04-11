@@ -1,34 +1,33 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import { Platform, NativeModules } from 'react-native'
+import i18n from "i18next"
+import { initReactI18next } from "react-i18next"
+import { NativeModules, Platform } from "react-native"
+// Import your translation files
+import enTranslation from "./src/locales/en.json"
+import frTranslation from "./src/locales/fr.json"
 
 const deviceLanguage =
-    Platform.OS === 'ios'
-        ? NativeModules.SettingsManager.settings.AppleLocale ||
-        NativeModules.SettingsManager.settings.AppleLanguages[0] //iOS 13
-        : NativeModules.I18nManager.localeIdentifier;
-
-// Import your translation files
-import enTranslation from './src/locales/en.json';
-import frTranslation from './src/locales/fr.json';
+  Platform.OS === "ios"
+	? NativeModules.SettingsManager.settings.AppleLocale ||
+	NativeModules.SettingsManager.settings.AppleLanguages[0] //iOS 13
+	: NativeModules.I18nManager.localeIdentifier
 
 const resources = {
-    en: { translation: enTranslation },
-    fr: { translation: frTranslation },
-};
+	en: { translation: enTranslation },
+	fr: { translation: frTranslation },
+}
 
 i18n
-    .use(initReactI18next)
-    .init({
-        compatibilityJSON: 'v3',
+.use(initReactI18next)
+.init({
+	compatibilityJSON: "v3",
 
-        resources,
-        lng: deviceLanguage.substring(0, 2), // set the default language
-        fallbackLng: 'en', // fallback language is english
+	resources,
+	lng: deviceLanguage.substring(0, 2), // set the default language
+	fallbackLng: "en", // fallback language is english
 
-        interpolation: {
-            escapeValue: false, // react already escapes values
-        },
-    });
+	interpolation: {
+		escapeValue: false, // react already escapes values
+	},
+})
 
-export default i18n;
+export default i18n

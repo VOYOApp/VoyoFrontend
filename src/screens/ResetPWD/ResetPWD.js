@@ -3,7 +3,6 @@ import { StyleSheet, Text, useWindowDimensions, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
 import BackButton from "../../components/BackButton"
-import CustomInput from "../../components/CustomInput"
 import CustomButton from "../../components/CustomButton"
 import Password from "../../components/Password/Password"
 
@@ -35,7 +34,8 @@ const ResetPWD = () => {
 				  setPasswordConfirmation(passwordConfirmation)
 			  }}></Password>
 
-			  <CustomButton text="Se connecter" onPress={onResetPwd} bgColor={"black"} deactivated={btnDisabled && !isValidPwd} />
+			  <CustomButton text="Se connecter" onPress={onResetPwd} bgColor={"black"}
+			                deactivated={btnDisabled && !isValidPwd} />
 		  </View>
 	  </View>
 	)

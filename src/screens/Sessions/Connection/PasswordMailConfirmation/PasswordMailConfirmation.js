@@ -13,7 +13,7 @@ const PasswordMailConfirmation = () => {
 	const { height } = useWindowDimensions()
 
 	const onSignInPressed = () => {
-		navigation.navigate('Prospect', { screen: "UserPage" })
+		navigation.navigate("Prospect", { screen: "UserPage" })
 	}
 
 	const onForgotPasswordPressed = () => {
@@ -32,7 +32,7 @@ const PasswordMailConfirmation = () => {
 			               secureTextEntry
 			  />
 
-			  <View className={'flex-row justify-between w-full mb-2'}>
+			  <View className={"flex-row justify-between w-full mb-2"}>
 				  <Text style={styles.error}>{t("common.incorrect_password")}</Text>
 				  <Text onPress={onForgotPasswordPressed} style={styles.link}>{t("common.forgot_password")}</Text>
 			  </View>
@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
 	},
 	link: {
 		color: "#FE881B",
-		marginBottom: 10
+		marginBottom: 10,
 	},
 	error: {
 		color: "red",
 		fontWeight: "bold",
-		marginBottom: 10
-	}
+		marginBottom: 10,
+	},
 })
 
 export default PasswordMailConfirmation

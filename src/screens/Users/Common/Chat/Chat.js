@@ -1,9 +1,9 @@
-import React, { useCallback, useState, useLayoutEffect } from "react"
-import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions } from "react-native"
+import React, { useCallback, useLayoutEffect, useState } from "react"
+import { Image, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import { Avatar } from "react-native-elements"
-import { auth, db } from '../../../../../firebaseConfig';
+import { auth, db } from "../../../../../firebaseConfig"
 import { signOut } from "firebase/auth"
-import { collection, addDoc, doc, updateDoc, serverTimestamp, getDocs, query, orderBy, onSnapshot } from "firebase/firestore"
+import { addDoc, collection, doc, onSnapshot, orderBy, query, serverTimestamp, updateDoc } from "firebase/firestore"
 import { GiftedChat } from "react-native-gifted-chat"
 import BackButton from "../../../../components/BackButton"
 import { removeGlobal, removeToken } from "../../../../context/AuthContext"
@@ -14,7 +14,7 @@ const Chat = ({ navigation, route }) => {
 	const { chatName, id, chatAvatar } = route.params
 	const signOutNow = async () => {
 		await removeGlobal("user_details")
-		await removeToken();
+		await removeToken()
 		await signOut(auth)
 	}
 	useLayoutEffect(() => {
@@ -22,14 +22,14 @@ const Chat = ({ navigation, route }) => {
 			title: chatName || "Chat",
 			headerTitleStyle: { fontSize: 18 },
 			headerLeft: () => (
-			  <View className={'flex-row items-center ml-4'}>
-				  <BackButton navigation={navigation}/>
-				  <View className={'ml-4'}>
+			  <View className={"flex-row items-center ml-4"}>
+				  <BackButton navigation={navigation} />
+				  <View className={"ml-4"}>
 					  <Avatar
-					    rounded
-					    source={{
-						    uri: chatAvatar || require("../../../../../assets/avatar.png"),
-					    }}
+						rounded
+						source={{
+							uri: chatAvatar || require("../../../../../assets/avatar.png"),
+						}}
 					  />
 				  </View>
 			  </View>
@@ -41,7 +41,7 @@ const Chat = ({ navigation, route }) => {
 			  </TouchableOpacity>
 			),
 		})
-		const q = query(collection(db, `chats/${id}/messages`), orderBy("createdAt", "desc"));
+		const q = query(collection(db, `chats/${id}/messages`), orderBy("createdAt", "desc"))
 		const unsubscribe = onSnapshot(q, (snapshot) => setMessages(
 		  snapshot.docs.map(doc => ({
 			  _id: doc.data()._id,
@@ -49,23 +49,23 @@ const Chat = ({ navigation, route }) => {
 			  text: doc.data().text,
 			  user: doc.data().user,
 		  })),
-		));
+		))
 
 		return () => {
-			unsubscribe();
-		};
-	}, [navigation, id, chatName]);
+			unsubscribe()
+		}
+	}, [navigation, id, chatName])
 
 	const onSend = useCallback((messages = []) => {
-		const { _id, createdAt, text, user } = messages[0];
-		const chatId = id;
+		const { _id, createdAt, text, user } = messages[0]
+		const chatId = id
 
 		// Ajoutez le message à la collection "messages" spécifique au chat
-		addDoc(collection(db, `chats/${chatId}/messages`), { _id, createdAt, text, user });
+		addDoc(collection(db, `chats/${chatId}/messages`), { _id, createdAt, text, user })
 
 		// Mettez à jour la propriété "lastActivity" du chat
-		updateDoc(doc(db, `chats/${chatId}`), { lastActivity: serverTimestamp() });
-	}, [id]);
+		updateDoc(doc(db, `chats/${chatId}`), { lastActivity: serverTimestamp() })
+	}, [id])
 
 	return (
 	  <GiftedChat

@@ -44,7 +44,7 @@ const ConnectPhone = () => {
 
 		  <BackButton />
 
-		  <View className={'w-full mb-3'}>
+		  <View className={"w-full mb-3"}>
 			  <Text style={[styles.title]}>{t("common.connection_to_voyo")}</Text>
 
 			  <CustomPhoneNumber placeHolder={t("common.cell_phone_number")}
@@ -56,16 +56,17 @@ const ConnectPhone = () => {
 		  <CustomButton text="Suivant" onPress={() => goToPwdVerification(phoneNumber)} bgColor={"black"}
 		                deactivated={btnDisabled} />
 
-		  <View className={'w-full flex-row items-center justify-around mt-4'}>
+		  <View className={"w-full flex-row items-center justify-around mt-4"}>
 			  <View className="border-b-black border-b-[1px] w-1/3" />
 			  <Text>ou</Text>
 			  <View className="border-b-black border-b-[1px] w-1/3" />
 		  </View>
 
-		  <View className={'w-full flex-row items-center justify-center mt-4'}>
+		  <View className={"w-full flex-row items-center justify-center mt-4"}>
 
 		  </View>
-		  <CustomButton text={t('common.continue_with_email')} onPress={() => gotToConnectEmail()} bgColor={"#FE881B"}/>
+		  <CustomButton text={t("common.continue_with_email")} onPress={() => gotToConnectEmail()}
+		                bgColor={"#FE881B"} />
 	  </View>
 	)
 }

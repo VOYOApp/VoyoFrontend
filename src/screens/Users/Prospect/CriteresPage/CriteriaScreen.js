@@ -18,7 +18,7 @@ const CriteriaScreen = () => {
 	const data = route.params?.data
 
 	const [criteriaList, setCriteriaList] = useState([
-	  {id: Math.random(), criteria: "", photo_required: false, video_required: false, reusable: false}
+		{ id: Math.random(), criteria: "", photo_required: false, video_required: false, reusable: false },
 	])
 
 	const addCriteriaCard = () => {
@@ -35,13 +35,14 @@ const CriteriaScreen = () => {
 	}
 
 	const onNextPressed = () => {
-		const criteriaListWithoutId =criteriaList.map((criteria) => {
+		const criteriaListWithoutId = criteriaList.map((criteria) => {
 			return ({
 				criteria: criteria.criteria,
 				photo_required: criteria.photo_required,
 				video_required: criteria.video_required,
 				reusable: criteria.reusable,
-		})})
+			})
+		})
 
 		navigation.navigate("SearchProspect", {
 			screen: "Recap", params: {
@@ -55,7 +56,7 @@ const CriteriaScreen = () => {
 				criterias: criteriaListWithoutId,
 				first_name: data.firstName,
 				last_name: data.lastName,
-				profile_picture: data.profilePicture
+				profile_picture: data.profilePicture,
 			},
 		})
 	}
@@ -63,12 +64,12 @@ const CriteriaScreen = () => {
 
 	useEffect(() => {
 		function checkAsCriteria() {
-			const isAnyCriteriaEmpty = criteriaList.some(criteria => criteria.criteria === "");
-			setBtnDisabled(isAnyCriteriaEmpty);
+			const isAnyCriteriaEmpty = criteriaList.some(criteria => criteria.criteria === "")
+			setBtnDisabled(isAnyCriteriaEmpty)
 		}
 
-		checkAsCriteria();
-	}, [criteriaList]);
+		checkAsCriteria()
+	}, [criteriaList])
 
 	const scrollViewRef = useRef(null)
 
@@ -94,25 +95,25 @@ const CriteriaScreen = () => {
 		  }}
 		>
 			{criteriaList.map((criteria, index) => (<CriteriaCard
-				key={index}
-				setCriteria={(value) => {
-					criteria.criteria = value
-					setCriteriaList([...criteriaList])
-				}}
-				setIsPhotoRequired={(value) => {
-					criteria.photo_required = value
-					setCriteriaList([...criteriaList])
-				}}
-				setIsVideoRequired={(value) => {
-					criteria.video_required = value
-					setCriteriaList([...criteriaList])
-				}}
-				setIsReusable={(value) => {
-					criteria.reusable = value
-					setCriteriaList([...criteriaList])
-				}}
-				onDelete={() => removeCriteriaCard(criteria.id)}
-			  />))}
+			  key={index}
+			  setCriteria={(value) => {
+				  criteria.criteria = value
+				  setCriteriaList([...criteriaList])
+			  }}
+			  setIsPhotoRequired={(value) => {
+				  criteria.photo_required = value
+				  setCriteriaList([...criteriaList])
+			  }}
+			  setIsVideoRequired={(value) => {
+				  criteria.video_required = value
+				  setCriteriaList([...criteriaList])
+			  }}
+			  setIsReusable={(value) => {
+				  criteria.reusable = value
+				  setCriteriaList([...criteriaList])
+			  }}
+			  onDelete={() => removeCriteriaCard(criteria.id)}
+			/>))}
 			<View style={styles.iAmABlankSpace} />
 		</ScrollView>
 

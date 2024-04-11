@@ -28,7 +28,7 @@ const ReportListAdmin = () => {
 			  <AdminHomeReportRequest />
 			  <AdminHomeReportRequest />
 			  <AdminHomeReportRequest />
-              <AdminHomeReportRequest />
+			  <AdminHomeReportRequest />
 		  </ScrollView>
 	  </View>
 	)

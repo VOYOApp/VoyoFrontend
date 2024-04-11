@@ -3,7 +3,6 @@ import { Animated, SafeAreaView, StyleSheet, TouchableWithoutFeedback, View } fr
 import { MaterialIcons } from "@expo/vector-icons"
 import { getToken } from "../../context/AuthContext"
 import axios from "axios"
-import { BASE_URL } from "@env"
 
 const StarsNotation = ({ visitID }) => {
 	const starRatingOptions = [1, 2, 3, 4, 5]
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1, alignItems: "center", justifyContent: "center", padding: 10,
 	}, heading: {
-		fontSize: 24, fontWeight: "bold"
+		fontSize: 24, fontWeight: "bold",
 	}, stars: {
 		display: "flex", flexDirection: "row",
 	}, starUnselected: {

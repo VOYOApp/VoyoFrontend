@@ -1,7 +1,8 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import { useTranslation } from "react-i18next"
 import { useNavigation } from "@react-navigation/native"
+
 const HeaderHome = ({ name, profilePicture, isAdmin = false }) => {
 	const { height } = useWindowDimensions()
 	const { t } = useTranslation()
@@ -9,10 +10,11 @@ const HeaderHome = ({ name, profilePicture, isAdmin = false }) => {
 
 	return (
 	  <View style={styles.header}>
-		  <TouchableOpacity style={styles.img_container} onPress={() => isAdmin ? navigation.navigate("HomeAdmin", { screen: "UserPage" }) : navigation.navigate("HomeProspect", { screen: "UserPage" })} >
+		  <TouchableOpacity style={styles.img_container}
+		                    onPress={() => isAdmin ? navigation.navigate("HomeAdmin", { screen: "UserPage" }) : navigation.navigate("HomeProspect", { screen: "UserPage" })}>
 			  <Image
-			    src={profilePicture}
-			    style={[styles.profilePic, { height: height }]}
+				src={profilePicture}
+				style={[styles.profilePic, { height: height }]}
 			  />
 		  </TouchableOpacity>
 		  <Text style={styles.title}>{t("common.greetings_name", { name: name })}</Text>
