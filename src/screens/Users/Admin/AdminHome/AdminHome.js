@@ -49,7 +49,7 @@ const ProspectHome = () => {
 
 	return (
 	<View style={styles.root}>
-		<HeaderHome name={firstname} profilePicture={icon}/>
+		<HeaderHome name={firstname} profilePicture={icon} isAdmin={true}/>
 			<ScrollView style={{ width: "100%" }}
 			            showsVerticalScrollIndicator={false}
 			            showsHorizontalScrollIndicator={false}
