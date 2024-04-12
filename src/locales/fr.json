@@ -1,5 +1,6 @@
 {
   "common": {
+    "nocriteriassent": "Aucun critère envoyé",
     "pay": "Payer",
     "visitor_fees": "Tarification de",
     "criterias_list": "Liste des critères",
