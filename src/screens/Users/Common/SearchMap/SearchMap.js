@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useRef, useState } from "react"
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import { useTranslation } from "react-i18next"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
-import CustomButton from "../../../../components/CustomButton" // https://www.npmjs.com/package/react-native-modal-datetime-picker
+import CustomButton from "../../../../components/CustomButton"
 import { RadioButton } from "react-native-paper"
 import { BottomSheetModal, BottomSheetModalProvider } from "@gorhom/bottom-sheet"
 import SearchResultPerson from "../../../../components/SearchResultPerson"
@@ -22,8 +22,9 @@ const SearchMap = () => {
 	const handlePresentModalPress = useCallback(() => {
 		bottomSheetModalRef.current?.present()
 	}, [])
+
 	const handleSheetChanges = useCallback((index) => {
-		console.log("handleSheetChanges", index)
+		// console.log("handleSheetChanges", index)
 	}, [])
 
 
@@ -139,7 +140,6 @@ const SearchMap = () => {
 					}
 				})
 				setSearchResults(updatedResults)
-				console.log(searchResults)
 			}
 		} catch (e) {
 			console.log(e)
@@ -228,7 +228,9 @@ const SearchMap = () => {
 									  <RadioButton
 										value={item.value}
 										status={selectedValue === item.value ? "checked" : "unchecked"}
-										onPress={() => setSelectedValue(item.value)}
+										onPress={() => {
+											setSelectedValue(item.value)
+										}}
 										color={"#FF7F50"}
 									  />
 									  <Text>{item.label}</Text>

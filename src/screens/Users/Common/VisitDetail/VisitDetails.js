@@ -190,23 +190,25 @@ const VisitDetails = () => {
 			{/*Criterias*/}
 			<View style={styles.innerContainer}>
 				<Text style={{ paddingBottom: 10 }}>{t("common.criterias")}</Text>
-				{visitData.visit.criterias.map((criteria, index) => {
-					return <CriteriaCard key={index}
-					                     showData={true}
-					                     data={criteria}
-					                     visitdetails={true}
-					                     decodedToken={decodedToken}
-					                     visitStatus={visitData.visit.details.status}
-					                     setCriteriaAnswer={(value) => {
-						                     criteria.criteria_answer = value
-						                     setCriteriaList([...criteriaList])
-					                     }}
-					                     setPhoto={(value) => {
-						                     criteria.photo = value
-						                     setCriteriaList([...criteriaList])
-					                     }}
-					/>
-				})}
+				{visitData.visit.criterias ? (<View>
+					{visitData.visit.criterias.map((criteria, index) => {
+						return <CriteriaCard key={index}
+						                     showData={true}
+						                     data={criteria}
+						                     visitdetails={true}
+						                     decodedToken={decodedToken}
+						                     visitStatus={visitData.visit.details.status}
+						                     setCriteriaAnswer={(value) => {
+							                     criteria.criteria_answer = value
+							                     setCriteriaList([...criteriaList])
+						                     }}
+						                     setPhoto={(value) => {
+							                     criteria.photo = value
+							                     setCriteriaList([...criteriaList])
+						                     }}
+						/>
+					})}
+				</View>) : <Text>{t("common.nocriteriassent")}</Text>}
 			</View>
 
 			{/*Visitor details*/}
