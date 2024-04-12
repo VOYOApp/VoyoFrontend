@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react"
-import { Image, StyleSheet, TextInput, useWindowDimensions, View } from "react-native"
+import { Image, StyleSheet, Switch, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import CustomInput from "../../../components/CustomInput"
 import CustomButton from "../../../components/CustomButton"
 import CustomHeader from "../../../components/CustomHeader"
 import CustomFooter from "../../../components/CustomFooter"
-import { useNavigation } from "@react-navigation/native"
 import { useTranslation } from "react-i18next"
-import { getGlobal, getToken } from "../../../context/AuthContext"
+import { getGlobal, getToken, storeGlobal, storeToken } from "../../../context/AuthContext"
 import { jwtDecode } from "jwt-decode"
+import axios from "axios"
 
-
-const UserPage = () => {
+const UserPage = ({ navigation }) => {
 	const { t } = useTranslation()
+	const { height } = useWindowDimensions()
+
 	const [avatar, setAvatar] = useState("https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x")
 	const [lastName, setLastName] = useState("")
 	const [firstName, setFirstName] = useState("")
@@ -21,20 +22,93 @@ const UserPage = () => {
 	const [password, setPassword] = useState("")
 	const [passwordConfirmation, setPasswordConfirmation] = useState("")
 	const [isEnabled, setIsEnabled] = useState(false)
+	const [btnDisabled, setBtnDisabled] = useState(false)
+	const [switchDisabled, setSwitchDisabled] = useState(false)
+	const [asVisitorAccount, setAsVisitorAccount] = useState(false)
 	const [isValidated, setIsValidated] = useState(false)
-	const toggleSwitch = () => setIsEnabled(previousState => !previousState)
-	const navigation = useNavigation()
 
-	const { height } = useWindowDimensions()
-	// const navigation = useNavigation()
-
-	const applyChanges = () => {
-		console.warn("Updated infos")
-		// navigation.navigate('HomeScreen')
+	const applyChanges = async () => {
+		try {
+			setBtnDisabled(true)
+			getGlobal("user_details").then(async (user) => {
+				await getToken().then(async (token) => {
+					let decodedToken = jwtDecode(token)
+					const idRole = isEnabled === true ? 2 : 1
+					await axios.put(`${process.env.BASE_URL}/api/user`, {
+						"first_name": firstName,
+						"last_name": lastName,
+						"email": email,
+						"biography": bio,
+					}, {
+						headers: { Authorization: `Bearer ${token}` },
+					}).then(async (result) => {
+						if (result.status === 204) {
+							const result = {
+								"first_name": firstName,
+								"last_name": lastName,
+								"email": user?.email,
+								"biography": bio,
+								"profile_picture": user?.profile_picture,
+								"pricing": user?.pricing,
+								"radius": user?.radius,
+								"x": user?.x,
+								"y": user?.y,
+								"password": user?.password,
+							}
+							await storeGlobal("user_details", JSON.stringify(result)).then(async () => {
+								idRole === 2 ? navigation.replace("Prospect", { screen: "HomeProspect" }) : navigation.replace("Visitor", { screen: "HomeProspect" })
+							})
+						}
+					})
+				})
+			})
+		} catch (e) {
+			setBtnDisabled(false)
+			console.log("Error update user : " + e)
+		}
 	}
 
 	const handleBioChange = (text) => {
 		setBio(text)
+	}
+
+	const goToResetPwd = () => {
+		navigation.navigate("Common", { screen: "ResetPWD" })
+	}
+
+
+	const toggleSwitch = () => {
+		setIsEnabled(previousState => !previousState)
+		try {
+			setSwitchDisabled(true)
+			getGlobal("user_details").then(async (user) => {
+				await getToken().then(async (token) => {
+					let decodedToken = jwtDecode(token)
+					const idRole = isEnabled === true ? 2 : 1
+					await axios.put(`${process.env.BASE_URL}/api/user`, {
+						"role_id": idRole,
+					}, {
+						headers: { Authorization: `Bearer ${token}` },
+					}).then(async (result) => {
+						if (result.status === 204) {
+							await axios.get(`${process.env.BASE_URL}/api/user/login`, {
+								params: {
+									"phone_number": decodedToken?.phone_number || "",
+									"password": user?.password || "",
+								},
+							}).then(async (newToken) => {
+								await storeToken(newToken.data.token).then(setTimeout(() => {
+									idRole === 2 ? navigation.replace("Prospect", { screen: "HomeProspect" }) : navigation.replace("Visitor", { screen: "HomeProspect" })
+								}, 1000))
+							})
+						}
+					})
+				})
+			})
+		} catch (e) {
+			setSwitchDisabled(false)
+			console.log("Error update role user : " + e)
+		}
 	}
 
 	useEffect(() => {
@@ -47,6 +121,9 @@ const UserPage = () => {
 				setBio(user.biography)
 				setEmail(user.email)
 				setPhoneNumber(decodedToken.phone_number)
+
+				user?.x === null || user?.y === null ? setAsVisitorAccount(false) : setAsVisitorAccount(true)
+				decodedToken?.role === "VISITOR" ? setIsEnabled(true) : setIsEnabled(false)
 			})
 		})
 	}, [])
@@ -111,43 +188,24 @@ const UserPage = () => {
 					  alignSelf: "center",
 				  }} />
 
-				  <CustomInput placeHolder={t("common.cell_phone_number")}
-				               value={phoneNumber}
-				               setValue={setPhoneNumber}
-				               showPen={true}
-				               editable={false}
-				  />
-				  <CustomInput placeHolder={t("common.email")}
-				               value={email}
-				               setValue={setEmail}
-				               showPen={true}
-				  />
-
-				  <View style={{
-					  borderBottomColor: "black",
-					  borderBottomWidth: 1,
-					  width: 40,
-					  marginBottom: 5,
-					  marginTop: 5,
-					  alignSelf: "center",
-				  }} />
-
 				  <View>
-					  <CustomInput placeHolder={t("common.password")}
-					               value={password}
-					               setValue={setPassword}
-					               secureTextEntry
+					  <CustomInput placeHolder={t("common.cell_phone_number")}
+					               value={phoneNumber}
+					               setValue={setPhoneNumber}
 					               showPen={true}
+					               editable={false}
+					  />
+					  <CustomInput placeHolder={t("common.email")}
+					               value={email}
+					               setValue={setEmail}
+					               showPen={true}
+					               editable={false}
 					  />
 
-					  <CustomInput placeHolder={t("common.confirm_password")}
-					               value={passwordConfirmation}
-					               setValue={setPasswordConfirmation}
-					               secureTextEntry
-					               showPen={true}
-					  />
+					  <TouchableOpacity className={"w-full mb-8 ml-2"}>
+						  <Text onPress={goToResetPwd} style={styles.link}>{t("common.forgot_password")}</Text>
+					  </TouchableOpacity>
 				  </View>
-			  </View>
 
 			  <View style={{
 				  borderBottomColor: "black",
@@ -158,20 +216,32 @@ const UserPage = () => {
 				  alignSelf: "center",
 			  }} />
 
-			  {/* <View style={{ display: "flex", alignItems: "center", justifyContent:'center', flexDirection: "row", marginBottom: 10, width:'100%' }}>
-            <Text style={{textAlign:'center', width: '30%'}}>Je souhaite visiter des biens immobiliers</Text>
-            <Switch
-              style={{marginLeft: 10, marginRight: 10}}
-              trackColor={{ false: "#767577", true: "#FE881B" }}
-              thumbColor={isEnabled ? "#D9D9D9" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
-            />
-            <Text style={{textAlign:'center', width: '30%'}}>Je souhaite faire visiter des biens immobiliers</Text>
-          </View> */}
+				  {asVisitorAccount === true ? (
+				    <View style={{
+					    display: "flex",
+					    alignItems: "center",
+					    justifyContent: "center",
+					    flexDirection: "row",
+					    marginBottom: 10,
+					    width: "100%",
+				    }}>
+					    <Text style={{ textAlign: "center", width: "45%" }}>{t("common.prospect")}</Text>
+					    <Switch
+						  style={{ marginLeft: 10, marginRight: 10 }}
+						  trackColor={{ false: "#767577", true: "#FE881B" }}
+						  thumbColor={isEnabled ? "#D9D9D9" : "#f4f3f4"}
+						  ios_backgroundColor="#3e3e3e"
+						  onValueChange={toggleSwitch}
+						  value={isEnabled}
+						  disabled={switchDisabled}
+					    />
+					    <Text style={{ textAlign: "center", width: "45%" }}>{t("common.visitor")}</Text>
+				    </View>
+				  ) : null}
 
-			  <CustomButton text={t("common.apply_changes")} onPress={applyChanges} bgColor={"black"} />
+			  </View>
+			  <CustomButton deactivated={btnDisabled} text={t("common.apply_changes")} onPress={applyChanges}
+			                bgColor={"black"} />
 		  </View>
 
 		  <CustomFooter currentOption={"home"} />
@@ -198,6 +268,9 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "row",
 		alignItems: "center",
+	},
+	link: {
+		color: "#FE881B",
 	},
 })
 

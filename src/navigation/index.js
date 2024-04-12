@@ -94,8 +94,9 @@ function SearchProspect() {
 // }
 
 function Common() {
-	return (<Stack.Navigator>
+	return (<Stack.Navigator screenOptions={{ headerShown: false }}>
 		<Stack.Screen name="Chat" component={Chat} />
+		<Stack.Screen name="ResetPWD" component={ResetPWD} />
 	</Stack.Navigator>)
 }
 
@@ -206,10 +207,12 @@ function Navigation({ isLoggedIn, status, role }) {
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
 			  <Stack.Screen name="Prospect" component={Prospect} />
 			  <Stack.Screen name="Common" component={Common} />
+			  <Stack.Screen name="Visitor" component={Visitor} />
 		  </Stack.Navigator>) : isLoggedIn && status === "VALIDATED" && role === "VISITOR" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
-			  <Stack.Screen name="Prospect" component={Visitor} />
+			  <Stack.Screen name="Visitor" component={Visitor} />
 			  <Stack.Screen name="Common" component={Common} />
+			  <Stack.Screen name="Prospect" component={Prospect} />
 		  </Stack.Navigator>) : isLoggedIn && status === "BANNED" ? (
 		  <Stack.Navigator screenOptions={{ headerShown: false }}>
 			  <Stack.Screen name="BanVoyo" component={BanVoyo} />

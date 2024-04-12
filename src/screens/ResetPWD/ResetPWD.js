@@ -17,7 +17,7 @@ const ResetPWD = () => {
 	const [btnDisabled, setBtnDisabled] = useState(true)
 
 	const onResetPwd = async () => {
-		console.log(password, passwordConfirmation)
+		console.log("THIS FEATURE IS IN PROGRESS !")
 	}
 
 	return (

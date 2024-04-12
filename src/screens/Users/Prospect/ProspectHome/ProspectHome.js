@@ -130,9 +130,7 @@ const ProspectHome = () => {
 			getGlobal("user_details").then((user) => {
 				setFirstname(user?.first_name)
 				setIcon(user?.profile_picture)
-
 				firebaseCnx(user, token)
-				console.log(auth?.currentUser)
 			}).catch((error) => {
 				console.log("Error getGlobal data : " + error)
 			})
