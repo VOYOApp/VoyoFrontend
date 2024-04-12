@@ -73,7 +73,7 @@ const AdditionalDetailsVisitor = () => {
 										placeholder={t("common.searchMap.searchPlaceholder")}
 										onPress={callFunc}
 										query={{
-											key: "AIzaSyBznSC8S1mPU-GPjsxuagQqnNK3a8xVOl4",
+											key: process.env.GOOGLE_MAPS_KEY,
 											language: "fr",
 											components: "country:fr", // Limit the search to France
 										}}

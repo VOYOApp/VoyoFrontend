@@ -103,33 +103,6 @@ const GMapInscription = React.forwardRef(({
 			  fillColor={"rgba(255,127,80,0.35)"}
 			/>)}
 		</MapView>
-
-		{/*{hasSearch ? (<GooglePlacesAutocomplete*/}
-		{/*  minLength={2}*/}
-		{/*  placeholder={t("common.searchMap.searchPlaceholder")}*/}
-		{/*  onPress={handlePlaceSelected}*/}
-		{/*  query={{*/}
-		{/*	  key: "AIzaSyBznSC8S1mPU-GPjsxuagQqnNK3a8xVOl4", language: "fr", components: "country:fr", // Limit the search to France*/}
-		{/*  }}*/}
-		{/*  ref={ref}*/}
-		{/*  nearbyPlacesAPI="GooglePlacesSearch"*/}
-		{/*  debounce={400}*/}
-		{/*  styles={styles.searchBar}*/}
-		{/*  currentLocation={true}*/}
-		{/*  currentLocationLabel="Current location"*/}
-		{/*  renderRightButton={() => (<TouchableOpacity*/}
-		{/*	onPress={() => {*/}
-		{/*		emptySearch()*/}
-		{/*	}}*/}
-
-		{/*	style={{*/}
-		{/*		position: "absolute", top: 7, right: 10, zIndex: 1000, padding: 5,*/}
-		{/*	}}*/}
-		{/*  >*/}
-		{/*	  <Icon name="close" size={20} source={Images.search} />*/}
-		{/*  </TouchableOpacity>)}*/}
-
-		{/*/>) : null}*/}
 	</View>)
 })
 

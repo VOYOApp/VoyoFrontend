@@ -127,7 +127,7 @@ const GMap = ({ hasSearch = false, marker, onData }) => {
 		  placeholder={t("common.searchMap.searchPlaceholder")}
 		  onPress={handlePlaceSelected}
 		  query={{
-			  key: "AIzaSyBznSC8S1mPU-GPjsxuagQqnNK3a8xVOl4", language: "fr", components: "country:fr", // Limit the search to France
+			  key: process.env.GOOGLE_MAPS_KEY, language: "fr", components: "country:fr", // Limit the search to France
 		  }}
 		  ref={ref}
 		  fetchDetails={true}
