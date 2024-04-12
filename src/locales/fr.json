@@ -1,5 +1,9 @@
 {
   "common": {
+    "total_price": "Prix total ",
+    "platform_fees": "Frais de plateforme ",
+    "visit_length": "Durée de la visite ",
+    "hourly_rate": "Tarif horaire ",
     "nocriteriassent": "Aucun critère envoyé",
     "pay": "Payer",
     "visitor_fees": "Tarification de",

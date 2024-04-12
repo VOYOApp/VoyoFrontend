@@ -28,6 +28,7 @@ const RecapRequest = () => {
 	const [users, setUser] = useState("")
 
 	function formatDateTime(date) {
+		let d = new Date(date)
 		const options = {
 			weekday: "long", // Nom complet du jour de la semaine
 			year: "numeric", // Année au format numérique
@@ -36,13 +37,27 @@ const RecapRequest = () => {
 			hour: "numeric", // Heure au format numérique
 			minute: "numeric", // Minutes au format numérique
 		}
-		let formattedDate = new Intl.DateTimeFormat("fr-FR", options).format(date)
+		let formattedDate = new Intl.DateTimeFormat("fr-FR", options).format(d)
 		formattedDate.replace(":", "h")
 		return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
 	}
 
+
+	function parseDuration() {
+		const parts = durationRealEstate.split("h")
+		const hours = parseInt(parts[0], 10)
+		const minutes = parseInt(parts[1].replace("m", ""), 10)
+		const tt = hours * 60 + minutes
+		// Calculate total price
+		const totalPrice = visit.price * (tt / 60)
+		return totalPrice
+	}
+
+	// Parse duration string
+
 	const formatDuration = (date) => {
-		return `${String(date.getHours()).padStart(2, "0")}h : ${String(date.getMinutes()).padStart(2, "0")}m : ${String(date.getSeconds()).padStart(2, "0")}s`
+		return `${String(date.getHours() - 1).padStart(2, "0")}h${String(date.getMinutes()).padStart(2, "0")}`
+
 	}
 
 	const createVisit = async () => {
@@ -50,14 +65,9 @@ const RecapRequest = () => {
 		let data = JSON.stringify(visit)
 
 		let config = {
-			method: "post",
-			maxBodyLength: Infinity,
-			url: `${process.env.BASE_URL}/api/visit`,
-			headers: {
-				"Content-Type": "application/json",
-				"Authorization": `Bearer ${token}`,
-			},
-			data: data,
+			method: "post", maxBodyLength: Infinity, url: `${process.env.BASE_URL}/api/visit`, headers: {
+				"Content-Type": "application/json", "Authorization": `Bearer ${token}`,
+			}, data: data,
 		}
 
 		// console.log(config)
@@ -89,13 +99,9 @@ const RecapRequest = () => {
 
 	const createChat = async () => {
 		const chatData = {
-			members: members,
-			users: users.map((user) => ({
-				avatar: user.avatar,
-				name: user.name,
-			})),
-			admin: "admin@example.com",
-			lastActivity: serverTimestamp(),
+			members: members, users: users.map((user) => ({
+				avatar: user.avatar, name: user.name,
+			})), admin: "admin@example.com", lastActivity: serverTimestamp(),
 		}
 		await addDoc(collection(db, "chats"), chatData)
 		// const chatRef = await addDoc(collection(db, "chats"), chatData);
@@ -107,20 +113,14 @@ const RecapRequest = () => {
 	useEffect(() => {
 		getGlobal("user_details").then(async (data) => {
 			const token = await getToken()
-			axios.get(`${process.env.BASE_URL}/api/user/email?phoneNumber=${visit?.phone_number_visitor.replace("+", "%2B")}`,
-			  {
-				  headers: { Authorization: `Bearer ${token}` },
-			  }).then((result) => {
-				setMembers([
-					data?.email,
-					result?.data.email,
-				])
+			axios.get(`${process.env.BASE_URL}/api/user/email?phoneNumber=${visit?.phone_number_visitor.replace("+", "%2B")}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			}).then((result) => {
+				setMembers([data?.email, result?.data.email])
 				setUser([{
-					avatar: data?.profile_picture,
-					name: data?.first_name + " " + data?.last_name,
+					avatar: data?.profile_picture, name: data?.first_name + " " + data?.last_name,
 				}, {
-					avatar: visit?.profile_picture,
-					name: visit?.first_name + " " + visit?.last_name,
+					avatar: visit?.profile_picture, name: visit?.first_name + " " + visit?.last_name,
 				}])
 			})
 		})
@@ -133,7 +133,6 @@ const RecapRequest = () => {
 			</Text>
 		</View>
 
-
 		<View style={styles.headTitles}>
 			<View style={styles.subTitle}>
 				<Icon source={Images.calendarOrange} size={27} />
@@ -141,7 +140,7 @@ const RecapRequest = () => {
 			</View>
 
 			<View style={styles.textDescription}>
-				<Text>{formatDateTime(visit.startTime)}</Text>
+				<Text>{formatDateTime(visit.start_time)}</Text>
 			</View>
 		</View>
 
@@ -165,10 +164,10 @@ const RecapRequest = () => {
 			</View>
 
 			<View style={styles.textDescription}>
-				<Text>Par heure : {visit.price}€</Text>
-				<Text>Durée de la visite : {durationRealEstate}</Text>
-				<Text>Frais de plateforme : {platformCost}€</Text>
-				<Text>Total à payer : {visit.price + platformCost}€</Text>
+				<Text>{t("common.hourly_rate")}: {visit.price}€</Text>
+				<Text>{t("common.visit_length")}: {durationRealEstate}</Text>
+				<Text>{t("common.platform_fees")}: {platformCost}€</Text>
+				<Text>{t("common.total_price")}: {parseDuration() + platformCost}€</Text>
 			</View>
 		</View>
 
@@ -219,8 +218,7 @@ const styles = StyleSheet.create({
 		alignItems: "center", flexDirection: "row", marginTop: 15, marginBottom: 0, padding: 0,
 	}, subTitleText: {
 		fontSize: 20, marginLeft: 10,
-	},
-	textDescription: {
+	}, textDescription: {
 		padding: 15,
 		backgroundColor: "rgba(0,0,0,0.07)",
 		borderRadius: 18,
@@ -231,35 +229,15 @@ const styles = StyleSheet.create({
 
 
 	members: {
-		maxHeight: 200,
-		borderColor: "#ccc",
-		borderWidth: 1,
-		borderRadius: 5,
-		marginTop: 10,
-	},
-	member: {
-		padding: 10,
-		borderColor: "#ccc",
-		borderBottomWidth: 1,
-		flexDirection: "row",
-		alignItems: "center",
-	},
-	avatar: {
-		width: 30,
-		height: 30,
-		borderRadius: 15,
-		marginRight: 10,
-	},
-	memberText: {
+		maxHeight: 200, borderColor: "#ccc", borderWidth: 1, borderRadius: 5, marginTop: 10,
+	}, member: {
+		padding: 10, borderColor: "#ccc", borderBottomWidth: 1, flexDirection: "row", alignItems: "center",
+	}, avatar: {
+		width: 30, height: 30, borderRadius: 15, marginRight: 10,
+	}, memberText: {
 		fontSize: 16,
-	},
-	selected: {
-		fontSize: 12,
-		color: "#000",
-		backgroundColor: "#ddd",
-		padding: 5,
-		borderRadius: 5,
-		marginLeft: "auto",
+	}, selected: {
+		fontSize: 12, color: "#000", backgroundColor: "#ddd", padding: 5, borderRadius: 5, marginLeft: "auto",
 	},
 })
 

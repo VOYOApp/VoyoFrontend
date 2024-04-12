@@ -1,5 +1,9 @@
 {
   "common": {
+    "total_price": "Total price",
+    "platform_fees": "Platform fees",
+    "visit_length": "Visit length",
+    "hourly_rate": "Hourly rate",
     "nocriteriassent": "No criterias sent",
     "pay": "Pay",
     "typegood": "Type of property",
