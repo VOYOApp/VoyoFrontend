@@ -1,0 +1,189 @@
+{
+  "common": {
+    "total_price": "Prix total",
+    "platform_fees": "Frais de plateforme",
+    "visit_length": "Durée de la visite",
+    "hourly_rate": "Frais horaires",
+    "nocriteriassent": "Aucun critère envoyé",
+    "pay": "Payez",
+    "typegood": "Type de bien",
+    "visitor_fees": "Frais de visiteur pour",
+    "criterias_list": "Liste des critères",
+    "login": "Connexion",
+    "or": "ou",
+    "criterias": "Critères",
+    "delete": "Supprimer",
+    "gallery": "Galerie",
+    "camera": "Caméra",
+    "uploadimg": "Ajouter une image",
+    "enter_validation_code": "Pour valider la visite, veuillez entrer le code de validation fourni par la personne qui vous a montré la propriété.",
+    "criterias_sent": "Critères envoyés",
+    "checkoutof": "Départ de",
+    "done": "terminé",
+    "visits_dones": "visites terminées",
+    "visitor": "Visiteur",
+    "prospect": "Perspective",
+    "verification_code": "Code de vérification",
+    "address": "Adresse",
+    "note_visit": "Notez la visite",
+    "duration": "Durée",
+    "to": "à",
+    "from": "de",
+    "starttime": "Date de départ",
+    "date": "Date",
+    "visit_details": "Détail visite",
+    "visit_done": "Visite terminée",
+    "cancelled_visit": "Visite annulée",
+    "refused_visit": "Visite refusée",
+    "waiting_validation": "En attente de validation",
+    "accepted_visit": "Visite acceptée",
+    "refuse_visit": "Refuser la visite",
+    "accept_visit": "Accepter la visite",
+    "citation": "L'avenir appartient à ceux qui croient en la beauté de leurs rêves.",
+    "cancel_visit": "Annuler la visite",
+    "loading": "Chargement",
+    "logout": "Déconnexion",
+    "register": "S'inscrire",
+    "register_to_voyo": "S'inscrire à VOYO",
+    "connection_to_voyo": "Se connecter à VOYO",
+    "enter_your_email": "Entrez votre adresse courriel",
+    "greetings": "Bienvenue sur VOYO!",
+    "greetings_name": "Bienvenue {{name}} !",
+    "already_have_an_account": "J'ai déjà un compte",
+    "cell_phone_number": "Numéro de téléphone cellulaire",
+    "continue_with_email": "Continuer avec l'e-mail",
+    "continue_with_phone": "Continuer avec le téléphone",
+    "unread_messages": {
+      "one": "Message non lu",
+      "other": "Messages non lus"
+    },
+    "platform_costs": "Coûts de la plateforme : {{price}}",
+    "select_pricing": "Sélectionnez les tarifs horaires",
+    "select_date": "Veuillez sélectionner une date",
+    "select_time": "Veuillez sélectionner une durée",
+    "resend_code": "Renvoyer le code",
+    "verification_code_sent": "Un code de vérification a été envoyé à {{phone}}",
+    "verification_mail_code_sent": "Un code de vérification a été envoyé à {{email}}",
+    "create_prospect_account": "Créez un compte prospect pour trouver un visiteur pour votre propriété",
+    "create_visitor_account": "Créer un compte visiteur supplémentaire pour inspecter les propriétés",
+    "other_information": "Pour finaliser votre inscription, nous avons besoin de plus d'informations.",
+    "reference_address": "Adresse de référence",
+    "address_description": "Cette adresse sera le point central de votre région de visite. Il ne sera jamais divulgué à d'autres utilisateurs. Vous n'avez pas à entrer votre adresse personnelle.",
+    "availability_description": "Pour apparaître dans les résultats de la recherche, veuillez entrer votre disponibilité pour visiter les propriétés. Vous pouvez ajouter, supprimer ou modifier votre disponibilité à tout moment via les paramètres.",
+    "pricing_description": "Avec VOYO, vous pouvez gagner de l'argent. En fait, vous serez payé pour chaque visite que vous faites avec VOYO. Et la meilleure partie ? Vous définissez votre propre tarif horaire !",
+    "identity_card_description": "Pour assurer la sécurité de nos utilisateurs, nous vous demandons de nous fournir une copie de votre carte d’identité. Ce document sera utilisé pour vérifier votre identité.",
+    "identity_card_front": "Veuillez enregistrer le recto de votre carte d'identité",
+    "identity_card_back": "Veuillez enregistrer le verso de votre carte d'identité",
+    "details": "Détails du produit",
+    "my_account": "Mon compte",
+    "card_id": "Carte d'identité",
+    "first_name": "Prénom",
+    "last_name": "Nom de famille",
+    "bio": "Bio",
+    "email": "Courriel",
+    "password": "Mot de passe",
+    "forgot_password": "Mot de passe oublié ?",
+    "incorrect_password": "Mot de passe incorrect",
+    "confirm_password": "Confirmation du mot de passe",
+    "apply_changes": "Appliquer les modifications",
+    "please": "Veuillez vous connecter",
+    "connect_to_internet": "vers Internet",
+    "retry": "Réessayer",
+    "back": "Précédent",
+    "searchMap": {
+      "searchPlaceholder": "Rechercher une adresse"
+    },
+    "availability": "Disponibilité",
+    "repeat": "Répéter :",
+    "unique_availability": "Une disponibilité unique",
+    "next": "Suivant",
+    "validate": "Validate",
+    "search": "Chercher",
+    "result": {
+      "one": "Résultat",
+      "other": "Résultats"
+    },
+    "identity_card": "Carte d'identité",
+    "pricing": "Tarification",
+    "price": "Prix",
+    "star": {
+      "one": "Étoiles",
+      "other": "Étoiles"
+    },
+    "distance": "Distance",
+    "photo": {
+      "one": "Photo",
+      "other": "Photos"
+    },
+    "video": {
+      "one": "Vidéo",
+      "other": "Vidéos"
+    },
+    "reusable": "Réutilisable"
+  },
+  "prospect": {
+    "noAnswer": "Le visiteur n'a pas encore répondu à vos critères.",
+    "programmed_visite": {
+      "one": "Visite programmée",
+      "other": "Visites programmées"
+    },
+    "number_of_visits": {
+      "one": "Visite faite avec VOYO",
+      "other": "Visites faites avec VOYO"
+    },
+    "feedback_waiting": {
+      "one": "Commentaires en attente",
+      "other": "Commentaires en attente"
+    },
+    "passed_visits": "Visites réussies",
+    "programmed_visits": "Visites programmées",
+    "choose_a_date": "Choisir une date",
+    "type_of_property": "Type de propriété",
+    "subtext_type_of_property": "En choisissant le type de propriété, vous pouvez déterminer la durée de la visite et donc estimer son coût.",
+    "subtext_choose_a_date": "Veuillez indiquer la date à laquelle vous souhaitez que la visite ait lieu.",
+    "visits_duration": {
+      "studio": "Studio, T1 : 30 minutes",
+      "t2_to_t4": "T2, T3, T4 : 40 minutes",
+      "t5_and_more": "T5 et plus : 50 minutes",
+      "house": "Maison : 1h",
+      "villa": "Villa : 1h30",
+      "custom_duration": "Durée personnalisée"
+    },
+    "send_request": "Envoyer la demande",
+    "send_request_description": "Pour débloquer l'accès au chat, veuillez envoyer une demande. Si votre demande est refusée, vous serez remboursé.",
+    "send_request_description_2": "Afin d'effectuer le paiement, vous serez redirigé vers le site Web de notre fournisseur de service externe Stripe",
+    "add_criteria": "Ajouter des critères",
+    "criteria": "Critères"
+  },
+  "visitor": {
+    "criteria_answer": "Écrivez votre réponse aux critères ici",
+    "upcoming_visits": {
+      "one": "Visite à venir",
+      "other": "Visites à venir"
+    },
+    "pending_acceptance": {
+      "one": "Acceptation de la candidature en attente",
+      "other": "Demandes en attente d'acceptation"
+    },
+    "review_pending": {
+      "one": "Revue en attente",
+      "other": "Avis en attente"
+    }
+  },
+  "admin": {
+    "account_validation_request": "Demandes de validation",
+    "report_request": "Signaler la demande de l'utilisateur :",
+    "reported_users": "Utilisateurs signalés",
+    "reported_by": "Signalé par",
+    "motive": "Motif :",
+    "validation_request": "Demande de validation :",
+    "accept_request": "Valider l'inscription",
+    "reject_request": "Refuser l'inscription",
+    "search_user": "Rechercher un utilisateur",
+    "clients_and_visitors": "Clients et visiteurs",
+    "pending_request": "En attente de confirmation...",
+    "consult": "Consultant",
+    "research": "Tapez le nom de l'utilisateur recherché",
+    "ban_user": "Bannir cet utilisateur"
+  }
+}
